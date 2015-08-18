@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.oltecnologias.hype.gui;
 
-import br.oltecnologias.hype.controller.GerenciadorDePessoas;
-import javax.swing.JOptionPane;
 
 /**
  *
- * @author Cliente
+ * @author Luender
  */
 public class LoginFrame extends javax.swing.JFrame {
 
@@ -156,7 +149,12 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
         // validar administrador no sistema
-        System.exit(0);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PrincipalFrame().setVisible(true);
+            }
+            
+        });
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
     /**
