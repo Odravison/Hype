@@ -28,6 +28,10 @@ public class Administrador extends Pessoa {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
+    
+    public String getNickName() {
+        return nickName;
+    }
 
     public int getId() {
         return id;
