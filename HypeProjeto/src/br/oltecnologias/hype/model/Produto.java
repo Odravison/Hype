@@ -74,11 +74,12 @@ public abstract class Produto {
     public void setCor(String cor) {
         this.cor = cor;
     }
-
+       
     public void addQuant(int add) {
         this.quant += add;
     }
         
-        
-
+    public void removerQuant(int add){
+        this.quant -= add;
+    }
 }

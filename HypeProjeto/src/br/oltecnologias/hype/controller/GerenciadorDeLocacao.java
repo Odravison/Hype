@@ -26,10 +26,16 @@ public class GerenciadorDeLocacao {
         return singleton;
     }
 
-    public void realizarLocacao(Cliente cliente, List<ProdutoDeLocacao> produtos, Calendar dataLocacao, float valor) {
+    public void realizarLocacao(Cliente cliente, List<ProdutoDeLocacao> produtos, Calendar dataLocacao, float valor) throws ProdutoInexistenteException {
         Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao);
-
-        locacoes.add(locacao);
+        cliente.adicionarLocacao(locacao);
+        this.locacoes.add(locacao);
+        for (Produto p: produtos){
+            GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).removerQuant(p.getQuant());
+        }
+        
+        
+        
 
     }
 
@@ -37,27 +43,25 @@ public class GerenciadorDeLocacao {
         return locacoes;
     }
 
-    public void devolverLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException {
+    public void finalizarLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException, LocacaoInexistenteException {
         boolean emprestou = false;
-        for (Locacao locacaoCliente : cliente.getLocacoes()){
-            if (locacaoCliente.getId() == idLoc){
-                for (Locacao locacaoGer : this.locacoes){
-                    if(locacaoGer.getId() == idLoc 
-                            && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())){
+        for (Locacao locacaoCliente : cliente.getLocacoes()) {
+            if (locacaoCliente.getId() == idLoc) {
+                for (Locacao locacaoGer : this.locacoes) {
+                    if (locacaoGer.getId() == idLoc
+                            && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                         emprestou = true;
-                        for (Produto p: locacaoGer.getProdutos()){
+                        for (Produto p : locacaoGer.getProdutos()) {
                             GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).addQuant(p.getQuant());
-                            
-                            
                         }
                         cliente.removerLocacao(locacaoCliente);
                         this.locacoes.remove(locacaoGer);
                     }
                 }
             }
-            
+
         }
-        
+
         if (!(emprestou)) {
             throw new LocacaoInexistenteException("O cliente não possui a locação referente.");
         }
@@ -80,14 +84,6 @@ public class GerenciadorDeLocacao {
         return extraviadas;
     }
 
-    public void finalizarLocacao(int idLocacao) {
-
-    }
-
-    public void carregarLocacoes() {
-
-    }
-
     public List<Locacao> listarLocacoesEmAtraso() {
         List<Locacao> atrasos = new ArrayList<Locacao>();
         for (Locacao l : this.locacoes) {
@@ -96,6 +92,10 @@ public class GerenciadorDeLocacao {
             }
         }
         return atrasos;
+
+    }
+
+    public void carregarLocacoes() {
 
     }
 }
