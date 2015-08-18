@@ -5,12 +5,12 @@ import java.util.List;
 
 public class Cliente extends Pessoa {
 
-	private String cpf;
-	private Calendar ultimaMedicao;
-	private Endereco endereco;
-	private Medidas medidas;
-	private String rg;
-	private List<String> telefones;
+    private String cpf;
+    private Calendar ultimaMedicao;
+    private Endereco endereco;
+    private Medidas medidas;
+    private String rg;
+    private List<String> telefones;
 
     public Cliente(String cpf, Endereco endereco, Medidas medidas, String rg, List<String> telefones) {
         this.cpf = cpf;

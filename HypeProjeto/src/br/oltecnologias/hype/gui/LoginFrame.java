@@ -31,13 +31,13 @@ public class LoginFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         painelGeral = new javax.swing.JPanel();
-        painelDeLogin1 = new javax.swing.JPanel();
-        labelUsuario1 = new javax.swing.JLabel();
-        campoNomeUsuario1 = new javax.swing.JTextField();
-        labelSenha1 = new javax.swing.JLabel();
-        campoSenha1 = new javax.swing.JPasswordField();
-        botaoEntrar1 = new javax.swing.JButton();
-        labelLogo1 = new javax.swing.JLabel();
+        painelDeLogin = new javax.swing.JPanel();
+        labelUsuario = new javax.swing.JLabel();
+        campoNomeUsuario = new javax.swing.JTextField();
+        labelSenha = new javax.swing.JLabel();
+        campoSenha = new javax.swing.JPasswordField();
+        botaoEntrar = new javax.swing.JButton();
+        labelLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
@@ -48,90 +48,91 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeral.setMinimumSize(new java.awt.Dimension(600, 500));
         painelGeral.setPreferredSize(new java.awt.Dimension(1329, 768));
 
-        painelDeLogin1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
-        painelDeLogin1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelDeLogin1.setName("hype!\n"); // NOI18N
+        painelDeLogin.setBackground(new java.awt.Color(204, 204, 255));
+        painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
+        painelDeLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        painelDeLogin.setName("hype!\n"); // NOI18N
 
-        labelUsuario1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelUsuario1.setText("Login:");
+        labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelUsuario.setText("Login:");
 
-        campoNomeUsuario1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNomeUsuario1.addActionListener(new java.awt.event.ActionListener() {
+        campoNomeUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNomeUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNomeUsuario1ActionPerformed(evt);
+                campoNomeUsuarioActionPerformed(evt);
             }
         });
 
-        labelSenha1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSenha1.setText("Senha:");
+        labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelSenha.setText("Senha:");
 
-        campoSenha1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        botaoEntrar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoEntrar1.setText("Entrar");
-        botaoEntrar1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoEntrar1.addActionListener(new java.awt.event.ActionListener() {
+        botaoEntrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoEntrar.setText("Entrar");
+        botaoEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoEntrar1ActionPerformed(evt);
+                botaoEntrarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout painelDeLogin1Layout = new javax.swing.GroupLayout(painelDeLogin1);
-        painelDeLogin1.setLayout(painelDeLogin1Layout);
-        painelDeLogin1Layout.setHorizontalGroup(
-            painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDeLogin1Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelDeLoginLayout = new javax.swing.GroupLayout(painelDeLogin);
+        painelDeLogin.setLayout(painelDeLoginLayout);
+        painelDeLoginLayout.setHorizontalGroup(
+            painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDeLoginLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelUsuario1)
-                    .addComponent(labelSenha1))
+                .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelUsuario)
+                    .addComponent(labelSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoEntrar1)
-                    .addGroup(painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(campoSenha1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addComponent(campoNomeUsuario1, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoEntrar)
+                    .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(campoSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                        .addComponent(campoNomeUsuario, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
-        painelDeLogin1Layout.setVerticalGroup(
-            painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDeLogin1Layout.createSequentialGroup()
+        painelDeLoginLayout.setVerticalGroup(
+            painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDeLoginLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
-                .addGroup(painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoNomeUsuario1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelUsuario1))
+                .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelUsuario))
                 .addGap(39, 39, 39)
-                .addGroup(painelDeLogin1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoSenha1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSenha1))
+                .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSenha))
                 .addGap(46, 46, 46)
-                .addComponent(botaoEntrar1)
+                .addComponent(botaoEntrar)
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        labelLogo1.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
-        labelLogo1.setText("hype!");
+        labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        labelLogo.setText("hype!");
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(painelDeLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(491, Short.MAX_VALUE)
+                .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(491, Short.MAX_VALUE))
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(612, 612, 612)
-                .addComponent(labelLogo1)
-                .addContainerGap(627, Short.MAX_VALUE))
+                .addGap(620, 620, 620)
+                .addComponent(labelLogo)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(labelLogo1)
-                .addGap(74, 74, 74)
-                .addComponent(painelDeLogin1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addComponent(labelLogo)
+                .addGap(76, 76, 76)
+                .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(228, Short.MAX_VALUE))
         );
 
@@ -149,14 +150,14 @@ public class LoginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoNomeUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeUsuario1ActionPerformed
+    private void campoNomeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_campoNomeUsuario1ActionPerformed
+    }//GEN-LAST:event_campoNomeUsuarioActionPerformed
 
-    private void botaoEntrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrar1ActionPerformed
+    private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
         // validar administrador no sistema
         System.exit(0);
-    }//GEN-LAST:event_botaoEntrar1ActionPerformed
+    }//GEN-LAST:event_botaoEntrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,13 +195,13 @@ public class LoginFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoEntrar1;
-    private javax.swing.JTextField campoNomeUsuario1;
-    private javax.swing.JPasswordField campoSenha1;
-    private javax.swing.JLabel labelLogo1;
-    private javax.swing.JLabel labelSenha1;
-    private javax.swing.JLabel labelUsuario1;
-    private javax.swing.JPanel painelDeLogin1;
+    private javax.swing.JButton botaoEntrar;
+    private javax.swing.JTextField campoNomeUsuario;
+    private javax.swing.JPasswordField campoSenha;
+    private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelSenha;
+    private javax.swing.JLabel labelUsuario;
+    private javax.swing.JPanel painelDeLogin;
     private javax.swing.JPanel painelGeral;
     // End of variables declaration//GEN-END:variables
 }

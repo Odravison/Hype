@@ -4,16 +4,32 @@ import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Administrador;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Cliente;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 
 public class GerenciadorDePessoas {
+    
+        public static GerenciadorDePessoas singleton;
 
 	private List<Cliente> clientes;
 
 	private List<Fornecedor> fornecedores;
 
 	private List<Administrador> administradores;
+        
+        private GerenciadorDePessoas() {
+            this.clientes = new ArrayList<Cliente>();
+            this.fornecedores = new ArrayList<Fornecedor>();
+            this.administradores = new ArrayList<Administrador>();
+        }
+        
+        public static GerenciadorDePessoas getInstance() {
+            if(singleton == null) {
+                singleton = new GerenciadorDePessoas();
+            }
+            return singleton;
+        }
 
 	public void cadastrarCliiente(String cpf, Calendar ultimaMedicao, String rg, List<String> telefones, String rua, String bairro, String uf, int numeroCasa, String cidade, int calca, int traje, int colete, int camisa, int gravata, int sapato, List<String> obs) {
 
@@ -36,7 +52,9 @@ public class GerenciadorDePessoas {
 	}
 
 	public void cadastrarAdministrador(String nome, String senha, String nickName) {
-
+            Administrador adm = new Administrador(nickName, senha);
+            this.administradores.add(adm);
+            System.out.println("Administrador cadastrado com sucesso"+nickName);
 	}
 
 	public void editarAdministrador(String nome, String senha, String nickName) {

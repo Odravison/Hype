@@ -2,8 +2,8 @@ package br.oltecnologias.hype.model;
 
 public class Contrato {
 
-	private String modeloPDF;
-        private String diretorioDoContrato;
+    private String modeloPDF;
+    private String diretorioDoContrato;
 
     public Contrato(String modeloPDF) {
         this.modeloPDF = modeloPDF;
