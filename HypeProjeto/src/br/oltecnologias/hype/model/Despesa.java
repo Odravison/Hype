@@ -8,11 +8,13 @@ public class Despesa {
 	private String nome;
 	private String observacao;
 	private Calendar data;
+        private float valor;
 
-    public Despesa(String nome, String observacao, Calendar data) {
+    public Despesa(String nome, String observacao, Calendar data, float valor) {
         this.nome = nome;
         this.observacao = observacao;
         this.data = data;
+        this.valor = valor;
     }
 
     public int getId() {
@@ -45,6 +47,14 @@ public class Despesa {
 
     public void setData(Calendar data) {
         this.data = data;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
     }
         
     
