@@ -68,8 +68,24 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public List<Locacao> listarLocacoesPorData(Calendar data) {
-        return null;
+    public List<Locacao> listarLocacoesPorDataDeLocacao(Calendar data) {
+        List<Locacao> aux = new ArrayList<Locacao>();
+        for(Locacao l: this.locacoes){
+            if (l.getDataLocacao().equals(data)){
+                aux.add(l);
+            }
+        }
+        return aux;
+    }
+    
+    public List<Locacao> listarLocacoesPorDataDeDevolucao(Calendar data){
+        List<Locacao> aux = new ArrayList<Locacao>();
+        for(Locacao l: this.locacoes){
+            if (l.getDataDevolucao().equals(data)){
+                aux.add(l);
+            }
+        }
+        return aux;
     }
 
     public List<Locacao> listarLocacoesExtraviadas() {
@@ -96,6 +112,6 @@ public class GerenciadorDeLocacao {
     }
 
     public void carregarLocacoes() {
-
+           // Metódo será implementado para quando.
     }
 }

@@ -16,7 +16,6 @@ import br.oltecnologias.hype.model.Empregado;
 import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Calendar;
 
 public class GerenciadorDePessoas {
 
@@ -212,7 +211,7 @@ public class GerenciadorDePessoas {
     }
 
     public void carregarPessoas() {
-        // Método sera usando quando houver bando de dados.
+        // Método sera implementado quando houver bando de dados.
     }
 
     public List<Cliente> getClientes() {
