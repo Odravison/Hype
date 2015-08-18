@@ -6,17 +6,18 @@ public class Administrador extends Pessoa {
     private String senha;
     private String nickName;
 
-    public Administrador(String senha, String nickName) {
+    public Administrador(String senha, String nickName, String nome) {
+        super(nome);
         this.senha = senha;
         this.nickName = nickName;
     }
-    
+
     @Override
     public String getDescricao() {
         return "Nome: " + super.getNome() + "\n"
                 + "Usuário: " + this.nickName;
     }
-    
+
     public String getSenha() {
         return senha;
     }
@@ -28,7 +29,7 @@ public class Administrador extends Pessoa {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
-    
+
     public String getNickName() {
         return nickName;
     }
@@ -39,5 +40,5 @@ public class Administrador extends Pessoa {
 
     public void setId(int id) {
         this.id = id;
-    }    
+    }
 }

@@ -4,7 +4,7 @@ package br.oltecnologias.hype.controller;
 import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
-import br.oltecnologias.hype.exceptions.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 
 public class GerenciadorDeProduto {
 
