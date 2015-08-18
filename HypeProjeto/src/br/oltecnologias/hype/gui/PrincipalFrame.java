@@ -1018,7 +1018,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxFiltrarVenda;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
