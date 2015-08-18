@@ -1,5 +1,7 @@
 package br.oltecnologias.hype.controller;
 
+import br.oltecnologias.hype.exceptions.ProdutoInexistenteException;
+import br.oltecnologias.hype.exceptions.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Produto;
@@ -35,7 +37,7 @@ public class GerenciadorDeLocacao {
         return locacoes;
     }
 
-    public void devolverLocacao(int idLoc, Cliente cliente) {
+    public void devolverLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException {
         boolean emprestou = false;
         for (Locacao locacaoCliente : cliente.getLocacoes()){
             if (locacaoCliente.getId() == idLoc){
@@ -43,11 +45,13 @@ public class GerenciadorDeLocacao {
                     if(locacaoGer.getId() == idLoc 
                             && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())){
                         emprestou = true;
-                        for (Produto p: locacaoCliente.getProdutos()){
-                            
+                        for (Produto p: locacaoGer.getProdutos()){
+                            GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).addQuant(p.getQuant());
                             
                             
                         }
+                        cliente.removerLocacao(locacaoCliente);
+                        this.locacoes.remove(locacaoGer);
                     }
                 }
             }
