@@ -9,7 +9,7 @@ package br.oltecnologias.hype.exceptions;
  *
  * @author Odravison
  */
-Public class LocacaoInexistenteException extends Exception {
+public class LocacaoInexistenteException extends Exception {
 
     public LocacaoInexistenteException(String msg) {
         super(msg);
