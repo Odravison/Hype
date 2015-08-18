@@ -21,6 +21,7 @@ public class Cliente extends Pessoa {
         this.rg = rg;
         this.telefones = telefones;
         this.locacoes = new ArrayList<Locacao>();
+        this.ultimaMedicao = Calendar.getInstance();
     }
 
     @Override

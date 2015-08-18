@@ -4,6 +4,7 @@ import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Administrador;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -14,30 +15,41 @@ public class GerenciadorDePessoas {
     private List<Fornecedor> fornecedores;
     private List<Administrador> administradores;
     private static GerenciadorDePessoas singleton = null;
-    
-    private GerenciadorDePessoas(){
+
+    private GerenciadorDePessoas() {
         clientes = new ArrayList<Cliente>();
         fornecedores = new ArrayList<Fornecedor>();
         administradores = new ArrayList<Administrador>();
     }
-    
-    public static GerenciadorDePessoas getInstance(){
-        if (singleton == null){
+
+    public static GerenciadorDePessoas getInstance() {
+        if (singleton == null) {
             singleton = new GerenciadorDePessoas();
         }
         return singleton;
     }
 
-    public void cadastrarCliiente(String cpf, Calendar ultimaMedicao, String rg, List<String> telefones, String rua, String bairro, String uf, int numeroCasa, String cidade, int calca, int traje, int colete, int camisa, int gravata, int sapato, List<String> obs) {
-
+    public void cadastrarCliiente(String cpf, Endereco endereco, Medidas medidas, String rg, List<String> telefones) {
+        for ()
     }
 
-    public void editarCliente(String cpf, Calendar ultimaMedicao, String rg, List<String> telefones, String rua, String bairro, String uf, int numeroCasa, String cidade, int calca, int traje, int colete, int camisa, int gravata, int sapato, List<String> obs) {
-
+    public void editarCliente(String cpfAntigo, String cpf, Endereco endereco, Medidas medidas, String rg, List<String> telefones)
+            throws ClienteInexistenteException {
+        Cliente alteracao = pesquisarCliente(cpfAntigo);
+        alteracao.setEndereco(endereco);
+        alteracao.setMedidas(medidas);
+        alteracao.setRg(rg);
+        alteracao.setTelefones(telefones);
+        
     }
 
-    public Cliente pesquisarCliente(String CPF) {
-        return null;
+    public Cliente pesquisarCliente(String cpf) throws ClienteInexistenteException {
+        for (Cliente cliente: this.clientes){
+            if (cliente.getCpf().equals(cpf)){
+                return cliente;
+            }
+        }
+        throw new ClienteInexistenteException("Cliente não cadastrado.");
     }
 
     public void removerCliente(String CPF) {
