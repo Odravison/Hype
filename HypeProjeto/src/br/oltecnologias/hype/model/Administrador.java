@@ -6,7 +6,7 @@ public class Administrador extends Pessoa {
     private String senha;
     private String nickName;
 
-    public Administrador(String senha, String nickName, String nome) {
+    public Administrador(String nome, String nickName, String senha) {
         super(nome);
         this.senha = senha;
         this.nickName = nickName;
