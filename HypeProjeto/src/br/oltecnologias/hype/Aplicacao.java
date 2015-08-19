@@ -38,7 +38,7 @@ public class Aplicacao {
         
         Cliente cliente = new Cliente("1234566", end, medidas, "123456", telefones);
         
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hypepu");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("HypeProjetoPU");
         
         ClienteJpaController cjp = new ClienteJpaController(emf);
         
