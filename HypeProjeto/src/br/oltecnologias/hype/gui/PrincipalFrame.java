@@ -173,6 +173,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelClientes.setBackground(new java.awt.Color(255, 255, 255));
         painelClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         painelClientes.setPreferredSize(new java.awt.Dimension(1311, 735));
+        painelClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelClientesMouseClicked(evt);
+            }
+        });
 
         botaoNovoCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoNovoCliente.setText("Novo Cliente");
@@ -1046,6 +1051,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         setVisible(false);
         new LoginFrame().setVisible(true);  
     }//GEN-LAST:event_botaoSairActionPerformed
+
+    private void painelClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelClientesMouseClicked
+        if(campoPesquisarCliente.getText().length() <= 0) {
+            campoPesquisarCliente.setText("Pesquisar Cliente");
+            campoPesquisarCliente.setForeground(new java.awt.Color(153, 153, 153));
+            campoPesquisarCliente.setFont(new java.awt.Font("Tahoma", 2, 14));
+        }
+    }//GEN-LAST:event_painelClientesMouseClicked
 
     /**
      * @param args the command line arguments

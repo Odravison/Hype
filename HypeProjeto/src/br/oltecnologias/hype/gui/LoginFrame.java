@@ -2,9 +2,6 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.exception.AdministradorInexistenteException;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -20,7 +17,7 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
-        ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Logo.png");
+        ImageIcon imagemTituloJanela = new ImageIcon("src\\Imagens\\Logo.png");
         setIconImage(imagemTituloJanela.getImage());
     }
 
@@ -115,7 +112,7 @@ public class LoginFrame extends javax.swing.JFrame {
         );
 
         labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
-        labelLogo.setIcon(new javax.swing.ImageIcon("D:\\Projeto\\Código\\Hype\\HypeProjeto\\Imagens\\Logo.png")); // NOI18N
+        labelLogo.setIcon(new javax.swing.ImageIcon("D:\\Projeto\\Código\\Hype\\HypeProjeto\\src\\Imagens\\Logo.png")); // NOI18N
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
