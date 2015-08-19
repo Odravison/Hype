@@ -3,10 +3,18 @@ package br.oltecnologias.hype.model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
 
 public class Cliente extends Pessoa {
 
+    @Id
+    @Column(name="ID_CLIENTE")
     private String cpf;
+    
+    @Column(name="ULTMED_CLIENTE", nullable = true)
+    @Temporal(Calendar)
     private Calendar ultimaMedicao;
     private Endereco endereco;
     private Medidas medidas;

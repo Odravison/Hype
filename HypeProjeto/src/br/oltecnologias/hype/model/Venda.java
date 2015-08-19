@@ -1,21 +1,16 @@
 package br.oltecnologias.hype.model;
 
 import java.util.List;
+import javax.persistence.Entity;
 
+@Entity(name = "VENDA")
 public class Venda {
-
-	private int id;
-	private List<ProdutoDeVenda> produtos;
-	private float valor;
-
-    public Venda(int id, List<ProdutoDeVenda> produtos, float valor) {
-        this.id = id;
-        this.produtos = produtos;
-        this.valor = valor;
-    }
     
-    public Venda(List<ProdutoDeVenda> produtos, float valor){
-        this.id = 0;
+    private int id;
+    private List<ProdutoDeVenda> produtos;
+    private float valor;
+
+    public Venda(List<ProdutoDeVenda> produtos, float valor) {
         this.produtos = produtos;
         this.valor = valor;
     }
@@ -43,9 +38,5 @@ public class Venda {
     public void setValor(float valor) {
         this.valor = valor;
     }
-    
-    
-        
-        
 
 }
