@@ -13,6 +13,12 @@ public class Venda {
         this.produtos = produtos;
         this.valor = valor;
     }
+    
+    public Venda(List<ProdutoDeVenda> produtos, float valor){
+        this.id = 0;
+        this.produtos = produtos;
+        this.valor = valor;
+    }
 
     public int getId() {
         return id;

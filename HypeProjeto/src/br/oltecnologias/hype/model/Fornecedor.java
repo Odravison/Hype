@@ -7,6 +7,17 @@ public class Fornecedor extends Pessoa {
     private String cnpj;
     private Endereco endereco;
     private List<String> telefones;
+    
+    public Fornecedor(String cnpj, Endereco end, List<String> telefones, String nome){
+        super(nome);
+        this.cnpj = cnpj;
+        this.endereco = end;
+        this.telefones = telefones;
+    }
+    
+    public Fornecedor(){
+        
+    }
 
     @Override
     public String getDescricao() {
@@ -31,4 +42,27 @@ public class Fornecedor extends Pessoa {
         return telefones;
     }
 
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+    public List<String> getTelefones() {
+        return telefones;
+    }
+
+    public void setTelefones(List<String> telefones) {
+        this.telefones = telefones;
+    }
 }

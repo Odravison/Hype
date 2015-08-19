@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.oltecnologias.hype.exceptions;
+package br.oltecnologias.hype.exception;
 
 /**
  *
  * @author Odravison
  */
-public class ProdutoInexistenteException extends Exception {
+public class EmpregadoExistenteException extends Exception {
 
-    public ProdutoInexistenteException(String msg) {
+    public EmpregadoExistenteException(String msg) {
         super(msg);
     }
     

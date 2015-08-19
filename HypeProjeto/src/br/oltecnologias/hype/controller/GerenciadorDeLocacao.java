@@ -1,7 +1,7 @@
 package br.oltecnologias.hype.controller;
 
-import br.oltecnologias.hype.exceptions.ProdutoInexistenteException;
-import br.oltecnologias.hype.exceptions.LocacaoInexistenteException;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Produto;
@@ -68,8 +68,24 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public List<Locacao> listarLocacoesPorData(Calendar data) {
-        return null;
+    public List<Locacao> listarLocacoesPorDataDeLocacao(Calendar data) {
+        List<Locacao> aux = new ArrayList<Locacao>();
+        for(Locacao l: this.locacoes){
+            if (l.getDataLocacao().equals(data)){
+                aux.add(l);
+            }
+        }
+        return aux;
+    }
+    
+    public List<Locacao> listarLocacoesPorDataDeDevolucao(Calendar data){
+        List<Locacao> aux = new ArrayList<Locacao>();
+        for(Locacao l: this.locacoes){
+            if (l.getDataDevolucao().equals(data)){
+                aux.add(l);
+            }
+        }
+        return aux;
     }
 
     public List<Locacao> listarLocacoesExtraviadas() {
@@ -96,6 +112,6 @@ public class GerenciadorDeLocacao {
     }
 
     public void carregarLocacoes() {
-
+           // Metódo será implementado para quando.
     }
 }
