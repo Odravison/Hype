@@ -1,5 +1,13 @@
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.exception.AdministradorInexistenteException;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -34,6 +42,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
+        setName("frameLogin"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1366, 768));
         setSize(new java.awt.Dimension(1366, 768));
 
@@ -50,11 +59,6 @@ public class LoginFrame extends javax.swing.JFrame {
         labelUsuario.setText("Login:");
 
         campoNomeUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNomeUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoNomeUsuarioActionPerformed(evt);
-            }
-        });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelSenha.setText("Senha:");
@@ -143,18 +147,20 @@ public class LoginFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoNomeUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoNomeUsuarioActionPerformed
-
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        // validar administrador no sistema
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PrincipalFrame().setVisible(true);
+        try {
+            URL url = this.getClass().getResource("Atenção.gif");
+            Image imagem = Toolkit.getDefaultToolkit().getImage(url);
+            // validar administrador no sistema
+            if(GerenciadorDePessoas.getInstance().validarAdministrador(campoNomeUsuario.getText(), new String (campoSenha.getPassword()))){
+                new PrincipalFrame(campoNomeUsuario.getText()).setVisible(true);
+                setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "Administrador não cadastrado no sistemaaaaa. \nInforme os dados novamente.", null, WIDTH, new ImageIcon(imagem));
             }
-            
-        });
+        } catch (AdministradorInexistenteException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), null, WIDTH, new ImageIcon("Atenção.gif"));
+        }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
     /**
