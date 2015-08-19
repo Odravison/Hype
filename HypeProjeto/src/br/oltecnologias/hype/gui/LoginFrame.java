@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Luender
+ * @author Luender Lima
  */
 public class LoginFrame extends javax.swing.JFrame {
 
@@ -17,8 +17,9 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
-        ImageIcon imagemTituloJanela = new ImageIcon("src\\Imagens\\Logo.png");
+        ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Mini logo hype!.png");
         setIconImage(imagemTituloJanela.getImage());
+        labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
     }
 
     /**
@@ -158,10 +159,10 @@ public class LoginFrame extends javax.swing.JFrame {
                 new PrincipalFrame(campoNomeUsuario.getText()).setVisible(true);
                 setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Administrador não cadastrado no sistema. \nInforme os dados novamente.", null, WIDTH, new ImageIcon("Imagens\\Atenção.gif"));
+                JOptionPane.showMessageDialog(null, "Administrador não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } catch (AdministradorInexistenteException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), null, WIDTH, new ImageIcon("Imagens\\Atenção.gif"));
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 

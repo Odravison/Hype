@@ -5,8 +5,8 @@
  */
 package br.oltecnologias.hype.gui;
 
+import java.awt.Dialog;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,13 +22,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
     
     /**
-     * Creates new form PrincipalFrame
+     * Cria um nov form PrincipalFrame
      * @param login
      */
     public PrincipalFrame(String login) {
         initComponents();
         labelNomeLogin.setText("Logado com "+login);
-        //labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\Logo.png"));
+        labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
+        //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
     }
     
     /**
@@ -42,9 +43,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         painelTopo = new javax.swing.JPanel();
         labelLogoEmpresa = new javax.swing.JLabel();
-        labelLogoSistema = new javax.swing.JLabel();
         botaoSair = new javax.swing.JButton();
         labelNomeLogin = new javax.swing.JLabel();
+        labelLogoSistema = new javax.swing.JLabel();
         abas = new javax.swing.JTabbedPane();
         painelClientes = new javax.swing.JPanel();
         botaoNovoCliente = new javax.swing.JButton();
@@ -123,11 +124,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         setSize(new java.awt.Dimension(1366, 768));
 
         labelLogoEmpresa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        labelLogoEmpresa.setText("TERNI VELUCCI");
 
-        labelLogoSistema.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        labelLogoSistema.setText("hype!");
-
+        botaoSair.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         botaoSair.setText("Sair");
         botaoSair.setToolTipText("Sair do sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -145,24 +143,27 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(labelLogoEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNomeLogin)
-                    .addGroup(painelTopoLayout.createSequentialGroup()
-                        .addComponent(labelLogoSistema)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoSair)))
-                .addGap(22, 22, 22))
+                .addComponent(labelLogoSistema)
+                .addGap(11, 11, 11)
+                .addComponent(botaoSair)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelNomeLogin)
+                .addGap(91, 91, 91))
         );
         painelTopoLayout.setVerticalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
-                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelLogoSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoSair))
-                .addGap(5, 5, 5)
+            .addGroup(painelTopoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(botaoSair)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelNomeLogin))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
+                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelLogoSistema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(8, 8, 8))
         );
 
         abas.setBackground(new java.awt.Color(255, 255, 255));
@@ -366,7 +367,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         abas.addTab("  Produtos  ", painelProdutos);
@@ -573,7 +574,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         abas.addTab("  Locações  ", painelLocacoes);
@@ -767,7 +768,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoGerarRelatorio)
                     .addComponent(botaoFecharCaixa))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
 
         abas.addTab("Relatório e Caixa", painelCaixaERelatorios);
@@ -863,7 +864,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(campoDiretorioContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoProcurarDiretorioContratos)
                     .addComponent(botaoSalvarDiretorioContratos))
-                .addContainerGap(448, Short.MAX_VALUE))
+                .addContainerGap(466, Short.MAX_VALUE))
         );
 
         abas.addTab("Configuração", painelConfiguracoes);
@@ -966,7 +967,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         abas.addTab("Administrador", painelAdministrador);
@@ -987,8 +988,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -996,23 +997,33 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoClienteActionPerformed
-        JOptionPane.showInputDialog("Cadastrar Cliente");
+        Dialog dialog = new CadastrarClienteDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoClienteActionPerformed
 
     private void botaoNovoFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoFornecedorActionPerformed
-        // TODO add your handling code here:
+        Dialog dialog = new CadastrarFornecedorDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoFornecedorActionPerformed
 
     private void botaoNovoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoProdutoActionPerformed
-        // TODO add your handling code here:
+        Dialog dialog = new CadastrarProdutoDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoProdutoActionPerformed
 
     private void botaoNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaVendaActionPerformed
-        // TODO add your handling code here:
+        Dialog dialog = new RealizarVendaDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
 
     private void botaoNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaLocacaoActionPerformed
-        // TODO add your handling code here:
+        Dialog dialog = new RealizarLocacaoDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
 
     private void botaoLocacoesAtrasadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLocacoesAtrasadasActionPerformed
@@ -1032,7 +1043,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
 
     private void botaoNovoAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoAdmActionPerformed
-        // TODO add your handling code here:
+        Dialog dialog = new CadastrarAdministradorDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoAdmActionPerformed
 
     private void botaoSalvarDiretorioContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioContratosActionPerformed

@@ -226,7 +226,7 @@ public class GerenciadorDePessoas {
                 return a;
             }
         }
-        throw new AdministradorInexistenteException("Administrador não cadastrado no sistema. \nInforme os dados novamente.");
+        throw new AdministradorInexistenteException("Administrador não cadastrado no sistema. \n\nInforme os dados novamente.");
     }
 
     public void carregarPessoas() {
