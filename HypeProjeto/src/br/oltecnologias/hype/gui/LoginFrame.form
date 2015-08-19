@@ -203,7 +203,7 @@
               <Font name="Calisto MT" size="36" style="0"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="D:\Projeto\C&#xf3;digo\Hype\HypeProjeto\Imagens\Logo.png"/>
+              <Image iconType="2" name="D:\Projeto\C&#xf3;digo\Hype\HypeProjeto\src\Imagens\Logo.png"/>
             </Property>
           </Properties>
         </Component>
