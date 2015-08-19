@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,12 +15,22 @@ import javax.swing.JOptionPane;
 public class PrincipalFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form PrincipalFrame
+     * Contrutor vazio da frame
      */
     public PrincipalFrame() {
         initComponents();
     }
-
+    
+    /**
+     * Creates new form PrincipalFrame
+     * @param login
+     */
+    public PrincipalFrame(String login) {
+        initComponents();
+        labelNomeLogin.setText("Logado com "+login);
+        //labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\Logo.png"));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,6 +44,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         labelLogoEmpresa = new javax.swing.JLabel();
         labelLogoSistema = new javax.swing.JLabel();
         botaoSair = new javax.swing.JButton();
+        labelNomeLogin = new javax.swing.JLabel();
         abas = new javax.swing.JTabbedPane();
         painelClientes = new javax.swing.JPanel();
         botaoNovoCliente = new javax.swing.JButton();
@@ -102,6 +114,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaAdm = new javax.swing.JTable();
         labelOrdenarAdm = new javax.swing.JLabel();
         comboBoxAdm = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
@@ -118,29 +131,38 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSair.setText("Sair");
         botaoSair.setToolTipText("Sair do sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelTopoLayout = new javax.swing.GroupLayout(painelTopo);
         painelTopo.setLayout(painelTopoLayout);
         painelTopoLayout.setHorizontalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelTopoLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addComponent(labelLogoEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelLogoSistema)
-                .addGap(18, 18, 18)
-                .addComponent(botaoSair)
+                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelNomeLogin)
+                    .addGroup(painelTopoLayout.createSequentialGroup()
+                        .addComponent(labelLogoSistema)
+                        .addGap(18, 18, 18)
+                        .addComponent(botaoSair)))
                 .addGap(22, 22, 22))
         );
         painelTopoLayout.setVerticalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelLogoSistema, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoSair))
-                .addGap(19, 19, 19))
+                .addGap(5, 5, 5)
+                .addComponent(labelNomeLogin))
         );
 
         abas.setBackground(new java.awt.Color(255, 255, 255));
@@ -895,6 +917,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxAdm.setToolTipText("Selecionar tipo de ordenação");
         comboBoxAdm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setText("Novo Funcionário");
+        jButton1.setToolTipText("Criar um novo funcionário");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
         javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
         painelAdministrador.setLayout(painelAdministradorLayout);
         painelAdministradorLayout.setHorizontalGroup(
@@ -902,7 +929,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelAdministradorLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoAdm)
+                    .addGroup(painelAdministradorLayout.createSequentialGroup()
+                        .addComponent(botaoNovoAdm)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
                     .addGroup(painelAdministradorLayout.createSequentialGroup()
                         .addComponent(campoPesquisarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -918,7 +948,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
             painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelAdministradorLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(botaoNovoAdm)
+                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoNovoAdm)
+                    .addComponent(jButton1))
                 .addGap(50, 50, 50)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -949,7 +981,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1009,6 +1041,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoPesquisarCliente.setForeground(new java.awt.Color(0, 0, 0));
         }
     }//GEN-LAST:event_campoPesquisarClienteMouseClicked
+
+    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
+        setVisible(false);
+        new LoginFrame().setVisible(true);  
+    }//GEN-LAST:event_botaoSairActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1084,6 +1121,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxOrdenarFornecedores;
     private javax.swing.JComboBox comboBoxOrdenarFornecedores1;
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioContratos;
     private javax.swing.JLabel labelFiltrarFornecedores;
@@ -1092,6 +1130,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelFiltrarProdutos;
     private javax.swing.JLabel labelLogoEmpresa;
     private javax.swing.JLabel labelLogoSistema;
+    private javax.swing.JLabel labelNomeLogin;
     private javax.swing.JLabel labelOrdenar;
     private javax.swing.JLabel labelOrdenar1;
     private javax.swing.JLabel labelOrdenarAdm;

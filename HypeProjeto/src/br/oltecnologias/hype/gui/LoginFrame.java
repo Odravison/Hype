@@ -20,6 +20,8 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
+        ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Logo.png");
+        setIconImage(imagemTituloJanela.getImage());
     }
 
     /**
@@ -54,19 +56,23 @@ public class LoginFrame extends javax.swing.JFrame {
         painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
         painelDeLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelDeLogin.setName("hype!\n"); // NOI18N
+        painelDeLogin.setPreferredSize(new java.awt.Dimension(420, 350));
 
         labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelUsuario.setText("Login:");
 
         campoNomeUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNomeUsuario.setToolTipText("Informe o seu login");
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelSenha.setText("Senha:");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoSenha.setToolTipText("Informe a sua senha");
 
         botaoEntrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoEntrar.setText("Entrar");
+        botaoEntrar.setToolTipText("Acessar sistema");
         botaoEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,18 +84,19 @@ public class LoginFrame extends javax.swing.JFrame {
         painelDeLogin.setLayout(painelDeLoginLayout);
         painelDeLoginLayout.setHorizontalGroup(
             painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDeLoginLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDeLoginLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(labelUsuario)
                     .addComponent(labelSenha))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoEntrar)
-                    .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(campoSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                        .addComponent(campoNomeUsuario, javax.swing.GroupLayout.Alignment.LEADING)))
-                .addContainerGap(40, Short.MAX_VALUE))
+                    .addComponent(campoSenha)
+                    .addGroup(painelDeLoginLayout.createSequentialGroup()
+                        .addGap(0, 160, Short.MAX_VALUE)
+                        .addComponent(botaoEntrar))
+                    .addComponent(campoNomeUsuario))
+                .addGap(65, 65, 65))
         );
         painelDeLoginLayout.setVerticalGroup(
             painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,46 +109,46 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSenha))
-                .addGap(46, 46, 46)
+                .addGap(63, 63, 63)
                 .addComponent(botaoEntrar)
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addGap(91, 91, 91))
         );
 
         labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
-        labelLogo.setText("hype!");
+        labelLogo.setIcon(new javax.swing.ImageIcon("D:\\Projeto\\Código\\Hype\\HypeProjeto\\Imagens\\Logo.png")); // NOI18N
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addContainerGap(491, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(491, Short.MAX_VALUE))
-            .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(620, 620, 620)
-                .addComponent(labelLogo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(painelGeralLayout.createSequentialGroup()
+                .addGap(546, 546, 546)
+                .addComponent(labelLogo)
+                .addGap(546, 590, Short.MAX_VALUE))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(74, 74, 74)
                 .addComponent(labelLogo)
-                .addGap(76, 76, 76)
+                .addGap(52, 52, 52)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(191, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 1322, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 711, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -149,17 +156,15 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
         try {
-            URL url = this.getClass().getResource("Atenção.gif");
-            Image imagem = Toolkit.getDefaultToolkit().getImage(url);
             // validar administrador no sistema
             if(GerenciadorDePessoas.getInstance().validarAdministrador(campoNomeUsuario.getText(), new String (campoSenha.getPassword()))){
                 new PrincipalFrame(campoNomeUsuario.getText()).setVisible(true);
                 setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Administrador não cadastrado no sistemaaaaa. \nInforme os dados novamente.", null, WIDTH, new ImageIcon(imagem));
+                JOptionPane.showMessageDialog(null, "Administrador não cadastrado no sistema. \nInforme os dados novamente.", null, WIDTH, new ImageIcon("Imagens\\Atenção.gif"));
             }
         } catch (AdministradorInexistenteException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), null, WIDTH, new ImageIcon("Atenção.gif"));
+            JOptionPane.showMessageDialog(null, e.getMessage(), null, WIDTH, new ImageIcon("Imagens\\Atenção.gif"));
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 

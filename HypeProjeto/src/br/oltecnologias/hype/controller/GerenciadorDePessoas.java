@@ -209,6 +209,25 @@ public class GerenciadorDePessoas {
         }
         throw new FornecedorInexistenteException("Fornecedor não encontrado.");
     }
+    
+    public boolean validarAdministrador(String login, String senha)  throws AdministradorInexistenteException{
+        if(this.pesquisarAdministradorPeloLogin(login).getSenha().equals(senha)) {
+            return true;
+        }     
+        return false;
+    }
+    
+    // Deve servir para funcionários também
+    public Administrador pesquisarAdministradorPeloLogin(String login) throws AdministradorInexistenteException{
+        this.administradores.add(new Administrador("Luender Lima","luender","1234"));
+        this.administradores.add(new Administrador("Odravison Amaral","odravison","1234"));
+        for(Administrador a: this.administradores) {
+            if(a.getNickName().equals(login)) {
+                return a;
+            }
+        }
+        throw new AdministradorInexistenteException("Administrador não cadastrado no sistema. \nInforme os dados novamente.");
+    }
 
     public void carregarPessoas() {
         // Método sera implementado quando houver bando de dados.

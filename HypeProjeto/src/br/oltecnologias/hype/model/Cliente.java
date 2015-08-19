@@ -14,7 +14,6 @@ public class Cliente extends Pessoa {
     private String cpf;
     
     @Column(name="ULTMED_CLIENTE", nullable = true)
-    @Temporal(Calendar)
     private Calendar ultimaMedicao;
     private Endereco endereco;
     private Medidas medidas;
