@@ -1,7 +1,8 @@
 package br.oltecnologias.hype.model;
 
 public class Medidas {
-
+    
+    private String id;
     private int calca;
     private int traje;
     private int colete;
@@ -87,8 +88,13 @@ public class Medidas {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
-    
-    
-        
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }        
 
 }

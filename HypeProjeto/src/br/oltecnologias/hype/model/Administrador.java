@@ -1,24 +1,16 @@
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity(name="ADMINISTRADOR")
-public class Administrador extends Pessoa {
+public class Administrador extends Pessoa implements Serializable {
     
-    @Id
-    @Column(name="ID_ADMINISTRADOR")
-    @GeneratedValue
-    private int id;
-    
-    @Column(name="ADM_SENHA", nullable = false, columnDefinition = "VARCHAR(10)",
-            length = 10)
     private String senha;
-    
-    @Column(name="ADM_NICKNAME", nullable = false, columnDefinition = "VARCHAR(12)",
-            length = 12)
+    @Id
     private String nickName;
 
     public Administrador(String nome, String nickName, String senha) {
@@ -47,13 +39,5 @@ public class Administrador extends Pessoa {
 
     public String getNickName() {
         return nickName;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }
