@@ -1,9 +1,15 @@
 package br.oltecnologias.hype;
 
+import br.oltecnologias.hype.dao.ClienteJpaController;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Endereco;
+import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -30,7 +36,19 @@ public class Aplicacao {
         Medidas medidas = new Medidas(10,10,10,10,10,10,"obs");
         
         
-        Cliente cliente = new Cliente();
+        Cliente cliente = new Cliente("1234566", end, medidas, "123456", telefones);
+        
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hypepu");
+        
+        ClienteJpaController cjp = new ClienteJpaController(emf);
+        
+        try {
+            cjp.create(cliente);
+            System.out.println(cjp.findCliente("1234566").getNome());
+        } catch (Exception ex) {
+            Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Funcionou :D");
         
     }
     
