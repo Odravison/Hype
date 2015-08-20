@@ -9,6 +9,11 @@ public class Venda implements Serializable {
     private List<ProdutoDeVenda> produtos;
     private float valor;
 
+    /**
+     *
+     * @param produtos
+     * @param valor
+     */
     public Venda(List<ProdutoDeVenda> produtos, float valor) {
         this.produtos = produtos;
         this.valor = valor;
