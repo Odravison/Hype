@@ -13,6 +13,7 @@ public class Medidas implements Serializable {
     @Id
     @GeneratedValue
     private int id;
+    
     private int calca;
     private int traje;
     private int colete;
