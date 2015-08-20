@@ -2,13 +2,9 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-@Entity(name = "VENDA")
 public class Venda implements Serializable {
     
-    @Id
     private int id;
     private List<ProdutoDeVenda> produtos;
     private float valor;

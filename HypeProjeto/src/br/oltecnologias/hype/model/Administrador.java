@@ -6,11 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name="ADMINISTRADOR")
 public class Administrador extends Pessoa implements Serializable {
     
     private String senha;
-    @Id
     private String nickName;
 
     public Administrador(String nome, String nickName, String senha) {

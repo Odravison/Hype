@@ -4,21 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
-@Entity
 public class Cliente extends Pessoa implements Serializable {
 
-    @Id
     private String cpf;
-    @Temporal(TemporalType.DATE)
     private Calendar ultimaMedicao;
-    
-    
     private Endereco endereco;
     private Medidas medidas;
     private String rg;
