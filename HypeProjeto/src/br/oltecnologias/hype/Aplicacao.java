@@ -33,7 +33,8 @@ public class Aplicacao {
 //        List<String> telefones = new ArrayList<String>();
 //        telefones.add(telefone1);
 //        telefones.add(telefone2);
-        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, "obs");
+        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, "obs1");
+        Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, "obs2");
 
 //        Cliente cliente = new Cliente("1234566", end, medidas, "123456", telefones);
 //        
@@ -51,12 +52,17 @@ public class Aplicacao {
         MedidasJpaController ctM = new MedidasJpaController(emf);
 
         try {
+            ctM.create(medidas);
+            ctM.create(medidas2);
+            
             for (Medidas med : ctM.findMedidasEntities()) {
                 System.out.println(med.getObservacao());
             }
         }catch(Exception e){
             Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, e);
         }
+        
+        emf.close();
 
         System.out.println("Funcionou :D");
 

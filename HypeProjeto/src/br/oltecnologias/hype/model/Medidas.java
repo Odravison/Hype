@@ -31,6 +31,10 @@ public class Medidas implements Serializable {
         this.sapato = sapato;
         this.observacao = observacao;
     }
+    
+    public Medidas(){
+        
+    }
 
     @Override
     public String toString() {

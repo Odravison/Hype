@@ -40,7 +40,11 @@ public class MedidasJpaController implements Serializable {
             em.getTransaction().commit();
         } finally {
             if (em != null) {
+                System.out.println(em.isOpen());
                 em.close();
+                System.out.println(em.isOpen());
+                System.out.println(emf.isOpen());
+                
             }
         }
     }
