@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-  <persistence-unit name="HypeProjetoPU" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="hypepu" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>br.oltecnologias.hype.model.Medidas</class>
+    <class>br.oltecnologias.hype.model.Administrador</class>
+    <class>br.oltecnologias.hype.model.Cliente</class>
+    <class>br.oltecnologias.hype.model.Contrato</class>
+    <class>br.oltecnologias.hype.model.Despesa</class>
+    <class>br.oltecnologias.hype.model.Empregado</class>
+    <class>br.oltecnologias.hype.model.Empresa</class>
+    <class>br.oltecnologias.hype.model.Endereco</class>
+    <class>br.oltecnologias.hype.model.Fornecedor</class>
+    <class>br.oltecnologias.hype.model.Locacao</class>
+    <class>br.oltecnologias.hype.model.Produto</class>
+    <class>br.oltecnologias.hype.model.Venda</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:C:\Projeto\HypeProjeto\HypeProjeto\banco\database"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:C:\Projeto\HypeProjeto\HypeProjeto\banco\database; shutdown=true"/>
       <property name="javax.persistence.jdbc.user" value="odravison"/>
       <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>
       <property name="javax.persistence.jdbc.password" value="odra"/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-      <property name="javax.persistence.schema-generation.database.action" value="create"/>
+      <!-- <property name="javax.persistence.schema-generation.database.action" value="create"/> -->
+      <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -1,17 +1,17 @@
 package br.oltecnologias.hype.model;
 
-import java.io.Serializable;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name="ADMINISTRADOR")
-public class Administrador extends Pessoa implements Serializable {
+@Entity
+public class Administrador extends Pessoa {
     
-    private String senha;
     @Id
     private String nickName;
+    private String senha;
+
+    public Administrador() {
+    }
 
     public Administrador(String nome, String nickName, String senha) {
         super(nome);

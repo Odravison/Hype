@@ -1,14 +1,28 @@
 package br.oltecnologias.hype.model;
 
-public abstract class Produto {
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="PRODUTO")
+public abstract class Produto implements Serializable {
+
+    @Id
     private String codigo;
     private String nome;
     private String descricao;
     private float valor;
     private int quant;
+    
+    @Column(name="FORNECEDOR", nullable=true)
     private String forcenedor;
     private String cor;
+
+    public Produto() {
+    }
 
     public Produto(String nome, String descricao, float valor, int quant, String forcenedor, String cor) {
         this.nome = nome;

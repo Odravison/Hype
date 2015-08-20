@@ -1,18 +1,30 @@
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-public class Empresa {
+@Entity
+public class Empresa implements Serializable {
 
+    @Id
     private String cnpj;
     private String nome;
-    private List<String> telefones;
+    private String telefone;
+    
+    @OneToOne
     private Endereco endereco;
 
-    public Empresa(String cnpj, String nome, List<String> telefones, Endereco endereco) {
+    public Empresa() {
+    }
+
+    public Empresa(String cnpj, String nome, String telefone, Endereco endereco) {
         this.cnpj = cnpj;
         this.nome = nome;
-        this.telefones = telefones;
+        this.telefone = telefone;
         this.endereco = endereco;
     }
 
@@ -32,13 +44,15 @@ public class Empresa {
         this.nome = nome;
     }
 
-    public List<String> getTelefones() {
-        return telefones;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefones(List<String> telefones) {
-        this.telefones = telefones;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
+
+   
 
     public Endereco getEndereco() {
         return endereco;
@@ -47,21 +61,4 @@ public class Empresa {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
-        
-    public String telefoneToStringEmLista(){
-        String lista = "";
-        for (String s: this.telefones){
-                    lista += s + "\n";
-                }
-        return lista;
-    }
-    
-    public String telefoneToString(){
-        String lista = "";
-        for (String s: this.telefones){
-                    lista += s + ", ";
-        }
-        return lista;
-    }
-
 }

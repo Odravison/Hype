@@ -38,18 +38,19 @@ public class GerenciadorDePessoas {
         return singleton;
     }
 
-    public void cadastrarCliiente(String cpf, Endereco endereco, Medidas medidas,
-            String rg, List<String> telefones) throws ClienteExistenteException {
+    public void cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
+            String rg, String telefone, String celular) throws ClienteExistenteException {
         for (Cliente c : this.clientes) {
             if (c.getCpf().equals(cpf)) {
                 throw new ClienteExistenteException("CPF já cadastrado.");
             }
         }
-        Cliente cliente = new Cliente(cpf, endereco, medidas, rg, telefones);
+        Cliente cliente = new Cliente(cpf, nome, endereco, medidas, rg, telefone, celular);
         this.clientes.add(cliente);
     }
 
-    public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, Medidas medidas, String rg, List<String> telefones)
+    public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, 
+            Medidas medidas, String rg, String telefone, String celular)
             throws ClienteInexistenteException, ClienteExistenteException {
         try {
             pesquisarCliente(cpfAntigo);
@@ -60,7 +61,8 @@ public class GerenciadorDePessoas {
             alteracao.setEndereco(endereco);
             alteracao.setMedidas(medidas);
             alteracao.setRg(rg);
-            alteracao.setTelefones(telefones);
+            alteracao.setTelefone(telefone);
+            alteracao.setCelular(celular);
         }
 
     }

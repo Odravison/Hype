@@ -5,12 +5,17 @@
  */
 package br.oltecnologias.hype.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 /**
  *
  * @author Odravison
  */
+@Entity
 public class Empregado extends Pessoa {
     
+    @Id
     private String nickName;
     private String senha;
     

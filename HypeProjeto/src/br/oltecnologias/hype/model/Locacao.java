@@ -1,17 +1,38 @@
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Calendar;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
-public class Locacao {
-
+@Entity
+public class Locacao implements Serializable {
+    
+    @Id
     private int id;
+    
+    @OneToOne
     private Cliente cliente;
+    
+    @OneToMany
     private List<ProdutoDeLocacao> produtos;
     private float valor;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataLocacao;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataDevolucao;
+    
+    @OneToOne
     private Contrato contrato;
+
+    public Locacao() {
+    }
 
     public Locacao(Cliente cliente, List<ProdutoDeLocacao> produtos, float valor, Calendar dataLocacao) {
         this.cliente = cliente;

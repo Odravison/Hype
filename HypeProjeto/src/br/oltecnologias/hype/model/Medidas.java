@@ -1,8 +1,19 @@
 package br.oltecnologias.hype.model;
 
-public class Medidas {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="MEDIDAS")
+public class Medidas implements Serializable {
     
-    private String id;
+    @Id
+    @GeneratedValue
+    private int id;
+    
     private int calca;
     private int traje;
     private int colete;
@@ -10,8 +21,9 @@ public class Medidas {
     private int gravata;
     private int sapato;
     private String observacao;
+    private int blazer;
 
-    public Medidas(int calca, int traje, int colete, int camisa, int gravata, int sapato, String observacao) {
+    public Medidas(int calca, int traje, int colete, int camisa, int gravata, int sapato, int blazer, String observacao) {
         this.calca = calca;
         this.traje = traje;
         this.colete = colete;
@@ -19,6 +31,11 @@ public class Medidas {
         this.gravata = gravata;
         this.sapato = sapato;
         this.observacao = observacao;
+        this.blazer = blazer;
+    }
+    
+    public Medidas(){
+        
     }
 
     @Override
@@ -89,12 +106,22 @@ public class Medidas {
         this.observacao = observacao;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
-    }        
+    }
+
+    public int getBlazer() {
+        return blazer;
+    }
+
+    public void setBlazer(int blazer) {
+        this.blazer = blazer;
+    }
+    
+    
 
 }

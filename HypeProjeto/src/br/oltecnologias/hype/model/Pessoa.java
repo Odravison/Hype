@@ -1,8 +1,12 @@
 package br.oltecnologias.hype.model;
 
-public abstract class Pessoa {
+import java.io.Serializable;
+import javax.persistence.MappedSuperclass;
 
-	private String nome;
+@MappedSuperclass
+public abstract class Pessoa implements Serializable {
+        
+        private String nome;
         
         public Pessoa(String nome){
             this.nome = nome;

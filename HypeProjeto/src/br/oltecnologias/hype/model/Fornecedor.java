@@ -1,11 +1,18 @@
 package br.oltecnologias.hype.model;
 
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class Fornecedor extends Pessoa {
-
+    
+    @Id
     private String cnpj;
     private Endereco endereco;
+    
+    @OneToMany
     private List<String> telefones;
     
     public Fornecedor(String cnpj, Endereco end, List<String> telefones, String nome){

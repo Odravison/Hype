@@ -1,14 +1,26 @@
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-public class Despesa {
+@Entity
+public class Despesa implements Serializable {
 
-	private int id;
-	private String nome;
-	private String observacao;
-	private Calendar data;
-        private float valor;
+    @Id
+    @GeneratedValue
+    private int id;
+    private String nome;
+    private String observacao;
+    
+    @Temporal(TemporalType.DATE)
+    private Calendar data;
+    
+    private float valor;
 
     public Despesa(String nome, String observacao, Calendar data, float valor) {
         this.nome = nome;
@@ -56,7 +68,5 @@ public class Despesa {
     public void setValor(float valor) {
         this.valor = valor;
     }
-        
-    
 
 }
