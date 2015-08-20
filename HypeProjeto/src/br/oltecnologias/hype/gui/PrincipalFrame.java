@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
  * @author Luender Lima
  */
 public class PrincipalFrame extends javax.swing.JFrame {
-
+    
     /**
      * Contrutor vazio da frame
      */
@@ -30,20 +30,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
      * @param login
      */
     public PrincipalFrame(String login) {
+        loginUsuario = login;
         initComponents();
+        
         labelNomeLogin.setText("Logado com " + login);
         labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
         //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
-        try {
+        /*try {
             System.out.println(GerenciadorDePessoas.getInstance().isAdministrador(login));
             if (!GerenciadorDePessoas.getInstance().isAdministrador(login)) {
-                painelUsuario.setVisible(false);
+                painelAdministrador.setVisible(false);
             }
-            System.out.println(painelUsuario.isVisible());
+            System.out.println(painelAdministrador.isVisible());
         } catch (UsuarioInexistenteException e) {
             setVisible(false);
             new LoginFrame().setVisible(true);
-        }
+        }*/
                
     }
     
@@ -123,7 +125,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoProcurarDiretorioContratos = new javax.swing.JButton();
         campoDiretorioContratos = new javax.swing.JTextField();
         labelDiretorioContratos = new javax.swing.JLabel();
-        painelUsuario = new javax.swing.JPanel();
+        painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
         botaoPesquisarUsuario = new javax.swing.JButton();
         campoPesquisarUsuario = new javax.swing.JTextField();
@@ -236,17 +238,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome do cliente", "Última locação", "Cadastrado em", "", ""
+                "Nome do cliente", "Última locação", "Cadastrado em", "Ver locações", "", ""
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -986,10 +988,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         abas.addTab("Configuração", painelConfiguracoes);
 
-        painelUsuario.setBackground(new java.awt.Color(255, 255, 255));
-        painelUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
+        painelAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelUsuarioMouseClicked(evt);
+                painelAdministradorMouseClicked(evt);
             }
         });
 
@@ -1055,36 +1057,36 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxUsuario.setToolTipText("Selecionar tipo de ordenação");
         comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        javax.swing.GroupLayout painelUsuarioLayout = new javax.swing.GroupLayout(painelUsuario);
-        painelUsuario.setLayout(painelUsuarioLayout);
-        painelUsuarioLayout.setHorizontalGroup(
-            painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelUsuarioLayout.createSequentialGroup()
+        javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
+        painelAdministrador.setLayout(painelAdministradorLayout);
+        painelAdministradorLayout.setHorizontalGroup(
+            painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelAdministradorLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoNovoUsuario)
-                    .addGroup(painelUsuarioLayout.createSequentialGroup()
+                    .addGroup(painelAdministradorLayout.createSequentialGroup()
                         .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botaoPesquisarUsuario))
                     .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelUsuarioLayout.createSequentialGroup()
+                    .addGroup(painelAdministradorLayout.createSequentialGroup()
                         .addComponent(labelOrdenarUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
-        painelUsuarioLayout.setVerticalGroup(
-            painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelUsuarioLayout.createSequentialGroup()
+        painelAdministradorLayout.setVerticalGroup(
+            painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelAdministradorLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(botaoNovoUsuario)
                 .addGap(50, 50, 50)
-                .addGroup(painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisarUsuario))
                 .addGap(40, 40, 40)
-                .addGroup(painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelOrdenarUsuario)
                     .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -1092,7 +1094,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        abas.addTab("Administrador", painelUsuario);
+        try {
+            if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
+
+                abas.addTab("Administrador", painelAdministrador);
+            }
+        } catch (UsuarioInexistenteException e) {
+            setVisible(false);
+            new LoginFrame().setVisible(true);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1119,7 +1129,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoClienteActionPerformed
-        Dialog dialog = new CadastrarCliDialog(new java.awt.Frame(), true);
+        Dialog dialog = new CadastrarClienteDialog(new java.awt.Frame(), true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoClienteActionPerformed
@@ -1318,11 +1328,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoPesquisarUsuarioKeyTyped
 
-    private void painelUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelUsuarioMouseClicked
+    private void painelAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelAdministradorMouseClicked
         if(campoPesquisarUsuario.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarUsuario, "Pesquisar Usuário");
         }
-    }//GEN-LAST:event_painelUsuarioMouseClicked
+    }//GEN-LAST:event_painelAdministradorMouseClicked
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -1370,7 +1380,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    private String loginUsuario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abas;
     private javax.swing.JButton botaoFecharCaixa;
@@ -1424,6 +1435,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelOrdenar1;
     private javax.swing.JLabel labelOrdenarUsuario;
     private javax.swing.JLabel labelValorCaixa;
+    private javax.swing.JPanel painelAdministrador;
     private javax.swing.JPanel painelCaixaERelatorios;
     private javax.swing.JPanel painelClientes;
     private javax.swing.JPanel painelConfiguracoes;
@@ -1431,7 +1443,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JPanel painelLocacoes;
     private javax.swing.JPanel painelProdutos;
     private javax.swing.JPanel painelTopo;
-    private javax.swing.JPanel painelUsuario;
     private javax.swing.JPanel painelVendas;
     private javax.swing.JScrollPane pnRlCaixaERelatorios;
     private javax.swing.JScrollPane pnRlCliente;

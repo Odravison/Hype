@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  *
  * @author Cliente
  */
-public class CadastrarCliDialog extends java.awt.Dialog {
+public class CadastrarClienteDialog extends java.awt.Dialog {
 
     /**
      * Creates new form CadastrarCliDialog
      */
-    public CadastrarCliDialog(java.awt.Frame parent, boolean modal) {
+    public CadastrarClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
@@ -461,7 +461,7 @@ public class CadastrarCliDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastrarCliDialog dialog = new CadastrarCliDialog(new java.awt.Frame(), true);
+                CadastrarClienteDialog dialog = new CadastrarClienteDialog(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
