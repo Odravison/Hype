@@ -21,8 +21,9 @@ public class Medidas implements Serializable {
     private int gravata;
     private int sapato;
     private String observacao;
+    private int blazer;
 
-    public Medidas(int calca, int traje, int colete, int camisa, int gravata, int sapato, String observacao) {
+    public Medidas(int calca, int traje, int colete, int camisa, int gravata, int sapato, int blazer, String observacao) {
         this.calca = calca;
         this.traje = traje;
         this.colete = colete;
@@ -30,6 +31,7 @@ public class Medidas implements Serializable {
         this.gravata = gravata;
         this.sapato = sapato;
         this.observacao = observacao;
+        this.blazer = blazer;
     }
     
     public Medidas(){
@@ -110,6 +112,16 @@ public class Medidas implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }        
+    }
+
+    public int getBlazer() {
+        return blazer;
+    }
+
+    public void setBlazer(int blazer) {
+        this.blazer = blazer;
+    }
+    
+    
 
 }
