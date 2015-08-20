@@ -64,9 +64,9 @@
                   <Component id="labelLogoEmpresa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="labelLogoSistema" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="botaoSair" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -77,18 +77,19 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="botaoSair" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="labelNomeLogin" min="-2" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="labelLogoSistema" max="32767" attributes="0"/>
                       <Component id="labelLogoEmpresa" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelNomeLogin" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoSair" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -201,7 +202,7 @@
                           <Component id="campoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -391,14 +392,14 @@
                           <Component id="campoPesquisarProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelFiltrarProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlProduto" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace pref="101" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -590,7 +591,7 @@
                           <Component id="campoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelFiltrarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -759,9 +760,9 @@
                           <Component id="pnRlFornecedores1" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="botaoNovaLocacao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoLocacoesAtrasadas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoLocacoesExtraviadas" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -788,14 +789,14 @@
                           <Component id="campoPesquisarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelFiltrarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlFornecedores1" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace pref="101" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1003,7 +1004,7 @@
                           <Component id="campoPesquisarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarFornecedor1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelOrdenar1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarCliente1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1163,26 +1164,29 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="937" pref="937" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlCaixaERelatorios" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="31" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="botaoGerarRelatorio" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoFecharCaixa" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="labelValorCaixa" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="campoValorCaixa" min="-2" pref="146" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pnRlCaixaERelatorios" min="-2" pref="1256" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="botaoGerarRelatorio" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="botaoFecharCaixa" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace pref="31" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -1193,10 +1197,11 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoGerarRelatorio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoFecharCaixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -1207,14 +1212,14 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="pnRlCaixaERelatorios" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="botaoGerarRelatorio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botaoFecharCaixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="124" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="pnRlCaixaERelatorios" min="-2" pref="359" max="-2" attributes="0"/>
+                      <EmptySpace pref="155" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1344,6 +1349,20 @@
                 </Property>
               </Properties>
             </Component>
+            <Component class="javax.swing.JButton" name="jButton2">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Registrar Despesa"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor em Forma de M&#xe3;o"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="painelConfiguracoes">
@@ -1374,19 +1393,19 @@
                               <Component id="campoDiretorioContratos" min="-2" pref="454" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="botaoProcurarDiretorioContratos" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoSalvarDiretorioContratos" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="campoDiretorioBackup" min="-2" pref="454" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="botaoProcurarDiretorioBackup" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoSalvarDiretorioBackup" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="labelDiretorioBackups" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="635" max="32767" attributes="0"/>
+                      <EmptySpace pref="647" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1571,14 +1590,14 @@
                           <Component id="campoPesquisarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelOrdenarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxAdm" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlAdministrador" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace pref="101" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1718,7 +1737,7 @@
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Novo Funcion&#xe1;rio"/>
-                <Property name="toolTipText" type="java.lang.String" value="Criar um novo funcion&#xe1;rio"/>
+                <Property name="toolTipText" type="java.lang.String" value="Criar novo funcion&#xe1;rio"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
