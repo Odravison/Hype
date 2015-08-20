@@ -31,20 +31,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
      */
     public PrincipalFrame(String login) {
         initComponents();
+        labelNomeLogin.setText("Logado com " + login);
+        labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
+        //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
         try {
             System.out.println(GerenciadorDePessoas.getInstance().isAdministrador(login));
-            if(!GerenciadorDePessoas.getInstance().isAdministrador(login)) {
-                painelAdministrador.setVisible(false);
+            if (!GerenciadorDePessoas.getInstance().isAdministrador(login)) {
+                painelUsuario.setVisible(false);
             }
-            System.out.println(painelAdministrador.isVisible());
-            labelNomeLogin.setText("Logado com "+login);
-            labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
-            //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
+            System.out.println(painelUsuario.isVisible());
         } catch (UsuarioInexistenteException e) {
             setVisible(false);
             new LoginFrame().setVisible(true);
         }
-                
+               
     }
     
     /**
@@ -123,14 +123,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoProcurarDiretorioContratos = new javax.swing.JButton();
         campoDiretorioContratos = new javax.swing.JTextField();
         labelDiretorioContratos = new javax.swing.JLabel();
-        painelAdministrador = new javax.swing.JPanel();
-        botaoNovoAdm = new javax.swing.JButton();
-        botaoPesquisarAdm = new javax.swing.JButton();
-        campoPesquisarAdm = new javax.swing.JTextField();
-        pnRlAdministrador = new javax.swing.JScrollPane();
-        tabelaAdm = new javax.swing.JTable();
-        labelOrdenarAdm = new javax.swing.JLabel();
-        comboBoxAdm = new javax.swing.JComboBox();
+        painelUsuario = new javax.swing.JPanel();
+        botaoNovoUsuario = new javax.swing.JButton();
+        botaoPesquisarUsuario = new javax.swing.JButton();
+        campoPesquisarUsuario = new javax.swing.JTextField();
+        pnRlUsuario = new javax.swing.JScrollPane();
+        tabelaUsuario = new javax.swing.JTable();
+        labelOrdenarUsuario = new javax.swing.JLabel();
+        comboBoxUsuario = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
@@ -408,6 +408,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("  Produtos  ", painelProdutos);
 
         painelFornecedores.setBackground(new java.awt.Color(255, 255, 255));
+        painelFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelFornecedoresMouseClicked(evt);
+            }
+        });
 
         botaoNovoFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoNovoFornecedor.setText("Novo Fornecedor");
@@ -429,6 +434,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarFornecedor.setText("Pesquisar Fornecedor");
         campoPesquisarFornecedor.setToolTipText("Informe o nome do fornecedor");
         campoPesquisarFornecedor.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoPesquisarFornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPesquisarFornecedorMouseClicked(evt);
+            }
+        });
+        campoPesquisarFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarFornecedorKeyTyped(evt);
+            }
+        });
 
         pnRlFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -503,6 +518,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("Fornecedores", painelFornecedores);
 
         painelLocacoes.setBackground(new java.awt.Color(255, 255, 255));
+        painelLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelLocacoesMouseClicked(evt);
+            }
+        });
 
         botaoNovaLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoNovaLocacao.setText("Nova Locação");
@@ -523,6 +543,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarLocacao.setText("Pesquisar Locação");
         campoPesquisarLocacao.setToolTipText("");
         campoPesquisarLocacao.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoPesquisarLocacao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPesquisarLocacaoMouseClicked(evt);
+            }
+        });
+        campoPesquisarLocacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarLocacaoKeyTyped(evt);
+            }
+        });
 
         botaoLocacoesAtrasadas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoLocacoesAtrasadas.setText("Ver locações Atrasadas");
@@ -615,6 +645,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("  Locações  ", painelLocacoes);
 
         painelVendas.setBackground(new java.awt.Color(255, 255, 255));
+        painelVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelVendasMouseClicked(evt);
+            }
+        });
 
         botaoNovaVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoNovaVenda.setText("Nova Venda");
@@ -634,6 +669,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarVenda.setForeground(new java.awt.Color(153, 153, 153));
         campoPesquisarVenda.setText("Pesquisar Venda");
         campoPesquisarVenda.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoPesquisarVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPesquisarVendaMouseClicked(evt);
+            }
+        });
+        campoPesquisarVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarVendaKeyTyped(evt);
+            }
+        });
 
         comboBoxOrdenarCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarCliente1.setMaximumRowCount(3);
@@ -822,6 +867,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         painelConfiguracoes.setBackground(new java.awt.Color(255, 255, 255));
         painelConfiguracoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        painelConfiguracoes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelConfiguracoesMouseClicked(evt);
+            }
+        });
 
         botaoSalvarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoSalvarDiretorioBackup.setText(" Salvar ");
@@ -843,6 +893,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoDiretorioBackup.setText("Caminho do diretório");
         campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
         campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoDiretorioBackupMouseClicked(evt);
+            }
+        });
+        campoDiretorioBackup.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoDiretorioBackupKeyTyped(evt);
+            }
+        });
 
         labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDiretorioBackups.setText("Diretório de backups");
@@ -867,6 +927,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoDiretorioContratos.setText("Caminho do diretório");
         campoDiretorioContratos.setToolTipText("Informe o caminho do diretório");
         campoDiretorioContratos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoDiretorioContratos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoDiretorioContratosMouseClicked(evt);
+            }
+        });
+        campoDiretorioContratos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoDiretorioContratosKeyTyped(evt);
+            }
+        });
 
         labelDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDiretorioContratos.setText("Diretório de Contratos");
@@ -916,32 +986,47 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         abas.addTab("Configuração", painelConfiguracoes);
 
-        painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
-
-        botaoNovoAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovoAdm.setText("Novo Usuário");
-        botaoNovoAdm.setToolTipText("Criar novo administrador");
-        botaoNovoAdm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoNovoAdm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoNovoAdmActionPerformed(evt);
+        painelUsuario.setBackground(new java.awt.Color(255, 255, 255));
+        painelUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelUsuarioMouseClicked(evt);
             }
         });
 
-        botaoPesquisarAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoPesquisarAdm.setText("Pesquisar");
-        botaoPesquisarAdm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoNovoUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoNovoUsuario.setText("Novo Usuário");
+        botaoNovoUsuario.setToolTipText("Criar novo usuário");
+        botaoNovoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoNovoUsuarioActionPerformed(evt);
+            }
+        });
 
-        campoPesquisarAdm.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoPesquisarAdm.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarAdm.setText("Pesquisar Usuário");
-        campoPesquisarAdm.setToolTipText("Informe o nome do administrador");
-        campoPesquisarAdm.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoPesquisarUsuario.setText("Pesquisar");
+        botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        pnRlAdministrador.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        campoPesquisarUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        campoPesquisarUsuario.setText("Pesquisar Usuário");
+        campoPesquisarUsuario.setToolTipText("Informe o nome do administrador");
+        campoPesquisarUsuario.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoPesquisarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPesquisarUsuarioMouseClicked(evt);
+            }
+        });
+        campoPesquisarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarUsuarioKeyTyped(evt);
+            }
+        });
 
-        tabelaAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaAdm.setModel(new javax.swing.table.DefaultTableModel(
+        pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        tabelaUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -960,54 +1045,54 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        pnRlAdministrador.setViewportView(tabelaAdm);
+        pnRlUsuario.setViewportView(tabelaUsuario);
 
-        labelOrdenarAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelOrdenarAdm.setText("Filtrar por:");
+        labelOrdenarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelOrdenarUsuario.setText("Filtrar por:");
 
-        comboBoxAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxAdm.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
-        comboBoxAdm.setToolTipText("Selecionar tipo de ordenação");
-        comboBoxAdm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        comboBoxUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        comboBoxUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
+        comboBoxUsuario.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
-        painelAdministrador.setLayout(painelAdministradorLayout);
-        painelAdministradorLayout.setHorizontalGroup(
-            painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAdministradorLayout.createSequentialGroup()
+        javax.swing.GroupLayout painelUsuarioLayout = new javax.swing.GroupLayout(painelUsuario);
+        painelUsuario.setLayout(painelUsuarioLayout);
+        painelUsuarioLayout.setHorizontalGroup(
+            painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelUsuarioLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoAdm)
-                    .addGroup(painelAdministradorLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoNovoUsuario)
+                    .addGroup(painelUsuarioLayout.createSequentialGroup()
+                        .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarAdm))
-                    .addComponent(pnRlAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelAdministradorLayout.createSequentialGroup()
-                        .addComponent(labelOrdenarAdm)
+                        .addComponent(botaoPesquisarUsuario))
+                    .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelUsuarioLayout.createSequentialGroup()
+                        .addComponent(labelOrdenarUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
-        painelAdministradorLayout.setVerticalGroup(
-            painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAdministradorLayout.createSequentialGroup()
+        painelUsuarioLayout.setVerticalGroup(
+            painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelUsuarioLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(botaoNovoAdm)
+                .addComponent(botaoNovoUsuario)
                 .addGap(50, 50, 50)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisarAdm))
+                .addGroup(painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoPesquisarUsuario))
                 .addGap(40, 40, 40)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelOrdenarAdm)
-                    .addComponent(comboBoxAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelOrdenarUsuario)
+                    .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(pnRlAdministrador, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(97, Short.MAX_VALUE))
         );
 
-        abas.addTab("Administrador", painelAdministrador);
+        abas.addTab("Administrador", painelUsuario);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1079,11 +1164,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
 
-    private void botaoNovoAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoAdmActionPerformed
+    private void botaoNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoUsuarioActionPerformed
         Dialog dialog = new CadastrarAdministradorDialog(new java.awt.Frame(), true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
-    }//GEN-LAST:event_botaoNovoAdmActionPerformed
+    }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
 
     private void botaoSalvarDiretorioContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioContratosActionPerformed
         // TODO add your handling code here:
@@ -1091,9 +1176,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void campoPesquisarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarClienteMouseClicked
         if(campoPesquisarCliente.getText().equals("Pesquisar Cliente")) {
-            campoPesquisarCliente.setText("");
-            campoPesquisarCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); 
-            campoPesquisarCliente.setForeground(new java.awt.Color(0, 0, 0));
+            eliminarTextoDeCampo(campoPesquisarCliente);
         }
     }//GEN-LAST:event_campoPesquisarClienteMouseClicked
 
@@ -1104,9 +1187,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void painelClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelClientesMouseClicked
         if(campoPesquisarCliente.getText().length() <= 0) {
-            campoPesquisarCliente.setText("Pesquisar Cliente");
-            campoPesquisarCliente.setForeground(new java.awt.Color(153, 153, 153));
-            campoPesquisarCliente.setFont(new java.awt.Font("Tahoma", 2, 14));
+            criarTextoEmCampo(campoPesquisarCliente, "Pesquisar Cliente");
         }
     }//GEN-LAST:event_painelClientesMouseClicked
 
@@ -1116,36 +1197,145 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void campoPesquisarProdutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoKeyTyped
         if(campoPesquisarProduto.getText().equals("Pesquisar Produto")) {
-            campoPesquisarProduto.setText("");
-            campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); 
-            campoPesquisarProduto.setForeground(new java.awt.Color(0, 0, 0));
+            eliminarTextoDeCampo(campoPesquisarProduto);
         }
     }//GEN-LAST:event_campoPesquisarProdutoKeyTyped
 
     private void campoPesquisarClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarClienteKeyTyped
         if(campoPesquisarCliente.getText().equals("Pesquisar Cliente")) {
-            campoPesquisarCliente.setText("");
-            campoPesquisarCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); 
-            campoPesquisarCliente.setForeground(new java.awt.Color(0, 0, 0));
+            eliminarTextoDeCampo(campoPesquisarCliente);
         }
     }//GEN-LAST:event_campoPesquisarClienteKeyTyped
 
     private void campoPesquisarProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoMouseClicked
-        if(campoPesquisarProduto.getText().equals("Pesquisar Cliente")) {
-            campoPesquisarProduto.setText("");
-            campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); 
-            campoPesquisarProduto.setForeground(new java.awt.Color(0, 0, 0));
+        if(campoPesquisarProduto.getText().equals("Pesquisar Produto")) {
+            eliminarTextoDeCampo(campoPesquisarProduto);
         }
     }//GEN-LAST:event_campoPesquisarProdutoMouseClicked
 
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
         if(campoPesquisarProduto.getText().length() <= 0) {
-            campoPesquisarProduto.setText("Pesquisar Cliente");
-            campoPesquisarProduto.setForeground(new java.awt.Color(153, 153, 153));
-            campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 2, 14));
+            criarTextoEmCampo(campoPesquisarProduto, "Pesquisar Produto");
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
 
+    private void campoPesquisarFornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarFornecedorMouseClicked
+        if(campoPesquisarFornecedor.getText().equals("Pesquisar Fornecedor")) {
+            eliminarTextoDeCampo(campoPesquisarFornecedor);
+        }
+    }//GEN-LAST:event_campoPesquisarFornecedorMouseClicked
+
+    private void campoPesquisarFornecedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarFornecedorKeyTyped
+        if(campoPesquisarFornecedor.getText().equals("Pesquisar Fornecedor")) {
+            eliminarTextoDeCampo(campoPesquisarFornecedor);
+        }
+    }//GEN-LAST:event_campoPesquisarFornecedorKeyTyped
+
+    private void painelFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelFornecedoresMouseClicked
+        if(campoPesquisarFornecedor.getText().length() <= 0) {
+            criarTextoEmCampo(campoPesquisarFornecedor, "Pesquisar Fornecedor");
+        }
+    }//GEN-LAST:event_painelFornecedoresMouseClicked
+
+    private void campoPesquisarLocacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarLocacaoMouseClicked
+        if(campoPesquisarLocacao.getText().equals("Pesquisar Locação")) {
+            eliminarTextoDeCampo(campoPesquisarLocacao);
+        }
+    }//GEN-LAST:event_campoPesquisarLocacaoMouseClicked
+
+    private void campoPesquisarLocacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarLocacaoKeyTyped
+        if(campoPesquisarLocacao.getText().equals("Pesquisar Locação")) {
+            eliminarTextoDeCampo(campoPesquisarLocacao);
+        }
+    }//GEN-LAST:event_campoPesquisarLocacaoKeyTyped
+
+    private void painelLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocacoesMouseClicked
+        if(campoPesquisarLocacao.getText().length() <= 0) {
+            criarTextoEmCampo(campoPesquisarLocacao, "Pesquisar Locação");
+        }
+    }//GEN-LAST:event_painelLocacoesMouseClicked
+
+    private void campoPesquisarVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarVendaMouseClicked
+        if(campoPesquisarVenda.getText().equals("Pesquisar Venda")) {
+            eliminarTextoDeCampo(campoPesquisarVenda);
+        }
+    }//GEN-LAST:event_campoPesquisarVendaMouseClicked
+
+    private void campoPesquisarVendaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarVendaKeyTyped
+        if(campoPesquisarVenda.getText().equals("Pesquisar Venda")) {
+            eliminarTextoDeCampo(campoPesquisarVenda);
+        }
+    }//GEN-LAST:event_campoPesquisarVendaKeyTyped
+
+    private void painelVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelVendasMouseClicked
+        if(campoPesquisarVenda.getText().length() <= 0) {
+            criarTextoEmCampo(campoPesquisarVenda, "Pesquisar Venda");
+        }
+    }//GEN-LAST:event_painelVendasMouseClicked
+
+    private void campoDiretorioBackupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioBackupMouseClicked
+        if(campoDiretorioBackup.getText().equals("Caminho do diretório")) {
+            eliminarTextoDeCampo(campoDiretorioBackup);
+        }
+    }//GEN-LAST:event_campoDiretorioBackupMouseClicked
+
+    private void campoDiretorioBackupKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioBackupKeyTyped
+        if(campoDiretorioBackup.getText().equals("Caminho do diretório")) {
+            eliminarTextoDeCampo(campoDiretorioBackup);
+        }
+    }//GEN-LAST:event_campoDiretorioBackupKeyTyped
+
+    private void campoDiretorioContratosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioContratosMouseClicked
+        if(campoDiretorioContratos.getText().equals("Caminho do diretório")) {
+            eliminarTextoDeCampo(campoDiretorioContratos);
+        }
+    }//GEN-LAST:event_campoDiretorioContratosMouseClicked
+
+    private void campoDiretorioContratosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioContratosKeyTyped
+        if(campoDiretorioContratos.getText().equals("Caminho do diretório")) {
+            eliminarTextoDeCampo(campoDiretorioContratos);
+        }
+    }//GEN-LAST:event_campoDiretorioContratosKeyTyped
+
+    private void painelConfiguracoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelConfiguracoesMouseClicked
+        if(campoDiretorioBackup.getText().length() <= 0) {
+            criarTextoEmCampo(campoDiretorioBackup, "Caminho do diretório");
+        }
+        if(campoDiretorioContratos.getText().length() <= 0) {
+            criarTextoEmCampo(campoDiretorioContratos, "Caminho do diretório");
+        }
+    }//GEN-LAST:event_painelConfiguracoesMouseClicked
+
+    private void campoPesquisarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarUsuarioMouseClicked
+        if(campoPesquisarUsuario.getText().equals("Pesquisar Usuário")) {
+            eliminarTextoDeCampo(campoPesquisarUsuario);
+        }
+    }//GEN-LAST:event_campoPesquisarUsuarioMouseClicked
+
+    private void campoPesquisarUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarUsuarioKeyTyped
+        if(campoPesquisarUsuario.getText().equals("Pesquisar Usuário")) {
+            eliminarTextoDeCampo(campoPesquisarUsuario);
+        }
+    }//GEN-LAST:event_campoPesquisarUsuarioKeyTyped
+
+    private void painelUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelUsuarioMouseClicked
+        if(campoPesquisarUsuario.getText().length() <= 0) {
+            criarTextoEmCampo(campoPesquisarUsuario, "Pesquisar Usuário");
+        }
+    }//GEN-LAST:event_painelUsuarioMouseClicked
+    
+    public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
+        campo.setText("");
+        campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        campo.setForeground(new java.awt.Color(0, 0, 0));
+    }
+    
+    public void criarTextoEmCampo(javax.swing.JTextField campo, String mensagem) {
+        campo.setText(mensagem);
+        campo.setForeground(new java.awt.Color(153, 153, 153));
+        campo.setFont(new java.awt.Font("Tahoma", 2, 14));
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1189,16 +1379,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoLocacoesExtraviadas;
     private javax.swing.JButton botaoNovaLocacao;
     private javax.swing.JButton botaoNovaVenda;
-    private javax.swing.JButton botaoNovoAdm;
     private javax.swing.JButton botaoNovoCliente;
     private javax.swing.JButton botaoNovoFornecedor;
     private javax.swing.JButton botaoNovoProduto;
-    private javax.swing.JButton botaoPesquisarAdm;
+    private javax.swing.JButton botaoNovoUsuario;
     private javax.swing.JButton botaoPesquisarCliente;
     private javax.swing.JButton botaoPesquisarFornecedor;
     private javax.swing.JButton botaoPesquisarFornecedor1;
     private javax.swing.JButton botaoPesquisarLocacao;
     private javax.swing.JButton botaoPesquisarProduto;
+    private javax.swing.JButton botaoPesquisarUsuario;
     private javax.swing.JButton botaoProcurarDiretorioBackup;
     private javax.swing.JButton botaoProcurarDiretorioContratos;
     private javax.swing.JButton botaoRegistrarDespesa;
@@ -1207,20 +1397,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoSalvarDiretorioContratos;
     private javax.swing.JTextField campoDiretorioBackup;
     private javax.swing.JTextField campoDiretorioContratos;
-    private javax.swing.JTextField campoPesquisarAdm;
     private javax.swing.JTextField campoPesquisarCliente;
     private javax.swing.JTextField campoPesquisarFornecedor;
     private javax.swing.JTextField campoPesquisarLocacao;
     private javax.swing.JTextField campoPesquisarProduto;
+    private javax.swing.JTextField campoPesquisarUsuario;
     private javax.swing.JTextField campoPesquisarVenda;
     private javax.swing.JTextField campoValorCaixa;
-    private javax.swing.JComboBox comboBoxAdm;
     private javax.swing.JComboBox comboBoxOrdenarCaixaEMovimentacao;
     private javax.swing.JComboBox comboBoxOrdenarCliente;
     private javax.swing.JComboBox comboBoxOrdenarCliente1;
     private javax.swing.JComboBox comboBoxOrdenarFornecedores;
     private javax.swing.JComboBox comboBoxOrdenarFornecedores1;
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
+    private javax.swing.JComboBox comboBoxUsuario;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioContratos;
     private javax.swing.JLabel labelFiltrarFornecedores;
@@ -1232,9 +1422,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelNomeLogin;
     private javax.swing.JLabel labelOrdenar;
     private javax.swing.JLabel labelOrdenar1;
-    private javax.swing.JLabel labelOrdenarAdm;
+    private javax.swing.JLabel labelOrdenarUsuario;
     private javax.swing.JLabel labelValorCaixa;
-    private javax.swing.JPanel painelAdministrador;
     private javax.swing.JPanel painelCaixaERelatorios;
     private javax.swing.JPanel painelClientes;
     private javax.swing.JPanel painelConfiguracoes;
@@ -1242,20 +1431,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JPanel painelLocacoes;
     private javax.swing.JPanel painelProdutos;
     private javax.swing.JPanel painelTopo;
+    private javax.swing.JPanel painelUsuario;
     private javax.swing.JPanel painelVendas;
-    private javax.swing.JScrollPane pnRlAdministrador;
     private javax.swing.JScrollPane pnRlCaixaERelatorios;
     private javax.swing.JScrollPane pnRlCliente;
     private javax.swing.JScrollPane pnRlCliente1;
     private javax.swing.JScrollPane pnRlFornecedores;
     private javax.swing.JScrollPane pnRlFornecedores1;
     private javax.swing.JScrollPane pnRlProduto;
-    private javax.swing.JTable tabelaAdm;
+    private javax.swing.JScrollPane pnRlUsuario;
     private javax.swing.JTable tabelaClientes;
     private javax.swing.JTable tabelaClientes1;
     private javax.swing.JTable tabelaFornecedores;
     private javax.swing.JTable tabelaFornecedores1;
     private javax.swing.JTable tabelaMovimentacao;
     private javax.swing.JTable tabelaProdutos;
+    private javax.swing.JTable tabelaUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -560,6 +560,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelFornecedoresMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Fornecedores">
@@ -655,6 +658,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarFornecedorMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarFornecedorKeyTyped"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="pnRlFornecedores">
               <Properties>
@@ -748,6 +755,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelLocacoesMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="  Loca&#xe7;&#xf5;es  ">
@@ -852,6 +862,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarLocacaoMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarLocacaoKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="botaoLocacoesAtrasadas">
               <Properties>
@@ -973,6 +987,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelVendasMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="   Vendas   ">
@@ -1066,6 +1083,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarVendaMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarVendaKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarCliente1">
               <Properties>
@@ -1384,6 +1405,9 @@
               <Color id="Cursor Padr&#xe3;o"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelConfiguracoesMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Configura&#xe7;&#xe3;o">
@@ -1485,6 +1509,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioBackupMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioBackupKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelDiretorioBackups">
               <Properties>
@@ -1535,6 +1563,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioContratosMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioContratosKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelDiretorioContratos">
               <Properties>
@@ -1546,12 +1578,15 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="painelAdministrador">
+        <Container class="javax.swing.JPanel" name="painelUsuario">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelUsuarioMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Administrador">
@@ -1566,17 +1601,17 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="botaoNovoAdm" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="botaoNovoUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="campoPesquisarAdm" min="-2" pref="454" max="-2" attributes="0"/>
+                              <Component id="campoPesquisarUsuario" min="-2" pref="454" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="botaoPesquisarAdm" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoPesquisarUsuario" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="pnRlAdministrador" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                          <Component id="pnRlUsuario" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelOrdenarAdm" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelOrdenarUsuario" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboBoxAdm" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxUsuario" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="31" max="32767" attributes="0"/>
@@ -1587,41 +1622,41 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="botaoNovoAdm" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="campoPesquisarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botaoPesquisarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botaoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelOrdenarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboBoxAdm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelOrdenarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="pnRlAdministrador" min="-2" pref="359" max="-2" attributes="0"/>
+                      <Component id="pnRlUsuario" min="-2" pref="359" max="-2" attributes="0"/>
                       <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="botaoNovoAdm">
+            <Component class="javax.swing.JButton" name="botaoNovoUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Novo Usu&#xe1;rio"/>
-                <Property name="toolTipText" type="java.lang.String" value="Criar novo administrador"/>
+                <Property name="toolTipText" type="java.lang.String" value="Criar novo usu&#xe1;rio"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoNovoAdmActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoNovoUsuarioActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="botaoPesquisarAdm">
+            <Component class="javax.swing.JButton" name="botaoPesquisarUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -1632,7 +1667,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campoPesquisarAdm">
+            <Component class="javax.swing.JTextField" name="campoPesquisarUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="2"/>
@@ -1646,8 +1681,12 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarUsuarioMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarUsuarioKeyTyped"/>
+              </Events>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="pnRlAdministrador">
+            <Container class="javax.swing.JScrollPane" name="pnRlUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -1659,7 +1698,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tabelaAdm">
+                <Component class="javax.swing.JTable" name="tabelaUsuario">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -1709,7 +1748,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="labelOrdenarAdm">
+            <Component class="javax.swing.JLabel" name="labelOrdenarUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -1717,7 +1756,7 @@
                 <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="comboBoxAdm">
+            <Component class="javax.swing.JComboBox" name="comboBoxUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
