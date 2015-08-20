@@ -5,7 +5,11 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import java.awt.Dialog;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -27,9 +31,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
      */
     public PrincipalFrame(String login) {
         initComponents();
-        labelNomeLogin.setText("Logado com "+login);
-        labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
-        //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
+        try {
+            System.out.println(GerenciadorDePessoas.getInstance().isAdministrador(login));
+            if(!GerenciadorDePessoas.getInstance().isAdministrador(login)) {
+                painelAdministrador.setVisible(false);
+            }
+            System.out.println(painelAdministrador.isVisible());
+            labelNomeLogin.setText("Logado com "+login);
+            labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
+            //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
+        } catch (UsuarioInexistenteException e) {
+            setVisible(false);
+            new LoginFrame().setVisible(true);
+        }
+                
     }
     
     /**
@@ -98,7 +113,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         labelValorCaixa = new javax.swing.JLabel();
         campoValorCaixa = new javax.swing.JTextField();
         comboBoxOrdenarCaixaEMovimentacao = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
+        botaoRegistrarDespesa = new javax.swing.JButton();
         painelConfiguracoes = new javax.swing.JPanel();
         botaoSalvarDiretorioBackup = new javax.swing.JButton();
         botaoProcurarDiretorioBackup = new javax.swing.JButton();
@@ -116,7 +131,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaAdm = new javax.swing.JTable();
         labelOrdenarAdm = new javax.swing.JLabel();
         comboBoxAdm = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
@@ -205,6 +219,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 campoPesquisarClienteMouseClicked(evt);
             }
         });
+        campoPesquisarCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarClienteKeyTyped(evt);
+            }
+        });
 
         comboBoxOrdenarCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarCliente.setMaximumRowCount(3);
@@ -279,6 +298,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("  Clientes  ", painelClientes);
 
         painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
+        painelProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelProdutosMouseClicked(evt);
+            }
+        });
 
         botaoNovoProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoNovoProduto.setText("Novo Produto");
@@ -300,6 +324,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarProduto.setText("Pesquisar Produto");
         campoPesquisarProduto.setToolTipText("Informe o nome do produto");
         campoPesquisarProduto.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoPesquisarProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPesquisarProdutoMouseClicked(evt);
+            }
+        });
+        campoPesquisarProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarProdutoKeyTyped(evt);
+            }
+        });
 
         pnRlProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -724,12 +758,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar filtro");
         comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("Registrar Despesa");
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoRegistrarDespesa.setText("Registrar Despesa");
+        botaoRegistrarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRegistrarDespesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botaoRegistrarDespesaActionPerformed(evt);
             }
         });
 
@@ -753,7 +787,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoFecharCaixa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
+                        .addComponent(botaoRegistrarDespesa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelValorCaixa)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -769,7 +803,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoGerarRelatorio)
                             .addComponent(botaoFecharCaixa)
-                            .addComponent(jButton2)))
+                            .addComponent(botaoRegistrarDespesa)))
                     .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -885,7 +919,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
 
         botaoNovoAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovoAdm.setText("Novo Administrador");
+        botaoNovoAdm.setText("Novo Usuário");
         botaoNovoAdm.setToolTipText("Criar novo administrador");
         botaoNovoAdm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoNovoAdm.addActionListener(new java.awt.event.ActionListener() {
@@ -900,7 +934,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         campoPesquisarAdm.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisarAdm.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarAdm.setText("Pesquisar Administrador");
+        campoPesquisarAdm.setText("Pesquisar Usuário");
         campoPesquisarAdm.setToolTipText("Informe o nome do administrador");
         campoPesquisarAdm.setDisabledTextColor(new java.awt.Color(204, 204, 204));
 
@@ -936,11 +970,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxAdm.setToolTipText("Selecionar tipo de ordenação");
         comboBoxAdm.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setText("Novo Funcionário");
-        jButton1.setToolTipText("Criar novo funcionário");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
         painelAdministrador.setLayout(painelAdministradorLayout);
         painelAdministradorLayout.setHorizontalGroup(
@@ -948,10 +977,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelAdministradorLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelAdministradorLayout.createSequentialGroup()
-                        .addComponent(botaoNovoAdm)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                    .addComponent(botaoNovoAdm)
                     .addGroup(painelAdministradorLayout.createSequentialGroup()
                         .addComponent(campoPesquisarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -967,9 +993,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelAdministradorLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoAdm)
-                    .addComponent(jButton1))
+                .addComponent(botaoNovoAdm)
                 .addGap(50, 50, 50)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisarAdm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1086,9 +1110,41 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_painelClientesMouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botaoRegistrarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarDespesaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
+
+    private void campoPesquisarProdutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoKeyTyped
+        if(campoPesquisarProduto.getText().equals("Pesquisar Produto")) {
+            campoPesquisarProduto.setText("");
+            campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+            campoPesquisarProduto.setForeground(new java.awt.Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_campoPesquisarProdutoKeyTyped
+
+    private void campoPesquisarClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarClienteKeyTyped
+        if(campoPesquisarCliente.getText().equals("Pesquisar Cliente")) {
+            campoPesquisarCliente.setText("");
+            campoPesquisarCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+            campoPesquisarCliente.setForeground(new java.awt.Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_campoPesquisarClienteKeyTyped
+
+    private void campoPesquisarProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoMouseClicked
+        if(campoPesquisarProduto.getText().equals("Pesquisar Cliente")) {
+            campoPesquisarProduto.setText("");
+            campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+            campoPesquisarProduto.setForeground(new java.awt.Color(0, 0, 0));
+        }
+    }//GEN-LAST:event_campoPesquisarProdutoMouseClicked
+
+    private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
+        if(campoPesquisarProduto.getText().length() <= 0) {
+            campoPesquisarProduto.setText("Pesquisar Cliente");
+            campoPesquisarProduto.setForeground(new java.awt.Color(153, 153, 153));
+            campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 2, 14));
+        }
+    }//GEN-LAST:event_painelProdutosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1145,6 +1201,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoPesquisarProduto;
     private javax.swing.JButton botaoProcurarDiretorioBackup;
     private javax.swing.JButton botaoProcurarDiretorioContratos;
+    private javax.swing.JButton botaoRegistrarDespesa;
     private javax.swing.JButton botaoSair;
     private javax.swing.JButton botaoSalvarDiretorioBackup;
     private javax.swing.JButton botaoSalvarDiretorioContratos;
@@ -1164,8 +1221,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxOrdenarFornecedores;
     private javax.swing.JComboBox comboBoxOrdenarFornecedores1;
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioContratos;
     private javax.swing.JLabel labelFiltrarFornecedores;

@@ -4,19 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Administrador extends Pessoa {
+public class Usuario extends Pessoa {
     
     @Id
     private String nickName;
     private String senha;
+    private boolean isAdministrador;
 
-    public Administrador() {
+    public Usuario() {
     }
 
-    public Administrador(String nome, String nickName, String senha) {
+    public Usuario(String nome, String nickName, String senha, boolean isAdministrador) {
         super(nome);
         this.senha = senha;
         this.nickName = nickName;
+        this.isAdministrador = isAdministrador;
     }
 
     @Override
@@ -40,4 +42,13 @@ public class Administrador extends Pessoa {
     public String getNickName() {
         return nickName;
     }
+    
+    public boolean isAdministrador() {
+        return isAdministrador;
+    }
+
+    public void setIsAdministrador(boolean isAdministrador) {
+        this.isAdministrador = isAdministrador;
+    }
+
 }

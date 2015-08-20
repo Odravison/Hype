@@ -1,7 +1,7 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
-import br.oltecnologias.hype.exception.AdministradorInexistenteException;
+import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -34,7 +34,7 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeral = new javax.swing.JPanel();
         painelDeLogin = new javax.swing.JPanel();
         labelUsuario = new javax.swing.JLabel();
-        campoNomeUsuario = new javax.swing.JTextField();
+        campoLogin = new javax.swing.JTextField();
         labelSenha = new javax.swing.JLabel();
         campoSenha = new javax.swing.JPasswordField();
         botaoEntrar = new javax.swing.JButton();
@@ -43,7 +43,6 @@ public class LoginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
         setName("frameLogin"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1366, 768));
         setSize(new java.awt.Dimension(1366, 768));
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
@@ -59,18 +58,28 @@ public class LoginFrame extends javax.swing.JFrame {
         labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelUsuario.setText("Login:");
 
-        campoNomeUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNomeUsuario.setToolTipText("Informe o seu login");
+        campoLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoLogin.setToolTipText("");
+        campoLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoLoginKeyTyped(evt);
+            }
+        });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelSenha.setText("Senha:");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoSenha.setToolTipText("Informe a sua senha");
+        campoSenha.setToolTipText("");
+        campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoSenhaKeyTyped(evt);
+            }
+        });
 
         botaoEntrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoEntrar.setText("Entrar");
-        botaoEntrar.setToolTipText("Acessar sistema");
+        botaoEntrar.setToolTipText("");
         botaoEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -93,7 +102,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     .addGroup(painelDeLoginLayout.createSequentialGroup()
                         .addGap(0, 160, Short.MAX_VALUE)
                         .addComponent(botaoEntrar))
-                    .addComponent(campoNomeUsuario))
+                    .addComponent(campoLogin))
                 .addGap(65, 65, 65))
         );
         painelDeLoginLayout.setVerticalGroup(
@@ -101,7 +110,7 @@ public class LoginFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDeLoginLayout.createSequentialGroup()
                 .addGap(70, 70, 70)
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelUsuario))
                 .addGap(39, 39, 39)
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -113,7 +122,6 @@ public class LoginFrame extends javax.swing.JFrame {
         );
 
         labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
-        labelLogo.setIcon(new javax.swing.ImageIcon("D:\\Projeto\\Código\\Hype\\HypeProjeto\\src\\Imagens\\Logo.png")); // NOI18N
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
@@ -155,16 +163,28 @@ public class LoginFrame extends javax.swing.JFrame {
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
         try {
             // validar administrador no sistema
-            if(GerenciadorDePessoas.getInstance().validarAdministrador(campoNomeUsuario.getText(), new String (campoSenha.getPassword()))){
-                new PrincipalFrame(campoNomeUsuario.getText()).setVisible(true);
+            if(GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String (campoSenha.getPassword()))){
+                new PrincipalFrame(campoLogin.getText()).setVisible(true);
                 setVisible(false);
             } else {
-                JOptionPane.showMessageDialog(null, "Administrador não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (AdministradorInexistenteException e) {
+        } catch (UsuarioInexistenteException e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
+
+    private void campoLoginKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoLoginKeyTyped
+        if(campoLogin.getText().length() >= 12) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoLoginKeyTyped
+
+    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
+        if(new String (campoSenha.getPassword()).length() >= 10) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoSenhaKeyTyped
 
     /**
      * @param args the command line arguments
@@ -203,7 +223,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoEntrar;
-    private javax.swing.JTextField campoNomeUsuario;
+    private javax.swing.JTextField campoLogin;
     private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelSenha;

@@ -1,18 +1,15 @@
 package br.oltecnologias.hype.controller;
 
-import br.oltecnologias.hype.exception.AdministradorExistenteException;
-import br.oltecnologias.hype.exception.AdministradorInexistenteException;
+import br.oltecnologias.hype.exception.UsuarioExistenteException;
+import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
-import br.oltecnologias.hype.exception.EmpregadoExistenteException;
-import br.oltecnologias.hype.exception.EmpregadoInexistenteException;
 import br.oltecnologias.hype.exception.FornecedorExistenteException;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.model.Endereco;
-import br.oltecnologias.hype.model.Administrador;
+import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Cliente;
-import br.oltecnologias.hype.model.Empregado;
 import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,14 +18,13 @@ public class GerenciadorDePessoas {
 
     private List<Cliente> clientes;
     private List<Fornecedor> fornecedores;
-    private List<Administrador> administradores;
-    private List<Empregado> empregados;
+    private List<Usuario> usuarios;
     private static GerenciadorDePessoas singleton = null;
 
     private GerenciadorDePessoas() {
         clientes = new ArrayList<Cliente>();
         fornecedores = new ArrayList<Fornecedor>();
-        administradores = new ArrayList<Administrador>();
+        usuarios = new ArrayList<Usuario>();
     }
 
     public static GerenciadorDePessoas getInstance() {
@@ -91,72 +87,40 @@ public class GerenciadorDePessoas {
         return aux;
     }
 
-    public void cadastrarAdministrador(String nome, String senha, String nickName) throws AdministradorExistenteException {
-        for (Administrador adm : this.administradores) {
-            if (adm.getNickName().equals(nickName)) {
-                throw new AdministradorExistenteException("O NickName informado já está em uso.");
+    public void cadastrarAdministrador(String nome, String senha, String nickName, boolean isAdm) throws UsuarioExistenteException {
+        for (Usuario u : this.usuarios) {
+            if (u.getNickName().equals(nickName)) {
+                throw new UsuarioExistenteException("O NickName informado já está em uso.");
             }
         }
-        Administrador adm = new Administrador(senha, nickName, nome);
-        this.administradores.add(adm);
+        Usuario u = new Usuario(senha, nickName, nome, isAdm);
+        this.usuarios.add(u);
 
     }
 
-    public void editarAdministrador(String nickAntigo, String nome, String senha, String nickNovo) throws AdministradorExistenteException {
-        for (Administrador adm : this.administradores) {
-            if (adm.getNickName().equals(nickNovo)) {
-                throw new AdministradorExistenteException("NickName já está em uso.");
+    public void editarUsuario(String nickAntigo, String nome, String senha, String nickNovo) throws UsuarioExistenteException {
+        for (Usuario u : this.usuarios) {
+            if (u.getNickName().equals(nickNovo)) {
+                throw new UsuarioExistenteException("NickName já está em uso.");
             }
         }
-        for (Administrador adm : this.administradores) {
-            if (adm.getNickName().equals(nickAntigo)) {
-                adm.setNickName(nickNovo);
-                adm.setNome(nome);
-                adm.setSenha(senha);
+        for (Usuario u : this.usuarios) {
+            if (u.getNickName().equals(nickAntigo)) {
+                u.setNickName(nickNovo);
+                u.setNome(nome);
+                u.setSenha(senha);
             }
         }
     }
 
-    public void removerAdministrador(String nickName) throws AdministradorInexistenteException {
-        for (Administrador adm : this.administradores) {
-            if (adm.getNickName().equals(nickName)) {
-                this.administradores.remove(adm);
+    public void removerUsuario(String nickName) throws UsuarioInexistenteException {
+        for (Usuario u : this.usuarios) {
+            if (u.getNickName().equals(nickName)) {
+                this.usuarios.remove(u);
                 return;
             }
         }
-        throw new AdministradorInexistenteException("Administrador não cadastrado.");
-    }
-
-    public void cadastrarEmpregado(String nome, String nickName, String senha) throws EmpregadoExistenteException {
-        for (Empregado e : this.empregados) {
-            if (e.getNickName().equals(nickName)) {
-                throw new EmpregadoExistenteException("NickName já esta em uso.");
-            }
-        }
-        Empregado e = new Empregado(nome, nickName, senha);
-        this.empregados.add(e);
-    }
-
-    public void editarEmpregado(String nome, String nickNovo, String nickAntigo, String senha) throws EmpregadoInexistenteException {
-        for (Empregado e : this.empregados) {
-            if (e.getNickName().equals(nickAntigo)) {
-                e.setNickName(nickNovo);
-                e.setNome(nome);
-                e.setSenha(senha);
-                return;
-            }
-        }
-        throw new EmpregadoInexistenteException("Empregado em questão não existe");
-    }
-
-    public void removerEmpregado(String nickName) throws EmpregadoInexistenteException  {
-        for (Empregado e : this.empregados) {
-            if (e.getNickName().equals(nickName)) {
-                this.empregados.remove(e);
-                return;
-            }
-        }
-        throw new EmpregadoInexistenteException("Empregado em questão não existe.");
+        throw new UsuarioInexistenteException("Administrador não cadastrado.");
     }
 
     public void cadastrarFornecedor(String cnpj, Endereco endereco, List<String> telefones, String nome) throws FornecedorExistenteException {
@@ -212,27 +176,24 @@ public class GerenciadorDePessoas {
         throw new FornecedorInexistenteException("Fornecedor não encontrado.");
     }
     
-    public boolean validarAdministrador(String login, String senha)  throws AdministradorInexistenteException{
-        if(this.pesquisarAdministradorPeloLogin(login).getSenha().equals(senha)) {
-            return true;
-        }     
-        return false;
+    public boolean validarUsuario(String login, String senha)  throws UsuarioInexistenteException{
+        return pesquisarUsuarioPeloLogin(login).getSenha().equals(senha);
+    }
+    
+    public boolean isAdministrador(String login) throws UsuarioInexistenteException {
+        return this.pesquisarUsuarioPeloLogin(login).isAdministrador();
     }
     
     // Deve servir para funcionários também
-    public Administrador pesquisarAdministradorPeloLogin(String login) throws AdministradorInexistenteException{
-        this.administradores.add(new Administrador("Luender Lima","luender","1234"));
-        this.administradores.add(new Administrador("Odravison Amaral","odravison","1234"));
-        for(Administrador a: this.administradores) {
+    public Usuario pesquisarUsuarioPeloLogin(String login) throws UsuarioInexistenteException{
+        this.usuarios.add(new Usuario("Luender Lima","luender","1234", true));
+        this.usuarios.add(new Usuario("Odravison Amaral","odravison","1234", false));
+        for(Usuario a: this.usuarios) {
             if(a.getNickName().equals(login)) {
                 return a;
             }
         }
-        throw new AdministradorInexistenteException("Administrador não cadastrado no sistema. \n\nInforme os dados novamente.");
-    }
-
-    public void carregarPessoas() {
-        // Método sera implementado quando houver bando de dados.
+        throw new UsuarioInexistenteException("Usuário não cadastrado no sistema. \n\nInforme os dados novamente.");
     }
 
     public List<Cliente> getClientes() {
@@ -251,19 +212,16 @@ public class GerenciadorDePessoas {
         this.fornecedores = fornecedores;
     }
 
-    public List<Administrador> getAdministradores() {
-        return administradores;
+    public List<Usuario> getUsuarios() {
+        return usuarios;
     }
 
-    public void setAdministradores(List<Administrador> administradores) {
-        this.administradores = administradores;
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+    
+    public void carregarPessoas() {
+        // Método sera implementado quando houver bando de dados.
     }
 
-    public List<Empregado> getEmpregados() {
-        return empregados;
-    }
-
-    public void setEmpregados(List<Empregado> empregados) {
-        this.empregados = empregados;
-    }
 }
