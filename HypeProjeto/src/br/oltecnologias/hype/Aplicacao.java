@@ -34,7 +34,7 @@ public class Aplicacao {
 //        telefones.add(telefone1);
 //        telefones.add(telefone2);
         Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, "obs1");
-        Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, "obs2");
+        Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, "obs1");
 
 //        Cliente cliente = new Cliente("1234566", end, medidas, "123456", telefones);
 //        
@@ -53,7 +53,7 @@ public class Aplicacao {
 
         try {
             ctM.create(medidas);
-            ctM.create(medidas2);
+            //ctM.create(medidas2);
             
             for (Medidas med : ctM.findMedidasEntities()) {
                 System.out.println(med.getObservacao());

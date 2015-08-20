@@ -1,12 +1,24 @@
 package br.oltecnologias.hype.model;
 
-public class Endereco {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-	private String rua;
-	private String bairro;
-	private String uf;
-	private int numeroCasa;
-	private String cidade;
+@Entity
+public class Endereco implements Serializable {
+
+    @Id
+    @GeneratedValue
+    private int id;
+    private String rua;
+    private String bairro;
+    private String uf;
+    private int numeroCasa;
+    private String cidade;
+
+    public Endereco() {
+    }
 
     public Endereco(String rua, String bairro, String uf, int numeroCasa, String cidade) {
         this.rua = rua;
@@ -59,12 +71,8 @@ public class Endereco {
     @Override
     public String toString() {
         String endereco = this.rua + ", " + this.numeroCasa + " - " + this.bairro + ", " + this.cidade + ", " + this.uf;
-        
+
         return endereco;
     }
-    
-    
-        
-    
 
 }

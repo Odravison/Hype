@@ -1,7 +1,16 @@
 package br.oltecnologias.hype.model;
 
-public class Contrato {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+public class Contrato implements Serializable {
+    
+    @Id
+    @GeneratedValue
+    private int id;
     private String modeloPDF;
     private String diretorioDoContrato;
 
@@ -9,8 +18,8 @@ public class Contrato {
         this.modeloPDF = modeloPDF;
     }
 
-    Contrato() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Contrato() {
+    
     }
 
     public String getModeloPDF() {

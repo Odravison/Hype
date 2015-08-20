@@ -4,23 +4,48 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
 
-public class Cliente extends Pessoa implements Serializable {
-
+@Entity
+public class Cliente extends Pessoa {
+    
+    @Id
     private String cpf;
+    
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar ultimaMedicao;
+    
+    @OneToOne
     private Endereco endereco;
+    
+    @OneToOne
     private Medidas medidas;
     private String rg;
-    private List<String> telefones;
+    
+    @Column(nullable = true)
+    private String telefone;
+    
+    private String celular;
+    
+    @OneToMany
     private List<Locacao> locacoes;
 
-    public Cliente(String cpf, Endereco endereco, Medidas medidas, String rg, List<String> telefones) {
+    public Cliente() {
+    }
+
+    public Cliente(String cpf, String nome, Endereco endereco, Medidas medidas, String rg, String telefone, String celular) {
+        super(nome);
         this.cpf = cpf;
         this.endereco = endereco;
         this.medidas = medidas;
         this.rg = rg;
-        this.telefones = telefones;
+        this.celular = celular;
+        this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
         this.ultimaMedicao = Calendar.getInstance();
     }
@@ -31,24 +56,9 @@ public class Cliente extends Pessoa implements Serializable {
                 + "Endereço: " + this.endereco + "\n"
                 + "CPF: " + this.cpf + "\n"
                 + "RG: " + this.rg + "\n"
-                + "telefones: " + this.telefoneToString() + "\n"
+                + "telefone: " + this.telefone + "\n"
+                + "celular: " + this.celular + "\n"
                 + "Medidas: " + this.medidas.toString();
-    }
-
-    public String telefoneToStringEmLista() {
-        String telefones = "";
-        for (String s : this.telefones) {
-            telefones += s.toString() + "\n";
-        }
-        return telefones;
-    }
-
-    public String telefoneToString() {
-        String telefones = "";
-        for (String s : this.telefones) {
-            telefones += s.toString() + ", ";
-        }
-        return telefones;
     }
 
     public String getCpf() {
@@ -91,12 +101,20 @@ public class Cliente extends Pessoa implements Serializable {
         this.rg = rg;
     }
 
-    public List<String> getTelefones() {
-        return telefones;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefones(List<String> telefones) {
-        this.telefones = telefones;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCelular() {
+        return celular;
+    }
+
+    public void setCelular(String celular) {
+        this.celular = celular;
     }
 
     public void adicionarLocacao(Locacao locacao) {
