@@ -47,7 +47,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="painelTopo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="abas" pref="704" max="32767" attributes="0"/>
+              <Component id="abas" pref="700" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -269,7 +269,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Todos"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -340,7 +340,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -399,7 +399,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlProduto" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="101" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -520,7 +520,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarProdutos">
@@ -528,12 +528,14 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="maximumRowCount" type="int" value="3"/>
+                <Property name="maximumRowCount" type="int" value="5"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="5">
                     <StringItem index="0" value="Todos"/>
-                    <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="1" value="Produtos de loca&#xe7;&#xe3;o"/>
+                    <StringItem index="2" value="Produtos de venda"/>
+                    <StringItem index="3" value="&#xda;ltimos locados"/>
+                    <StringItem index="4" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -708,7 +710,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarFornecedores">
@@ -721,7 +723,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Todos"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -796,7 +798,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlFornecedores1" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="101" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -933,7 +935,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarFornecedores1">
@@ -946,7 +948,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Todas"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -1139,7 +1141,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -1170,7 +1172,6 @@
                                       <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="937" pref="937" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="pnRlCaixaERelatorios" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
                               </Group>
@@ -1219,7 +1220,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlCaixaERelatorios" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="155" max="32767" attributes="0"/>
+                      <EmptySpace pref="151" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1312,7 +1313,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Filtrar movimenta&#xe7;&#xe3;o por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelValorCaixa">
@@ -1337,10 +1338,11 @@
                 </Property>
                 <Property name="maximumRowCount" type="int" value="3"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="4">
                     <StringItem index="0" value="Ordem alfab&#xe9;tica"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
                     <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="3" value="Despesas"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar filtro"/>
@@ -1428,7 +1430,7 @@
                           <Component id="botaoProcurarDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoSalvarDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="466" max="32767" attributes="0"/>
+                      <EmptySpace pref="462" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1597,7 +1599,7 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlAdministrador" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="101" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1711,7 +1713,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxAdm">
@@ -1722,7 +1724,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
                     <StringItem index="0" value="Todos"/>
-                    <StringItem index="1" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="1" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
