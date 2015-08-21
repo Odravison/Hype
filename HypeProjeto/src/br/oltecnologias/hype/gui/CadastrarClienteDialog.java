@@ -6,8 +6,11 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -77,9 +80,10 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         campoGravata = new javax.swing.JFormattedTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(240, 240, 240));
-        setPreferredSize(new java.awt.Dimension(672, 696));
+        setPreferredSize(new java.awt.Dimension(672, 671));
         setSize(new java.awt.Dimension(676, 671));
         setTitle("Cadastro de cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -88,10 +92,12 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             }
         });
 
+        painelGeral.setPreferredSize(new java.awt.Dimension(632, 579));
+
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados pessoais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:");
+        labelNome.setText("Nome:*");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -101,12 +107,12 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         });
 
         labelCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCpf.setText("CPF:");
+        labelCpf.setText("CPF:*");
 
         painelEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
 
         labelRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelRua.setText("Rua:");
+        labelRua.setText("Rua:*");
 
         campoRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoRua.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -116,10 +122,10 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         });
 
         labelNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNumero.setText("Número:");
+        labelNumero.setText("Número:*");
 
         labelBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelBairro.setText("Bairro:");
+        labelBairro.setText("Bairro:*");
 
         campoBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoBairro.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -129,7 +135,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         });
 
         labelCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCidade.setText("Cidade:");
+        labelCidade.setText("Cidade:*");
 
         campoCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -139,7 +145,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         });
 
         labelUf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelUf.setText("UF:");
+        labelUf.setText("UF:*");
 
         comboUf.setMaximumRowCount(20);
         comboUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PB", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
@@ -175,11 +181,11 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                         .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(labelUf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addGap(16, 16, 16))
                     .addGroup(painelEnderecoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -209,7 +215,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelTelResidencial.setText("Telefone residencial:");
 
         labelCel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCel.setText("Celular:");
+        labelCel.setText("Celular:*");
 
         try {
             campoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -233,6 +239,11 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         campoTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         checkCpf.setText("Não possui CPF");
+        checkCpf.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                checkCpfItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelDadosPessoaisLayout = new javax.swing.GroupLayout(painelDadosPessoais);
         painelDadosPessoais.setLayout(painelDadosPessoaisLayout);
@@ -288,27 +299,28 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         );
 
         painelMedidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidas"));
+        painelMedidas.setPreferredSize(new java.awt.Dimension(622, 218));
 
         labelTraje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTraje.setText("Traje:");
+        labelTraje.setText("Traje:*");
 
         labelCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCalca.setText("Calça:");
+        labelCalca.setText("Calça:*");
 
         labelColete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelColete.setText("Colete:");
+        labelColete.setText("Colete:*");
 
         labelObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelObservacao.setText("Observação:");
 
         labelGravata.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelGravata.setText("Gravata:");
+        labelGravata.setText("Gravata:*");
 
         labelSapato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSapato.setText("Sapato:");
+        labelSapato.setText("Sapato:*");
 
         labelBlazer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelBlazer.setText("Blazer:");
+        labelBlazer.setText("Blazer:*");
 
         areaObservacao.setColumns(20);
         areaObservacao.setRows(5);
@@ -320,7 +332,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         scPnObservacao.setViewportView(areaObservacao);
 
         labelCamisa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCamisa.setText("Camisa:");
+        labelCamisa.setText("Camisa:*");
 
         try {
             campoCalca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
@@ -379,10 +391,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelMedidasLayout.createSequentialGroup()
-                        .addComponent(labelObservacao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scPnObservacao))
-                    .addGroup(painelMedidasLayout.createSequentialGroup()
                         .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(painelMedidasLayout.createSequentialGroup()
                                 .addComponent(labelGravata)
@@ -414,13 +422,17 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                                 .addComponent(labelCamisa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(campoCamisa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 25, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelMedidasLayout.createSequentialGroup()
+                        .addComponent(labelObservacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scPnObservacao)
+                        .addContainerGap())))
         );
         painelMedidasLayout.setVerticalGroup(
             painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMedidasLayout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCalca)
                     .addComponent(labelBlazer)
@@ -441,11 +453,11 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGap(22, 22, 22)
                 .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelObservacao)
-                    .addComponent(scPnObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(scPnObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
-        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -454,7 +466,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             }
         });
 
-        botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -462,6 +474,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 botaoCancelarActionPerformed(evt);
             }
         });
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("* Obrigatório");
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
@@ -471,16 +486,14 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
-                    .addGroup(painelGeralLayout.createSequentialGroup()
-                        .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(painelDadosPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelMedidas, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -488,12 +501,14 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGap(22, 22, 22)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar))
-                .addGap(35, 35, 35))
+                .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(jLabel1))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -552,6 +567,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNumeroKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        String tel;
         // Validar campos para cadastro
         if(campoNome.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o nome do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -563,11 +579,42 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "Informe o bairro do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoNumero.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o número da casa do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else if(campoCel.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o número de celular do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } 
+        
+        if(campoTelefone.getText().length() <= 0) {
+            tel = "Não informado";
+        } else {
+            tel = campoTelefone.getText();
         }
-        Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getToolTipText(), Integer.parseInt(campoNumero.getText()), campoCidade.getText()); 
-        Medidas medidas = new Medidas(Integer.parseInt(campoCalca.getText()), Integer.parseInt(campoTraje.getText()), Integer.parseInt(campoColete.getText()), Integer.parseInt(campoCamisa.getText()), Integer.parseInt(campoGravata.getText()), Integer.parseInt(campoSapato.getText()), Integer.parseInt(campoBlazer.getText()), areaObservacao.getText());
-        //GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas, campoTelefone.getText(), campoCel.getText());
+        
+        Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(), 
+                Integer.parseInt(campoNumero.getText()), campoCidade.getText()); 
+        Medidas medidas = new Medidas(Integer.parseInt(campoCalca.getText()), Integer.parseInt(campoTraje.getText()), 
+                Integer.parseInt(campoColete.getText()), Integer.parseInt(campoCamisa.getText()), 
+                Integer.parseInt(campoGravata.getText()), Integer.parseInt(campoSapato.getText()), 
+                Integer.parseInt(campoBlazer.getText()), areaObservacao.getText());
+        try {
+            GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas, 
+                    tel, campoCel.getText());
+            JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+            setVisible(false);
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void checkCpfItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkCpfItemStateChanged
+        //Habilita ou desabilita o campo de cpf 
+        if (checkCpf.isSelected()){
+            campoCpf.setEnabled(false);
+        } else {
+            campoCpf.setEnabled(true);
+        }
+    }//GEN-LAST:event_checkCpfItemStateChanged
     
     private void validarLetras(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -620,6 +667,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private javax.swing.JFormattedTextField campoTraje;
     private javax.swing.JCheckBox checkCpf;
     private javax.swing.JComboBox comboUf;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelBairro;
     private javax.swing.JLabel labelBlazer;
     private javax.swing.JLabel labelCalca;

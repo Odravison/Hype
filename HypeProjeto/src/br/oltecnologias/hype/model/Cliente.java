@@ -25,7 +25,6 @@ public class Cliente extends Pessoa {
     
     @OneToOne
     private Medidas medidas;
-    private String rg;
     
     @Column(nullable = true)
     private String telefone;
@@ -38,12 +37,11 @@ public class Cliente extends Pessoa {
     public Cliente() {
     }
 
-    public Cliente(String cpf, String nome, Endereco endereco, Medidas medidas, String rg, String telefone, String celular) {
+    public Cliente(String cpf, String nome, Endereco endereco, Medidas medidas, String telefone, String celular) {
         super(nome);
         this.cpf = cpf;
         this.endereco = endereco;
         this.medidas = medidas;
-        this.rg = rg;
         this.celular = celular;
         this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
@@ -55,7 +53,6 @@ public class Cliente extends Pessoa {
         return "Cliente: " + super.getNome() + "\n"
                 + "Endereço: " + this.endereco + "\n"
                 + "CPF: " + this.cpf + "\n"
-                + "RG: " + this.rg + "\n"
                 + "telefone: " + this.telefone + "\n"
                 + "celular: " + this.celular + "\n"
                 + "Medidas: " + this.medidas.toString();
@@ -91,14 +88,6 @@ public class Cliente extends Pessoa {
 
     public void setMedidas(Medidas medidas) {
         this.medidas = medidas;
-    }
-
-    public String getRg() {
-        return rg;
-    }
-
-    public void setRg(String rg) {
-        this.rg = rg;
     }
 
     public String getTelefone() {
