@@ -2,10 +2,27 @@ package br.oltecnologias.hype;
 
 import br.oltecnologias.hype.dao.MedidasJpaController;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Configuracao;
+import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
+import br.oltecnologias.hype.model.GeradorDeContrato;
+import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Medidas;
+import br.oltecnologias.hype.model.ProdutoDeLocacao;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -22,7 +39,7 @@ public class Aplicacao {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DocumentException, IOException, Exception {
         System.out.println("Opa");
 
 //        String telefone1 = "1234-5678";
@@ -33,12 +50,11 @@ public class Aplicacao {
 //        List<String> telefones = new ArrayList<String>();
 //        telefones.add(telefone1);
 //        telefones.add(telefone2);
-        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, "obs1");
-        Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, "obs1");
-
+//        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
+//        Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
 //        Cliente cliente = new Cliente("1234566", end, medidas, "123456", telefones);
 //        
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hypepu");
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hypepu");
 //        
 //        ClienteJpaController cjp = new ClienteJpaController(emf);
 //        
@@ -48,24 +64,51 @@ public class Aplicacao {
 //        } catch (Exception ex) {
 //            Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-
-        MedidasJpaController ctM = new MedidasJpaController(emf);
-
-        try {
-            ctM.create(medidas);
-            //ctM.create(medidas2);
-            
-            for (Medidas med : ctM.findMedidasEntities()) {
-                System.out.println(med.getObservacao());
-            }
-        }catch(Exception e){
-            Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, e);
+//
+//        MedidasJpaController ctM = new MedidasJpaController(emf);
+//
+//        try {
+//            ctM.create(medidas);
+//            //ctM.create(medidas2);
+//            
+//            for (Medidas med : ctM.findMedidasEntities()) {
+//                System.out.println(med.getObservacao());
+//            }
+//        }catch(Exception e){
+//            Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, e);
+//        }
+//        
+//        emf.close();
+//
+//        System.out.println("Funcionou :D");
+        
+        System.out.println("SIMULAÇÃO DE CONTRATO");
+        
+        Configuracao conf = Configuracao.getInstance();
+        Endereco endereco = new Endereco ("Av. Picamonhagaba", "Centro", "Paraíba", 40, "João Pessoa");
+        conf.setEmpresa(new Empresa("1234566", "Luender sexShop", "1234-5678", endereco));
+        conf.setDiasEmprestimo(2);
+        conf.setDiretorioDeContratos("C:\\Users\\Odravison\\Desktop");
+        
+        Cliente luender;
+        luender = new Cliente("123456789012", "José Luender de Lima Santos", endereco, new Medidas(10,10,10,10,10,10,10,"osb"),
+                "123456", "3222-2222", "(83)98763-3232");
+        
+        List<ProdutoDeLocacao> produtos = new ArrayList<ProdutoDeLocacao>();
+        
+        for (int i = 0; i < 6; i++){
+            ProdutoDeLocacao p = new ProdutoDeLocacao("Suéter1", 40, i+1, "Fornecedor1", "Azul", 40);
+            produtos.add(p);
         }
         
-        emf.close();
-
-        System.out.println("Funcionou :D");
-
+        Locacao locacao = new Locacao(luender,produtos, 240, Calendar.getInstance() );
+        
+        GeradorDeContrato ger = GeradorDeContrato.getInstance();
+        ger.gerarContrato(luender, locacao.getDataLocacao(), locacao.getDataDevolucao(), produtos);
+        
+        System.out.println("PASSOU");
+        
+        
     }
 
 }

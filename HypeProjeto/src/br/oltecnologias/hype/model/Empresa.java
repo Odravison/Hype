@@ -52,8 +52,6 @@ public class Empresa implements Serializable {
         this.telefone = telefone;
     }
 
-   
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -61,4 +59,5 @@ public class Empresa implements Serializable {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
 }

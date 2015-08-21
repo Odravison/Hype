@@ -13,9 +13,9 @@ public abstract class Produto implements Serializable {
     @Id
     private String codigo;
     private String nome;
-    private String descricao;
     private float valor;
     private int quant;
+    private int tam;
     
     @Column(name="FORNECEDOR", nullable=true)
     private String forcenedor;
@@ -24,11 +24,11 @@ public abstract class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(String nome, String descricao, float valor, int quant, String forcenedor, String cor) {
+    public Produto(String nome, float valor, int quant, String forcenedor, String cor, int tam) {
         this.nome = nome;
-        this.descricao = descricao;
         this.valor = valor;
         this.quant = quant;
+        this.tam = tam;
         this.forcenedor = forcenedor;
         this.cor = cor;
     }   
@@ -50,11 +50,7 @@ public abstract class Produto implements Serializable {
     }
 
     public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+        return this.nome + " - Tam: " + this.tam + " " + this.cor + " - R$ " + this.valor;
     }
 
     public float getValor() {
@@ -95,5 +91,13 @@ public abstract class Produto implements Serializable {
         
     public void removerQuant(int add){
         this.quant -= add;
+    }
+
+    public int getTam() {
+        return tam;
+    }
+
+    public void setTam(int tam) {
+        this.tam = tam;
     }
 }
