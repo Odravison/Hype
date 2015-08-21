@@ -99,7 +99,7 @@ public class Aplicacao {
 
         Cliente luender;
         luender = new Cliente("123456789012", "José Luender de Lima Santos", endereco, new Medidas(10, 10, 10, 10, 10, 10, 10, "osb"),
-                "123445", "3222-2222", "(83)98763-3232");
+                "3222-2222", "(83)98763-3232");
 
         List<Produto> produtos = new ArrayList<Produto>();
 
