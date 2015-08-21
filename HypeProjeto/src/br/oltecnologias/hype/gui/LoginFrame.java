@@ -17,6 +17,7 @@ public class LoginFrame extends javax.swing.JFrame {
      */
     public LoginFrame() {
         initComponents();
+        getRootPane().setDefaultButton(botaoEntrar);
         ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Mini logo hype!.png");
         setIconImage(imagemTituloJanela.getImage());
         labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
@@ -43,11 +44,13 @@ public class LoginFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
         setName("frameLogin"); // NOI18N
-        setSize(new java.awt.Dimension(1366, 768));
+        setPreferredSize(new java.awt.Dimension(1366, 730));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1366, 730));
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
         painelGeral.setMinimumSize(new java.awt.Dimension(600, 500));
-        painelGeral.setPreferredSize(new java.awt.Dimension(1329, 768));
+        painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
 
         painelDeLogin.setBackground(new java.awt.Color(204, 204, 255));
         painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
@@ -59,7 +62,6 @@ public class LoginFrame extends javax.swing.JFrame {
         labelUsuario.setText("Login:");
 
         campoLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoLogin.setToolTipText("");
         campoLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoLoginKeyTyped(evt);
@@ -70,7 +72,6 @@ public class LoginFrame extends javax.swing.JFrame {
         labelSenha.setText("Senha:");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoSenha.setToolTipText("");
         campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoSenhaKeyTyped(evt);
@@ -79,7 +80,6 @@ public class LoginFrame extends javax.swing.JFrame {
 
         botaoEntrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoEntrar.setText("Entrar");
-        botaoEntrar.setToolTipText("");
         botaoEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,33 +128,35 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(468, Short.MAX_VALUE)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(478, Short.MAX_VALUE))
             .addGroup(painelGeralLayout.createSequentialGroup()
                 .addGap(546, 546, 546)
                 .addComponent(labelLogo)
-                .addGap(546, 590, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
                 .addGap(74, 74, 74)
                 .addComponent(labelLogo)
-                .addGap(52, 52, 52)
+                .addGap(50, 50, 50)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(191, Short.MAX_VALUE))
+                .addGap(232, 232, 232))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 1366, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
@@ -162,8 +164,8 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
         try {
-            // validar administrador no sistema
-            if(GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String (campoSenha.getPassword()))){
+            // validar usuário no sistema
+            if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
                 new PrincipalFrame(campoLogin.getText()).setVisible(true);
                 setVisible(false);
             } else {
@@ -185,7 +187,7 @@ public class LoginFrame extends javax.swing.JFrame {
             evt.consume();
         }
     }//GEN-LAST:event_campoSenhaKeyTyped
-
+      
     /**
      * @param args the command line arguments
      */

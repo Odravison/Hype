@@ -35,18 +35,18 @@ public class GerenciadorDePessoas {
     }
 
     public void cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
-            String rg, String telefone, String celular) throws ClienteExistenteException {
+            String telefone, String celular) throws ClienteExistenteException {
         for (Cliente c : this.clientes) {
             if (c.getCpf().equals(cpf)) {
                 throw new ClienteExistenteException("CPF já cadastrado.");
             }
         }
-        Cliente cliente = new Cliente(cpf, nome, endereco, medidas, rg, telefone, celular);
+        Cliente cliente = new Cliente(cpf, nome, endereco, medidas, telefone, celular);
         this.clientes.add(cliente);
     }
 
     public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, 
-            Medidas medidas, String rg, String telefone, String celular)
+            Medidas medidas, String telefone, String celular)
             throws ClienteInexistenteException, ClienteExistenteException {
         try {
             pesquisarCliente(cpfAntigo);
@@ -56,7 +56,6 @@ public class GerenciadorDePessoas {
             alteracao.setCpf(cpfNovo);
             alteracao.setEndereco(endereco);
             alteracao.setMedidas(medidas);
-            alteracao.setRg(rg);
             alteracao.setTelefone(telefone);
             alteracao.setCelular(celular);
         }
