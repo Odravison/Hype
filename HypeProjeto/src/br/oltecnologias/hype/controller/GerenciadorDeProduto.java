@@ -4,14 +4,19 @@ import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.model.ProdutoDeLocacao;
+import br.oltecnologias.hype.model.ProdutoDeVenda;
 
 public class GerenciadorDeProduto {
 
-    private List<Produto> produtos;
+    private List<ProdutoDeVenda> produtosDeVenda;
+    private List<ProdutoDeLocacao> produtosDeLocacao;
+    
     private static GerenciadorDeProduto singleton = null;
 
     private GerenciadorDeProduto() {
-        produtos = new ArrayList<Produto>();
+        this.produtosDeLocacao = new ArrayList<ProdutoDeLocacao>();
+        this.produtosDeVenda = new ArrayList<ProdutoDeVenda>();
     }
 
     public static GerenciadorDeProduto getInstance() {
@@ -27,12 +32,12 @@ public class GerenciadorDeProduto {
 
     }
 
-    public void editarProduto(String nome, String codigo, String descricao,
+    public void editarProduto(String codigo, String nome, int tam,
             float valor, String fornecedor, String cor) {
         try {
             Produto p = pesquisarProduto(codigo);
             p.setCor(cor);
-            p.setDescricao(descricao);
+            p.setTam(tam);
             p.setForcenedor(fornecedor);
             p.setNome(nome);
             p.setValor(valor);
@@ -50,22 +55,35 @@ public class GerenciadorDeProduto {
      *
      * @param codigo
      * @return
+     * @throws br.oltecnologias.hype.exception.ProdutoInexistenteException
      */
     public Produto pesquisarProduto(String codigo) throws ProdutoInexistenteException {
-        for (Produto p : this.produtos) {
+        for (ProdutoDeVenda p : this.produtosDeVenda) {
             if (p.getCodigo().equals(codigo)) {
                 return p;
             }
         }
+        
+        for (ProdutoDeLocacao p : this.produtosDeLocacao) {
+            if (p.getCodigo().equals(codigo)) {
+                return p;
+            }
+        }
+        
         throw new ProdutoInexistenteException("Produto não cadastrado.");
     }
     
-    public void carregarProdutos() {
-        // Carregar Produtos quando definirmos o banco de dados.
+    public List<ProdutoDeVenda> getProdutosDeVenda() {
+        return this.produtosDeVenda;
     }
 
-    public List<Produto> getProdutos() {
-        return this.produtos;
+    public List<ProdutoDeLocacao> getProdutosDeLocacao() {
+        return produtosDeLocacao;
     }
+
+    public void setProdutosDeLocacao(List<ProdutoDeLocacao> produtosDeLocacao) {
+        this.produtosDeLocacao = produtosDeLocacao;
+    }
+    
 
 }
