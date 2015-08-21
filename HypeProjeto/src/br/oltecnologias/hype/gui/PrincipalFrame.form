@@ -47,7 +47,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="painelTopo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="abas" pref="704" max="32767" attributes="0"/>
+              <Component id="abas" pref="700" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -64,9 +64,9 @@
                   <Component id="labelLogoEmpresa" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="labelLogoSistema" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="botaoSair" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -77,18 +77,19 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="botaoSair" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="labelNomeLogin" min="-2" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" alignment="1" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="labelLogoSistema" max="32767" attributes="0"/>
                       <Component id="labelLogoEmpresa" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="17" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelNomeLogin" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoSair" alignment="1" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -201,7 +202,7 @@
                           <Component id="campoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -256,6 +257,7 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarClienteMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarClienteKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarCliente">
@@ -268,7 +270,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Todos"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -295,10 +297,11 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="5" rowCount="4">
+                      <Table columnCount="6" rowCount="4">
                         <Column editable="true" title="Nome do cliente" type="java.lang.String"/>
                         <Column editable="true" title="&#xda;ltima loca&#xe7;&#xe3;o" type="java.lang.Object"/>
                         <Column editable="true" title="Cadastrado em" type="java.lang.Object"/>
+                        <Column editable="true" title="Ver loca&#xe7;&#xf5;es" type="java.lang.Object"/>
                         <Column editable="true" title="" type="java.lang.Object"/>
                         <Column editable="true" title="" type="java.lang.Object"/>
                       </Table>
@@ -339,7 +342,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -350,6 +353,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelProdutosMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="  Produtos  ">
@@ -391,14 +397,14 @@
                           <Component id="campoPesquisarProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelFiltrarProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlProduto" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -445,6 +451,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarProdutoMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarProdutoKeyTyped"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="pnRlProduto">
               <Properties>
@@ -519,7 +529,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarProdutos">
@@ -527,12 +537,14 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="maximumRowCount" type="int" value="3"/>
+                <Property name="maximumRowCount" type="int" value="5"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="5">
                     <StringItem index="0" value="Todos"/>
-                    <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="1" value="Produtos de loca&#xe7;&#xe3;o"/>
+                    <StringItem index="2" value="Produtos de venda"/>
+                    <StringItem index="3" value="&#xda;ltimos locados"/>
+                    <StringItem index="4" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -549,6 +561,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelFornecedoresMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Fornecedores">
@@ -590,7 +605,7 @@
                           <Component id="campoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelFiltrarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -644,6 +659,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarFornecedorMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarFornecedorKeyTyped"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="pnRlFornecedores">
               <Properties>
@@ -707,7 +726,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarFornecedores">
@@ -720,7 +739,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Todos"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -737,6 +756,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelLocacoesMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="  Loca&#xe7;&#xf5;es  ">
@@ -759,9 +781,9 @@
                           <Component id="pnRlFornecedores1" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="botaoNovaLocacao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoLocacoesAtrasadas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoLocacoesExtraviadas" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -788,14 +810,14 @@
                           <Component id="campoPesquisarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelFiltrarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="pnRlFornecedores1" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -841,6 +863,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarLocacaoMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarLocacaoKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="botaoLocacoesAtrasadas">
               <Properties>
@@ -932,7 +958,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarFornecedores1">
@@ -945,7 +971,7 @@
                   <StringArray count="3">
                     <StringItem index="0" value="Todas"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                    <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
@@ -962,6 +988,9 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelVendasMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="   Vendas   ">
@@ -1003,7 +1032,7 @@
                           <Component id="campoPesquisarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoPesquisarFornecedor1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelOrdenar1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="comboBoxOrdenarCliente1" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1055,6 +1084,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarVendaMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarVendaKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="comboBoxOrdenarCliente1">
               <Properties>
@@ -1138,7 +1171,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
           </SubComponents>
@@ -1163,26 +1196,28 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlCaixaERelatorios" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="31" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="botaoGerarRelatorio" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoFecharCaixa" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="botaoRegistrarDespesa" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="labelValorCaixa" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="campoValorCaixa" min="-2" pref="146" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pnRlCaixaERelatorios" min="-2" pref="1256" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="botaoGerarRelatorio" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="botaoFecharCaixa" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace pref="31" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -1193,10 +1228,11 @@
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoGerarRelatorio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoFecharCaixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoRegistrarDespesa" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -1207,14 +1243,14 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="pnRlCaixaERelatorios" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="botaoGerarRelatorio" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botaoFecharCaixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="124" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="pnRlCaixaERelatorios" min="-2" pref="359" max="-2" attributes="0"/>
+                      <EmptySpace pref="151" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1307,7 +1343,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Filtrar movimenta&#xe7;&#xe3;o por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="labelValorCaixa">
@@ -1332,10 +1368,11 @@
                 </Property>
                 <Property name="maximumRowCount" type="int" value="3"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
+                  <StringArray count="4">
                     <StringItem index="0" value="Ordem alfab&#xe9;tica"/>
                     <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
                     <StringItem index="2" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="3" value="Despesas"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar filtro"/>
@@ -1343,6 +1380,20 @@
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="botaoRegistrarDespesa">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Registrar Despesa"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor em Forma de M&#xe3;o"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRegistrarDespesaActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -1355,6 +1406,9 @@
               <Color id="Cursor Padr&#xe3;o"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelConfiguracoesMouseClicked"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Configura&#xe7;&#xe3;o">
@@ -1374,19 +1428,19 @@
                               <Component id="campoDiretorioContratos" min="-2" pref="454" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="botaoProcurarDiretorioContratos" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoSalvarDiretorioContratos" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="campoDiretorioBackup" min="-2" pref="454" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="botaoProcurarDiretorioBackup" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="botaoSalvarDiretorioBackup" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="labelDiretorioBackups" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="635" max="32767" attributes="0"/>
+                      <EmptySpace pref="647" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1409,7 +1463,7 @@
                           <Component id="botaoProcurarDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="botaoSalvarDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="466" max="32767" attributes="0"/>
+                      <EmptySpace pref="462" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1456,6 +1510,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioBackupMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioBackupKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelDiretorioBackups">
               <Properties>
@@ -1506,6 +1564,10 @@
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioContratosMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioContratosKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelDiretorioContratos">
               <Properties>
@@ -1523,6 +1585,13 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelAdministradorMouseClicked"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="}&#xa;} catch (UsuarioInexistenteException e) {&#xa;    setVisible(false);&#xa;    new LoginFrame().setVisible(true);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="try {&#xa;if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Administrador">
@@ -1537,21 +1606,17 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="botaoNovoUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="botaoNovoAdm" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="campoPesquisarAdm" min="-2" pref="454" max="-2" attributes="0"/>
+                              <Component id="campoPesquisarUsuario" min="-2" pref="454" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="botaoPesquisarAdm" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoPesquisarUsuario" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="pnRlAdministrador" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                          <Component id="pnRlUsuario" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelOrdenarAdm" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelOrdenarUsuario" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboBoxAdm" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboBoxUsuario" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="31" max="32767" attributes="0"/>
@@ -1562,44 +1627,41 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="botaoNovoAdm" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="campoPesquisarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="botaoPesquisarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="botaoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelOrdenarAdm" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboBoxAdm" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelOrdenarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboBoxUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="pnRlAdministrador" min="-2" pref="359" max="-2" attributes="0"/>
-                      <EmptySpace pref="91" max="32767" attributes="0"/>
+                      <Component id="pnRlUsuario" min="-2" pref="359" max="-2" attributes="0"/>
+                      <EmptySpace pref="97" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="botaoNovoAdm">
+            <Component class="javax.swing.JButton" name="botaoNovoUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Novo Administrador"/>
-                <Property name="toolTipText" type="java.lang.String" value="Criar novo administrador"/>
+                <Property name="text" type="java.lang.String" value="Novo Usu&#xe1;rio"/>
+                <Property name="toolTipText" type="java.lang.String" value="Criar novo usu&#xe1;rio"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoNovoAdmActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoNovoUsuarioActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="botaoPesquisarAdm">
+            <Component class="javax.swing.JButton" name="botaoPesquisarUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -1610,7 +1672,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campoPesquisarAdm">
+            <Component class="javax.swing.JTextField" name="campoPesquisarUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="2"/>
@@ -1618,14 +1680,18 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Pesquisar Administrador"/>
+                <Property name="text" type="java.lang.String" value="Pesquisar Usu&#xe1;rio"/>
                 <Property name="toolTipText" type="java.lang.String" value="Informe o nome do administrador"/>
                 <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarUsuarioMouseClicked"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarUsuarioKeyTyped"/>
+              </Events>
             </Component>
-            <Container class="javax.swing.JScrollPane" name="pnRlAdministrador">
+            <Container class="javax.swing.JScrollPane" name="pnRlUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -1637,7 +1703,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tabelaAdm">
+                <Component class="javax.swing.JTable" name="tabelaUsuario">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -1687,15 +1753,15 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="labelOrdenarAdm">
+            <Component class="javax.swing.JLabel" name="labelOrdenarUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ordenar por:"/>
+                <Property name="text" type="java.lang.String" value="Filtrar por:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="comboBoxAdm">
+            <Component class="javax.swing.JComboBox" name="comboBoxUsuario">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -1703,22 +1769,10 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
                     <StringItem index="0" value="Todos"/>
-                    <StringItem index="1" value="&#xda;ltimos cadastrados"/>
+                    <StringItem index="1" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
-                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                  <Color id="Cursor em Forma de M&#xe3;o"/>
-                </Property>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="14" style="0"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Novo Funcion&#xe1;rio"/>
-                <Property name="toolTipText" type="java.lang.String" value="Criar um novo funcion&#xe1;rio"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>

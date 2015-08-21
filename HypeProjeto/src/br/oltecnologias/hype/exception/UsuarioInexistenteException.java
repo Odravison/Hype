@@ -9,9 +9,9 @@ package br.oltecnologias.hype.exception;
  *
  * @author Odravison
  */
-public class AdministradorInexistenteException extends Exception {
+public class UsuarioInexistenteException extends Exception {
 
-    public AdministradorInexistenteException(String msg) {
+    public UsuarioInexistenteException(String msg) {
         super(msg);
     }
     

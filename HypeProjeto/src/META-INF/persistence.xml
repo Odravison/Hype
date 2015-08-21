@@ -3,17 +3,16 @@
   <persistence-unit name="hypepu" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>br.oltecnologias.hype.model.Medidas</class>
-    <class>br.oltecnologias.hype.model.Administrador</class>
     <class>br.oltecnologias.hype.model.Cliente</class>
     <class>br.oltecnologias.hype.model.Contrato</class>
     <class>br.oltecnologias.hype.model.Despesa</class>
-    <class>br.oltecnologias.hype.model.Empregado</class>
     <class>br.oltecnologias.hype.model.Empresa</class>
     <class>br.oltecnologias.hype.model.Endereco</class>
     <class>br.oltecnologias.hype.model.Fornecedor</class>
     <class>br.oltecnologias.hype.model.Locacao</class>
     <class>br.oltecnologias.hype.model.Produto</class>
     <class>br.oltecnologias.hype.model.Venda</class>
+    <class>br.oltecnologias.hype.model.Usuario</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:C:\Projeto\HypeProjeto\HypeProjeto\banco\database; shutdown=true"/>
       <property name="javax.persistence.jdbc.user" value="odravison"/>

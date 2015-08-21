@@ -9,9 +9,9 @@ package br.oltecnologias.hype.exception;
  *
  * @author Odravison
  */
-public class EmpregadoExistenteException extends Exception {
+public class UsuarioExistenteException extends Exception {
 
-    public EmpregadoExistenteException(String msg) {
+    public UsuarioExistenteException(String msg) {
         super(msg);
     }
     

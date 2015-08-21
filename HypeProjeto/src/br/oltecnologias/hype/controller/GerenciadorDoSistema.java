@@ -1,7 +1,7 @@
 package br.oltecnologias.hype.controller;
 
 import br.oltecnologias.hype.model.Despesa;
-import br.oltecnologias.hype.model.Administrador;
+import br.oltecnologias.hype.model.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -10,7 +10,7 @@ public class GerenciadorDoSistema {
 
     private float valorCaixaDiario;
     private List<Despesa> despesas;
-    private Administrador admLogado;
+    private Usuario admLogado;
     private static GerenciadorDoSistema singleton = null;
     
     private GerenciadorDoSistema(){

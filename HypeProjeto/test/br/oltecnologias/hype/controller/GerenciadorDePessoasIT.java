@@ -5,7 +5,7 @@
  */
 package br.oltecnologias.hype.controller;
 
-import br.oltecnologias.hype.model.Administrador;
+import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Empregado;
 import br.oltecnologias.hype.model.Endereco;
@@ -371,8 +371,8 @@ public class GerenciadorDePessoasIT {
     public void testGetAdministradores() {
         System.out.println("getAdministradores");
         GerenciadorDePessoas instance = null;
-        List<Administrador> expResult = null;
-        List<Administrador> result = instance.getAdministradores();
+        List<Usuario> expResult = null;
+        List<Usuario> result = instance.getUsuarios();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -384,9 +384,9 @@ public class GerenciadorDePessoasIT {
     @Test
     public void testSetAdministradores() {
         System.out.println("setAdministradores");
-        List<Administrador> administradores = null;
+        List<Usuario> administradores = null;
         GerenciadorDePessoas instance = null;
-        instance.setAdministradores(administradores);
+        instance.setUsuarios(administradores);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
