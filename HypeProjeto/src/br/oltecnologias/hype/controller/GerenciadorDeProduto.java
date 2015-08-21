@@ -4,19 +4,15 @@ import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
-import br.oltecnologias.hype.model.ProdutoDeLocacao;
-import br.oltecnologias.hype.model.ProdutoDeVenda;
 
 public class GerenciadorDeProduto {
 
-    private List<ProdutoDeVenda> produtosDeVenda;
-    private List<ProdutoDeLocacao> produtosDeLocacao;
+    private List<Produto> produtos;
     
     private static GerenciadorDeProduto singleton = null;
 
     private GerenciadorDeProduto() {
-        this.produtosDeLocacao = new ArrayList<ProdutoDeLocacao>();
-        this.produtosDeVenda = new ArrayList<ProdutoDeVenda>();
+        this.produtos = new ArrayList<Produto>();
     }
 
     public static GerenciadorDeProduto getInstance() {
@@ -48,7 +44,13 @@ public class GerenciadorDeProduto {
     }
 
     public List<Produto> pesquisarProdutosPeloNome(String nome) {
-        return null;
+        List<Produto> aux = new ArrayList<Produto>();
+        for (Produto p: this.produtos){
+            if (p.getNome().contains(nome)){
+                aux.add(p);
+            }
+        }
+        return aux;
     }
 
     /**
@@ -58,13 +60,7 @@ public class GerenciadorDeProduto {
      * @throws br.oltecnologias.hype.exception.ProdutoInexistenteException
      */
     public Produto pesquisarProduto(String codigo) throws ProdutoInexistenteException {
-        for (ProdutoDeVenda p : this.produtosDeVenda) {
-            if (p.getCodigo().equals(codigo)) {
-                return p;
-            }
-        }
-        
-        for (ProdutoDeLocacao p : this.produtosDeLocacao) {
+        for (Produto p : this.produtos) {
             if (p.getCodigo().equals(codigo)) {
                 return p;
             }
@@ -72,17 +68,13 @@ public class GerenciadorDeProduto {
         
         throw new ProdutoInexistenteException("Produto não cadastrado.");
     }
-    
-    public List<ProdutoDeVenda> getProdutosDeVenda() {
-        return this.produtosDeVenda;
+
+    public List<Produto> getProdutosDeLocacao() {
+        return produtos;
     }
 
-    public List<ProdutoDeLocacao> getProdutosDeLocacao() {
-        return produtosDeLocacao;
-    }
-
-    public void setProdutosDeLocacao(List<ProdutoDeLocacao> produtosDeLocacao) {
-        this.produtosDeLocacao = produtosDeLocacao;
+    public void setProdutosDeLocacao(List<Produto> produtos) {
+        this.produtos = produtos;
     }
     
 

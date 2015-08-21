@@ -1,7 +1,7 @@
 package br.oltecnologias.hype.controller;
 
+import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Venda;
-import br.oltecnologias.hype.model.ProdutoDeVenda;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +21,12 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public void realizarVenda(List<ProdutoDeVenda> produtos, float valor) {
+    public void realizarVenda(List<Produto> produtos, float valor) {
         Venda venda = new Venda(produtos, valor);
         this.vendas.add(venda);
-        
-
     }
 
     public List<Venda> listarVendas() {
         return this.vendas;
     }
-
-    public void carregarVendas() {
-        // Implementar método após definir banco de dados
-    }
-
 }

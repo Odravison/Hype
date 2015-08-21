@@ -27,7 +27,7 @@ import java.util.Locale;
 public class GeradorDeContrato {
 
     private static GeradorDeContrato singleton;
-    private List<ProdutoDeLocacao> produtos;
+    private List<Produto> produtos;
 
     public static GeradorDeContrato getInstance() {
         if (singleton == null) {
@@ -37,11 +37,11 @@ public class GeradorDeContrato {
     }
 
     private GeradorDeContrato() {
-        produtos = new ArrayList<ProdutoDeLocacao>();
+        produtos = new ArrayList<Produto>();
 
     }
 
-    public void gerarContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<ProdutoDeLocacao> produtos)
+    public void gerarContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<Produto> produtos)
             throws DocumentException, IOException, Exception {
         this.produtos = produtos;
         Document pdf = new Document();
@@ -129,7 +129,7 @@ public class GeradorDeContrato {
 
     private String getDescricaoDeProdutos() {
         String descCompleta = "";
-        for (ProdutoDeLocacao p: this.produtos) {
+        for (Produto p: this.produtos) {
             descCompleta += p.getDescricao() + "\n";
         }
                 

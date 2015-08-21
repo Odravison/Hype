@@ -40,6 +40,8 @@ public class Configuracao implements Serializable {
         }
         return singleton;
     }
+    
+    
 
     public Empresa getEmpresa() {
         return empresa;
@@ -96,5 +98,4 @@ public class Configuracao implements Serializable {
     public void setContratoOriginal(String contratoOriginal) {
         this.contratoOriginal = contratoOriginal;
     }
-
 }

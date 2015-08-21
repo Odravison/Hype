@@ -17,9 +17,9 @@ public class Venda implements Serializable {
     private int id;
     
     @OneToMany
-    private List<ProdutoDeVenda> produtos;
+    private List<Produto> produtos;
     
-    private float valor;
+    private double valor;
 
     public Venda() {
     }
@@ -29,7 +29,7 @@ public class Venda implements Serializable {
      * @param produtos
      * @param valor
      */
-    public Venda(List<ProdutoDeVenda> produtos, float valor) {
+    public Venda(List<Produto> produtos, double valor) {
         this.produtos = produtos;
         this.valor = valor;
     }
@@ -42,19 +42,19 @@ public class Venda implements Serializable {
         this.id = id;
     }
 
-    public List<ProdutoDeVenda> getProdutos() {
+    public List<Produto> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(List<ProdutoDeVenda> produtos) {
+    public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

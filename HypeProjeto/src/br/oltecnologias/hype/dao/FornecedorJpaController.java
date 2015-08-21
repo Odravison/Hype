@@ -6,7 +6,8 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
-import br.oltecnologias.hype.model.Medidas;
+import br.oltecnologias.hype.dao.exceptions.PreexistingEntityException;
+import br.oltecnologias.hype.model.Fornecedor;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,9 +21,9 @@ import javax.persistence.criteria.Root;
  *
  * @author Odravison
  */
-public class MedidasJpaController implements Serializable {
+public class FornecedorJpaController implements Serializable {
 
-    public MedidasJpaController(EntityManagerFactory emf) {
+    public FornecedorJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -31,13 +32,18 @@ public class MedidasJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Medidas medidas) {
+    public void create(Fornecedor fornecedor) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(medidas);
+            em.persist(fornecedor);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findFornecedor(fornecedor.getCnpj()) != null) {
+                throw new PreexistingEntityException("Fornecedor " + fornecedor + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -45,19 +51,19 @@ public class MedidasJpaController implements Serializable {
         }
     }
 
-    public void edit(Medidas medidas) throws NonexistentEntityException, Exception {
+    public void edit(Fornecedor fornecedor) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            medidas = em.merge(medidas);
+            fornecedor = em.merge(fornecedor);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = medidas.getId();
-                if (findMedidas(id) == null) {
-                    throw new NonexistentEntityException("The medidas with id " + id + " no longer exists.");
+                String id = fornecedor.getCnpj();
+                if (findFornecedor(id) == null) {
+                    throw new NonexistentEntityException("The fornecedor with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -68,19 +74,19 @@ public class MedidasJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Medidas medidas;
+            Fornecedor fornecedor;
             try {
-                medidas = em.getReference(Medidas.class, id);
-                medidas.getId();
+                fornecedor = em.getReference(Fornecedor.class, id);
+                fornecedor.getCnpj();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The medidas with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The fornecedor with id " + id + " no longer exists.", enfe);
             }
-            em.remove(medidas);
+            em.remove(fornecedor);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -89,19 +95,19 @@ public class MedidasJpaController implements Serializable {
         }
     }
 
-    public List<Medidas> findMedidasEntities() {
-        return findMedidasEntities(true, -1, -1);
+    public List<Fornecedor> findFornecedorEntities() {
+        return findFornecedorEntities(true, -1, -1);
     }
 
-    public List<Medidas> findMedidasEntities(int maxResults, int firstResult) {
-        return findMedidasEntities(false, maxResults, firstResult);
+    public List<Fornecedor> findFornecedorEntities(int maxResults, int firstResult) {
+        return findFornecedorEntities(false, maxResults, firstResult);
     }
 
-    private List<Medidas> findMedidasEntities(boolean all, int maxResults, int firstResult) {
+    private List<Fornecedor> findFornecedorEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Medidas.class));
+            cq.select(cq.from(Fornecedor.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -113,20 +119,20 @@ public class MedidasJpaController implements Serializable {
         }
     }
 
-    public Medidas findMedidas(int id) {
+    public Fornecedor findFornecedor(String id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Medidas.class, id);
+            return em.find(Fornecedor.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getMedidasCount() {
+    public int getFornecedorCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Medidas> rt = cq.from(Medidas.class);
+            Root<Fornecedor> rt = cq.from(Fornecedor.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

@@ -1,16 +1,8 @@
 package br.oltecnologias.hype.model;
 
-import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
 import javax.persistence.Entity;
@@ -29,8 +21,8 @@ public class Locacao implements Serializable {
     private Cliente cliente;
 
     @OneToMany
-    private List<ProdutoDeLocacao> produtos;
-    private float valor;
+    private List<Produto> produtos;
+    private double valor;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataLocacao;
@@ -44,7 +36,7 @@ public class Locacao implements Serializable {
     public Locacao() {
     }
 
-    public Locacao(Cliente cliente, List<ProdutoDeLocacao> produtos, float valor, Calendar dataLocacao) {
+    public Locacao(Cliente cliente, List<Produto> produtos, double valor, Calendar dataLocacao) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.valor = valor;
@@ -80,19 +72,19 @@ public class Locacao implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<ProdutoDeLocacao> getProdutos() {
+    public List<Produto> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(List<ProdutoDeLocacao> produtos) {
+    public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -112,7 +104,7 @@ public class Locacao implements Serializable {
 
     public String produtosToString() {
         String string = null;
-        for (ProdutoDeLocacao p : this.produtos) {
+        for (Produto p : this.produtos) {
             string += p.getDescricao();
         }
 

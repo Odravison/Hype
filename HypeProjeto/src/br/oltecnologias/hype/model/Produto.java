@@ -4,35 +4,33 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="PRODUTO")
-public abstract class Produto implements Serializable {
+public class Produto implements Serializable {
 
     @Id
     private String codigo;
     private String nome;
-    private float valor;
+    private double valor;
     private int quant;
     private int tam;
-    
-    @Column(name="FORNECEDOR", nullable=true)
+
+    @Column(name = "FORNECEDOR", nullable = true)
     private String forcenedor;
     private String cor;
 
     public Produto() {
     }
 
-    public Produto(String nome, float valor, int quant, String forcenedor, String cor, int tam) {
+    public Produto(String nome, double valor, int quant, String forcenedor, String cor, int tam) {
         this.nome = nome;
         this.valor = valor;
         this.quant = quant;
         this.tam = tam;
         this.forcenedor = forcenedor;
         this.cor = cor;
-    }   
-    
+    }
+
     public String getCodigo() {
         return codigo;
     }
@@ -53,11 +51,11 @@ public abstract class Produto implements Serializable {
         return this.nome + " - Tam: " + this.tam + " " + this.cor + " - R$ " + this.valor;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -84,12 +82,12 @@ public abstract class Produto implements Serializable {
     public void setCor(String cor) {
         this.cor = cor;
     }
-       
+
     public void addQuant(int add) {
         this.quant += add;
     }
-        
-    public void removerQuant(int add){
+
+    public void removerQuant(int add) {
         this.quant -= add;
     }
 
@@ -100,4 +98,5 @@ public abstract class Produto implements Serializable {
     public void setTam(int tam) {
         this.tam = tam;
     }
+
 }

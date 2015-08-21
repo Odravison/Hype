@@ -5,7 +5,6 @@ import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Produto;
-import br.oltecnologias.hype.model.ProdutoDeLocacao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -26,7 +25,7 @@ public class GerenciadorDeLocacao {
         return singleton;
     }
 
-    public void realizarLocacao(Cliente cliente, List<ProdutoDeLocacao> produtos, Calendar dataLocacao, float valor) throws ProdutoInexistenteException {
+    public void realizarLocacao(Cliente cliente, List<Produto> produtos, Calendar dataLocacao, float valor) throws ProdutoInexistenteException {
         Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao);
         cliente.adicionarLocacao(locacao);
         this.locacoes.add(locacao);
