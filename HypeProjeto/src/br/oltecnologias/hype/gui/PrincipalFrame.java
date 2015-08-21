@@ -137,8 +137,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("hype!");
         setName(""); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1366, 768));
-        setSize(new java.awt.Dimension(1366, 768));
+        setPreferredSize(new java.awt.Dimension(1366, 730));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1366, 730));
 
         labelLogoEmpresa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
