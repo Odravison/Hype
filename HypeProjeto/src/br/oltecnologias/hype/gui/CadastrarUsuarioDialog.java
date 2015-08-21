@@ -9,12 +9,12 @@ package br.oltecnologias.hype.gui;
  *
  * @author Luender Lima
  */
-public class CadastrarAdministradorDialog extends java.awt.Dialog {
+public class CadastrarUsuarioDialog extends java.awt.Dialog {
 
     /**
      * Creates new form CadastrarAdministradorDialog
      */
-    public CadastrarAdministradorDialog(java.awt.Frame parent, boolean modal) {
+    public CadastrarUsuarioDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -52,7 +52,7 @@ public class CadastrarAdministradorDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastrarAdministradorDialog dialog = new CadastrarAdministradorDialog(new java.awt.Frame(), true);
+                CadastrarUsuarioDialog dialog = new CadastrarUsuarioDialog(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

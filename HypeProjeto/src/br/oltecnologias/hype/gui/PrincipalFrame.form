@@ -273,7 +273,7 @@
                     <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
@@ -547,7 +547,7 @@
                     <StringItem index="4" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
@@ -742,7 +742,7 @@
                     <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
@@ -974,7 +974,7 @@
                     <StringItem index="2" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
@@ -1102,7 +1102,7 @@
                     <StringItem index="2" value="Valor"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
@@ -1375,7 +1375,7 @@
                     <StringItem index="3" value="Despesas"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar filtro"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>
@@ -1681,7 +1681,7 @@
                   <Color blue="99" green="99" red="99" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Pesquisar Usu&#xe1;rio"/>
-                <Property name="toolTipText" type="java.lang.String" value="Informe o nome do administrador"/>
+                <Property name="toolTipText" type="java.lang.String" value="Informe o nome do usu&#xe1;rio"/>
                 <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="cc" green="cc" red="cc" type="rgb"/>
                 </Property>
@@ -1772,7 +1772,7 @@
                     <StringItem index="1" value="&#xda;ltimos cadastros"/>
                   </StringArray>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de ordena&#xe7;&#xe3;o"/>
+                <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Cursor em Forma de M&#xe3;o"/>
                 </Property>

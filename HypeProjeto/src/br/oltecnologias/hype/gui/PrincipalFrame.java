@@ -230,7 +230,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarCliente.setMaximumRowCount(3);
         comboBoxOrdenarCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos locatários", "Últimos cadastros" }));
-        comboBoxOrdenarCliente.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxOrdenarCliente.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -367,7 +367,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarProdutos.setMaximumRowCount(5);
         comboBoxOrdenarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Produtos de locação", "Produtos de venda", "Últimos locados", "Últimos cadastros" }));
-        comboBoxOrdenarProdutos.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxOrdenarProdutos.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
@@ -477,7 +477,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarFornecedores.setMaximumRowCount(3);
         comboBoxOrdenarFornecedores.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos locatários", "Últimos cadastros" }));
-        comboBoxOrdenarFornecedores.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxOrdenarFornecedores.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout painelFornecedoresLayout = new javax.swing.GroupLayout(painelFornecedores);
@@ -596,7 +596,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarFornecedores1.setMaximumRowCount(3);
         comboBoxOrdenarFornecedores1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimos locatários", "Últimos cadastros" }));
-        comboBoxOrdenarFornecedores1.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxOrdenarFornecedores1.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarFornecedores1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout painelLocacoesLayout = new javax.swing.GroupLayout(painelLocacoes);
@@ -685,7 +685,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarCliente1.setMaximumRowCount(3);
         comboBoxOrdenarCliente1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimas vendas", "Valor" }));
-        comboBoxOrdenarCliente1.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxOrdenarCliente1.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarCliente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         pnRlCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -802,7 +802,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarCaixaEMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarCaixaEMovimentacao.setMaximumRowCount(3);
         comboBoxOrdenarCaixaEMovimentacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ordem alfabética", "Últimos locatários", "Últimos cadastrados", "Despesas" }));
-        comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar filtro");
+        comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1012,7 +1012,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisarUsuario.setForeground(new java.awt.Color(153, 153, 153));
         campoPesquisarUsuario.setText("Pesquisar Usuário");
-        campoPesquisarUsuario.setToolTipText("Informe o nome do administrador");
+        campoPesquisarUsuario.setToolTipText("Informe o nome do usuário");
         campoPesquisarUsuario.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoPesquisarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1054,7 +1054,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         comboBoxUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
-        comboBoxUsuario.setToolTipText("Selecionar tipo de ordenação");
+        comboBoxUsuario.setToolTipText("Selecionar tipo de filtro");
         comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
@@ -1175,7 +1175,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
 
     private void botaoNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoUsuarioActionPerformed
-        Dialog dialog = new CadastrarAdministradorDialog(new java.awt.Frame(), true);
+        Dialog dialog = new CadastrarUsuarioDialog(new java.awt.Frame(), true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
