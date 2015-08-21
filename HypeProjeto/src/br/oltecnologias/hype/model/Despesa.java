@@ -30,7 +30,7 @@ public class Despesa implements Serializable {
     }
 
     public Despesa() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     public int getId() {

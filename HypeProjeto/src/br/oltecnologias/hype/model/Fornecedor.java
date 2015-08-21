@@ -1,52 +1,39 @@
 package br.oltecnologias.hype.model;
 
-import java.util.List;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
+@DiscriminatorValue("2")
 public class Fornecedor extends Pessoa {
-    
-    @Id
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fornecedor_id_cnpj")
     private String cnpj;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fornecedor_id_endereco")
     private Endereco endereco;
-    
-    @OneToMany
-    private List<String> telefones;
-    
-    public Fornecedor(String cnpj, Endereco end, List<String> telefones, String nome){
+    private String telefone;
+
+    public Fornecedor(String cnpj, Endereco end, String telefones, String nome) {
         super(nome);
         this.cnpj = cnpj;
         this.endereco = end;
-        this.telefones = telefones;
+        this.telefone = telefone;
     }
-    
-    public Fornecedor(){
-        
+
+    public Fornecedor() {
+
     }
 
     @Override
     public String getDescricao() {
         return "CPJ: " + this.cnpj + "\n"
                 + "Endereco: " + this.endereco.toString() + "\n "
-                + "Telefones:  " + this.telefoneToStringEmLista();
-    }
-    
-    public String telefoneToStringEmLista(){
-        String telefones = "";
-        for (String s: this.telefones){
-                    telefones += s.toString() + "\n";
-                }
-        return telefones;
-    }
-    
-    public String telefoneToString(){
-        String telefones = "";
-        for (String s: this.telefones){
-                    telefones += s.toString() + ", ";
-                }
-        return telefones;
+                + "Telefone:  " + this.telefone;
     }
 
     public String getCnpj() {
@@ -65,11 +52,12 @@ public class Fornecedor extends Pessoa {
         this.endereco = endereco;
     }
 
-    public List<String> getTelefones() {
-        return telefones;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setTelefones(List<String> telefones) {
-        this.telefones = telefones;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
+
 }

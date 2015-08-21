@@ -2,6 +2,7 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -10,9 +11,11 @@ import javax.persistence.OneToOne;
 public class Configuracao implements Serializable {
     
     @Id
-    private int id = 1;
+    private int id;
     
-    @OneToOne
+    private String nomeDaImpressora;
+    
+    @OneToOne(cascade = {CascadeType.ALL})
     private Empresa empresa = null;
     
     private String contratoOriginal = "Terni Vellucci , inscrita no CNPJ/22.833.691/0001-47, Av.Presidente Epitácio Pessoa, Nº 2400 doravante denominada “Terni Vellucci”, neste ato representada na Forma de seu contrato social e de outro lado o contratante denominado de “LOCADOR”, resolvem celebrar o presente contrato de locação, nas seguintes condições:\n"
@@ -27,10 +30,9 @@ public class Configuracao implements Serializable {
     private String diretorioDeContratos = null;
     private String diretorioDeBackup = null;
     
-    @OneToOne
     private static Configuracao singleton = null;
 
-    private Configuracao(){
+    public Configuracao(){
         
     }
     
@@ -75,14 +77,6 @@ public class Configuracao implements Serializable {
         this.diretorioDeBackup = diretorioDeBackup;
     }
 
-    public static Configuracao getSingleton() {
-        return singleton;
-    }
-
-    public static void setSingleton(Configuracao singleton) {
-        Configuracao.singleton = singleton;
-    }
-
     public int getId() {
         return id;
     }
@@ -98,4 +92,24 @@ public class Configuracao implements Serializable {
     public void setContratoOriginal(String contratoOriginal) {
         this.contratoOriginal = contratoOriginal;
     }
+
+    public String getNomeDaImpressora() {
+        return nomeDaImpressora;
+    }
+
+    public void setNomeDaImpressora(String nomeDaImpressora) {
+        this.nomeDaImpressora = nomeDaImpressora;
+    }
+
+    public static Configuracao getSingleton() {
+        return singleton;
+    }
+
+    public static void setSingleton(Configuracao singleton) {
+        Configuracao.singleton = singleton;
+    }
+    
+    
+    
+    
 }

@@ -12,6 +12,7 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -39,6 +40,23 @@ public class GeradorDeContrato {
     private GeradorDeContrato() {
         produtos = new ArrayList<Produto>();
 
+    }
+    
+    public void imprimirContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<Produto> produtos) throws IOException, Exception{
+        
+        gerarContrato(cliente, dataLocacao, dataDevolucao, produtos);
+        String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
+        String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(dataLocacao.getTime());
+        
+        String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
+                    + "\\" + cliente.getNome()+ "\\" + "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
+        
+        
+        FileInputStream fis = new FileInputStream(diretorio);
+        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao +".pdf", "RICOH Class Driver");
+
+        printPDFFile.print();
+        
     }
 
     public void gerarContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<Produto> produtos)

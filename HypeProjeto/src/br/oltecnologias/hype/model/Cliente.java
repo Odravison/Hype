@@ -1,41 +1,41 @@
 package br.oltecnologias.hype.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
+@DiscriminatorValue("1")
 public class Cliente extends Pessoa {
-    
-    @Id
-    @GeneratedValue
-    private int id;
-    
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cliente_id_cpf")
     private String cpf;
-    
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar ultimaMedicao;
-    
+
     @OneToOne
     private Endereco endereco;
-    
+
     @OneToOne
     private Medidas medidas;
     private String rg;
-    
+
     @Column(nullable = true)
     private String telefone;
-    
+
     private String celular;
-    
+
     @OneToMany
     private List<Locacao> locacoes;
 
@@ -53,7 +53,7 @@ public class Cliente extends Pessoa {
         this.locacoes = new ArrayList<Locacao>();
         this.ultimaMedicao = Calendar.getInstance();
     }
-    
+
     @Override
     public String getDescricao() {
         return "Cliente: " + super.getNome() + "\n"
@@ -142,13 +142,4 @@ public class Cliente extends Pessoa {
         this.locacoes = locacoes;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    
-    
 }

@@ -1,12 +1,20 @@
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario extends Pessoa {
+public class Usuario implements Serializable {
+    
+    private String nome;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id_usuario")
     private String nickName;
     private String senha;
     private boolean isAdministrador;
@@ -15,16 +23,10 @@ public class Usuario extends Pessoa {
     }
 
     public Usuario(String nome, String nickName, String senha, boolean isAdministrador) {
-        super(nome);
+        this.nome = nome;
         this.senha = senha;
         this.nickName = nickName;
         this.isAdministrador = isAdministrador;
-    }
-
-    @Override
-    public String getDescricao() {
-        return "Nome: " + super.getNome() + "\n"
-                + "Usuário: " + this.nickName;
     }
 
     public String getSenha() {
@@ -42,7 +44,7 @@ public class Usuario extends Pessoa {
     public String getNickName() {
         return nickName;
     }
-    
+
     public boolean isAdministrador() {
         return isAdministrador;
     }
@@ -51,4 +53,11 @@ public class Usuario extends Pessoa {
         this.isAdministrador = isAdministrador;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

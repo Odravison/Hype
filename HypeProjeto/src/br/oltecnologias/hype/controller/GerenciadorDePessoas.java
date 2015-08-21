@@ -123,23 +123,23 @@ public class GerenciadorDePessoas {
         throw new UsuarioInexistenteException("Administrador não cadastrado.");
     }
 
-    public void cadastrarFornecedor(String cnpj, Endereco endereco, List<String> telefones, String nome) throws FornecedorExistenteException {
+    public void cadastrarFornecedor(String cnpj, Endereco endereco, String telefone, String nome) throws FornecedorExistenteException {
         for (Fornecedor f : this.fornecedores) {
             if (f.getCnpj().equals(cnpj)) {
                 throw new FornecedorExistenteException("O CNPJ em questão já foi cadastrado.");
             }
         }
-        Fornecedor f = new Fornecedor(cnpj, endereco, telefones, nome);
+        Fornecedor f = new Fornecedor(cnpj, endereco, telefone, nome);
         this.fornecedores.add(f);
     }
 
-    public void editarFornecedor(String cnpjAntigo, String cnpjNovo, Endereco endereco, List<String> telefones, String nome) throws FornecedorInexistenteException {
+    public void editarFornecedor(String cnpjAntigo, String cnpjNovo, Endereco endereco, String telefone, String nome) throws FornecedorInexistenteException {
         for (Fornecedor f : this.fornecedores) {
             if (f.getCnpj().equals(cnpjAntigo)) {
                 f.setCnpj(cnpjNovo);
                 f.setEndereco(endereco);
                 f.setNome(nome);
-                f.setTelefones(telefones);
+                f.setTelefone(telefone);
                 return;
             }
         }
