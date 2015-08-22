@@ -34,7 +34,7 @@ public class GerenciadorDeProduto {
             Produto p = pesquisarProduto(codigo);
             p.setCor(cor);
             p.setTam(tam);
-            p.setForcenedor(fornecedor);
+            p.setFornecedor(fornecedor);
             p.setNome(nome);
             p.setValor(valor);
             

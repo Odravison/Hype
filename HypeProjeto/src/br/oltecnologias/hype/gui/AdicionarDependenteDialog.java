@@ -7,14 +7,14 @@ package br.oltecnologias.hype.gui;
 
 /**
  *
- * @author Luender Lima
+ * @author Cliente
  */
-public class CadastrarProdutoDialog extends java.awt.Dialog {
+public class AdicionarDependenteDialog extends java.awt.Dialog {
 
     /**
-     * Creates new form CadastrarProdutoDialog
+     * Creates new form AdicionarDependenteDialog
      */
-    public CadastrarProdutoDialog(java.awt.Frame parent, boolean modal) {
+    public AdicionarDependenteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -27,25 +27,44 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(672, 671));
+        painelGeral = new javax.swing.JPanel();
+
         setResizable(false);
-        setTitle("Cadastrar Produto");
+        setTitle("Adicionar Dependente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
 
+        painelGeral.setBackground(new java.awt.Color(255, 255, 255));
+
+        javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+        painelGeral.setLayout(painelGeralLayout);
+        painelGeralLayout.setHorizontalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 501, Short.MAX_VALUE)
+        );
+        painelGeralLayout.setVerticalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 507, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 672, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(236, 236, 236)
+                .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(272, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 671, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(144, 144, 144)
+                .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(278, Short.MAX_VALUE))
         );
 
         pack();
@@ -65,7 +84,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastrarProdutoDialog dialog = new CadastrarProdutoDialog(new java.awt.Frame(), true);
+                AdicionarDependenteDialog dialog = new AdicionarDependenteDialog(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -78,5 +97,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel painelGeral;
     // End of variables declaration//GEN-END:variables
 }
