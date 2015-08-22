@@ -9,6 +9,7 @@ import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
+import java.awt.Dialog;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -28,6 +29,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         initComponents();
         botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        botaoAdicionarDependente.setIcon(new ImageIcon("Imagens\\Mais.png"));
     }
 
     /**
@@ -59,6 +61,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         campoCpf = new javax.swing.JFormattedTextField();
         campoCel = new javax.swing.JFormattedTextField();
         campoTelefone = new javax.swing.JFormattedTextField();
+        botaoAdicionarDependente = new javax.swing.JLabel();
         painelMedidas = new javax.swing.JPanel();
         labelTraje = new javax.swing.JLabel();
         labelCalca = new javax.swing.JLabel();
@@ -85,7 +88,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         setPreferredSize(new java.awt.Dimension(672, 671));
         setResizable(false);
         setSize(new java.awt.Dimension(676, 671));
-        setTitle("Cadastro de cliente");
+        setTitle("Cadastro de Cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -184,7 +187,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                         .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(labelUf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -241,6 +244,14 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         }
         campoTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        botaoAdicionarDependente.setToolTipText("Adicionar Dependente");
+        botaoAdicionarDependente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAdicionarDependente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoAdicionarDependenteMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelDadosPessoaisLayout = new javax.swing.GroupLayout(painelDadosPessoais);
         painelDadosPessoais.setLayout(painelDadosPessoaisLayout);
         painelDadosPessoaisLayout.setHorizontalGroup(
@@ -248,17 +259,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
                         .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                                .addComponent(labelTelResidencial)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(96, 96, 96)
-                                .addComponent(labelCel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(painelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
                                 .addComponent(labelNome)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -267,8 +270,18 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                                 .addComponent(labelCpf)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                        .addComponent(labelTelResidencial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(labelCel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoAdicionarDependente)
+                        .addGap(29, 29, 29))))
         );
         painelDadosPessoaisLayout.setVerticalGroup(
             painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,13 +299,14 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                     .addComponent(labelTelResidencial)
                     .addComponent(labelCel)
                     .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAdicionarDependente))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelMedidas.setBackground(new java.awt.Color(255, 255, 255));
         painelMedidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidas"));
-        painelMedidas.setPreferredSize(new java.awt.Dimension(622, 218));
+        painelMedidas.setPreferredSize(new java.awt.Dimension(635, 238));
 
         labelTraje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTraje.setText("Traje:*");
@@ -414,18 +428,17 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                                 .addGap(65, 65, 65)
                                 .addComponent(labelCamisa)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoCamisa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(campoCamisa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(painelMedidasLayout.createSequentialGroup()
                         .addComponent(labelObservacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scPnObservacao)
-                        .addContainerGap())))
+                        .addComponent(scPnObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelMedidasLayout.setVerticalGroup(
             painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelMedidasLayout.createSequentialGroup()
-                .addContainerGap(29, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelCalca)
                     .addComponent(labelBlazer)
@@ -447,7 +460,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelObservacao)
                     .addComponent(scPnObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -480,13 +493,13 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
-                    .addComponent(painelDadosPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelMedidas, javax.swing.GroupLayout.DEFAULT_SIZE, 619, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(painelDadosPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(painelMedidas, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -494,7 +507,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGap(22, 22, 22)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
-                .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -508,11 +521,11 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
         );
 
         pack();
@@ -599,6 +612,12 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         }
         
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void botaoAdicionarDependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarDependenteMouseClicked
+        Dialog adicionarDependente = new AdicionarDependenteDialog(new java.awt.Frame(), true);
+        adicionarDependente.setLocationRelativeTo(null);
+        adicionarDependente.setVisible(true);
+    }//GEN-LAST:event_botaoAdicionarDependenteMouseClicked
     
     private void validarLetras(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -632,6 +651,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private int maxCaracteresObs = 250;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
+    private javax.swing.JLabel botaoAdicionarDependente;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoBairro;
