@@ -8,26 +8,18 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import java.awt.Dialog;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
  *
- * @author Luender Lima
+ * @author Cliente
  */
 public class PrincipalFrame extends javax.swing.JFrame {
-    
+
+    private String loginUsuario;
+
     /**
-     * Contrutor vazio da frame
-     */
-    public PrincipalFrame() {
-        initComponents();
-    }
-    
-    /**
-     * Cria um nov form PrincipalFrame
-     * @param login
+     * Cria um novo form PrincipalFrame
      */
     public PrincipalFrame(String login) {
         loginUsuario = login;
@@ -35,20 +27,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
         
         labelNomeLogin.setText("Logado com " + login);
         labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\mini-logo-wide.png"));
-        //labelLogoSistema.setIcon(new ImageIcon("Imagens\\Mini logo hype!.png"));
-        /*try {
-            System.out.println(GerenciadorDePessoas.getInstance().isAdministrador(login));
-            if (!GerenciadorDePessoas.getInstance().isAdministrador(login)) {
-                painelAdministrador.setVisible(false);
-            }
-            System.out.println(painelAdministrador.isVisible());
-        } catch (UsuarioInexistenteException e) {
-            setVisible(false);
-            new LoginFrame().setVisible(true);
-        }*/
-               
+        botaoSair.setIcon(new ImageIcon("Imagens\\Sair do sistema.png"));
+        //labelLogoSistema.setIcon(new ImageIcon("Imagens\\.png"));
     }
-    
+
+    /**
+     * Creates new form PrinFrame
+     */
+    public PrincipalFrame() {
+        initComponents();
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -58,11 +47,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        painelGeral = new javax.swing.JPanel();
         painelTopo = new javax.swing.JPanel();
         labelLogoEmpresa = new javax.swing.JLabel();
-        botaoSair = new javax.swing.JButton();
         labelNomeLogin = new javax.swing.JLabel();
         labelLogoSistema = new javax.swing.JLabel();
+        botaoSair = new javax.swing.JLabel();
         abas = new javax.swing.JTabbedPane();
         painelClientes = new javax.swing.JPanel();
         botaoNovoCliente = new javax.swing.JButton();
@@ -135,23 +125,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxUsuario = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("hype!");
-        setName(""); // NOI18N
         setPreferredSize(new java.awt.Dimension(1366, 730));
         setResizable(false);
-        setSize(new java.awt.Dimension(1366, 730));
+
+        painelGeral.setBackground(new java.awt.Color(255, 255, 255));
+        painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
+
+        painelTopo.setBackground(new java.awt.Color(255, 255, 255));
 
         labelLogoEmpresa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
-        botaoSair.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        botaoSair.setText("Sair");
-        botaoSair.setToolTipText("Sair do sistema");
+        botaoSair.setToolTipText("Sair do Sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSairActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout painelTopoLayout = new javax.swing.GroupLayout(painelTopo);
         painelTopo.setLayout(painelTopoLayout);
@@ -162,9 +147,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(labelLogoEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelLogoSistema)
-                .addGap(18, 18, 18)
-                .addComponent(botaoSair)
-                .addGap(3, 3, 3))
+                .addGap(38, 38, 38)
+                .addComponent(botaoSair))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelNomeLogin)
@@ -178,7 +162,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(8, 8, 8))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(26, Short.MAX_VALUE)
                 .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelNomeLogin, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(botaoSair, javax.swing.GroupLayout.Alignment.TRAILING)))
@@ -186,10 +170,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         abas.setBackground(new java.awt.Color(255, 255, 255));
         abas.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(255, 255, 255), new java.awt.Color(153, 153, 153)));
-        abas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        abas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         abas.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         painelClientes.setBackground(new java.awt.Color(255, 255, 255));
+        painelClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         painelClientes.setPreferredSize(new java.awt.Dimension(1311, 735));
         painelClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -301,6 +286,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("  Clientes  ", painelClientes);
 
         painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
+        painelProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 painelProdutosMouseClicked(evt);
@@ -405,12 +391,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         abas.addTab("  Produtos  ", painelProdutos);
 
         painelFornecedores.setBackground(new java.awt.Color(255, 255, 255));
+        painelFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 painelFornecedoresMouseClicked(evt);
@@ -521,6 +508,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("Fornecedores", painelFornecedores);
 
         painelLocacoes.setBackground(new java.awt.Color(255, 255, 255));
+        painelLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 painelLocacoesMouseClicked(evt);
@@ -642,12 +630,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         abas.addTab("  Locações  ", painelLocacoes);
 
         painelVendas.setBackground(new java.awt.Color(255, 255, 255));
+        painelVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelVendas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 painelVendasMouseClicked(evt);
@@ -756,6 +745,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         abas.addTab("   Vendas   ", painelVendas);
 
         painelCaixaERelatorios.setBackground(new java.awt.Color(255, 255, 255));
+        painelCaixaERelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         botaoGerarRelatorio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoGerarRelatorio.setText("Gerar Relatório");
@@ -863,7 +853,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(151, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         abas.addTab("Relatório e Caixa", painelCaixaERelatorios);
@@ -984,12 +974,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(campoDiretorioContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoProcurarDiretorioContratos)
                     .addComponent(botaoSalvarDiretorioContratos))
-                .addContainerGap(462, Short.MAX_VALUE))
+                .addContainerGap(438, Short.MAX_VALUE))
         );
 
         abas.addTab("Configuração", painelConfiguracoes);
 
         painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
+        painelAdministrador.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 painelAdministradorMouseClicked(evt);
@@ -1092,7 +1083,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         try {
@@ -1105,85 +1096,48 @@ public class PrincipalFrame extends javax.swing.JFrame {
             new LoginFrame().setVisible(true);
         }
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+        painelGeral.setLayout(painelGeralLayout);
+        painelGeralLayout.setHorizontalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelGeralLayout.createSequentialGroup()
                 .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(abas)
                     .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+        painelGeralLayout.setVerticalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelGeralLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
                 .addContainerGap())
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoClienteActionPerformed
-        Dialog dialog = new CadastrarClienteDialog(new java.awt.Frame(), true);
+        Dialog dialog = new CadastrarClienteDialog(this, true);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoNovoClienteActionPerformed
-
-    private void botaoNovoFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoFornecedorActionPerformed
-        Dialog dialog = new CadastrarFornecedorDialog(new java.awt.Frame(), true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_botaoNovoFornecedorActionPerformed
-
-    private void botaoNovoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoProdutoActionPerformed
-        Dialog dialog = new CadastrarProdutoDialog(new java.awt.Frame(), true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_botaoNovoProdutoActionPerformed
-
-    private void botaoNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaVendaActionPerformed
-        Dialog dialog = new RealizarVendaDialog(new java.awt.Frame(), true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_botaoNovaVendaActionPerformed
-
-    private void botaoNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaLocacaoActionPerformed
-        Dialog dialog = new RealizarLocacaoDialog(new java.awt.Frame(), true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
-
-    private void botaoLocacoesAtrasadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLocacoesAtrasadasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoLocacoesAtrasadasActionPerformed
-
-    private void botaoLocacoesExtraviadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLocacoesExtraviadasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoLocacoesExtraviadasActionPerformed
-
-    private void botaoGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarRelatorioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoGerarRelatorioActionPerformed
-
-    private void botaoSalvarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioBackupActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
-
-    private void botaoNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoUsuarioActionPerformed
-        Dialog dialog = new CadastrarUsuarioDialog(new java.awt.Frame(), true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
-    }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
-
-    private void botaoSalvarDiretorioContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioContratosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoSalvarDiretorioContratosActionPerformed
 
     private void campoPesquisarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarClienteMouseClicked
         if(campoPesquisarCliente.getText().equals("Pesquisar Cliente")) {
@@ -1191,10 +1145,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoPesquisarClienteMouseClicked
 
-    private void botaoSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSairActionPerformed
-        setVisible(false);
-        new LoginFrame().setVisible(true);  
-    }//GEN-LAST:event_botaoSairActionPerformed
+    private void campoPesquisarClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarClienteKeyTyped
+        if(campoPesquisarCliente.getText().equals("Pesquisar Cliente")) {
+            eliminarTextoDeCampo(campoPesquisarCliente);
+        }
+    }//GEN-LAST:event_campoPesquisarClienteKeyTyped
 
     private void painelClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelClientesMouseClicked
         if(campoPesquisarCliente.getText().length() <= 0) {
@@ -1202,21 +1157,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_painelClientesMouseClicked
 
-    private void botaoRegistrarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarDespesaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
-
-    private void campoPesquisarProdutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoKeyTyped
-        if(campoPesquisarProduto.getText().equals("Pesquisar Produto")) {
-            eliminarTextoDeCampo(campoPesquisarProduto);
-        }
-    }//GEN-LAST:event_campoPesquisarProdutoKeyTyped
-
-    private void campoPesquisarClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarClienteKeyTyped
-        if(campoPesquisarCliente.getText().equals("Pesquisar Cliente")) {
-            eliminarTextoDeCampo(campoPesquisarCliente);
-        }
-    }//GEN-LAST:event_campoPesquisarClienteKeyTyped
+    private void botaoNovoProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoProdutoActionPerformed
+        Dialog dialog = new CadastrarProdutoDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoNovoProdutoActionPerformed
 
     private void campoPesquisarProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoMouseClicked
         if(campoPesquisarProduto.getText().equals("Pesquisar Produto")) {
@@ -1224,11 +1169,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoPesquisarProdutoMouseClicked
 
+    private void campoPesquisarProdutoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarProdutoKeyTyped
+        if(campoPesquisarProduto.getText().equals("Pesquisar Produto")) {
+            eliminarTextoDeCampo(campoPesquisarProduto);
+        }
+    }//GEN-LAST:event_campoPesquisarProdutoKeyTyped
+
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
         if(campoPesquisarProduto.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarProduto, "Pesquisar Produto");
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
+
+    private void botaoNovoFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoFornecedorActionPerformed
+        Dialog dialog = new CadastrarFornecedorDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoNovoFornecedorActionPerformed
 
     private void campoPesquisarFornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarFornecedorMouseClicked
         if(campoPesquisarFornecedor.getText().equals("Pesquisar Fornecedor")) {
@@ -1248,6 +1205,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_painelFornecedoresMouseClicked
 
+    private void botaoNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaLocacaoActionPerformed
+        Dialog dialog = new RealizarLocacaoDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
+
     private void campoPesquisarLocacaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarLocacaoMouseClicked
         if(campoPesquisarLocacao.getText().equals("Pesquisar Locação")) {
             eliminarTextoDeCampo(campoPesquisarLocacao);
@@ -1260,11 +1223,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoPesquisarLocacaoKeyTyped
 
+    private void botaoLocacoesAtrasadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLocacoesAtrasadasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoLocacoesAtrasadasActionPerformed
+
+    private void botaoLocacoesExtraviadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLocacoesExtraviadasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoLocacoesExtraviadasActionPerformed
+
     private void painelLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocacoesMouseClicked
         if(campoPesquisarLocacao.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarLocacao, "Pesquisar Locação");
         }
     }//GEN-LAST:event_painelLocacoesMouseClicked
+
+    private void botaoNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaVendaActionPerformed
+        Dialog dialog = new RealizarVendaDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoNovaVendaActionPerformed
 
     private void campoPesquisarVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarVendaMouseClicked
         if(campoPesquisarVenda.getText().equals("Pesquisar Venda")) {
@@ -1284,6 +1261,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_painelVendasMouseClicked
 
+    private void botaoGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarRelatorioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoGerarRelatorioActionPerformed
+
+    private void botaoRegistrarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarDespesaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
+
+    private void botaoSalvarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioBackupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
+
     private void campoDiretorioBackupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioBackupMouseClicked
         if(campoDiretorioBackup.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioBackup);
@@ -1295,6 +1284,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
             eliminarTextoDeCampo(campoDiretorioBackup);
         }
     }//GEN-LAST:event_campoDiretorioBackupKeyTyped
+
+    private void botaoSalvarDiretorioContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioContratosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoSalvarDiretorioContratosActionPerformed
 
     private void campoDiretorioContratosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioContratosMouseClicked
         if(campoDiretorioContratos.getText().equals("Caminho do diretório")) {
@@ -1316,6 +1309,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoDiretorioContratos, "Caminho do diretório");
         }
     }//GEN-LAST:event_painelConfiguracoesMouseClicked
+
+    private void botaoNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoUsuarioActionPerformed
+        Dialog dialog = new CadastrarUsuarioDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
 
     private void campoPesquisarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarUsuarioMouseClicked
         if(campoPesquisarUsuario.getText().equals("Pesquisar Usuário")) {
@@ -1346,7 +1345,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campo.setForeground(new java.awt.Color(153, 153, 153));
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
-    
     /**
      * @param args the command line arguments
      */
@@ -1373,6 +1371,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -1381,8 +1380,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
     }
-    
-    private String loginUsuario;
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abas;
     private javax.swing.JButton botaoFecharCaixa;
@@ -1404,7 +1402,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoProcurarDiretorioBackup;
     private javax.swing.JButton botaoProcurarDiretorioContratos;
     private javax.swing.JButton botaoRegistrarDespesa;
-    private javax.swing.JButton botaoSair;
+    private javax.swing.JLabel botaoSair;
     private javax.swing.JButton botaoSalvarDiretorioBackup;
     private javax.swing.JButton botaoSalvarDiretorioContratos;
     private javax.swing.JTextField campoDiretorioBackup;
@@ -1441,6 +1439,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JPanel painelClientes;
     private javax.swing.JPanel painelConfiguracoes;
     private javax.swing.JPanel painelFornecedores;
+    private javax.swing.JPanel painelGeral;
     private javax.swing.JPanel painelLocacoes;
     private javax.swing.JPanel painelProdutos;
     private javax.swing.JPanel painelTopo;

@@ -16,18 +16,18 @@ public class Produto implements Serializable {
     private int tam;
 
     @Column(name = "FORNECEDOR", nullable = true)
-    private String forcenedor;
+    private String fornecedor; //Deveria ser do tipo Fornecedor
     private String cor;
 
     public Produto() {
     }
 
-    public Produto(String nome, double valor, int quant, String forcenedor, String cor, int tam) {
+    public Produto(String nome, double valor, int quant, String fornecedor, String cor, int tam) {
         this.nome = nome;
         this.valor = valor;
         this.quant = quant;
         this.tam = tam;
-        this.forcenedor = forcenedor;
+        this.fornecedor = fornecedor;
         this.cor = cor;
     }
 
@@ -67,12 +67,12 @@ public class Produto implements Serializable {
         this.quant = quant;
     }
 
-    public String getForcenedor() {
-        return forcenedor;
+    public String getFornecedor() {
+        return fornecedor;
     }
 
-    public void setForcenedor(String forcenedor) {
-        this.forcenedor = forcenedor;
+    public void setFornecedor(String fornecedor) {
+        this.fornecedor = fornecedor;
     }
 
     public String getCor() {

@@ -39,6 +39,17 @@ public class AdicionarDependenteDialog extends java.awt.Dialog {
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
 
+        javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+        painelGeral.setLayout(painelGeralLayout);
+        painelGeralLayout.setHorizontalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 501, Short.MAX_VALUE)
+        );
+        painelGeralLayout.setVerticalGroup(
+            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 507, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
