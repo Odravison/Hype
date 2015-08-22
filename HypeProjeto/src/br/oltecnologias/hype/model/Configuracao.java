@@ -78,8 +78,14 @@ public class Configuracao {
     public static Configuracao getSingleton() {
         return singleton;
     }
-    
-    
+
+    public DadosConfiguracao getDados() {
+        return dados;
+    }
+
+    public void setDados(DadosConfiguracao dados) {
+        Configuracao.dados = dados;
+    }
     
     
 }
