@@ -18,17 +18,19 @@ public class Produto implements Serializable {
     @Column(name = "FORNECEDOR", nullable = true)
     private String fornecedor; //Deveria ser do tipo Fornecedor
     private String cor;
+    private boolean isLocation;
 
     public Produto() {
     }
 
-    public Produto(String nome, double valor, int quant, String fornecedor, String cor, int tam) {
+    public Produto(String nome, double valor, int quant, String fornecedor, String cor, int tam, boolean isLocation) {
         this.nome = nome;
         this.valor = valor;
         this.quant = quant;
         this.tam = tam;
         this.fornecedor = fornecedor;
         this.cor = cor;
+        this.isLocation = isLocation;
     }
 
     public String getCodigo() {
@@ -97,6 +99,14 @@ public class Produto implements Serializable {
 
     public void setTam(int tam) {
         this.tam = tam;
+    }
+    
+    public boolean isIsLocation() {
+        return isLocation;
+    }
+
+    public void setIsLocation(boolean isLocation) {
+        this.isLocation = isLocation;
     }
 
 }

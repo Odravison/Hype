@@ -137,6 +137,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         botaoSair.setToolTipText("Sair do Sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                botaoSairMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelTopoLayout = new javax.swing.GroupLayout(painelTopo);
         painelTopo.setLayout(painelTopoLayout);
@@ -1333,6 +1338,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarUsuario, "Pesquisar Usuário");
         }
     }//GEN-LAST:event_painelAdministradorMouseClicked
+
+    private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
+        setVisible(false);
+        new LoginFrame().setVisible(true);
+    }//GEN-LAST:event_botaoSairMouseClicked
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");

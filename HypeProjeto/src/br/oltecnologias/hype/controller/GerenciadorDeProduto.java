@@ -22,10 +22,9 @@ public class GerenciadorDeProduto {
         return singleton;
     }
 
-    public void cadastrarProduto(String nome, String descricao, float valor,
-            int quant, String fornecedor, String cor) {
-        // Será implementado quando decidirmos o sistema de código
-
+    public void cadastrarProduto(String nome, float valor,
+            int quant, String fornecedor, String cor, int tamanho, boolean isLocation) {
+        this.produtos.add(new Produto(nome, valor, quant, fornecedor, cor, tamanho, isLocation));
     }
 
     public void editarProduto(String codigo, String nome, int tam,

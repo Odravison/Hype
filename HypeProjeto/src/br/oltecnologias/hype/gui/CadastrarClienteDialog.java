@@ -330,6 +330,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelBlazer.setText("Blazer:*");
 
         areaObservacao.setColumns(20);
+        areaObservacao.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         areaObservacao.setRows(5);
         areaObservacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {

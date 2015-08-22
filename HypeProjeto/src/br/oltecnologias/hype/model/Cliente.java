@@ -37,6 +37,8 @@ public class Cliente extends Pessoa {
 
     @OneToMany
     private List<Locacao> locacoes;
+    
+    private List<Dependente> dependentes;
 
     public Cliente() {
     }
@@ -49,7 +51,9 @@ public class Cliente extends Pessoa {
         this.celular = celular;
         this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
+        this.dependentes = new ArrayList<Dependente>();
         this.ultimaMedicao = Calendar.getInstance();
+        
     }
 
     @Override
@@ -110,6 +114,7 @@ public class Cliente extends Pessoa {
         this.celular = celular;
     }
 
+    //Não precisará desses métodos se a adição e remoção forem feitos diretamente no banco
     public void adicionarLocacao(Locacao locacao) {
         this.locacoes.add(locacao);
     }
@@ -129,6 +134,28 @@ public class Cliente extends Pessoa {
 
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
+    }
+    
+    public List<Dependente> getDependentes() {
+        return dependentes;
+    }
+
+    public void setDependentes(List<Dependente> dependentes) {
+        this.dependentes = dependentes;
+    }
+    
+    //Não precisará desses métodos se a adição e remoção forem feitos diretamente no banco
+    public void adicionarDependente(Dependente dependente) {
+        this.dependentes.add(dependente);
+    }
+    
+    public void removerLocacao(Dependente dependente) {
+        for (Dependente d : this.dependentes) {
+            if (d.getId() == dependente.getId()) {
+                this.dependentes.remove(d);
+                break;
+            }
+        }
     }
 
 }
