@@ -52,7 +52,7 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeral.setMinimumSize(new java.awt.Dimension(600, 500));
         painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
 
-        painelDeLogin.setBackground(new java.awt.Color(204, 204, 255));
+        painelDeLogin.setBackground(new java.awt.Color(234, 234, 255));
         painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
         painelDeLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelDeLogin.setName("hype!\n"); // NOI18N
@@ -143,7 +143,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(labelLogo)
                 .addGap(50, 50, 50)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(232, 232, 232))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -154,9 +154,7 @@ public class LoginFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -166,7 +164,7 @@ public class LoginFrame extends javax.swing.JFrame {
         try {
             // validar usuário no sistema
             if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
-                new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                new PrinFrame(campoLogin.getText()).setVisible(true);
                 setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);

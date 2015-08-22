@@ -59,7 +59,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         campoCpf = new javax.swing.JFormattedTextField();
         campoCel = new javax.swing.JFormattedTextField();
         campoTelefone = new javax.swing.JFormattedTextField();
-        checkCpf = new javax.swing.JCheckBox();
         painelMedidas = new javax.swing.JPanel();
         labelTraje = new javax.swing.JLabel();
         labelCalca = new javax.swing.JLabel();
@@ -84,6 +83,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
 
         setBackground(new java.awt.Color(240, 240, 240));
         setPreferredSize(new java.awt.Dimension(672, 671));
+        setResizable(false);
         setSize(new java.awt.Dimension(676, 671));
         setTitle("Cadastro de cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -92,8 +92,10 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             }
         });
 
+        painelGeral.setBackground(new java.awt.Color(255, 255, 255));
         painelGeral.setPreferredSize(new java.awt.Dimension(632, 579));
 
+        painelDadosPessoais.setBackground(new java.awt.Color(255, 255, 255));
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados pessoais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -109,6 +111,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCpf.setText("CPF:*");
 
+        painelEndereco.setBackground(new java.awt.Color(255, 255, 255));
         painelEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
 
         labelRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -238,13 +241,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         }
         campoTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        checkCpf.setText("Não possui CPF");
-        checkCpf.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                checkCpfItemStateChanged(evt);
-            }
-        });
-
         javax.swing.GroupLayout painelDadosPessoaisLayout = new javax.swing.GroupLayout(painelDadosPessoais);
         painelDadosPessoais.setLayout(painelDadosPessoaisLayout);
         painelDadosPessoaisLayout.setHorizontalGroup(
@@ -254,25 +250,23 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(painelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                        .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(checkCpf)
-                            .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                                    .addComponent(labelTelResidencial)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(96, 96, 96)
-                                    .addComponent(labelCel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                                    .addComponent(labelNome)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(62, 62, 62)
-                                    .addComponent(labelCpf)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                                .addComponent(labelTelResidencial)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(96, 96, 96)
+                                .addComponent(labelCel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                                .addComponent(labelNome)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(62, 62, 62)
+                                .addComponent(labelCpf)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -285,11 +279,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCpf)
                     .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(checkCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(painelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(20, 20, 20)
                 .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelTelResidencial)
                     .addComponent(labelCel)
@@ -298,6 +290,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        painelMedidas.setBackground(new java.awt.Color(255, 255, 255));
         painelMedidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidas"));
         painelMedidas.setPreferredSize(new java.awt.Dimension(622, 218));
 
@@ -519,7 +512,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 566, Short.MAX_VALUE)
         );
 
         pack();
@@ -606,15 +599,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         }
         
     }//GEN-LAST:event_botaoSalvarActionPerformed
-
-    private void checkCpfItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_checkCpfItemStateChanged
-        //Habilita ou desabilita o campo de cpf 
-        if (checkCpf.isSelected()){
-            campoCpf.setEnabled(false);
-        } else {
-            campoCpf.setEnabled(true);
-        }
-    }//GEN-LAST:event_checkCpfItemStateChanged
     
     private void validarLetras(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -665,7 +649,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private javax.swing.JFormattedTextField campoSapato;
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JFormattedTextField campoTraje;
-    private javax.swing.JCheckBox checkCpf;
     private javax.swing.JComboBox comboUf;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelBairro;
