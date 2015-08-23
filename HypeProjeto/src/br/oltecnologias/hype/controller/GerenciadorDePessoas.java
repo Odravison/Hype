@@ -10,6 +10,7 @@ import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Dependente;
 import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +36,13 @@ public class GerenciadorDePessoas {
     }
 
     public void cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
-            String telefone, String celular) throws ClienteExistenteException {
+            String telefone, String celular, List<Dependente> dependentes) throws ClienteExistenteException {
         for (Cliente c : this.clientes) {
             if (c.getCpf().equals(cpf)) {
                 throw new ClienteExistenteException("CPF já cadastrado.");
             }
         }
-        Cliente cliente = new Cliente(cpf, nome, endereco, medidas, telefone, celular);
-        this.clientes.add(cliente);
+        this.clientes.add(new Cliente(cpf, nome, endereco, medidas, telefone, celular, dependentes));
     }
 
     public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, 
@@ -79,22 +79,20 @@ public class GerenciadorDePessoas {
     public List<Cliente> pesquisarClientesPorNome(String nome) {
         List<Cliente> aux = new ArrayList<Cliente>();
         for (Cliente c : this.clientes) {
-            if (c.getNome().contains(nome)) {
+            if (c.getNome().toUpperCase().contains(nome.toUpperCase())) {
                 aux.add(c);
             }
         }
         return aux;
     }
 
-    public void cadastrarAdministrador(String nome, String senha, String nickName, boolean isAdm) throws UsuarioExistenteException {
+    public void cadastrarUsuario(String nome, String nickName, String senha, boolean isAdm) throws UsuarioExistenteException {
         for (Usuario u : this.usuarios) {
             if (u.getNickName().equals(nickName)) {
                 throw new UsuarioExistenteException("O NickName informado já está em uso.");
             }
         }
-        Usuario u = new Usuario(senha, nickName, nome, isAdm);
-        this.usuarios.add(u);
-
+        this.usuarios.add(new Usuario(nome, nickName, senha, isAdm));
     }
 
     public void editarUsuario(String nickAntigo, String nome, String senha, String nickNovo) throws UsuarioExistenteException {
@@ -128,8 +126,7 @@ public class GerenciadorDePessoas {
                 throw new FornecedorExistenteException("O CNPJ em questão já foi cadastrado.");
             }
         }
-        Fornecedor f = new Fornecedor(cnpj, endereco, telefone, nome);
-        this.fornecedores.add(f);
+        this.fornecedores.add(new Fornecedor(cnpj, endereco, telefone, nome));
     }
 
     public void editarFornecedor(String cnpjAntigo, String cnpjNovo, Endereco endereco, String telefone, String nome) throws FornecedorInexistenteException {
@@ -183,10 +180,9 @@ public class GerenciadorDePessoas {
         return this.pesquisarUsuarioPeloLogin(login).isAdministrador();
     }
     
-    // Deve servir para funcionários também
     public Usuario pesquisarUsuarioPeloLogin(String login) throws UsuarioInexistenteException{
-        this.usuarios.add(new Usuario("Luender Lima","luender","1234", true));
-        this.usuarios.add(new Usuario("Odravison Amaral","odravison","1234", false));
+        this.usuarios.add(new Usuario("Luender Lima", "luender", "1234", true));
+        this.usuarios.add(new Usuario("Odravison Amaral", "odravison", "1234", false));
         for(Usuario a: this.usuarios) {
             if(a.getNickName().equals(login)) {
                 return a;

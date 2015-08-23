@@ -43,7 +43,7 @@ public class Cliente extends Pessoa {
     public Cliente() {
     }
 
-    public Cliente(String cpf, String nome, Endereco endereco, Medidas medidas, String telefone, String celular) {
+    public Cliente(String cpf, String nome, Endereco endereco, Medidas medidas, String telefone, String celular, List<Dependente> dependentes) {
         super(nome);
         this.cpf = cpf;
         this.endereco = endereco;
@@ -51,7 +51,7 @@ public class Cliente extends Pessoa {
         this.celular = celular;
         this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
-        this.dependentes = new ArrayList<Dependente>();
+        this.dependentes = dependentes;
         this.ultimaMedicao = Calendar.getInstance();
         
     }

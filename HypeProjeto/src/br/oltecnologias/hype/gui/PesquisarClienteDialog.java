@@ -5,7 +5,11 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.model.Cliente;
 import java.awt.Frame;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -21,8 +25,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         initComponents();
     }
     
-    public PesquisarClienteDialog(Frame owner)
-    {
+    public PesquisarClienteDialog(Frame owner) {
         super(owner);
         initComponents();
     }
@@ -42,9 +45,9 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         scPanelClientes = new javax.swing.JScrollPane();
         listaClientes = new javax.swing.JList();
         botaoOk = new javax.swing.JButton();
+        botaoVoltar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
-        setPreferredSize(new java.awt.Dimension(534, 357));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -53,10 +56,10 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         });
 
         painelDados.setBackground(new java.awt.Color(255, 255, 255));
-        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados necessários"));
+        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Pesquisar Cliente"));
 
         labelCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCliente.setText("Cliente:*");
+        labelCliente.setText("Cliente:");
 
         campoCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCliente.setToolTipText("");
@@ -64,13 +67,18 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         botaoPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoPesquisar.setText("Pesquisar");
         botaoPesquisar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        listaClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        listaClientes.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Cliente 1", "Cliente 2", "Cliente 3", "Cliente 4" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+        botaoPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoPesquisarActionPerformed(evt);
+            }
         });
+
+        listaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        DefaultListModel modelo = new DefaultListModel();
+        for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
+            modelo.addElement(cliente.getNome());
+        }
+        listaClientes.setModel(modelo);
         scPanelClientes.setViewportView(listaClientes);
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
@@ -112,16 +120,30 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
             }
         });
 
+        botaoVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoVoltar.setText("Voltar");
+        botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(botaoOk)
-                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoOk)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoVoltar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +151,9 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(botaoOk)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoVoltar)
+                    .addComponent(botaoOk))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -145,19 +169,41 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkActionPerformed
-        okSelecionado = true; //Dizemos que o ok foi selecionado.
-        setVisible(false);
+        if(listaClientes.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na lista antes de continuar", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            okSelecionado = true; //O ok foi selecionado.
+            setVisible(false);
+        }
+        
     }//GEN-LAST:event_botaoOkActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
+        if(campoCliente.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "É preciso informar um nome para a pesquisa de clientes", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            DefaultListModel modelo = new DefaultListModel();
+            for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoCliente.getText())) {
+                modelo.addElement(cliente.getNome());
+            }
+            listaClientes.setModel(modelo);
+        }
+    }//GEN-LAST:event_botaoPesquisarActionPerformed
 
     public boolean alterarDados() {        
         okSelecionado = false;  //Marcamos que o ok n�o foi selecionado
-        setModal(true);         //A dialog tem que ser modal. S� pode retornar do setVisible ap�s ficar invis�vel.
-        setVisible(true);       //Mostramos a dialog e esperamos o usu�rio escolher alguma coisa.
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
         return okSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
-    public String getNome() {
-        return campoCliente.getText(); 
+    public String getNomeClienteSelecionado() {
+        return listaClientes.getSelectedValue().toString();
     }
     
     /**
@@ -178,9 +224,11 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     }
 
     protected boolean okSelecionado;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoOk;
     private javax.swing.JButton botaoPesquisar;
+    private javax.swing.JButton botaoVoltar;
     private javax.swing.JTextField campoCliente;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JList listaClientes;

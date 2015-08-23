@@ -7,9 +7,11 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
+import br.oltecnologias.hype.model.Dependente;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
 import java.awt.Dialog;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -570,6 +572,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private void campoNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNumeroKeyTyped
         if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
+        } if(campoNumero.getText().length()>= maxCaracteresNumero){ 
+            evt.consume(); 
         }
     }//GEN-LAST:event_campoNumeroKeyTyped
 
@@ -586,8 +590,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "Informe o bairro do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoNumero.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o número da casa do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCel.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o número de celular do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else if(campoCel.getText().length() <= 0 || campoCel.getText().length() < 9) {
+            JOptionPane.showMessageDialog(null, "Informe o número de celular completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } 
         
         if(campoTelefone.getText().length() <= 0) {
@@ -604,7 +608,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 Integer.parseInt(campoBlazer.getText()), areaObservacao.getText());
         try {
             GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas, 
-                    tel, campoCel.getText());
+                    tel, campoCel.getText(), dependentes);
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
             setVisible(false);
             dispose();
@@ -615,9 +619,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoAdicionarDependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarDependenteMouseClicked
-        Dialog adicionarDependente = new AdicionarDependenteDialog(new java.awt.Frame(), true);
-        adicionarDependente.setLocationRelativeTo(null);
-        adicionarDependente.setVisible(true);
+        Dialog listarDependentes = new ListarDependentesDialog(new java.awt.Frame(), true);
+        listarDependentes.setLocationRelativeTo(null);
+        listarDependentes.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarDependenteMouseClicked
     
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
@@ -645,11 +649,17 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             }
         });
     }
+    
+    public void setDependente(List<Dependente> dependentes) {
+        this.dependentes = dependentes;
+    }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 40;
     private int maxCaracteresBairro = 30;
+    private int maxCaracteresNumero = 4;
     private int maxCaracteresObs = 250;
+    List<Dependente> dependentes;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
     private javax.swing.JLabel botaoAdicionarDependente;
