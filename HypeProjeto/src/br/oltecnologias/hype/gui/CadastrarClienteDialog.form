@@ -156,12 +156,14 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="painelEndereco" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelTelResidencial" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelCel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoCel" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="botaoAdicionarDependente" alignment="1" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="labelTelResidencial" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelCel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="campoCel" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="campoTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
