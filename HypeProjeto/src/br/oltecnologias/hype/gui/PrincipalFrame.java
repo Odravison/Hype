@@ -358,7 +358,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         comboBoxOrdenarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         comboBoxOrdenarProdutos.setMaximumRowCount(5);
-        comboBoxOrdenarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Produtos de locação", "Produtos de venda", "Últimos locados", "Últimos cadastros" }));
+        comboBoxOrdenarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Em estoque", "Produtos de locação", "Produtos de venda", "Últimos locados", "Últimos cadastros" }));
         comboBoxOrdenarProdutos.setToolTipText("Selecionar tipo de filtro");
         comboBoxOrdenarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
