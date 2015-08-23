@@ -6,30 +6,24 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  *
- * @author Luender
+ * @author Odravison
  */
 @Entity
+@DiscriminatorValue("2")
 public class Dependente extends Pessoa implements Serializable {
+    
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (int) super.getId();
         return hash;
     }
 
@@ -40,7 +34,7 @@ public class Dependente extends Pessoa implements Serializable {
             return false;
         }
         Dependente other = (Dependente) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (super.getId() != other.getId()) {
             return false;
         }
         return true;
@@ -48,12 +42,13 @@ public class Dependente extends Pessoa implements Serializable {
 
     @Override
     public String toString() {
-        return "br.oltecnologias.hype.model.Dependente[ id=" + id + " ]";
+        return "br.oltecnologias.hype.model.Dependente[ id=" + super.getId() + " ]";
     }
 
     @Override
     public String getDescricao() {
-        return "Dependente: "+super.getNome();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
     
 }
