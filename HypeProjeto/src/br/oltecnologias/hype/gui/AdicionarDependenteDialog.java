@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.model.Medidas;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -79,25 +80,25 @@ public class AdicionarDependenteDialog extends java.awt.Dialog {
         painelMedidas.setPreferredSize(new java.awt.Dimension(635, 238));
 
         labelTraje.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTraje.setText("Traje:*");
+        labelTraje.setText("Traje:");
 
         labelCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCalca.setText("Calça:*");
+        labelCalca.setText("Calça:");
 
         labelColete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelColete.setText("Colete:*");
+        labelColete.setText("Colete:");
 
         labelObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelObservacao.setText("Observação:");
 
         labelGravata.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelGravata.setText("Gravata:*");
+        labelGravata.setText("Gravata:");
 
         labelSapato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSapato.setText("Sapato:*");
+        labelSapato.setText("Sapato:");
 
         labelBlazer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelBlazer.setText("Blazer:*");
+        labelBlazer.setText("Blazer:");
 
         areaObservacao.setColumns(20);
         areaObservacao.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
@@ -110,7 +111,7 @@ public class AdicionarDependenteDialog extends java.awt.Dialog {
         scPnObservacao.setViewportView(areaObservacao);
 
         labelCamisa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCamisa.setText("Camisa:*");
+        labelCamisa.setText("Camisa:");
 
         try {
             campoCalca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
@@ -204,7 +205,7 @@ public class AdicionarDependenteDialog extends java.awt.Dialog {
                         .addComponent(labelObservacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(scPnObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         painelMedidasLayout.setVerticalGroup(
             painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,44 +332,21 @@ public class AdicionarDependenteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_areaObservacaoKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        String tel;
         // Validar campos para cadastro
-        /*if(campoNome.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o nome do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoRua.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a rua do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCidade.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a cidade do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoBairro.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o bairro do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoNumero.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o número da casa do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCel.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o número de celular do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
+        if(campoNome.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o nome do dependente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } 
 
-        if(campoTelefone.getText().length() <= 0) {
-            tel = "Não informado";
-        } else {
-            tel = campoTelefone.getText();
-        }
-
-        Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
-            Integer.parseInt(campoNumero.getText()), campoCidade.getText());
         Medidas medidas = new Medidas(Integer.parseInt(campoCalca.getText()), Integer.parseInt(campoTraje.getText()),
             Integer.parseInt(campoColete.getText()), Integer.parseInt(campoCamisa.getText()),
             Integer.parseInt(campoGravata.getText()), Integer.parseInt(campoSapato.getText()),
             Integer.parseInt(campoBlazer.getText()), areaObservacao.getText());
         try {
-            GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas,
-                tel, campoCel.getText());
-            JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
-            setVisible(false);
-            dispose();
+            //Dependente;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-        */
+        
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed

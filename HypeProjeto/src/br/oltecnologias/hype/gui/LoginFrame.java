@@ -2,6 +2,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
+import br.oltecnologias.hype.model.Usuario;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -167,9 +168,10 @@ public class LoginFrame extends javax.swing.JFrame {
                 new PrincipalFrame(campoLogin.getText()).setVisible(true);
                 setVisible(false);
             } else {
+                System.out.println("entrou");
                 JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (UsuarioInexistenteException e) {
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed

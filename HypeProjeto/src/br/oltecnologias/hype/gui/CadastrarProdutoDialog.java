@@ -38,12 +38,12 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         labelNome = new javax.swing.JLabel();
         campoNome = new javax.swing.JTextField();
         labelCodigo = new javax.swing.JLabel();
-        campoCodigo = new javax.swing.JFormattedTextField();
         labelCor = new javax.swing.JLabel();
         campoCor = new javax.swing.JTextField();
         radioVenda = new javax.swing.JRadioButton();
         radioAluguel = new javax.swing.JRadioButton();
         labelTipo = new javax.swing.JLabel();
+        campoCodigo = new javax.swing.JTextField();
         painelValores = new javax.swing.JPanel();
         labelTamanho = new javax.swing.JLabel();
         campoTamanho = new javax.swing.JFormattedTextField();
@@ -58,7 +58,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(707, 443));
         setResizable(false);
         setTitle("Cadastrar Produto");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -85,18 +84,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
 
         labelCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCodigo.setText("Código:*");
-
-        try {
-            campoCodigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoCodigoKeyTyped(evt);
-            }
-        });
 
         labelCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCor.setText("Cor:*");
@@ -132,6 +119,14 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         labelTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTipo.setText("Tipo:*");
 
+        campoCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoCodigo.setPreferredSize(new java.awt.Dimension(38, 23));
+        campoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoCodigoKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelIdentificacaoLayout = new javax.swing.GroupLayout(painelIdentificacao);
         painelIdentificacao.setLayout(painelIdentificacaoLayout);
         painelIdentificacaoLayout.setHorizontalGroup(
@@ -143,11 +138,11 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                         .addComponent(labelNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addComponent(labelCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))
+                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
                     .addGroup(painelIdentificacaoLayout.createSequentialGroup()
                         .addComponent(labelCor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -352,8 +347,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
-        validarLetrasETamanho(evt, campoPreco, maxCaracteresPreco);
-        if(campoPreco.getText().length() > 0 && campoPreco.getText().length() % 4 == 0){
+        if(!numeros.contains(evt.getKeyChar()+"") || campoPreco.getText().length() >= maxCaracteresPreco) {
+            evt.consume();
+        }
+        if(campoPreco.getText().length() > 0 && campoPreco.getText().length() % 3 == 0){
             campoPreco.setText(campoPreco.getText()+".");
         } 
     }//GEN-LAST:event_campoPrecoKeyTyped
@@ -420,15 +417,17 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
+        if(!numeros.contains(evt.getKeyChar()+"") || campoQuantidade.getText().length() >= maxCaracteresQuantidade) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoQuantidadeKeyTyped
+
     private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
-        if(campoCodigo.getText().length()>= maxCaracteresCodigo){ 
-            evt.consume(); 
+        if(campoQuantidade.getText().length() >= maxCaracteresCodigo) {
+            evt.consume();
         }
     }//GEN-LAST:event_campoCodigoKeyTyped
-
-    private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
-        validarLetrasETamanho(evt, campoQuantidade, maxCaracteresQuantidade);
-    }//GEN-LAST:event_campoQuantidadeKeyTyped
     
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -465,7 +464,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
-    private javax.swing.JFormattedTextField campoCodigo;
+    private javax.swing.JTextField campoCodigo;
     private javax.swing.JTextField campoCor;
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField campoPreco;

@@ -45,7 +45,7 @@ public class GerenciadorDeProduto {
     public List<Produto> pesquisarProdutosPeloNome(String nome) {
         List<Produto> aux = new ArrayList<Produto>();
         for (Produto p: this.produtos){
-            if (p.getNome().contains(nome)){
+            if (p.getNome().toUpperCase().contains(nome.toUpperCase())){
                 aux.add(p);
             }
         }
@@ -69,7 +69,13 @@ public class GerenciadorDeProduto {
     }
 
     public List<Produto> getProdutosDeLocacao() {
-        return produtos;
+        List<Produto> produtosDeLocacao = new ArrayList<Produto>();
+        for(Produto produto: this.produtos) {
+            if(produto.isIsLocation()) {
+                produtosDeLocacao.add(produto);
+            }
+        }
+        return produtosDeLocacao;
     }
 
     public void setProdutosDeLocacao(List<Produto> produtos) {
