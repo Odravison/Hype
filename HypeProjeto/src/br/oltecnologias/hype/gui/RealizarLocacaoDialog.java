@@ -27,13 +27,95 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(240, 240, 240));
-        setTitle("Cadastrar Cliente");
+        painelDados = new javax.swing.JPanel();
+        labelCliente = new javax.swing.JLabel();
+        campoCliente = new javax.swing.JTextField();
+        botaoPesquisar = new javax.swing.JButton();
+        labelProdutos = new javax.swing.JLabel();
+        scPaneProdutos = new javax.swing.JScrollPane();
+        areaProdutos = new javax.swing.JTextArea();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(551, 343));
+        setResizable(false);
+        setTitle("Realizar Locação");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
+
+        painelDados.setBackground(new java.awt.Color(255, 255, 255));
+        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados necessários"));
+
+        labelCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCliente.setText("Cliente:*");
+
+        campoCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoCliente.setToolTipText("Informe o nome ou o CPF do cliente");
+
+        botaoPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoPesquisar.setText("Pesquisar");
+        botaoPesquisar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        labelProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelProdutos.setText("Produtos:*");
+
+        areaProdutos.setColumns(20);
+        areaProdutos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        areaProdutos.setRows(5);
+        scPaneProdutos.setViewportView(areaProdutos);
+
+        javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
+        painelDados.setLayout(painelDadosLayout);
+        painelDadosLayout.setHorizontalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(botaoPesquisar))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelProdutos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scPaneProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelDadosLayout.setVerticalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelCliente)
+                    .addComponent(campoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoPesquisar))
+                .addGap(18, 18, 18)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelProdutos)
+                    .addComponent(scPaneProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(51, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -65,5 +147,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea areaProdutos;
+    private javax.swing.JButton botaoPesquisar;
+    private javax.swing.JTextField campoCliente;
+    private javax.swing.JLabel labelCliente;
+    private javax.swing.JLabel labelProdutos;
+    private javax.swing.JPanel painelDados;
+    private javax.swing.JScrollPane scPaneProdutos;
     // End of variables declaration//GEN-END:variables
 }

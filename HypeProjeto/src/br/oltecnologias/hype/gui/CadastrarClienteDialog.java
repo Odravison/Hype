@@ -22,14 +22,14 @@ import javax.swing.JOptionPane;
 public class CadastrarClienteDialog extends java.awt.Dialog {
 
     /**
-     * Creates new form CadastrarCliDialog
+     * Cria um novo form CadastrarClienteDialog
      */
     public CadastrarClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
-        botaoAdicionarDependente.setIcon(new ImageIcon("Imagens\\Mais.png"));
+        botaoAdicionarDependente.setIcon(new ImageIcon("Imagens\\Mais.gif"));
     }
 
     /**
@@ -82,10 +82,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         campoGravata = new javax.swing.JFormattedTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        labelObrigatório = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(240, 240, 240));
-        setPreferredSize(new java.awt.Dimension(672, 671));
         setResizable(false);
         setSize(new java.awt.Dimension(676, 671));
         setTitle("Cadastro de Cliente");
@@ -280,8 +279,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoAdicionarDependente)
-                        .addGap(29, 29, 29))))
+                        .addComponent(botaoAdicionarDependente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))))
         );
         painelDadosPessoaisLayout.setVerticalGroup(
             painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,7 +299,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                     .addComponent(labelCel)
                     .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoAdicionarDependente))
+                    .addComponent(botaoAdicionarDependente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -482,8 +481,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("* Obrigatório");
+        labelObrigatório.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatório.setText("* Obrigatório");
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
@@ -493,8 +492,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 394, Short.MAX_VALUE)
+                        .addComponent(labelObrigatório)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
@@ -514,7 +513,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                     .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar))
-                    .addComponent(jLabel1))
+                    .addComponent(labelObrigatório))
                 .addContainerGap())
         );
 
@@ -546,19 +545,19 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
-        validarLetras(evt, campoNome, maxCaracteresNome);
+        validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
     }//GEN-LAST:event_campoNomeKeyTyped
 
     private void campoRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoRuaKeyTyped
-        validarLetras(evt, campoRua, maxCaracteresNome); // Mesmo tamanho para nomes de pessoas e ruas
+        validarLetrasETamanho(evt, campoRua, maxCaracteresNome); // Mesmo tamanho para nomes de pessoas e ruas
     }//GEN-LAST:event_campoRuaKeyTyped
 
     private void campoBairroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBairroKeyTyped
-        validarLetras(evt, campoBairro, maxCaracteresBairro);
+        validarLetrasETamanho(evt, campoBairro, maxCaracteresBairro);
     }//GEN-LAST:event_campoBairroKeyTyped
 
     private void campoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCidadeKeyTyped
-        validarLetras(evt, campoCidade, maxCaracteresBairro); // Mesmo tamanho para nomes de bairros e cidades
+        validarLetrasETamanho(evt, campoCidade, maxCaracteresBairro); // Mesmo tamanho para nomes de bairros e cidades
     }//GEN-LAST:event_campoCidadeKeyTyped
 
     private void areaObservacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaObservacaoKeyTyped
@@ -620,7 +619,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         adicionarDependente.setVisible(true);
     }//GEN-LAST:event_botaoAdicionarDependenteMouseClicked
     
-    private void validarLetras(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
+    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
         } if(campo.getText().length()>= maxCaracteres){ 
@@ -671,7 +670,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JFormattedTextField campoTraje;
     private javax.swing.JComboBox comboUf;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelBairro;
     private javax.swing.JLabel labelBlazer;
     private javax.swing.JLabel labelCalca;
@@ -683,6 +681,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelGravata;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
+    private javax.swing.JLabel labelObrigatório;
     private javax.swing.JLabel labelObservacao;
     private javax.swing.JLabel labelRua;
     private javax.swing.JLabel labelSapato;
