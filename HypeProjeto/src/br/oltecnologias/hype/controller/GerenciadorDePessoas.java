@@ -10,7 +10,6 @@ import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Cliente;
-import br.oltecnologias.hype.model.Dependente;
 import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +35,13 @@ public class GerenciadorDePessoas {
     }
 
     public void cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
-            String telefone, String celular, List<Dependente> dependentes) throws ClienteExistenteException {
+            String telefone, String celular) throws ClienteExistenteException {
         for (Cliente c : this.clientes) {
             if (c.getCpf().equals(cpf)) {
                 throw new ClienteExistenteException("CPF já cadastrado.");
             }
         }
-        this.clientes.add(new Cliente(cpf, nome, endereco, medidas, telefone, celular, dependentes));
+        this.clientes.add(new Cliente(cpf, nome, endereco, medidas, telefone, celular));
     }
 
     public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, 

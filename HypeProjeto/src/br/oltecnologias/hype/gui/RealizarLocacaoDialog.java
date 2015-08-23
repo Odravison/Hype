@@ -26,6 +26,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         initComponents();
         botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        modeloProdutosLocados  = new DefaultListModel();
     }
 
     /**

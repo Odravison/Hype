@@ -7,7 +7,6 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
-import br.oltecnologias.hype.model.Dependente;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
 import java.awt.Dialog;
@@ -31,7 +30,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         initComponents();
         botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
-        botaoAdicionarDependente.setIcon(new ImageIcon("Imagens\\Mais.gif"));
     }
 
     /**
@@ -63,7 +61,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         campoCpf = new javax.swing.JFormattedTextField();
         campoCel = new javax.swing.JFormattedTextField();
         campoTelefone = new javax.swing.JFormattedTextField();
-        botaoAdicionarDependente = new javax.swing.JLabel();
         painelMedidas = new javax.swing.JPanel();
         labelTraje = new javax.swing.JLabel();
         labelCalca = new javax.swing.JLabel();
@@ -245,14 +242,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         }
         campoTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        botaoAdicionarDependente.setToolTipText("Adicionar Dependente");
-        botaoAdicionarDependente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoAdicionarDependente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                botaoAdicionarDependenteMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout painelDadosPessoaisLayout = new javax.swing.GroupLayout(painelDadosPessoais);
         painelDadosPessoais.setLayout(painelDadosPessoaisLayout);
         painelDadosPessoaisLayout.setHorizontalGroup(
@@ -280,9 +269,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                         .addComponent(labelCel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoAdicionarDependente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         painelDadosPessoaisLayout.setVerticalGroup(
             painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,13 +283,11 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 .addGap(18, 18, 18)
                 .addComponent(painelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoAdicionarDependente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelTelResidencial)
-                        .addComponent(labelCel)
-                        .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTelResidencial)
+                    .addComponent(labelCel)
+                    .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -608,7 +593,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 Integer.parseInt(campoBlazer.getText()), areaObservacao.getText());
         try {
             GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas, 
-                    tel, campoCel.getText(), dependentes);
+                    tel, campoCel.getText());
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
             setVisible(false);
             dispose();
@@ -617,12 +602,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         }
         
     }//GEN-LAST:event_botaoSalvarActionPerformed
-
-    private void botaoAdicionarDependenteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoAdicionarDependenteMouseClicked
-        Dialog listarDependentes = new ListarDependentesDialog(new java.awt.Frame(), true);
-        listarDependentes.setLocationRelativeTo(null);
-        listarDependentes.setVisible(true);
-    }//GEN-LAST:event_botaoAdicionarDependenteMouseClicked
     
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -649,20 +628,14 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             }
         });
     }
-    
-    public void setDependente(List<Dependente> dependentes) {
-        this.dependentes = dependentes;
-    }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 40;
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
     private int maxCaracteresObs = 250;
-    List<Dependente> dependentes;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
-    private javax.swing.JLabel botaoAdicionarDependente;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoBairro;
