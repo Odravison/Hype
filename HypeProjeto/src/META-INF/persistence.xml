@@ -15,7 +15,6 @@
     <class>br.oltecnologias.hype.model.Produto</class>
     <class>br.oltecnologias.hype.model.Venda</class>
     <class>br.oltecnologias.hype.model.DadosConfiguracao</class>
-    <class>br.oltecnologias.hype.model.Dependente</class>
     <class>br.oltecnologias.hype.model.Pessoa</class>
     <class>br.oltecnologias.hype.model.Usuario</class>
     <properties>

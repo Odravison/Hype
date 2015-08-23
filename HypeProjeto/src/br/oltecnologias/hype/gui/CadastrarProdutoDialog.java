@@ -350,9 +350,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         if(!numeros.contains(evt.getKeyChar()+"") || campoPreco.getText().length() >= maxCaracteresPreco) {
             evt.consume();
         }
-        if(campoPreco.getText().length() > 0 && campoPreco.getText().length() % 3 == 0){
+        /*
+        if(campoPreco.getText().length() > 3 && campoPreco.getText().length() % 3 == 0){
             campoPreco.setText(campoPreco.getText()+".");
-        } 
+        } */
     }//GEN-LAST:event_campoPrecoKeyTyped
 
     private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
@@ -458,7 +459,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 40;
     private int maxCaracteresCor = 25;
-    private int maxCaracteresPreco = 8;
+    private int maxCaracteresPreco = 10;
     private int maxCaracteresCodigo = 8;
     private int maxCaracteresQuantidade = 4;
     // Variables declaration - do not modify//GEN-BEGIN:variables

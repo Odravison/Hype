@@ -37,7 +37,7 @@ public class Cliente extends Pessoa {
 
     @OneToMany
     private List<Locacao> locacoes;
-
+    
     public Cliente() {
     }
 
