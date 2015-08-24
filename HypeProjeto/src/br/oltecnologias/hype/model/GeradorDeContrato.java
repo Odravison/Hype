@@ -59,6 +59,7 @@ public class GeradorDeContrato {
         
     }
 
+    // Deveria receber uma locação, pois todos os dados últeis para gerar o contrato se encontram nela
     public void gerarContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<Produto> produtos)
             throws DocumentException, IOException, Exception {
         this.produtos = produtos;

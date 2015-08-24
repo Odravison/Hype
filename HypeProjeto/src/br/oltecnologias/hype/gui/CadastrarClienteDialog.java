@@ -85,7 +85,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
 
         setBackground(new java.awt.Color(240, 240, 240));
         setResizable(false);
-        setSize(new java.awt.Dimension(676, 671));
+        setSize(new java.awt.Dimension(672, 681));
         setTitle("Cadastro de Cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -94,7 +94,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         });
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
-        painelGeral.setPreferredSize(new java.awt.Dimension(632, 579));
+        painelGeral.setPreferredSize(new java.awt.Dimension(672, 615));
 
         painelDadosPessoais.setBackground(new java.awt.Color(255, 255, 255));
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados pessoais"));
@@ -502,18 +502,18 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar))
                     .addComponent(labelObrigatório))
-                .addContainerGap())
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 672, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();

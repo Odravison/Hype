@@ -36,6 +36,9 @@ public class Configuracao {
     }
 
     public String getDiretorioDeContratos() {
+        // retirar... foi apenas para teste
+        dados.setDiretorioDeContratos("D:\\");
+        ////
         return dados.getDiretorioDeContratos();
     }
 

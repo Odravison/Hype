@@ -50,7 +50,7 @@ public class Produto implements Serializable {
     }
 
     public String getDescricao() {
-        return this.nome + " - Tam: " + this.tam + " " + this.cor + " - R$ " + this.valor;
+        return this.codigo + " | " + this.nome + " - Tam: " + this.tam + ", " + this.cor + " - R$ " + this.valor;
     }
 
     public double getValor() {

@@ -32,10 +32,7 @@ public class GerenciadorDeLocacao {
         for (Produto p: produtos){
             GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).removerQuant(p.getQuant());
         }
-        
-        
-        
-
+        // Deveria chamar o método para a geração do contrato aqui
     }
 
     public List<Locacao> listarLocacoes() {

@@ -55,12 +55,13 @@ public class Cliente extends Pessoa {
 
     @Override
     public String getDescricao() {
-        return "Cliente: " + super.getNome() + "\n"
+        return this.cpf + " | " + super.getNome() ;
+        /*return "Cliente: " + super.getNome() + "\n"
                 + "Endereço: " + this.endereco + "\n"
                 + "CPF: " + this.cpf + "\n"
                 + "telefone: " + this.telefone + "\n"
                 + "celular: " + this.celular + "\n"
-                + "Medidas: " + this.medidas.toString();
+                + "Medidas: " + this.medidas.toString();*/
     }
 
     public String getCpf() {
