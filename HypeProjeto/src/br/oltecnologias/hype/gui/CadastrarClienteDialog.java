@@ -10,6 +10,7 @@ import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
 import java.awt.Dialog;
+import java.awt.Frame;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,13 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
      */
     public CadastrarClienteDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+    }
+    
+    public CadastrarClienteDialog(Frame owner) {
+        super(owner);
         initComponents();
         botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
@@ -595,8 +603,12 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas, 
                     tel, campoCel.getText());
             JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+            //setVisible(false);
+            //dispose();
+            
+            salvarSelecionado = true; //O ok foi selecionado.
             setVisible(false);
-            dispose();
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -610,6 +622,13 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
             evt.consume(); 
             campo.setText(campo.getText().substring(0, maxCaracteres)); // Remove os caracters inválidos caso o usuário tenha colado o texto
         }
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     /**
@@ -634,6 +653,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
     private int maxCaracteresObs = 250;
+    protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
     private javax.swing.JButton botaoCancelar;

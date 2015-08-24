@@ -50,6 +50,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
+        setTitle("Pesquisar Cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -107,8 +108,8 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
                     .addComponent(campoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisar))
                 .addGap(18, 18, 18)
-                .addComponent(scPanelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(scPanelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         botaoOk.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -231,7 +232,6 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     }
 
     protected boolean okSelecionado;
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoOk;
     private javax.swing.JButton botaoPesquisar;

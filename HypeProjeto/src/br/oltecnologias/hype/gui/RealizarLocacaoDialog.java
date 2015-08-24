@@ -315,15 +315,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConcluir)
-                    .addComponent(botaoCancelar)
-                    .addComponent(labelValorTotal)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(labelValorLocacao)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addComponent(labelValorLocacao))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoConcluir)
+                        .addComponent(botaoCancelar)
+                        .addComponent(labelValorTotal)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
@@ -354,8 +354,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 GeradorDeContrato.getInstance().gerarContrato(locador,Calendar.getInstance(), Calendar.getInstance(), produtosLocados);
                 
                 // O usuário que irá informar a data da locação ou o sistema irá pegar?
-                GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Calendar.getInstance(), 
-                        Float.parseFloat(getValorTotalDaLocacao()));
+                // tirar comentário, foi só para testar. Este método estava lançando exceção
+                //GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Calendar.getInstance(), 
+                        //Float.parseFloat(getValorTotalDaLocacao()));
                 
                 //fecha janela
                 setVisible(false);

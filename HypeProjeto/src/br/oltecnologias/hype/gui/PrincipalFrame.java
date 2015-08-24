@@ -6,9 +6,18 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
+import br.oltecnologias.hype.model.Cliente;
+import java.awt.Cursor;
 import java.awt.Dialog;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -227,921 +236,950 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nome do cliente", "Última locação", "Cadastrado em", "Ver locações", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
+        String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "",""};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhas = new ArrayList<>();
+        //Adicionando valores nas linhas
+        for(Cliente cliente: GerenciadorDePessoas.getInstance().getClientes()) {
+            listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
+                new JButton("Ver Medidas"), new JButton("Ver Locações"),
+                new JButton("Editar"), new JButton("Excluir")});
+    }
+    //cria um defaultablemodel com as informações acima
+    DefaultTableModel modelo = new DefaultTableModel(
+        listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);
+    //define o model da tabela
+    tabelaClientes.setModel(modelo);
+    pnRlCliente.setViewportView(tabelaClientes);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnRlCliente.setViewportView(tabelaClientes);
+    labelOrdenar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelOrdenar.setText("Filtrar por:");
 
-        labelOrdenar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelOrdenar.setText("Filtrar por:");
-
-        javax.swing.GroupLayout painelClientesLayout = new javax.swing.GroupLayout(painelClientes);
-        painelClientes.setLayout(painelClientesLayout);
-        painelClientesLayout.setHorizontalGroup(
-            painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelClientesLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoCliente)
-                    .addGroup(painelClientesLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarCliente))
-                    .addGroup(painelClientesLayout.createSequentialGroup()
-                        .addComponent(labelOrdenar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxOrdenarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        painelClientesLayout.setVerticalGroup(
-            painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelClientesLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+    javax.swing.GroupLayout painelClientesLayout = new javax.swing.GroupLayout(painelClientes);
+    painelClientes.setLayout(painelClientesLayout);
+    painelClientesLayout.setHorizontalGroup(
+        painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelClientesLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(botaoNovoCliente)
-                .addGap(50, 50, 50)
-                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelClientesLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
                     .addComponent(botaoPesquisarCliente))
-                .addGap(40, 40, 40)
-                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(painelClientesLayout.createSequentialGroup()
                     .addComponent(labelOrdenar)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(comboBoxOrdenarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        abas.addTab("  Clientes  ", painelClientes);
-
-        painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
-        painelProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelProdutosMouseClicked(evt);
-            }
-        });
-
-        botaoNovoProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovoProduto.setText("Novo Produto");
-        botaoNovoProduto.setToolTipText("Criar novo produto");
-        botaoNovoProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoNovoProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoNovoProdutoActionPerformed(evt);
-            }
-        });
-
-        botaoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoPesquisarProduto.setText("Pesquisar");
-        botaoPesquisarProduto.setToolTipText("Pesquisar produtos em estoque");
-        botaoPesquisarProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoPesquisarProduto.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarProduto.setText("Pesquisar Produto");
-        campoPesquisarProduto.setToolTipText("Informe o nome do produto");
-        campoPesquisarProduto.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoPesquisarProduto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoPesquisarProdutoMouseClicked(evt);
-            }
-        });
-        campoPesquisarProduto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPesquisarProdutoKeyTyped(evt);
-            }
-        });
-
-        pnRlProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Código", "Descrição do Produto", "Qtd. em estoque", "", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnRlProduto.setViewportView(tabelaProdutos);
-
-        labelFiltrarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelFiltrarProdutos.setText("Filtrar por:");
-
-        comboBoxOrdenarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxOrdenarProdutos.setMaximumRowCount(5);
-        comboBoxOrdenarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Em estoque", "Produtos de locação", "Produtos de venda", "Últimos locados", "Últimos cadastros" }));
-        comboBoxOrdenarProdutos.setToolTipText("Selecionar tipo de filtro");
-        comboBoxOrdenarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
-        painelProdutos.setLayout(painelProdutosLayout);
-        painelProdutosLayout.setHorizontalGroup(
-            painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelProdutosLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoProduto)
-                    .addGroup(painelProdutosLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarProduto))
-                    .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelProdutosLayout.createSequentialGroup()
-                        .addComponent(labelFiltrarProdutos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxOrdenarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        painelProdutosLayout.setVerticalGroup(
-            painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelProdutosLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(botaoNovoProduto)
-                .addGap(50, 50, 50)
-                .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisarProduto))
-                .addGap(40, 40, 40)
-                .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFiltrarProdutos)
-                    .addComponent(comboBoxOrdenarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
-        );
-
-        abas.addTab("  Produtos  ", painelProdutos);
-
-        painelFornecedores.setBackground(new java.awt.Color(255, 255, 255));
-        painelFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelFornecedoresMouseClicked(evt);
-            }
-        });
-
-        botaoNovoFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovoFornecedor.setText("Novo Fornecedor");
-        botaoNovoFornecedor.setToolTipText("Criar novo fornecedor");
-        botaoNovoFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoNovoFornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoNovoFornecedorActionPerformed(evt);
-            }
-        });
-
-        botaoPesquisarFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoPesquisarFornecedor.setText("Pesquisar");
-        botaoPesquisarFornecedor.setToolTipText("Pesquisar fornecedores cadastrados");
-        botaoPesquisarFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoPesquisarFornecedor.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoPesquisarFornecedor.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarFornecedor.setText("Pesquisar Fornecedor");
-        campoPesquisarFornecedor.setToolTipText("Informe o nome do fornecedor");
-        campoPesquisarFornecedor.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoPesquisarFornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoPesquisarFornecedorMouseClicked(evt);
-            }
-        });
-        campoPesquisarFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPesquisarFornecedorKeyTyped(evt);
-            }
-        });
-
-        pnRlFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaFornecedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Forncedor", "Endereço", "Contato", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnRlFornecedores.setViewportView(tabelaFornecedores);
-
-        labelFiltrarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelFiltrarFornecedores.setText("Filtrar por:");
-
-        comboBoxOrdenarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxOrdenarFornecedores.setMaximumRowCount(3);
-        comboBoxOrdenarFornecedores.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos locatários", "Últimos cadastros" }));
-        comboBoxOrdenarFornecedores.setToolTipText("Selecionar tipo de filtro");
-        comboBoxOrdenarFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout painelFornecedoresLayout = new javax.swing.GroupLayout(painelFornecedores);
-        painelFornecedores.setLayout(painelFornecedoresLayout);
-        painelFornecedoresLayout.setHorizontalGroup(
-            painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFornecedoresLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoFornecedor)
-                    .addGroup(painelFornecedoresLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarFornecedor))
-                    .addGroup(painelFornecedoresLayout.createSequentialGroup()
-                        .addComponent(labelFiltrarFornecedores)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxOrdenarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnRlFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        painelFornecedoresLayout.setVerticalGroup(
-            painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFornecedoresLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(botaoNovoFornecedor)
-                .addGap(50, 50, 50)
-                .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisarFornecedor))
-                .addGap(40, 40, 40)
-                .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFiltrarFornecedores)
-                    .addComponent(comboBoxOrdenarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
-        );
-
-        abas.addTab("Fornecedores", painelFornecedores);
-
-        painelLocacoes.setBackground(new java.awt.Color(255, 255, 255));
-        painelLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelLocacoesMouseClicked(evt);
-            }
-        });
-
-        botaoNovaLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovaLocacao.setText("Nova Locação");
-        botaoNovaLocacao.setToolTipText("Criar nova locação");
-        botaoNovaLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoNovaLocacao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoNovaLocacaoActionPerformed(evt);
-            }
-        });
-
-        botaoPesquisarLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoPesquisarLocacao.setText("Pesquisar");
-        botaoPesquisarLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoPesquisarLocacao.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoPesquisarLocacao.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarLocacao.setText("Pesquisar Locação");
-        campoPesquisarLocacao.setToolTipText("");
-        campoPesquisarLocacao.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoPesquisarLocacao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoPesquisarLocacaoMouseClicked(evt);
-            }
-        });
-        campoPesquisarLocacao.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPesquisarLocacaoKeyTyped(evt);
-            }
-        });
-
-        botaoLocacoesAtrasadas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoLocacoesAtrasadas.setText("Ver locações Atrasadas");
-        botaoLocacoesAtrasadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoLocacoesAtrasadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoLocacoesAtrasadasActionPerformed(evt);
-            }
-        });
-
-        botaoLocacoesExtraviadas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoLocacoesExtraviadas.setText("Ver locações Extraviadas");
-        botaoLocacoesExtraviadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoLocacoesExtraviadas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoLocacoesExtraviadasActionPerformed(evt);
-            }
-        });
-
-        pnRlFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        tabelaFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaFornecedores1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Cliente", "Produtos Locados", "Contato", "Retorno", ""
-            }
-        ));
-        pnRlFornecedores1.setViewportView(tabelaFornecedores1);
-
-        labelFiltrarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelFiltrarFornecedores1.setText("Filtrar por:");
-
-        comboBoxOrdenarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxOrdenarFornecedores1.setMaximumRowCount(3);
-        comboBoxOrdenarFornecedores1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimos locatários", "Últimos cadastros" }));
-        comboBoxOrdenarFornecedores1.setToolTipText("Selecionar tipo de filtro");
-        comboBoxOrdenarFornecedores1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout painelLocacoesLayout = new javax.swing.GroupLayout(painelLocacoes);
-        painelLocacoes.setLayout(painelLocacoesLayout);
-        painelLocacoesLayout.setHorizontalGroup(
-            painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelLocacoesLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelLocacoesLayout.createSequentialGroup()
-                        .addComponent(labelFiltrarFornecedores1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnRlFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelLocacoesLayout.createSequentialGroup()
-                        .addComponent(botaoNovaLocacao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoLocacoesAtrasadas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoLocacoesExtraviadas))
-                    .addGroup(painelLocacoesLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarLocacao)))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        painelLocacoesLayout.setVerticalGroup(
-            painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelLocacoesLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoNovaLocacao)
-                    .addComponent(botaoLocacoesAtrasadas)
-                    .addComponent(botaoLocacoesExtraviadas))
-                .addGap(50, 50, 50)
-                .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisarLocacao))
-                .addGap(40, 40, 40)
-                .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFiltrarFornecedores1)
-                    .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
-        );
-
-        abas.addTab("  Locações  ", painelLocacoes);
-
-        painelVendas.setBackground(new java.awt.Color(255, 255, 255));
-        painelVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelVendas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelVendasMouseClicked(evt);
-            }
-        });
-
-        botaoNovaVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovaVenda.setText("Nova Venda");
-        botaoNovaVenda.setToolTipText("Criar nova locação");
-        botaoNovaVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoNovaVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoNovaVendaActionPerformed(evt);
-            }
-        });
-
-        botaoPesquisarFornecedor1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoPesquisarFornecedor1.setText("Pesquisar");
-        botaoPesquisarFornecedor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoPesquisarVenda.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoPesquisarVenda.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarVenda.setText("Pesquisar Venda");
-        campoPesquisarVenda.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoPesquisarVenda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoPesquisarVendaMouseClicked(evt);
-            }
-        });
-        campoPesquisarVenda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPesquisarVendaKeyTyped(evt);
-            }
-        });
-
-        comboBoxOrdenarCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxOrdenarCliente1.setMaximumRowCount(3);
-        comboBoxOrdenarCliente1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimas vendas", "Valor" }));
-        comboBoxOrdenarCliente1.setToolTipText("Selecionar tipo de filtro");
-        comboBoxOrdenarCliente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        pnRlCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        tabelaClientes1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaClientes1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Data da venda", "Vendedor", "Valor da venda", "Itens", "Forma pagamento", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnRlCliente1.setViewportView(tabelaClientes1);
-
-        labelOrdenar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelOrdenar1.setText("Filtrar por:");
-
-        javax.swing.GroupLayout painelVendasLayout = new javax.swing.GroupLayout(painelVendas);
-        painelVendas.setLayout(painelVendasLayout);
-        painelVendasLayout.setHorizontalGroup(
-            painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelVendasLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelVendasLayout.createSequentialGroup()
-                        .addComponent(labelOrdenar1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxOrdenarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnRlCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoNovaVenda)
-                    .addGroup(painelVendasLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarFornecedor1)))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        painelVendasLayout.setVerticalGroup(
-            painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelVendasLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(botaoNovaVenda)
-                .addGap(50, 50, 50)
-                .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisarFornecedor1))
-                .addGap(40, 40, 40)
-                .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelOrdenar1)
-                    .addComponent(comboBoxOrdenarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
-        );
-
-        abas.addTab("   Vendas   ", painelVendas);
-
-        painelCaixaERelatorios.setBackground(new java.awt.Color(255, 255, 255));
-        painelCaixaERelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        botaoGerarRelatorio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoGerarRelatorio.setText("Gerar Relatório");
-        botaoGerarRelatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoGerarRelatorioActionPerformed(evt);
-            }
-        });
-
-        botaoFecharCaixa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoFecharCaixa.setText("Fechar Caixa");
-        botaoFecharCaixa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        tabelaMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaMovimentacao.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Movimento", "Valor", "Data", "Responsável", "Motivo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnRlCaixaERelatorios.setViewportView(tabelaMovimentacao);
-
-        labelFiltrarMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelFiltrarMovimentacao.setText("Filtrar por:");
-
-        labelValorCaixa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        labelValorCaixa.setText("Valor em Caixa:");
-
-        campoValorCaixa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-
-        comboBoxOrdenarCaixaEMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxOrdenarCaixaEMovimentacao.setMaximumRowCount(3);
-        comboBoxOrdenarCaixaEMovimentacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ordem alfabética", "Últimos locatários", "Últimos cadastrados", "Despesas" }));
-        comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar tipo de filtro");
-        comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoRegistrarDespesa.setText("Registrar Despesa");
-        botaoRegistrarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoRegistrarDespesa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoRegistrarDespesaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelCaixaERelatoriosLayout = new javax.swing.GroupLayout(painelCaixaERelatorios);
-        painelCaixaERelatorios.setLayout(painelCaixaERelatoriosLayout);
-        painelCaixaERelatoriosLayout.setHorizontalGroup(
-            painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                        .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                                .addComponent(labelFiltrarMovimentacao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(31, Short.MAX_VALUE))
-                    .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                        .addComponent(botaoGerarRelatorio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoFecharCaixa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoRegistrarDespesa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelValorCaixa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(53, 53, 53))))
-        );
-        painelCaixaERelatoriosLayout.setVerticalGroup(
-            painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botaoGerarRelatorio)
-                            .addComponent(botaoFecharCaixa)
-                            .addComponent(botaoRegistrarDespesa)))
-                    .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(campoValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(40, 40, 40)
-                .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFiltrarMovimentacao)
-                    .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(127, Short.MAX_VALUE))
-        );
-
-        abas.addTab("Relatório e Caixa", painelCaixaERelatorios);
-
-        painelConfiguracoes.setBackground(new java.awt.Color(255, 255, 255));
-        painelConfiguracoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelConfiguracoes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelConfiguracoesMouseClicked(evt);
-            }
-        });
-
-        botaoSalvarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoSalvarDiretorioBackup.setText(" Salvar ");
-        botaoSalvarDiretorioBackup.setToolTipText("Salvar diretório");
-        botaoSalvarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvarDiretorioBackup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarDiretorioBackupActionPerformed(evt);
-            }
-        });
-
-        botaoProcurarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoProcurarDiretorioBackup.setText("Procurar");
-        botaoProcurarDiretorioBackup.setToolTipText("Procurar diretório");
-        botaoProcurarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
-        campoDiretorioBackup.setText("Caminho do diretório");
-        campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
-        campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoDiretorioBackupMouseClicked(evt);
-            }
-        });
-        campoDiretorioBackup.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDiretorioBackupKeyTyped(evt);
-            }
-        });
-
-        labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDiretorioBackups.setText("Diretório de backups");
-
-        botaoSalvarDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoSalvarDiretorioContratos.setText(" Salvar ");
-        botaoSalvarDiretorioContratos.setToolTipText("Salvar diretório");
-        botaoSalvarDiretorioContratos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvarDiretorioContratos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarDiretorioContratosActionPerformed(evt);
-            }
-        });
-
-        botaoProcurarDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoProcurarDiretorioContratos.setText("Procurar");
-        botaoProcurarDiretorioContratos.setToolTipText("Procurar diretório");
-        botaoProcurarDiretorioContratos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoDiretorioContratos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoDiretorioContratos.setForeground(new java.awt.Color(153, 153, 153));
-        campoDiretorioContratos.setText("Caminho do diretório");
-        campoDiretorioContratos.setToolTipText("Informe o caminho do diretório");
-        campoDiretorioContratos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoDiretorioContratos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoDiretorioContratosMouseClicked(evt);
-            }
-        });
-        campoDiretorioContratos.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDiretorioContratosKeyTyped(evt);
-            }
-        });
-
-        labelDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDiretorioContratos.setText("Diretório de Contratos");
-
-        javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
-        painelConfiguracoes.setLayout(painelConfiguracoesLayout);
-        painelConfiguracoesLayout.setHorizontalGroup(
-            painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelDiretorioContratos)
-                    .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                        .addComponent(campoDiretorioContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoProcurarDiretorioContratos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSalvarDiretorioContratos))
-                    .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                        .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoProcurarDiretorioBackup)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSalvarDiretorioBackup))
-                    .addComponent(labelDiretorioBackups))
-                .addContainerGap(647, Short.MAX_VALUE))
-        );
-        painelConfiguracoesLayout.setVerticalGroup(
-            painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
-                .addComponent(labelDiretorioBackups)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoProcurarDiretorioBackup)
-                    .addComponent(botaoSalvarDiretorioBackup))
-                .addGap(31, 31, 31)
-                .addComponent(labelDiretorioContratos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoDiretorioContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoProcurarDiretorioContratos)
-                    .addComponent(botaoSalvarDiretorioContratos))
-                .addContainerGap(438, Short.MAX_VALUE))
-        );
-
-        abas.addTab("Configuração", painelConfiguracoes);
-
-        painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
-        painelAdministrador.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        painelAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                painelAdministradorMouseClicked(evt);
-            }
-        });
-
-        botaoNovoUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoNovoUsuario.setText("Novo Usuário");
-        botaoNovoUsuario.setToolTipText("Criar novo usuário");
-        botaoNovoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoNovoUsuarioActionPerformed(evt);
-            }
-        });
-
-        botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoPesquisarUsuario.setText("Pesquisar");
-        botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoPesquisarUsuario.setForeground(new java.awt.Color(153, 153, 153));
-        campoPesquisarUsuario.setText("Pesquisar Usuário");
-        campoPesquisarUsuario.setToolTipText("Informe o nome do usuário");
-        campoPesquisarUsuario.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoPesquisarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoPesquisarUsuarioMouseClicked(evt);
-            }
-        });
-        campoPesquisarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPesquisarUsuarioKeyTyped(evt);
-            }
-        });
-
-        pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        tabelaUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Login", "Cadastrado desde", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        pnRlUsuario.setViewportView(tabelaUsuario);
-
-        labelOrdenarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelOrdenarUsuario.setText("Filtrar por:");
-
-        comboBoxUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboBoxUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
-        comboBoxUsuario.setToolTipText("Selecionar tipo de filtro");
-        comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
-        painelAdministrador.setLayout(painelAdministradorLayout);
-        painelAdministradorLayout.setHorizontalGroup(
-            painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAdministradorLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoNovoUsuario)
-                    .addGroup(painelAdministradorLayout.createSequentialGroup()
-                        .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(botaoPesquisarUsuario))
-                    .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelAdministradorLayout.createSequentialGroup()
-                        .addComponent(labelOrdenarUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(31, Short.MAX_VALUE))
-        );
-        painelAdministradorLayout.setVerticalGroup(
-            painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAdministradorLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(botaoNovoUsuario)
-                .addGap(50, 50, 50)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoPesquisarUsuario))
-                .addGap(40, 40, 40)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelOrdenarUsuario)
-                    .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
-        );
-
-        try {
-            if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
-
-                abas.addTab("Administrador", painelAdministrador);
-            }
-        } catch (UsuarioInexistenteException e) {
-            setVisible(false);
-            new LoginFrame().setVisible(true);
+                .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+    painelClientesLayout.setVerticalGroup(
+        painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelClientesLayout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addComponent(botaoNovoCliente)
+            .addGap(50, 50, 50)
+            .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoPesquisarCliente))
+            .addGap(40, 40, 40)
+            .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelOrdenar)
+                .addComponent(comboBoxOrdenarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap())
+    );
+
+    abas.addTab("  Clientes  ", painelClientes);
+
+    painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
+    painelProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    painelProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            painelProdutosMouseClicked(evt);
         }
+    });
 
-        javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
-        painelGeral.setLayout(painelGeralLayout);
-        painelGeralLayout.setHorizontalGroup(
-            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelGeralLayout.createSequentialGroup()
-                .addContainerGap(19, Short.MAX_VALUE)
-                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(abas)
-                    .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-        painelGeralLayout.setVerticalGroup(
-            painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelGeralLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+    botaoNovoProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoNovoProduto.setText("Novo Produto");
+    botaoNovoProduto.setToolTipText("Criar novo produto");
+    botaoNovoProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoNovoProduto.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoNovoProdutoActionPerformed(evt);
+        }
+    });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+    botaoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoPesquisarProduto.setText("Pesquisar");
+    botaoPesquisarProduto.setToolTipText("Pesquisar produtos em estoque");
+    botaoPesquisarProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoPesquisarProduto.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoPesquisarProduto.setForeground(new java.awt.Color(153, 153, 153));
+    campoPesquisarProduto.setText("Pesquisar Produto");
+    campoPesquisarProduto.setToolTipText("Informe o nome do produto");
+    campoPesquisarProduto.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoPesquisarProduto.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoPesquisarProdutoMouseClicked(evt);
+        }
+    });
+    campoPesquisarProduto.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoPesquisarProdutoKeyTyped(evt);
+        }
+    });
+
+    pnRlProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+    tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null, null, null},
+            {null, null, null, null, null, null},
+            {null, null, null, null, null, null},
+            {null, null, null, null, null, null}
+        },
+        new String [] {
+            "Código", "Descrição do Produto", "Qtd. em estoque", "", "", ""
+        }
+    ) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+    });
+    pnRlProduto.setViewportView(tabelaProdutos);
+
+    labelFiltrarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelFiltrarProdutos.setText("Filtrar por:");
+
+    comboBoxOrdenarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    comboBoxOrdenarProdutos.setMaximumRowCount(5);
+    comboBoxOrdenarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Em estoque", "Produtos de locação", "Produtos de venda", "Últimos locados", "Últimos cadastros" }));
+    comboBoxOrdenarProdutos.setToolTipText("Selecionar tipo de filtro");
+    comboBoxOrdenarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
+    painelProdutos.setLayout(painelProdutosLayout);
+    painelProdutosLayout.setHorizontalGroup(
+        painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelProdutosLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(botaoNovoProduto)
+                .addGroup(painelProdutosLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoPesquisarProduto))
+                .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelProdutosLayout.createSequentialGroup()
+                    .addComponent(labelFiltrarProdutos)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(comboBoxOrdenarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+    painelProdutosLayout.setVerticalGroup(
+        painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelProdutosLayout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addComponent(botaoNovoProduto)
+            .addGap(50, 50, 50)
+            .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoPesquisarProduto))
+            .addGap(40, 40, 40)
+            .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelFiltrarProdutos)
+                .addComponent(comboBoxOrdenarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(73, Short.MAX_VALUE))
+    );
+
+    abas.addTab("  Produtos  ", painelProdutos);
+
+    painelFornecedores.setBackground(new java.awt.Color(255, 255, 255));
+    painelFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    painelFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            painelFornecedoresMouseClicked(evt);
+        }
+    });
+
+    botaoNovoFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoNovoFornecedor.setText("Novo Fornecedor");
+    botaoNovoFornecedor.setToolTipText("Criar novo fornecedor");
+    botaoNovoFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoNovoFornecedor.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoNovoFornecedorActionPerformed(evt);
+        }
+    });
+
+    botaoPesquisarFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoPesquisarFornecedor.setText("Pesquisar");
+    botaoPesquisarFornecedor.setToolTipText("Pesquisar fornecedores cadastrados");
+    botaoPesquisarFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoPesquisarFornecedor.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoPesquisarFornecedor.setForeground(new java.awt.Color(153, 153, 153));
+    campoPesquisarFornecedor.setText("Pesquisar Fornecedor");
+    campoPesquisarFornecedor.setToolTipText("Informe o nome do fornecedor");
+    campoPesquisarFornecedor.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoPesquisarFornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoPesquisarFornecedorMouseClicked(evt);
+        }
+    });
+    campoPesquisarFornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoPesquisarFornecedorKeyTyped(evt);
+        }
+    });
+
+    pnRlFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+    tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    tabelaFornecedores.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null}
+        },
+        new String [] {
+            "Forncedor", "Endereço", "Contato", "", ""
+        }
+    ) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+    });
+    pnRlFornecedores.setViewportView(tabelaFornecedores);
+
+    labelFiltrarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelFiltrarFornecedores.setText("Filtrar por:");
+
+    comboBoxOrdenarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    comboBoxOrdenarFornecedores.setMaximumRowCount(3);
+    comboBoxOrdenarFornecedores.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos locatários", "Últimos cadastros" }));
+    comboBoxOrdenarFornecedores.setToolTipText("Selecionar tipo de filtro");
+    comboBoxOrdenarFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    javax.swing.GroupLayout painelFornecedoresLayout = new javax.swing.GroupLayout(painelFornecedores);
+    painelFornecedores.setLayout(painelFornecedoresLayout);
+    painelFornecedoresLayout.setHorizontalGroup(
+        painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelFornecedoresLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(botaoNovoFornecedor)
+                .addGroup(painelFornecedoresLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoPesquisarFornecedor))
+                .addGroup(painelFornecedoresLayout.createSequentialGroup()
+                    .addComponent(labelFiltrarFornecedores)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(comboBoxOrdenarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnRlFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+    painelFornecedoresLayout.setVerticalGroup(
+        painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelFornecedoresLayout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addComponent(botaoNovoFornecedor)
+            .addGap(50, 50, 50)
+            .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoPesquisarFornecedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoPesquisarFornecedor))
+            .addGap(40, 40, 40)
+            .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelFiltrarFornecedores)
+                .addComponent(comboBoxOrdenarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(73, 73, 73))
+    );
+
+    abas.addTab("Fornecedores", painelFornecedores);
+
+    painelLocacoes.setBackground(new java.awt.Color(255, 255, 255));
+    painelLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    painelLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            painelLocacoesMouseClicked(evt);
+        }
+    });
+
+    botaoNovaLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoNovaLocacao.setText("Nova Locação");
+    botaoNovaLocacao.setToolTipText("Criar nova locação");
+    botaoNovaLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoNovaLocacao.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoNovaLocacaoActionPerformed(evt);
+        }
+    });
+
+    botaoPesquisarLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoPesquisarLocacao.setText("Pesquisar");
+    botaoPesquisarLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoPesquisarLocacao.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoPesquisarLocacao.setForeground(new java.awt.Color(153, 153, 153));
+    campoPesquisarLocacao.setText("Pesquisar Locação");
+    campoPesquisarLocacao.setToolTipText("");
+    campoPesquisarLocacao.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoPesquisarLocacao.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoPesquisarLocacaoMouseClicked(evt);
+        }
+    });
+    campoPesquisarLocacao.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoPesquisarLocacaoKeyTyped(evt);
+        }
+    });
+
+    botaoLocacoesAtrasadas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoLocacoesAtrasadas.setText("Ver locações Atrasadas");
+    botaoLocacoesAtrasadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoLocacoesAtrasadas.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoLocacoesAtrasadasActionPerformed(evt);
+        }
+    });
+
+    botaoLocacoesExtraviadas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoLocacoesExtraviadas.setText("Ver locações Extraviadas");
+    botaoLocacoesExtraviadas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoLocacoesExtraviadas.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoLocacoesExtraviadasActionPerformed(evt);
+        }
+    });
+
+    pnRlFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+    tabelaFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    tabelaFornecedores1.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null}
+        },
+        new String [] {
+            "Cliente", "Produtos Locados", "Contato", "Retorno", ""
+        }
+    ));
+    pnRlFornecedores1.setViewportView(tabelaFornecedores1);
+
+    labelFiltrarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelFiltrarFornecedores1.setText("Filtrar por:");
+
+    comboBoxOrdenarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    comboBoxOrdenarFornecedores1.setMaximumRowCount(3);
+    comboBoxOrdenarFornecedores1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimos locatários", "Últimos cadastros" }));
+    comboBoxOrdenarFornecedores1.setToolTipText("Selecionar tipo de filtro");
+    comboBoxOrdenarFornecedores1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    javax.swing.GroupLayout painelLocacoesLayout = new javax.swing.GroupLayout(painelLocacoes);
+    painelLocacoes.setLayout(painelLocacoesLayout);
+    painelLocacoesLayout.setHorizontalGroup(
+        painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelLocacoesLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addComponent(labelFiltrarFornecedores1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnRlFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addComponent(botaoNovaLocacao)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoLocacoesAtrasadas)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoLocacoesExtraviadas))
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoPesquisarLocacao)))
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+    painelLocacoesLayout.setVerticalGroup(
+        painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelLocacoesLayout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(botaoNovaLocacao)
+                .addComponent(botaoLocacoesAtrasadas)
+                .addComponent(botaoLocacoesExtraviadas))
+            .addGap(50, 50, 50)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoPesquisarLocacao))
+            .addGap(40, 40, 40)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelFiltrarFornecedores1)
+                .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(73, Short.MAX_VALUE))
+    );
+
+    abas.addTab("  Locações  ", painelLocacoes);
+
+    painelVendas.setBackground(new java.awt.Color(255, 255, 255));
+    painelVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    painelVendas.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            painelVendasMouseClicked(evt);
+        }
+    });
+
+    botaoNovaVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoNovaVenda.setText("Nova Venda");
+    botaoNovaVenda.setToolTipText("Criar nova locação");
+    botaoNovaVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoNovaVenda.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoNovaVendaActionPerformed(evt);
+        }
+    });
+
+    botaoPesquisarFornecedor1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoPesquisarFornecedor1.setText("Pesquisar");
+    botaoPesquisarFornecedor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoPesquisarVenda.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoPesquisarVenda.setForeground(new java.awt.Color(153, 153, 153));
+    campoPesquisarVenda.setText("Pesquisar Venda");
+    campoPesquisarVenda.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoPesquisarVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoPesquisarVendaMouseClicked(evt);
+        }
+    });
+    campoPesquisarVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoPesquisarVendaKeyTyped(evt);
+        }
+    });
+
+    comboBoxOrdenarCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    comboBoxOrdenarCliente1.setMaximumRowCount(3);
+    comboBoxOrdenarCliente1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimas vendas", "Valor" }));
+    comboBoxOrdenarCliente1.setToolTipText("Selecionar tipo de filtro");
+    comboBoxOrdenarCliente1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    pnRlCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+    tabelaClientes1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    tabelaClientes1.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null, null, null},
+            {null, null, null, null, null, null},
+            {null, null, null, null, null, null},
+            {null, null, null, null, null, null}
+        },
+        new String [] {
+            "Data da venda", "Vendedor", "Valor da venda", "Itens", "Forma pagamento", ""
+        }
+    ) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+    });
+    pnRlCliente1.setViewportView(tabelaClientes1);
+
+    labelOrdenar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelOrdenar1.setText("Filtrar por:");
+
+    javax.swing.GroupLayout painelVendasLayout = new javax.swing.GroupLayout(painelVendas);
+    painelVendas.setLayout(painelVendasLayout);
+    painelVendasLayout.setHorizontalGroup(
+        painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelVendasLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelVendasLayout.createSequentialGroup()
+                    .addComponent(labelOrdenar1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(comboBoxOrdenarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnRlCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoNovaVenda)
+                .addGroup(painelVendasLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoPesquisarFornecedor1)))
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+    painelVendasLayout.setVerticalGroup(
+        painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelVendasLayout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addComponent(botaoNovaVenda)
+            .addGap(50, 50, 50)
+            .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoPesquisarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoPesquisarFornecedor1))
+            .addGap(40, 40, 40)
+            .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelOrdenar1)
+                .addComponent(comboBoxOrdenarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(73, 73, 73))
+    );
+
+    abas.addTab("   Vendas   ", painelVendas);
+
+    painelCaixaERelatorios.setBackground(new java.awt.Color(255, 255, 255));
+    painelCaixaERelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+    botaoGerarRelatorio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoGerarRelatorio.setText("Gerar Relatório");
+    botaoGerarRelatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoGerarRelatorio.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoGerarRelatorioActionPerformed(evt);
+        }
+    });
+
+    botaoFecharCaixa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoFecharCaixa.setText("Fechar Caixa");
+    botaoFecharCaixa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    tabelaMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    tabelaMovimentacao.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null}
+        },
+        new String [] {
+            "Movimento", "Valor", "Data", "Responsável", "Motivo"
+        }
+    ) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+    });
+    pnRlCaixaERelatorios.setViewportView(tabelaMovimentacao);
+
+    labelFiltrarMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelFiltrarMovimentacao.setText("Filtrar por:");
+
+    labelValorCaixa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+    labelValorCaixa.setText("Valor em Caixa:");
+
+    campoValorCaixa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+
+    comboBoxOrdenarCaixaEMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    comboBoxOrdenarCaixaEMovimentacao.setMaximumRowCount(3);
+    comboBoxOrdenarCaixaEMovimentacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ordem alfabética", "Últimos locatários", "Últimos cadastrados", "Despesas" }));
+    comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar tipo de filtro");
+    comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoRegistrarDespesa.setText("Registrar Despesa");
+    botaoRegistrarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoRegistrarDespesa.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoRegistrarDespesaActionPerformed(evt);
+        }
+    });
+
+    javax.swing.GroupLayout painelCaixaERelatoriosLayout = new javax.swing.GroupLayout(painelCaixaERelatorios);
+    painelCaixaERelatorios.setLayout(painelCaixaERelatoriosLayout);
+    painelCaixaERelatoriosLayout.setHorizontalGroup(
+        painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+                    .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+                            .addComponent(labelFiltrarMovimentacao)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+                    .addComponent(botaoGerarRelatorio)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoFecharCaixa)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoRegistrarDespesa)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelValorCaixa)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(campoValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(53, 53, 53))))
+    );
+    painelCaixaERelatoriosLayout.setVerticalGroup(
+        painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+            .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+                    .addGap(23, 23, 23)
+                    .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoGerarRelatorio)
+                        .addComponent(botaoFecharCaixa)
+                        .addComponent(botaoRegistrarDespesa)))
+                .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
+                    .addGap(37, 37, 37)
+                    .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoValorCaixa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGap(40, 40, 40)
+            .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelFiltrarMovimentacao)
+                .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(127, Short.MAX_VALUE))
+    );
+
+    abas.addTab("Relatório e Caixa", painelCaixaERelatorios);
+
+    painelConfiguracoes.setBackground(new java.awt.Color(255, 255, 255));
+    painelConfiguracoes.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    painelConfiguracoes.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            painelConfiguracoesMouseClicked(evt);
+        }
+    });
+
+    botaoSalvarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoSalvarDiretorioBackup.setText(" Salvar ");
+    botaoSalvarDiretorioBackup.setToolTipText("Salvar diretório");
+    botaoSalvarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioBackup.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoSalvarDiretorioBackupActionPerformed(evt);
+        }
+    });
+
+    botaoProcurarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoProcurarDiretorioBackup.setText("Procurar");
+    botaoProcurarDiretorioBackup.setToolTipText("Procurar diretório");
+    botaoProcurarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioBackup.setText("Caminho do diretório");
+    campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
+    campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoDiretorioBackupMouseClicked(evt);
+        }
+    });
+    campoDiretorioBackup.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoDiretorioBackupKeyTyped(evt);
+        }
+    });
+
+    labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelDiretorioBackups.setText("Diretório de backups");
+
+    botaoSalvarDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoSalvarDiretorioContratos.setText(" Salvar ");
+    botaoSalvarDiretorioContratos.setToolTipText("Salvar diretório");
+    botaoSalvarDiretorioContratos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioContratos.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoSalvarDiretorioContratosActionPerformed(evt);
+        }
+    });
+
+    botaoProcurarDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoProcurarDiretorioContratos.setText("Procurar");
+    botaoProcurarDiretorioContratos.setToolTipText("Procurar diretório");
+    botaoProcurarDiretorioContratos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoDiretorioContratos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoDiretorioContratos.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioContratos.setText("Caminho do diretório");
+    campoDiretorioContratos.setToolTipText("Informe o caminho do diretório");
+    campoDiretorioContratos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoDiretorioContratos.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoDiretorioContratosMouseClicked(evt);
+        }
+    });
+    campoDiretorioContratos.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoDiretorioContratosKeyTyped(evt);
+        }
+    });
+
+    labelDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelDiretorioContratos.setText("Diretório de Contratos");
+
+    javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
+    painelConfiguracoes.setLayout(painelConfiguracoesLayout);
+    painelConfiguracoesLayout.setHorizontalGroup(
+        painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(labelDiretorioContratos)
+                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                    .addComponent(campoDiretorioContratos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoProcurarDiretorioContratos)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoSalvarDiretorioContratos))
+                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                    .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoProcurarDiretorioBackup)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoSalvarDiretorioBackup))
+                .addComponent(labelDiretorioBackups))
+            .addContainerGap(647, Short.MAX_VALUE))
+    );
+    painelConfiguracoesLayout.setVerticalGroup(
+        painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+            .addGap(66, 66, 66)
+            .addComponent(labelDiretorioBackups)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoProcurarDiretorioBackup)
+                .addComponent(botaoSalvarDiretorioBackup))
+            .addGap(31, 31, 31)
+            .addComponent(labelDiretorioContratos)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoDiretorioContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoProcurarDiretorioContratos)
+                .addComponent(botaoSalvarDiretorioContratos))
+            .addContainerGap(438, Short.MAX_VALUE))
+    );
+
+    abas.addTab("Configuração", painelConfiguracoes);
+
+    painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
+    painelAdministrador.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    painelAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            painelAdministradorMouseClicked(evt);
+        }
+    });
+
+    botaoNovoUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoNovoUsuario.setText("Novo Usuário");
+    botaoNovoUsuario.setToolTipText("Criar novo usuário");
+    botaoNovoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoNovoUsuarioActionPerformed(evt);
+        }
+    });
+
+    botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoPesquisarUsuario.setText("Pesquisar");
+    botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    campoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoPesquisarUsuario.setForeground(new java.awt.Color(153, 153, 153));
+    campoPesquisarUsuario.setText("Pesquisar Usuário");
+    campoPesquisarUsuario.setToolTipText("Informe o nome do usuário");
+    campoPesquisarUsuario.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoPesquisarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoPesquisarUsuarioMouseClicked(evt);
+        }
+    });
+    campoPesquisarUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoPesquisarUsuarioKeyTyped(evt);
+        }
+    });
+
+    pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+    tabelaUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    tabelaUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        new Object [][] {
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null}
+        },
+        new String [] {
+            "Nome", "Login", "Cadastrado desde", "", ""
+        }
+    ) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+    });
+    pnRlUsuario.setViewportView(tabelaUsuario);
+
+    labelOrdenarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelOrdenarUsuario.setText("Filtrar por:");
+
+    comboBoxUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    comboBoxUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
+    comboBoxUsuario.setToolTipText("Selecionar tipo de filtro");
+    comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
+    painelAdministrador.setLayout(painelAdministradorLayout);
+    painelAdministradorLayout.setHorizontalGroup(
+        painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelAdministradorLayout.createSequentialGroup()
+            .addGap(32, 32, 32)
+            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(botaoNovoUsuario)
+                .addGroup(painelAdministradorLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(botaoPesquisarUsuario))
+                .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 1256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelAdministradorLayout.createSequentialGroup()
+                    .addComponent(labelOrdenarUsuario)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(31, Short.MAX_VALUE))
+    );
+    painelAdministradorLayout.setVerticalGroup(
+        painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelAdministradorLayout.createSequentialGroup()
+            .addGap(23, 23, 23)
+            .addComponent(botaoNovoUsuario)
+            .addGap(50, 50, 50)
+            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoPesquisarUsuario))
+            .addGap(40, 40, 40)
+            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(labelOrdenarUsuario)
+                .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGap(18, 18, 18)
+            .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(73, Short.MAX_VALUE))
+    );
+
+    try {
+        if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
+
+            abas.addTab("Administrador", painelAdministrador);
+        }
+    } catch (UsuarioInexistenteException e) {
+        setVisible(false);
+        new LoginFrame().setVisible(true);
+    }
+
+    javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+    painelGeral.setLayout(painelGeralLayout);
+    painelGeralLayout.setHorizontalGroup(
+        painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelGeralLayout.createSequentialGroup()
+            .addContainerGap(19, Short.MAX_VALUE)
+            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(abas)
+                .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(19, Short.MAX_VALUE))
+    );
+    painelGeralLayout.setVerticalGroup(
+        painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(painelGeralLayout.createSequentialGroup()
+            .addContainerGap()
+            .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE)
+            .addContainerGap())
+    );
+
+    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+    getContentPane().setLayout(layout);
+    layout.setHorizontalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+    );
+    layout.setVerticalGroup(
+        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        .addGroup(layout.createSequentialGroup()
             .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
-        );
+            .addGap(0, 1, Short.MAX_VALUE))
+    );
 
-        pack();
+    pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoClienteActionPerformed
-        Dialog dialog = new CadastrarClienteDialog(this, true);
+        //Dialog dialog = new CadastrarClienteDialog(this, true);
+        //dialog.setLocationRelativeTo(null);
+        //dialog.setVisible(true);
+        
+        CadastrarClienteDialog dialog = new CadastrarClienteDialog(null);
         dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        if (dialog.alterarDados()) {
+            
+            //logica para atualizar a tabela... refazer apenas atualizando o modelo
+            String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "", ""};
+            //Essa lista terá as linhas da tabela
+            List<Object[]> listaLinhas = new ArrayList<>();
+            
+            JButton botaoMedidas = new JButton("Ver Medidas");
+            JButton botaoLocacoes = new JButton("Ver Locações");
+            JButton botaoEditar = new JButton("Editar");
+            JButton botaoExcluir = new JButton("Excluir");
+            
+            botaoMedidas.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            botaoLocacoes.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            botaoEditar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            botaoExcluir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            
+            //Adicionando valores nas linhas
+            for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
+                listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
+                    botaoMedidas, botaoLocacoes,
+                    botaoEditar, botaoExcluir});
+            }
+            //cria um defaultablemodel com as informações acima
+            DefaultTableModel modelo = new DefaultTableModel(
+                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);
+            //define o model da tabela
+            tabelaClientes.setModel(modelo);
+            
+        }
+        dialog.dispose();
     }//GEN-LAST:event_botaoNovoClienteActionPerformed
 
     private void campoPesquisarClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarClienteMouseClicked

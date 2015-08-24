@@ -20,6 +20,9 @@ public class Configuracao {
     
 
     public Empresa getEmpresa() {
+        //Tirar esse método, foi apenas para teste
+        setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-3229", 
+                new Endereco("AV. Irineu Pinto, S/N", "Centro", "PB", 2222, "João Pessoa")));
         return dados.getEmpresa();
     }
 
@@ -37,7 +40,7 @@ public class Configuracao {
 
     public String getDiretorioDeContratos() {
         // retirar... foi apenas para teste
-        dados.setDiretorioDeContratos("D:\\");
+        dados.setDiretorioDeContratos("D:\\Contratos");
         ////
         return dados.getDiretorioDeContratos();
     }

@@ -318,18 +318,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaClientes">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String[] nomesColunas = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;&#xda;ltima Loca&#xe7;&#xe3;o&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;,&quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for(Cliente cliente: GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), &quot;20/04/2015&quot;, &#xa;        new JButton(&quot;Ver Medidas&quot;), new JButton(&quot;Ver Loca&#xe7;&#xf5;es&quot;),&#xa;        new JButton(&quot;Editar&quot;), new JButton(&quot;Excluir&quot;)});&#xa;} &#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;DefaultTableModel modelo = new DefaultTableModel(&#xa;        listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modelo);">
                           <Font name="Tahoma" size="14" style="0"/>
-                        </Property>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="4">
-                            <Column editable="true" title="Nome do cliente" type="java.lang.String"/>
-                            <Column editable="true" title="&#xda;ltima loca&#xe7;&#xe3;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Cadastrado em" type="java.lang.Object"/>
-                            <Column editable="true" title="Ver loca&#xe7;&#xf5;es" type="java.lang.Object"/>
-                            <Column editable="true" title="" type="java.lang.Object"/>
-                            <Column editable="true" title="" type="java.lang.Object"/>
-                          </Table>
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
