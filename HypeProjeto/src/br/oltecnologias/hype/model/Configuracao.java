@@ -33,8 +33,6 @@ public class Configuracao implements Serializable {
     
     private double descontoAVista;
 
-    @Lob
-    @Column(length = 10000, name="ContratoOriginal")
     private String contratoPt1 = "Terni Vellucci , inscrita no CNPJ/22.833.691/0001-47, Av.Presidente Epitácio Pessoa, Nº 2400 doravante denominada “Terni Vellucci”, neste ato representada na Forma de seu contrato social e de outro lado o contratante denominado de “LOCADOR”, resolvem celebrar o presente contrato de locação, nas seguintes condições:\n"
             + "Cláusula 1ª. O objeto do presente contrato é a locação de roupas, usadas ou não, e acessórios de uso pessoal, as quais são selecionados e indicados pelo LOCADOR, pessoalmente na loja física.\n"
             + "Cláusula 2ª. A Terni Vellucci se compromete a disponibilizar ao LOCADOR, as roupas e acessórios, escolhidos e locados, em perfeito estado para uso e conservação, na data estabelecida;\n";
@@ -55,32 +53,8 @@ public class Configuracao implements Serializable {
     }
 
     private static class ConfiguracaoHolder {
-
-<<<<<<< HEAD (a92c076) - Adição do banco de dado
         private static final Configuracao INSTANCE = new Configuracao();
-=======
-    public void setDiasEmprestimo(int diasEmprestimo) {
-        dados.setDiasEmprestimo(diasEmprestimo);
-    }
 
-    public String getDiretorioDeContratos() {
-        // retirar... foi apenas para teste
-        dados.setDiretorioDeContratos("D:\\Contratos");
-        ////
-        return dados.getDiretorioDeContratos();
-    }
-
-    public void setDiretorioDeContratos(String diretorioDeContratos) {
-        dados.setDiretorioDeContratos(diretorioDeContratos);
-    }
-
-    public String getDiretorioDeBackup() {
-        return dados.getDiretorioDeBackup();
-    }
-
-    public void setDiretorioDeBackup(String diretorioDeBackup) {
-        dados.setDiretorioDeBackup(diretorioDeBackup);
->>>>>>> e5e8377fce6553b27ee47b7a97224111747b9d2b
     }
 
     public int getId() {
