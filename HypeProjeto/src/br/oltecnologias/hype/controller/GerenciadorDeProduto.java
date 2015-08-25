@@ -64,7 +64,6 @@ public class GerenciadorDeProduto {
                 return p;
             }
         }
-        
         throw new ProdutoInexistenteException("Produto não cadastrado.");
     }
 

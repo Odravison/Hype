@@ -56,7 +56,31 @@ public class Configuracao implements Serializable {
 
     private static class ConfiguracaoHolder {
 
+<<<<<<< HEAD (a92c076) - Adição do banco de dado
         private static final Configuracao INSTANCE = new Configuracao();
+=======
+    public void setDiasEmprestimo(int diasEmprestimo) {
+        dados.setDiasEmprestimo(diasEmprestimo);
+    }
+
+    public String getDiretorioDeContratos() {
+        // retirar... foi apenas para teste
+        dados.setDiretorioDeContratos("D:\\Contratos");
+        ////
+        return dados.getDiretorioDeContratos();
+    }
+
+    public void setDiretorioDeContratos(String diretorioDeContratos) {
+        dados.setDiretorioDeContratos(diretorioDeContratos);
+    }
+
+    public String getDiretorioDeBackup() {
+        return dados.getDiretorioDeBackup();
+    }
+
+    public void setDiretorioDeBackup(String diretorioDeBackup) {
+        dados.setDiretorioDeBackup(diretorioDeBackup);
+>>>>>>> e5e8377fce6553b27ee47b7a97224111747b9d2b
     }
 
     public int getId() {

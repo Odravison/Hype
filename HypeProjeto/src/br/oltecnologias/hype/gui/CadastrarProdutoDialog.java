@@ -332,7 +332,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar)))
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -347,7 +347,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
-        if(!numeros.contains(evt.getKeyChar()+"") || campoPreco.getText().length() >= maxCaracteresPreco) {
+        if((campoPreco.getText().length() > 3 && !campoPreco.getText().contains(".")) || 
+                (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
+                || campoPreco.getText().length() >= maxCaracteresPreco) {
+            
             evt.consume();
         }
         /*
@@ -381,8 +384,8 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         // Validar campos para cadastro
         if(campoNome.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o nome do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCodigo.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o código do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else if(campoCodigo.getText().length() <= 0 || campoCodigo.getText().length() < maxCaracteresCodigo) {
+            JOptionPane.showMessageDialog(null, "Informe o código do produto com 8 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoCor.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe a cor do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoTamanho.getText().length() <= 0) {
@@ -391,24 +394,24 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "Informe a quantidade de peças do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoPreco.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o preço do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
-
-        if(comboFornecedor.getSelectedItem().toString().equals("Selecione")) {
-            fornecedor = "Não informado";
         } else {
-            fornecedor = comboFornecedor.getSelectedItem().toString();
-        }
-        
-        try {
-            GerenciadorDeProduto.getInstance().cadastrarProduto(campoNome.getText(), Float.parseFloat(campoPreco.getText()), 
-                    Integer.parseInt(campoQuantidade.getText()), fornecedor, campoCor.getText(), 
-                    Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
             
-            JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
-            setVisible(false);
-            dispose();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            if(comboFornecedor.getSelectedItem().toString().equals("Selecione")) {
+                fornecedor = "Não informado";
+            } else {
+                fornecedor = comboFornecedor.getSelectedItem().toString();
+            }
+            try {
+                GerenciadorDeProduto.getInstance().cadastrarProduto(campoNome.getText(), Float.parseFloat(campoPreco.getText()),
+                        Integer.parseInt(campoQuantidade.getText()), fornecedor, campoCor.getText(),
+                        Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
+
+                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+                setVisible(false);
+                dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }  
         }
 
     }//GEN-LAST:event_botaoSalvarActionPerformed

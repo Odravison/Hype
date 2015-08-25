@@ -318,18 +318,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaClientes">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="String[] nomesColunas = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;&#xda;ltima Loca&#xe7;&#xe3;o&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;,&quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for(Cliente cliente: GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), &quot;20/04/2015&quot;, &#xa;        new JButton(&quot;Ver Medidas&quot;), new JButton(&quot;Ver Loca&#xe7;&#xf5;es&quot;),&#xa;        new JButton(&quot;Editar&quot;), new JButton(&quot;Excluir&quot;)});&#xa;} &#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;DefaultTableModel modelo = new DefaultTableModel(&#xa;        listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modelo);">
                           <Font name="Tahoma" size="14" style="0"/>
-                        </Property>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="6" rowCount="4">
-                            <Column editable="true" title="Nome do cliente" type="java.lang.String"/>
-                            <Column editable="true" title="&#xda;ltima loca&#xe7;&#xe3;o" type="java.lang.Object"/>
-                            <Column editable="true" title="Cadastrado em" type="java.lang.Object"/>
-                            <Column editable="true" title="Ver loca&#xe7;&#xf5;es" type="java.lang.Object"/>
-                            <Column editable="true" title="" type="java.lang.Object"/>
-                            <Column editable="true" title="" type="java.lang.Object"/>
-                          </Table>
                         </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
@@ -899,8 +889,8 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="3">
                         <StringItem index="0" value="Todas"/>
-                        <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                        <StringItem index="2" value="&#xda;ltimos cadastros"/>
+                        <StringItem index="1" value="&#xda;ltimas Loca&#xe7;&#xf5;es"/>
+                        <StringItem index="2" value="Mais Antigas"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1250,11 +1240,12 @@
                     </Property>
                     <Property name="maximumRowCount" type="int" value="3"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
+                      <StringArray count="5">
                         <StringItem index="0" value="Ordem alfab&#xe9;tica"/>
                         <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
                         <StringItem index="2" value="&#xda;ltimos cadastrados"/>
-                        <StringItem index="3" value="Despesas"/>
+                        <StringItem index="3" value="Pend&#xea;ncias"/>
+                        <StringItem index="4" value="Despesas"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1491,7 +1482,11 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="botaoNovoUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarUsuario" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1512,8 +1507,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                          <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="botaoNovoUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="campoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1525,7 +1523,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="pnRlUsuario" min="-2" pref="359" max="-2" attributes="0"/>
-                          <EmptySpace pref="73" max="32767" attributes="0"/>
+                          <EmptySpace pref="74" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1629,6 +1627,17 @@
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Gerar Recibo"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>

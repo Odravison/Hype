@@ -8,6 +8,7 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.model.Cliente;
 import java.awt.Frame;
+import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -49,6 +50,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
+        setTitle("Pesquisar Cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -62,7 +64,6 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         labelCliente.setText("Cliente:");
 
         campoCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoCliente.setToolTipText("");
 
         botaoPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoPesquisar.setText("Pesquisar");
@@ -76,7 +77,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         listaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         DefaultListModel modelo = new DefaultListModel();
         for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-            modelo.addElement(cliente.getNome());
+            modelo.addElement(cliente.getDescricao());
         }
         listaClientes.setModel(modelo);
         scPanelClientes.setViewportView(listaClientes);
@@ -107,12 +108,12 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
                     .addComponent(campoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisar))
                 .addGap(18, 18, 18)
-                .addComponent(scPanelClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(scPanelClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         botaoOk.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoOk.setText("OK");
+        botaoOk.setText("  OK  ");
         botaoOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,7 +155,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoVoltar)
                     .addComponent(botaoOk))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -189,7 +190,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         } else {
             DefaultListModel modelo = new DefaultListModel();
             for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoCliente.getText())) {
-                modelo.addElement(cliente.getNome());
+                modelo.addElement(cliente.getCpf() + " | " + cliente.getNome());
             }
             listaClientes.setModel(modelo);
         }
@@ -203,7 +204,14 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     }
     
     public String getNomeClienteSelecionado() {
-        return listaClientes.getSelectedValue().toString();
+        StringTokenizer descricao = new StringTokenizer(listaClientes.getSelectedValue().toString(), "|");
+        descricao.nextToken();
+        return descricao.nextToken();
+    }
+    
+    public String getCpfLocador() {
+        StringTokenizer descricao = new StringTokenizer(listaClientes.getSelectedValue().toString(), " ");
+        return descricao.nextToken();
     }
     
     /**
@@ -224,7 +232,6 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     }
 
     protected boolean okSelecionado;
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoOk;
     private javax.swing.JButton botaoPesquisar;
