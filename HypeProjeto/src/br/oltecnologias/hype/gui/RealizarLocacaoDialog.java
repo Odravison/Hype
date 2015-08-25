@@ -310,10 +310,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioCartao.setBackground(new java.awt.Color(255, 255, 255));
         radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCartao.setText("Cartão");
+        radioCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCartaoActionPerformed(evt);
+            }
+        });
 
         radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
         radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPromissoria.setText("Promissória");
+        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPromissoriaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("AINDA FALTA AS DATAS");
 
@@ -368,11 +378,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(painelSelecionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                             .addComponent(painelLocador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, 0)))
+                            .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 23, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -546,6 +553,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_listaProdutosMouseClicked
+
+    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
+        if(radioAVista.isSelected())
+            radioAVista.setSelected(false);
+        if(radioPromissoria.isSelected()) 
+            radioPromissoria.setSelected(false);
+    }//GEN-LAST:event_radioCartaoActionPerformed
+
+    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
+        if(radioCartao.isSelected())
+            radioCartao.setSelected(false);
+        if(radioAVista.isSelected()) 
+            radioAVista.setSelected(false);
+    }//GEN-LAST:event_radioPromissoriaActionPerformed
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");

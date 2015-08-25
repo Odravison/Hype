@@ -600,8 +600,17 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         } else if(campoCel.getText().length() <= 0 || campoCel.getText().length() < 9) {
             JOptionPane.showMessageDialog(null, "Informe o número de celular completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
+                
             Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
                     Integer.parseInt(campoNumero.getText()), campoCidade.getText());
+            
+            // Nem todos os valores das medidas virão
+            
+            //Medidas medidas = new Medidas();
+            //if(campoBlazer.getText().length() == )
+            //medidas.setBlazer();
+            
+            
             Medidas medidas = new Medidas(Integer.parseInt(campoCalca.getText()), Integer.parseInt(campoComprimentoManga.getText()),
                     Integer.parseInt(campoColete.getText()), Integer.parseInt(campoCamisa.getText()),
                     Integer.parseInt(campoSapato.getText()), Integer.parseInt(campoSapato.getText()),
