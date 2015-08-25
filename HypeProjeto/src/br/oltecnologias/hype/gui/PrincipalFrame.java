@@ -132,6 +132,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaUsuario = new javax.swing.JTable();
         labelOrdenarUsuario = new javax.swing.JLabel();
         comboBoxUsuario = new javax.swing.JComboBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1366, 730));
@@ -1058,6 +1059,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboBoxUsuario.setToolTipText("Selecionar tipo de filtro");
     comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+    jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    jButton1.setText("Gerar Recibo");
+    jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
     javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
     painelAdministrador.setLayout(painelAdministradorLayout);
     painelAdministradorLayout.setHorizontalGroup(
@@ -1065,7 +1070,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelAdministradorLayout.createSequentialGroup()
             .addGap(32, 32, 32)
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(botaoNovoUsuario)
+                .addGroup(painelAdministradorLayout.createSequentialGroup()
+                    .addComponent(botaoNovoUsuario)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton1))
                 .addGroup(painelAdministradorLayout.createSequentialGroup()
                     .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -1081,8 +1089,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelAdministradorLayout.createSequentialGroup()
             .addGap(23, 23, 23)
-            .addComponent(botaoNovoUsuario)
-            .addGap(50, 50, 50)
+            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(botaoNovoUsuario)
+                .addComponent(jButton1))
+            .addGap(49, 49, 49)
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarUsuario))
@@ -1092,7 +1102,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(18, 18, 18)
             .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(73, Short.MAX_VALUE))
+            .addContainerGap(74, Short.MAX_VALUE))
     );
 
     try {
@@ -1151,7 +1161,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
             
-            //logica para atualizar a tabela... refazer apenas atualizando o modelo
+            //lógica para atualizar a tabela... refazer apenas atualizando o modelo
             String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "", ""};
             //Essa lista terá as linhas da tabela
             List<Object[]> listaLinhas = new ArrayList<>();
@@ -1169,8 +1179,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Adicionando valores nas linhas
             for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
                 listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
-                    botaoMedidas, botaoLocacoes,
-                    botaoEditar, botaoExcluir});
+                    "", "",
+                    "", ""});
             }
             //cria um defaultablemodel com as informações acima
             DefaultTableModel modelo = new DefaultTableModel(
@@ -1469,6 +1479,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxOrdenarFornecedores1;
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
     private javax.swing.JComboBox comboBoxUsuario;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioContratos;
     private javax.swing.JLabel labelFiltrarFornecedores;
