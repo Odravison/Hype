@@ -13,8 +13,6 @@ public class Usuario implements Serializable {
     private String nome;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "id_usuario")
     private String nickName;
     private String senha;
     private boolean isAdministrador;

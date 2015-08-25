@@ -20,6 +20,8 @@ public class Venda implements Serializable {
     private List<Produto> produtos;
     
     private double valor;
+    
+    private String formaDePagamento;
 
     public Venda() {
     }
@@ -29,9 +31,13 @@ public class Venda implements Serializable {
      * @param produtos
      * @param valor
      */
-    public Venda(List<Produto> produtos, double valor) {
+    public Venda(List<Produto> produtos, double valor, String formaDePagamento) {
         this.produtos = produtos;
         this.valor = valor;
+        this.formaDePagamento = formaDePagamento;
+        if (formaDePagamento.equals("A VISTA")){
+            this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
+        }
     }
 
     public int getId() {
@@ -56,6 +62,14 @@ public class Venda implements Serializable {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+
+    public String getFormaDePagamento() {
+        return formaDePagamento;
+    }
+
+    public void setFormaDePagamento(String formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
     }
 
 }

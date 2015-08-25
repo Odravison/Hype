@@ -22,7 +22,7 @@ public class Locacao implements Serializable {
 
     @OneToMany
     private List<Produto> produtos;
-    private double valor;
+    private double valorLocacao;
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataLocacao;
@@ -30,21 +30,37 @@ public class Locacao implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataDevolucao;
     
-    private String caminhoDoContrato;
-
+    private String formaDePagamento;
+    
+    private double valorDeEntrada = 0;
+    
+    private double jaPago = 0;
 
     public Locacao() {
     }
 
-    public Locacao(Cliente cliente, List<Produto> produtos, double valor, Calendar dataLocacao) {
+    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao, 
+            Calendar dataDeDevolucao, String formaDePagamento) {
         this.cliente = cliente;
         this.produtos = produtos;
-        this.valor = valor;
+        this.valorLocacao = valorLocacao;
         this.dataLocacao = dataLocacao;
-        
-        this.dataDevolucao = Calendar.getInstance();
-        this.dataDevolucao.setTime(this.dataLocacao.getTime());
-        this.dataDevolucao.add(Calendar.DAY_OF_MONTH, Configuracao.getInstance().getDiasEmprestimo());
+        this.dataDevolucao = dataDeDevolucao;
+        this.formaDePagamento = formaDePagamento;
+        if (formaDePagamento.equals("A VISTA")){
+            this.valorLocacao = valorLocacao - (valorLocacao*Configuracao.getInstance().getDescontoAVista());
+        }
+    }
+    
+    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao, 
+            Calendar dataDeDevolucao, String formaDePagamento, double valorDeEntrada) {
+        this.cliente = cliente;
+        this.produtos = produtos;
+        this.valorLocacao = valorLocacao;
+        this.dataLocacao = dataLocacao;
+        this.dataDevolucao = dataDeDevolucao;
+        this.formaDePagamento = formaDePagamento;
+        this.valorDeEntrada = valorDeEntrada;
     }
 
     public void gerarContrato() throws DocumentException, IOException, Exception {
@@ -52,8 +68,8 @@ public class Locacao implements Serializable {
 
     }
 
-    public void imprimirContrato() {
-
+    public void imprimirContrato() throws DocumentException, IOException, Exception {
+        GeradorDeContrato.getInstance().imprimirContrato(this.cliente, this.dataLocacao, this.dataDevolucao, this.produtos);
     }
 
     public int getId() {
@@ -80,12 +96,12 @@ public class Locacao implements Serializable {
         this.produtos = produtos;
     }
 
-    public double getValor() {
-        return valor;
+    public double getValorLocacao() {
+        return valorLocacao;
     }
 
-    public void setValor(double valor) {
-        this.valor = valor;
+    public void setValorLocacao(double valorLocacao) {
+        this.valorLocacao = valorLocacao;
     }
 
     public Calendar getDataLocacao() {
@@ -94,8 +110,10 @@ public class Locacao implements Serializable {
 
     public void setDataLocacao(Calendar dataLocacao) {
         this.dataLocacao = dataLocacao;
-        dataLocacao.add(Calendar.DAY_OF_MONTH, 2);
-        this.dataDevolucao = dataLocacao;
+    }
+
+    public void setDataDevolucao(Calendar dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
     }
 
     public Calendar getDataDevolucao() {
@@ -109,5 +127,29 @@ public class Locacao implements Serializable {
         }
 
         return string;
+    }
+
+    public String getFormaDePagamento() {
+        return formaDePagamento;
+    }
+
+    public void setFormaDePagamento(String formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
+    }
+
+    public double getValorDeEntrada() {
+        return valorDeEntrada;
+    }
+
+    public void setValorDeEntrada(double valorDeEntrada) {
+        this.valorDeEntrada = valorDeEntrada;
+    }
+
+    public double getJaPago() {
+        return jaPago;
+    }
+
+    public void setJaPago(double jaPago) {
+        this.jaPago = jaPago;
     }
 }

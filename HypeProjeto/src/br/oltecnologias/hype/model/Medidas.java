@@ -15,23 +15,23 @@ public class Medidas implements Serializable {
     private int id;
     
     private int calca;
-    private int traje;
     private int colete;
     private int camisa;
-    private int gravata;
     private int sapato;
     private String observacao;
     private int blazer;
+    private int comprimentoManga;
+    private int comprimentoCalca;
 
-    public Medidas(int calca, int traje, int colete, int camisa, int gravata, int sapato, int blazer, String observacao) {
+    public Medidas(int calca, int colete, int camisa, int sapato, int blazer, int comprimentoManga, int comprimentoCalca, String observacao) {
         this.calca = calca;
-        this.traje = traje;
         this.colete = colete;
         this.camisa = camisa;
-        this.gravata = gravata;
         this.sapato = sapato;
         this.observacao = observacao;
         this.blazer = blazer;
+        this.comprimentoCalca = comprimentoCalca;
+        this.comprimentoManga = comprimentoManga;
     }
     
     public Medidas(){
@@ -40,12 +40,12 @@ public class Medidas implements Serializable {
 
     @Override
     public String toString() {
-        return "Medidas{" + "calca=" + calca 
-                + "\n traje=" + traje 
-                + "\n colete=" + colete 
-                + "\n camisa=" + camisa 
-                + "\n gravata=" + gravata 
-                + "\n sapato=" + sapato + '}';
+        return "Medidas{" + "\n Comp. Manga=" + comprimentoManga
+                + "\n Comp. Calça=" + comprimentoCalca 
+                + "Tam. calça=" + calca
+                + "\n Colete=" + colete 
+                + "\n Camisa=" + camisa 
+                + "\n Sapato=" + sapato + '}';
     }
     
     
@@ -58,12 +58,20 @@ public class Medidas implements Serializable {
         this.calca = calca;
     }
 
-    public int getTraje() {
-        return traje;
+    public int getComprimentoManga() {
+        return comprimentoManga;
     }
 
-    public void setTraje(int traje) {
-        this.traje = traje;
+    public void setComprimentoManga(int comprimentoManga) {
+        this.comprimentoManga = comprimentoManga;
+    }
+
+    public int getComprimentoCalca() {
+        return comprimentoCalca;
+    }
+
+    public void setComprimentoCalca(int comprimentoCalca) {
+        this.comprimentoCalca = comprimentoCalca;
     }
 
     public int getColete() {
@@ -80,14 +88,6 @@ public class Medidas implements Serializable {
 
     public void setCamisa(int camisa) {
         this.camisa = camisa;
-    }
-
-    public int getGravata() {
-        return gravata;
-    }
-
-    public void setGravata(int gravata) {
-        this.gravata = gravata;
     }
 
     public int getSapato() {
@@ -121,7 +121,4 @@ public class Medidas implements Serializable {
     public void setBlazer(int blazer) {
         this.blazer = blazer;
     }
-    
-    
-
 }
