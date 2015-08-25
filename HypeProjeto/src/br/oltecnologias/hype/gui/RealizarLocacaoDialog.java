@@ -68,10 +68,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoRemover = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaProdutosLocados = new javax.swing.JList();
+        painelFormaPagamento = new javax.swing.JPanel();
+        radioAVista = new javax.swing.JRadioButton();
+        radioCartao = new javax.swing.JRadioButton();
+        radioPromissoria = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
         labelValorLocacao = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(615, 672));
+        setPreferredSize(new java.awt.Dimension(615, 730));
         setResizable(false);
         setTitle("Realizar Locação");
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -194,6 +199,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
 
+        listaProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        listaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProdutosMouseClicked(evt);
+            }
+        });
         scPanelListarProdutos.setViewportView(listaProdutos);
         DefaultListModel modelo = new DefaultListModel();
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
@@ -217,7 +228,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(campoPesquisar)
                         .addGap(29, 29, 29))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
-                        .addComponent(scPanelListarProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                        .addComponent(scPanelListarProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoBuscar)
@@ -236,7 +247,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(scPanelListarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoSelecionarProdutos))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
@@ -256,6 +267,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
 
+        listaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jScrollPane1.setViewportView(listaProdutosLocados);
         modeloProdutosLocados = new DefaultListModel();
         listaProdutosLocados.setModel(modeloProdutosLocados);
@@ -276,14 +288,63 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             .addGroup(painelProdutosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
                     .addGroup(painelProdutosLayout.createSequentialGroup()
                         .addComponent(botaoRemover)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        labelValorLocacao.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        painelFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
+        painelFormaPagamento.setBorder(javax.swing.BorderFactory.createTitledBorder("Forma de Pagamento"));
+
+        radioAVista.setBackground(new java.awt.Color(255, 255, 255));
+        radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioAVista.setText("À Vista");
+        radioAVista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAVistaActionPerformed(evt);
+            }
+        });
+
+        radioCartao.setBackground(new java.awt.Color(255, 255, 255));
+        radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioCartao.setText("Cartão");
+
+        radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
+        radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioPromissoria.setText("Promissória");
+
+        jLabel1.setText("AINDA FALTA AS DATAS");
+
+        javax.swing.GroupLayout painelFormaPagamentoLayout = new javax.swing.GroupLayout(painelFormaPagamento);
+        painelFormaPagamento.setLayout(painelFormaPagamentoLayout);
+        painelFormaPagamentoLayout.setHorizontalGroup(
+            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(radioAVista)
+                .addGap(18, 18, 18)
+                .addComponent(radioCartao)
+                .addGap(18, 18, 18)
+                .addComponent(radioPromissoria)
+                .addGap(84, 84, 84)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelFormaPagamentoLayout.setVerticalGroup(
+            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioAVista)
+                    .addComponent(radioCartao)
+                    .addComponent(radioPromissoria)
+                    .addComponent(jLabel1))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        labelValorLocacao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelValorLocacao.setForeground(new java.awt.Color(0, 153, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -291,39 +352,47 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelValorLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoConcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
-                    .addComponent(painelSelecionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelLocador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)
-                    .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 42, Short.MAX_VALUE))
+                        .addComponent(botaoCancelar)
+                        .addGap(41, 41, 41))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(painelSelecionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                            .addComponent(painelLocador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, 0)))
+                        .addGap(0, 23, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(13, 13, 13)
                 .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(labelValorLocacao))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoConcluir)
-                        .addComponent(botaoCancelar)
-                        .addComponent(labelValorTotal)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelValorTotal)
+                    .addComponent(botaoConcluir)
+                    .addComponent(botaoCancelar)
+                    .addComponent(labelValorLocacao))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         pack();
@@ -383,21 +452,21 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoSelecionarClienteActionPerformed
 
     private void campoPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarKeyTyped
-        if(campoPesquisar.getText().equals("Pesquisar Produto")) {
+        if(campoPesquisar.getText().equals("Pesquisar Produto")) 
             eliminarTextoDeCampo(campoPesquisar);
-        }
+        
     }//GEN-LAST:event_campoPesquisarKeyTyped
 
     private void campoPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarMouseClicked
-        if(campoPesquisar.getText().equals("Pesquisar Produto")) {
+        if(campoPesquisar.getText().equals("Pesquisar Produto")) 
             eliminarTextoDeCampo(campoPesquisar);
-        }
+        
     }//GEN-LAST:event_campoPesquisarMouseClicked
 
     private void painelSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelSelecionarMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if(campoPesquisar.getText().length() <= 0) 
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-        }
+        
     }//GEN-LAST:event_painelSelecionarMouseClicked
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
@@ -441,22 +510,42 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if(campoPesquisar.getText().length() <= 0) 
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-        }
+        
     }//GEN-LAST:event_formMouseClicked
 
     private void painelLocadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocadorMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if(campoPesquisar.getText().length() <= 0) 
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-        }
+        
     }//GEN-LAST:event_painelLocadorMouseClicked
 
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if(campoPesquisar.getText().length() <= 0) 
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-        }
+        
     }//GEN-LAST:event_painelProdutosMouseClicked
+
+    private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
+        if(radioCartao.isSelected())
+            radioCartao.setSelected(false);
+        if(radioPromissoria.isSelected()) 
+            radioPromissoria.setSelected(false);
+        
+    }//GEN-LAST:event_radioAVistaActionPerformed
+
+    private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
+        if(evt.getClickCount() == 2){            
+            // dá pra criar um único método na classe
+            modeloProdutosLocados.addElement(listaProdutos.getSelectedValue().toString());
+            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            labelValorLocacao.setText(getValorTotalDaLocacao());
+        }
+    }//GEN-LAST:event_listaProdutosMouseClicked
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -520,6 +609,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoSelecionarCliente;
     private javax.swing.JButton botaoSelecionarProdutos;
     private javax.swing.JTextField campoPesquisar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelNomeCliente;
@@ -528,9 +618,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JList listaProdutos;
     private javax.swing.JList listaProdutosLocados;
+    private javax.swing.JPanel painelFormaPagamento;
     private javax.swing.JPanel painelLocador;
     private javax.swing.JPanel painelProdutos;
     private javax.swing.JPanel painelSelecionar;
+    private javax.swing.JRadioButton radioAVista;
+    private javax.swing.JRadioButton radioCartao;
+    private javax.swing.JRadioButton radioPromissoria;
     private javax.swing.JScrollPane scPanelListarProdutos;
     // End of variables declaration//GEN-END:variables
 

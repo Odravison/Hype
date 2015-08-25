@@ -889,8 +889,8 @@
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                       <StringArray count="3">
                         <StringItem index="0" value="Todas"/>
-                        <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                        <StringItem index="2" value="&#xda;ltimos cadastros"/>
+                        <StringItem index="1" value="&#xda;ltimas Loca&#xe7;&#xf5;es"/>
+                        <StringItem index="2" value="Mais Antigas"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1240,11 +1240,12 @@
                     </Property>
                     <Property name="maximumRowCount" type="int" value="3"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
+                      <StringArray count="5">
                         <StringItem index="0" value="Ordem alfab&#xe9;tica"/>
                         <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
                         <StringItem index="2" value="&#xda;ltimos cadastrados"/>
-                        <StringItem index="3" value="Despesas"/>
+                        <StringItem index="3" value="Pend&#xea;ncias"/>
+                        <StringItem index="4" value="Despesas"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>

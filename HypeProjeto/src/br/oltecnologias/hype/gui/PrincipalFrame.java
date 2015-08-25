@@ -594,7 +594,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     comboBoxOrdenarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     comboBoxOrdenarFornecedores1.setMaximumRowCount(3);
-    comboBoxOrdenarFornecedores1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimos locatários", "Últimos cadastros" }));
+    comboBoxOrdenarFornecedores1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimas Locações", "Mais Antigas" }));
     comboBoxOrdenarFornecedores1.setToolTipText("Selecionar tipo de filtro");
     comboBoxOrdenarFornecedores1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
@@ -802,7 +802,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     comboBoxOrdenarCaixaEMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     comboBoxOrdenarCaixaEMovimentacao.setMaximumRowCount(3);
-    comboBoxOrdenarCaixaEMovimentacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ordem alfabética", "Últimos locatários", "Últimos cadastrados", "Despesas" }));
+    comboBoxOrdenarCaixaEMovimentacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Ordem alfabética", "Últimos locatários", "Últimos cadastrados", "Pendências", "Despesas" }));
     comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar tipo de filtro");
     comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
