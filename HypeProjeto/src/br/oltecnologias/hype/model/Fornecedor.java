@@ -7,10 +7,13 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,15 +26,26 @@ public class Fornecedor implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @Column(name = "id_fornecedor")
     private String cnpj;
     
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(mappedBy = "fornecedor", cascade = CascadeType.ALL)
     private Endereco endereco;
     
     private String telefone;
     
+    @OneToOne
+    @JoinColumn(name = "id_produto")
+    private Produto produto;
+    
     public Fornecedor() {
 
+    }
+    
+    public Fornecedor(String cnpj, Endereco end, String telefone){
+        this.cnpj = cnpj;
+        this.endereco = end;
+        this.telefone = telefone;
     }
 
     public String getId() {

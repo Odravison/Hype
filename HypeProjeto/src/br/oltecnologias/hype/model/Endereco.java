@@ -1,21 +1,41 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
 public class Endereco implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id_endereco")
     private int id;
     private String rua;
     private String bairro;
     private String uf;
     private int numeroCasa;
     private String cidade;
+
+    @OneToOne
+    @JoinColumn(name = "id_cliente")
+    private Cliente cliente;
+    
+    @OneToOne
+    @JoinColumn(name = "id_fornecedor")
+    private Fornecedor fornecedor;
+    
+    @OneToOne
+    @JoinColumn(name = "id_empresa")
+    private Empresa empresa;
+    
+    
 
     public Endereco() {
     }
@@ -68,13 +88,6 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
-    @Override
-    public String toString() {
-        String endereco = this.rua + ", " + this.numeroCasa + " - " + this.bairro + ", " + this.cidade + ", " + this.uf;
-
-        return endereco;
-    }
-
     public int getId() {
         return id;
     }
@@ -83,5 +96,10 @@ public class Endereco implements Serializable {
         this.id = id;
     }
     
-    
+    @Override
+    public String toString() {
+        String endereco = this.rua + ", " + this.numeroCasa + " - " + this.bairro + ", " + this.cidade + ", " + this.uf;
+
+        return endereco;
+    }
 }

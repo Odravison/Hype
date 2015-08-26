@@ -11,6 +11,7 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
+import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Medidas;
@@ -58,7 +59,8 @@ public class Aplicacao {
         List<Produto> produtos = new ArrayList<Produto>();
 
         for (int i = 0; i < 6; i++) {
-            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, "Fornecedor1", "Azul", 40, true);
+            Fornecedor fornecedor = new Fornecedor();
+            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, , "Azul", 40, true);
             produtos.add(p);
 //            pjp.destroy(p.getCodigo());
         }

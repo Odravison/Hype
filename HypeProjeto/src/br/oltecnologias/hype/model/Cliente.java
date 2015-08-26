@@ -12,46 +12,46 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import org.hibernate.annotations.Cascade;
 
 /**
  *
  * @author Odravison
  */
-
 @Entity
 public class Cliente implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
+    @Column(name = "id_cliente")
     private String cpf;
-    
+
     private String nome;
-    
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar ultimaMedicao;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private Endereco endereco;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
     private Medidas medidas;
-    
-    @Column(nullable = true)
+
+    @Column(name="telefone", nullable = true)
     private String telefone;
 
     private String celular;
 
-    @OneToMany
+    @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Locacao> locacoes;
-    
+
     public Cliente() {
     }
 
@@ -64,7 +64,7 @@ public class Cliente implements Serializable {
         this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
         this.ultimaMedicao = Calendar.getInstance();
-        
+
     }
 
     @Override
@@ -155,6 +155,5 @@ public class Cliente implements Serializable {
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
     }
-    
-    
+
 }

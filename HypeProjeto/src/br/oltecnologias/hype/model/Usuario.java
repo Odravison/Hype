@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
     private String nome;
     
     @Id
+    @Column(name="id_usuario")
     private String nickName;
     private String senha;
     private boolean isAdministrador;

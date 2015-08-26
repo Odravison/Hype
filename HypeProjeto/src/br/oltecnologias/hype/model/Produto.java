@@ -17,7 +17,8 @@ public class Produto implements Serializable {
     private int quant;
     private int tam;
     
-    private String fornecedor; //Deveria ser do tipo Fornecedor
+    @OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+    private Fornecedor fornecedor;
     
     private String cor;
     private boolean isLocation;
@@ -25,7 +26,7 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(String codigo, String nome, double valor, int quant, String fornecedor, String cor, int tam, boolean isLocation) {
+    public Produto(String codigo, String nome, double valor, int quant, Fornecedor fornecedor, String cor, int tam, boolean isLocation) {
         this.codigo = codigo;
         this.nome = nome;
         this.valor = valor;
@@ -72,11 +73,11 @@ public class Produto implements Serializable {
         this.quant = quant;
     }
 
-    public String getFornecedor() {
+    public Fornecedor getFornecedor() {
         return fornecedor;
     }
 
-    public void setFornecedor(String fornecedor) {
+    public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
 
