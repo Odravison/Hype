@@ -1,39 +1,70 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.oltecnologias.hype.model;
 
-import javax.persistence.DiscriminatorValue;
+import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+/**
+ *
+ * @author Odravison
+ */
 
 @Entity
-@DiscriminatorValue("2")
-public class Fornecedor extends Pessoa {
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fornecedor_id_cnpj")
+public class Fornecedor implements Serializable {
+    private static final long serialVersionUID = 1L;
+    
+    @Id
     private String cnpj;
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "fornecedor_id_endereco")
+    
+    @OneToOne(cascade = {CascadeType.ALL})
     private Endereco endereco;
+    
     private String telefone;
-
-    public Fornecedor(String cnpj, Endereco end, String telefones, String nome) {
-        super(nome);
-        this.cnpj = cnpj;
-        this.endereco = end;
-        this.telefone = telefone;
-    }
-
+    
     public Fornecedor() {
 
     }
 
+    public String getId() {
+        return cnpj;
+    }
+
+    public void setId(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
     @Override
-    public String getDescricao() {
-        return "CPJ: " + this.cnpj + "\n"
-                + "Endereco: " + this.endereco.toString() + "\n "
-                + "Telefone:  " + this.telefone;
+    public int hashCode() {
+        int hash = 0;
+        hash += (cnpj != null ? cnpj.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Fornecedor)) {
+            return false;
+        }
+        Fornecedor other = (Fornecedor) object;
+        if ((this.cnpj == null && other.cnpj != null) || (this.cnpj != null && !this.cnpj.equals(other.cnpj))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "br.oltecnologias.hype.model.Fornecedor[ cnpj=" + cnpj + " ]";
     }
 
     public String getCnpj() {
@@ -59,5 +90,7 @@ public class Fornecedor extends Pessoa {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-
+    
+    
+    
 }

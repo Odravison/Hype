@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
+import br.oltecnologias.hype.dao.exceptions.PreexistingEntityException;
 import br.oltecnologias.hype.model.Cliente;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -33,7 +34,7 @@ public class ClienteJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Cliente cliente) {
+    public void create(Cliente cliente) throws PreexistingEntityException, Exception {
         if (cliente.getLocacoes() == null) {
             cliente.setLocacoes(new ArrayList<Locacao>());
         }
@@ -58,6 +59,11 @@ public class ClienteJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findCliente(cliente.getCpf()) != null) {
+                throw new PreexistingEntityException("Cliente " + cliente + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -70,7 +76,7 @@ public class ClienteJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cliente persistentCliente = em.find(Cliente.class, cliente.getId());
+            Cliente persistentCliente = em.find(Cliente.class, cliente.getCpf());
             List<Locacao> locacoesOld = persistentCliente.getLocacoes();
             List<Locacao> locacoesNew = cliente.getLocacoes();
             List<Locacao> attachedLocacoesNew = new ArrayList<Locacao>();
@@ -102,7 +108,7 @@ public class ClienteJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = cliente.getId();
+                String id = cliente.getCpf();
                 if (findCliente(id) == null) {
                     throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.");
                 }
@@ -115,7 +121,7 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -123,7 +129,7 @@ public class ClienteJpaController implements Serializable {
             Cliente cliente;
             try {
                 cliente = em.getReference(Cliente.class, id);
-                cliente.getId();
+                cliente.getCpf();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
             }
@@ -165,7 +171,7 @@ public class ClienteJpaController implements Serializable {
         }
     }
 
-    public Cliente findCliente(int id) {
+    public Cliente findCliente(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Cliente.class, id);

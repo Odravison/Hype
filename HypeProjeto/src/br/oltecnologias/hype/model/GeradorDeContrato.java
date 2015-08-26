@@ -10,6 +10,8 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,7 +55,7 @@ public class GeradorDeContrato {
         
         
         FileInputStream fis = new FileInputStream(diretorio);
-        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao +".pdf", "RICOH Class Driver");
+        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao +".pdf", Configuracao.getInstance().getNomeDaImpressora());
 
         printPDFFile.print();
         
@@ -99,7 +101,7 @@ public class GeradorDeContrato {
             System.out.println("Tirar: chagou aqui! 3");
 
             Paragraph textoContrato;
-            textoContrato = new Paragraph(Configuracao.getInstance().getContratoOriginal(), timesNewRoman12);
+            textoContrato = new Paragraph(Configuracao.getInstance().getContratoPt1().concat(Configuracao.getInstance().getContratoPt2()), timesNewRoman12);
             textoContrato.setAlignment(Paragraph.ALIGN_JUSTIFIED);
             textoContrato.setPaddingTop(2);
             
@@ -153,7 +155,17 @@ public class GeradorDeContrato {
             pdf.add(dadosEmpresa);
             pdf.add(diaLocal);
             
-            //Método para imprimir o pdf aqui
+            pdf.newPage();
+            
+            pdf.add(tituloContrato);
+            pdf.add(textoContrato);
+            pdf.add(periodo);
+            pdf.add(objLocados);
+            pdf.add(linhaAssinatura);
+            pdf.add(dadosCliente);
+            pdf.add(linhaAssinatura);
+            pdf.add(dadosEmpresa);
+            pdf.add(diaLocal);
 
         } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());

@@ -1,33 +1,47 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
+/**
+ *
+ * @author Odravison
+ */
+
 @Entity
-@DiscriminatorValue("1")
-public class Cliente extends Pessoa {
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "cliente_id_cpf")
+public class Cliente implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
+    @Id
     private String cpf;
-
+    
+    private String nome;
+    
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar ultimaMedicao;
 
-    @OneToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Endereco endereco;
 
-    @OneToOne
+    @ManyToOne(cascade=CascadeType.ALL)
     private Medidas medidas;
     
     @Column(nullable = true)
@@ -42,7 +56,7 @@ public class Cliente extends Pessoa {
     }
 
     public Cliente(String cpf, String nome, Endereco endereco, Medidas medidas, String telefone, String celular) {
-        super(nome);
+        this.nome = nome;
         this.cpf = cpf;
         this.endereco = endereco;
         this.medidas = medidas;
@@ -54,14 +68,28 @@ public class Cliente extends Pessoa {
     }
 
     @Override
-    public String getDescricao() {
-        return this.cpf + " | " + super.getNome() ;
-        /*return "Cliente: " + super.getNome() + "\n"
-                + "Endereço: " + this.endereco + "\n"
-                + "CPF: " + this.cpf + "\n"
-                + "telefone: " + this.telefone + "\n"
-                + "celular: " + this.celular + "\n"
-                + "Medidas: " + this.medidas.toString();*/
+    public int hashCode() {
+        int hash = 0;
+        hash += (cpf != null ? cpf.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Cliente)) {
+            return false;
+        }
+        Cliente other = (Cliente) object;
+        if ((this.cpf == null && other.cpf != null) || (this.cpf != null && !this.cpf.equals(other.cpf))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "br.oltecnologias.hype.model.Cliente[ cpf=" + cpf + " ]";
     }
 
     public String getCpf() {
@@ -70,6 +98,14 @@ public class Cliente extends Pessoa {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Calendar getUltimaMedicao() {
@@ -112,20 +148,6 @@ public class Cliente extends Pessoa {
         this.celular = celular;
     }
 
-    //Não precisará desses métodos se a adição e remoção forem feitos diretamente no banco
-    public void adicionarLocacao(Locacao locacao) {
-        this.locacoes.add(locacao);
-    }
-
-    public void removerLocacao(Locacao locacao) {
-        for (Locacao l : this.locacoes) {
-            if (l.getId() == locacao.getId()) {
-                this.locacoes.remove(l);
-                break;
-            }
-        }
-    }
-
     public List<Locacao> getLocacoes() {
         return locacoes;
     }
@@ -133,5 +155,6 @@ public class Cliente extends Pessoa {
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
     }
-
+    
+    
 }

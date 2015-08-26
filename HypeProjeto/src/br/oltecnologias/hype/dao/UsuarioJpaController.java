@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
+import br.oltecnologias.hype.dao.exceptions.PreexistingEntityException;
 import br.oltecnologias.hype.model.Usuario;
 import java.io.Serializable;
 import java.util.List;
@@ -31,13 +32,18 @@ public class UsuarioJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Usuario usuario) {
+    public void create(Usuario usuario) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(usuario);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findUsuario(usuario.getNickName()) != null) {
+                throw new PreexistingEntityException("Usuario " + usuario + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();

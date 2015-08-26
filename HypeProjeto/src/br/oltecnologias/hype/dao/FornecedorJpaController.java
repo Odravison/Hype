@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
+import br.oltecnologias.hype.dao.exceptions.PreexistingEntityException;
 import br.oltecnologias.hype.model.Fornecedor;
 import java.io.Serializable;
 import java.util.List;
@@ -31,13 +32,18 @@ public class FornecedorJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Fornecedor fornecedor) {
+    public void create(Fornecedor fornecedor) throws PreexistingEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             em.persist(fornecedor);
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findFornecedor(fornecedor.getCnpj()) != null) {
+                throw new PreexistingEntityException("Fornecedor " + fornecedor + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -55,7 +61,7 @@ public class FornecedorJpaController implements Serializable {
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = fornecedor.getId();
+                String id = fornecedor.getCnpj();
                 if (findFornecedor(id) == null) {
                     throw new NonexistentEntityException("The fornecedor with id " + id + " no longer exists.");
                 }
@@ -68,7 +74,7 @@ public class FornecedorJpaController implements Serializable {
         }
     }
 
-    public void destroy(int id) throws NonexistentEntityException {
+    public void destroy(String id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -76,7 +82,7 @@ public class FornecedorJpaController implements Serializable {
             Fornecedor fornecedor;
             try {
                 fornecedor = em.getReference(Fornecedor.class, id);
-                fornecedor.getId();
+                fornecedor.getCnpj();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The fornecedor with id " + id + " no longer exists.", enfe);
             }
@@ -113,7 +119,7 @@ public class FornecedorJpaController implements Serializable {
         }
     }
 
-    public Fornecedor findFornecedor(int id) {
+    public Fornecedor findFornecedor(String id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Fornecedor.class, id);

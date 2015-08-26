@@ -1,9 +1,11 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Produto implements Serializable {
@@ -14,16 +16,17 @@ public class Produto implements Serializable {
     private double valor;
     private int quant;
     private int tam;
-
-    @Column(name = "FORNECEDOR", nullable = true)
+    
     private String fornecedor; //Deveria ser do tipo Fornecedor
+    
     private String cor;
     private boolean isLocation;
 
     public Produto() {
     }
 
-    public Produto(String nome, double valor, int quant, String fornecedor, String cor, int tam, boolean isLocation) {
+    public Produto(String codigo, String nome, double valor, int quant, String fornecedor, String cor, int tam, boolean isLocation) {
+        this.codigo = codigo;
         this.nome = nome;
         this.valor = valor;
         this.quant = quant;

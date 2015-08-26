@@ -6,7 +6,7 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
-import br.oltecnologias.hype.model.DadosConfiguracao;
+import br.oltecnologias.hype.model.Configuracao;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,9 +20,9 @@ import javax.persistence.criteria.Root;
  *
  * @author Odravison
  */
-public class DadosConfiguracaoJpaController implements Serializable {
+public class ConfiguracaoJpaController implements Serializable {
 
-    public DadosConfiguracaoJpaController(EntityManagerFactory emf) {
+    public ConfiguracaoJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
     private EntityManagerFactory emf = null;
@@ -31,12 +31,12 @@ public class DadosConfiguracaoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(DadosConfiguracao dadosConfiguracao) {
+    public void create(Configuracao configuracao) {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            em.persist(dadosConfiguracao);
+            em.persist(configuracao);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -45,19 +45,19 @@ public class DadosConfiguracaoJpaController implements Serializable {
         }
     }
 
-    public void edit(DadosConfiguracao dadosConfiguracao) throws NonexistentEntityException, Exception {
+    public void edit(Configuracao configuracao) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            dadosConfiguracao = em.merge(dadosConfiguracao);
+            configuracao = em.merge(configuracao);
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                int id = dadosConfiguracao.getId();
-                if (findDadosConfiguracao(id) == null) {
-                    throw new NonexistentEntityException("The dadosConfiguracao with id " + id + " no longer exists.");
+                int id = configuracao.getId();
+                if (findConfiguracao(id) == null) {
+                    throw new NonexistentEntityException("The configuracao with id " + id + " no longer exists.");
                 }
             }
             throw ex;
@@ -73,14 +73,14 @@ public class DadosConfiguracaoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            DadosConfiguracao dadosConfiguracao;
+            Configuracao configuracao;
             try {
-                dadosConfiguracao = em.getReference(DadosConfiguracao.class, id);
-                dadosConfiguracao.getId();
+                configuracao = em.getReference(Configuracao.class, id);
+                configuracao.getId();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The dadosConfiguracao with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The configuracao with id " + id + " no longer exists.", enfe);
             }
-            em.remove(dadosConfiguracao);
+            em.remove(configuracao);
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -89,19 +89,19 @@ public class DadosConfiguracaoJpaController implements Serializable {
         }
     }
 
-    public List<DadosConfiguracao> findDadosConfiguracaoEntities() {
-        return findDadosConfiguracaoEntities(true, -1, -1);
+    public List<Configuracao> findConfiguracaoEntities() {
+        return findConfiguracaoEntities(true, -1, -1);
     }
 
-    public List<DadosConfiguracao> findDadosConfiguracaoEntities(int maxResults, int firstResult) {
-        return findDadosConfiguracaoEntities(false, maxResults, firstResult);
+    public List<Configuracao> findConfiguracaoEntities(int maxResults, int firstResult) {
+        return findConfiguracaoEntities(false, maxResults, firstResult);
     }
 
-    private List<DadosConfiguracao> findDadosConfiguracaoEntities(boolean all, int maxResults, int firstResult) {
+    private List<Configuracao> findConfiguracaoEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(DadosConfiguracao.class));
+            cq.select(cq.from(Configuracao.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -113,20 +113,20 @@ public class DadosConfiguracaoJpaController implements Serializable {
         }
     }
 
-    public DadosConfiguracao findDadosConfiguracao(int id) {
+    public Configuracao findConfiguracao(int id) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(DadosConfiguracao.class, id);
+            return em.find(Configuracao.class, id);
         } finally {
             em.close();
         }
     }
 
-    public int getDadosConfiguracaoCount() {
+    public int getConfiguracaoCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<DadosConfiguracao> rt = cq.from(DadosConfiguracao.class);
+            Root<Configuracao> rt = cq.from(Configuracao.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();

@@ -40,7 +40,7 @@ public class LocacaoJpaController implements Serializable {
             em.getTransaction().begin();
             Cliente cliente = locacao.getCliente();
             if (cliente != null) {
-                cliente = em.getReference(cliente.getClass(), cliente.getId());
+                cliente = em.getReference(cliente.getClass(), cliente.getCpf());
                 locacao.setCliente(cliente);
             }
             em.persist(locacao);
@@ -70,7 +70,7 @@ public class LocacaoJpaController implements Serializable {
             Cliente clienteOld = persistentLocacao.getCliente();
             Cliente clienteNew = locacao.getCliente();
             if (clienteNew != null) {
-                clienteNew = em.getReference(clienteNew.getClass(), clienteNew.getId());
+                clienteNew = em.getReference(clienteNew.getClass(), clienteNew.getCpf());
                 locacao.setCliente(clienteNew);
             }
             locacao = em.merge(locacao);
