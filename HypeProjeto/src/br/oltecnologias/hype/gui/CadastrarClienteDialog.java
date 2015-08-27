@@ -92,7 +92,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
 
         setBackground(new java.awt.Color(240, 240, 240));
         setResizable(false);
-        setSize(new java.awt.Dimension(700, 681));
+        setSize(new java.awt.Dimension(700, 694));
         setTitle("Cadastro de Cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -529,7 +529,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar))
                     .addComponent(labelObrigatório))
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -540,7 +540,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
         );
 
         pack();
@@ -564,11 +564,15 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNomeKeyTyped
 
     private void campoRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoRuaKeyTyped
-        validarLetrasETamanho(evt, campoRua, maxCaracteresNome); // Mesmo tamanho para nomes de pessoas e ruas
+        if(campoRua.getText().length()>= maxCaracteresNome){ //O mesmo limite de tamanho para nome do cliente e nome da rua
+            evt.consume(); 
+        }
     }//GEN-LAST:event_campoRuaKeyTyped
 
     private void campoBairroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBairroKeyTyped
-        validarLetrasETamanho(evt, campoBairro, maxCaracteresBairro);
+        if(campoBairro.getText().length()>= maxCaracteresBairro){ 
+            evt.consume(); 
+        }
     }//GEN-LAST:event_campoBairroKeyTyped
 
     private void campoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCidadeKeyTyped
@@ -586,87 +590,86 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNumeroKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        String tel;
+        try {
+            if(campoCpf.getText().charAt(13) == ' ') {//O último caractere do número de CPF não pode ser vazio
+                JOptionPane.showMessageDialog(null, "Informe o CPF completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }else if(campoNome.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o nome do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoRua.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a rua do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoCidade.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a cidade do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoBairro.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o bairro do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoNumero.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o número da casa do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoCel.getText().charAt(14) == ' ') { //O último caractere do número de cel não pode ser vazio
+                JOptionPane.showMessageDialog(null, "Informe o número de celular completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
 
-        if(campoCpf.getText().charAt(13) == ' ') {//O último caractere do número de CPF não pode ser vazio
-            JOptionPane.showMessageDialog(null, "Informe o CPF completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }else if(campoNome.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o nome do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoRua.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a rua do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCidade.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a cidade do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoBairro.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o bairro do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoNumero.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o número da casa do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCel.getText().charAt(14) == ' ') { //O último caractere do número de cel não pode ser vazio
-            JOptionPane.showMessageDialog(null, "Informe o número de celular completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            
-            Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
-                    Integer.parseInt(campoNumero.getText()), campoCidade.getText());
-            
-            //Tratamento caso o número de telefone residencial não seja informado
-            if (campoTelefone.getText().length() <= 0) {
-                tel = "Não informado";
-            } else {
-                tel = campoTelefone.getText();
-            }
-            
-            Medidas medidas = new Medidas();
-            
-            // Nem todos os valores das medidas serão informados
-            if(campoBlazer.getText().length() <= 0) {
-                medidas.setBlazer(0);
-            } else {
-                medidas.setBlazer(Integer.parseInt(campoBlazer.getText()));
-            }
-            if(campoCalca.getText().length() <= 0) {
-                medidas.setCalca(0);
-            } else {
-                medidas.setCalca(Integer.parseInt(campoCalca.getText()));
-            }
-            if(campoColete.getText().length() <=0) {
-                medidas.setColete(0);
-            } else {
-                medidas.setColete(Integer.parseInt(campoColete.getText()));
-            }
-            if(campoCamisa.getText().length() <=0) {
-                medidas.setCamisa(0);
-            } else {
-                medidas.setCamisa(Integer.parseInt(campoCamisa.getText()));
-            }
-            if(campoSapato.getText().length() <=0) {
-                medidas.setSapato(0);
-            } else {
-                medidas.setSapato(Integer.parseInt(campoSapato.getText()));
-            }
-            if(campoComprimentoCalca.getText().length() <= 0) {
-                medidas.setComprimentoCalca(0);
-            } else {
-                medidas.setComprimentoCalca(Integer.parseInt(campoComprimentoCalca.getText()));
-            }
-            if(campoComprimentoManga.getText().length() <=0) {
-                medidas.setComprimentoManga(0);
-            } else  {
-                medidas.setComprimentoManga(Integer.parseInt(campoComprimentoManga.getText()));
-            }
-            medidas.setObservacao(areaObservacao.getText());
-            
-            try {
-                novoCliente = GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas,
-                        tel, campoCel.getText());
-                JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+                Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
+                        Integer.parseInt(campoNumero.getText()), campoCidade.getText());
 
-                salvarSelecionado = true; //O botão Salvar foi selecionado
-                setVisible(false);
+                //Tratamento caso o número de telefone residencial não seja informado
+                if (campoTelefone.getText().length() <= 0) {
+                    campoTelefone.setText("Não informado");
+                } 
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                Medidas medidas = new Medidas();
+
+                // Nem todos os valores das medidas serão informados
+                if(campoBlazer.getText().length() <= 0) {
+                    medidas.setBlazer(0);
+                } else {
+                    medidas.setBlazer(Integer.parseInt(campoBlazer.getText()));
+                }
+                if(campoCalca.getText().length() <= 0) {
+                    medidas.setCalca(0);
+                } else {
+                    medidas.setCalca(Integer.parseInt(campoCalca.getText()));
+                }
+                if(campoColete.getText().length() <=0) {
+                    medidas.setColete(0);
+                } else {
+                    medidas.setColete(Integer.parseInt(campoColete.getText()));
+                }
+                if(campoCamisa.getText().length() <=0) {
+                    medidas.setCamisa(0);
+                } else {
+                    medidas.setCamisa(Integer.parseInt(campoCamisa.getText()));
+                }
+                if(campoSapato.getText().length() <=0) {
+                    medidas.setSapato(0);
+                } else {
+                    medidas.setSapato(Integer.parseInt(campoSapato.getText()));
+                }
+                if(campoComprimentoCalca.getText().length() <= 0) {
+                    medidas.setComprimentoCalca(0);
+                } else {
+                    medidas.setComprimentoCalca(Integer.parseInt(campoComprimentoCalca.getText()));
+                }
+                if(campoComprimentoManga.getText().length() <=0) {
+                    medidas.setComprimentoManga(0);
+                } else  {
+                    medidas.setComprimentoManga(Integer.parseInt(campoComprimentoManga.getText()));
+                }
+                medidas.setObservacao(areaObservacao.getText());
+
+                try {
+                    novoCliente = GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas,
+                            campoTelefone.getText(), campoCel.getText());
+                    JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+
+                    salvarSelecionado = true; //O botão Salvar foi selecionado
+                    setVisible(false);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-        
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void campoComprimentoMangaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoComprimentoMangaKeyTyped

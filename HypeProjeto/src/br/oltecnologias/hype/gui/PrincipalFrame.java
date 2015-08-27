@@ -135,7 +135,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 730));
         setResizable(false);
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
@@ -248,11 +247,27 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
 
+        pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         tabelaClientes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaClientes.getTableHeader().setResizingAllowed(false);
+        tabelaClientes.getTableHeader().setReorderingAllowed(false);
         String[] nomesColunasTabelaClientes = {"CPF", "Nome do Cliente", "Número de celular", "Última Medição"};
+        //Define a fonte do cabeçalho da tabela clientes
+        tabelaClientes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+
+        tabelaClientes.setRowHeight(25); // altura em pixels
+
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhas = new ArrayList<>();
 
@@ -274,8 +289,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);
         // Redimensionando a largura da coluna de última locação
         tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);
-
-        tabelaClientes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlCliente.setViewportView(tabelaClientes);
 
         labelOrdenar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -362,7 +375,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         tabelaProdutos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaProdutos.getTableHeader().setResizingAllowed(false);
+        tabelaProdutos.getTableHeader().setReorderingAllowed(false);
         String[] nomesColunasTabelaProdutos = {"Código", "Descrição do Produto", "Quantidade em estoque", "Finalidade"};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasProdutos = new ArrayList<>();
@@ -480,6 +503,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaFornecedores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaFornecedores.getTableHeader().setResizingAllowed(false);
+        tabelaFornecedores.getTableHeader().setReorderingAllowed(false);
         String[] nomesColunasTabelaFornecedores = {"CNPJ", "Fornecedor", "Endereço", "Contato"};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasFornecedores = new ArrayList<>();
@@ -614,7 +639,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaLocacoes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        String[] nomesColunasTabelaLocacoes = {"Cliente", "Produtos Locados", "Vencimento", "Contato"};
+        tabelaLocacoes.getTableHeader().setResizingAllowed(false);
+        tabelaLocacoes.getTableHeader().setReorderingAllowed(false);
+        String[] nomesColunasTabelaLocacoes = {"Cliente", "Produtos Locados", "Vencimento", "Contato Cliente"};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
 
@@ -629,13 +656,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         //define o model da tabela
         tabelaLocacoes.setModel(modeloTabelaLocacoes);
         // Redimensionando a largura da coluna de cliente
-        tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(300);
+        tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(270);
         // Redimensionando a largura da coluna de produtos locados
-        tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(340);
+        tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(400);
         // Redimensionando a largura da coluna de número do vencimento
         tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
         // Redimensionando a largura da coluna de última contato
-        tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110);
+        tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(170);
 
         tabelaLocacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlFornecedores1.setViewportView(tabelaLocacoes);
@@ -759,6 +786,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
         tabelaVendas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaVendas.getTableHeader().setResizingAllowed(false);
+        tabelaVendas.getTableHeader().setReorderingAllowed(false);
         pnRlCliente1.setViewportView(tabelaVendas);
 
         labelOrdenar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -837,6 +866,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
         tabelaRelatorios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaRelatorios.getTableHeader().setResizingAllowed(false);
+        tabelaRelatorios.getTableHeader().setReorderingAllowed(false);
         pnRlCaixaERelatorios.setViewportView(tabelaRelatorios);
 
         labelFiltrarMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1094,6 +1125,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
         tabelaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaUsuarios.getTableHeader().setResizingAllowed(false);
+        tabelaUsuarios.getTableHeader().setReorderingAllowed(false);
         pnRlUsuario.setViewportView(tabelaUsuarios);
 
         labelOrdenarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1252,9 +1285,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelProdutosMouseClicked
 
     private void botaoNovoFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoFornecedorActionPerformed
-        /*Dialog dialog = new CadastrarFornecedorDialog(new java.awt.Frame(), true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);*/
         CadastrarFornecedorDialog dialog = new CadastrarFornecedorDialog(null);
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
@@ -1484,21 +1514,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
     
     public void adicionarNovoFornecedorNaTabela(Fornecedor fornecedor) {
-        //Adiciona os dados do novo cliente na tabela
+        //Adiciona os dados do novo fornecedor na tabela
         modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
         //Atualiza o model da tabela
         tabelaFornecedores.setModel(modeloTabelaFornecedores);
     }
     
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
-        //Adiciona os dados do novo cliente na tabela
+        //Adiciona os dados da nova locação na tabela
         modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(), locacao.getVencimento(), locacao.getContato()});
         //Atualiza o model da tabela
         tabelaLocacoes.setModel(modeloTabelaLocacoes);
     }
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
-        //Adiciona os dados do novo cliente na tabela
+        //Adiciona os dadosa nova venda na tabela
         modeloTabelaVendas.addRow(new Object[]{ });
         //Atualiza o model da tabela
         tabelaVendas.setModel(modeloTabelaVendas);
@@ -1506,14 +1536,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     
     //Qual seria a entrada????????
     public void adicionarNovoRelatorioNaTabela() {
-        //Adiciona os dados do novo cliente na tabela
+        //Adiciona os dados do novo relatório na tabela
         modeloTabelaRelatorios.addRow(new Object[]{ });
         //Atualiza o model da tabela
         tabelaRelatorios.setModel(modeloTabelaRelatorios);
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
-        //Adiciona os dados do novo cliente na tabela
+        //Adiciona os dados do novo usuário na tabela
         modeloTabelaUsuarios.addRow(new Object[]{ });
         //Atualiza o model da tabela
         tabelaUsuarios.setModel(modeloTabelaUsuarios);

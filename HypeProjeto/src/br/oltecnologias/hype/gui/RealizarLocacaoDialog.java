@@ -218,7 +218,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         scPanelListarProdutos.setViewportView(listaProdutos);
         modeloProdutos = new DefaultListModel();
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
-            modeloProdutos.addElement(produto.getDescricao());
+            modeloProdutos.addElement(produto.getCodigo() + " | " + produto.getNome());
         }
         listaProdutos.setModel(modeloProdutos);
 
@@ -434,27 +434,38 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        if(labelNomeCliente.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(produtosLocados.size() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            try {
-                //tirar
-                JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-                
-                // O usuário que irá informar a data da locação ou o sistema irá pegar?
-                // tirar comentário, foi só para testar. Este método estava lançando exceção
-                //GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Calendar.getInstance(), 
-                        //Float.parseFloat(getValorTotalDaLocacao()));
-                
-                //fecha janela
-                setVisible(false);
-                dispose();
-                //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\n O contrato será impresso em instantes...");
-            } catch (Exception ex) {
-                Logger.getLogger(RealizarLocacaoDialog.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if(labelNomeCliente.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(produtosLocados.size() <= 0) {
+                JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                try {
+                    String formaPagamento = "";
+                    
+                    if(radioAVista.isSelected()) {
+                        formaPagamento = "À Vista";
+                    }else if(radioCartao.isSelected()) {
+                        formaPagamento = "Cartão";
+                    } else if(radioPromissoria.isSelected()) {
+                        formaPagamento = "Promissória";
+                    } 
+
+                    // O usuário que irá informar a data de início e de fim da locação, quantidade de parcelas e entrada
+                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                            Calendar.getInstance(), formaPagamento);
+                    
+                    //tirar depois
+                    JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+                    
+                    concluirSelecionado = true;
+                    setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
@@ -627,10 +638,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
     
     public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+        return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     public Locacao getNovaLocacao() {
@@ -659,7 +670,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private Cliente locador;
     private float valorTotalLocacao;
     private List<Produto> produtosLocados;
-    protected boolean salvarSelecionado;
+    protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;

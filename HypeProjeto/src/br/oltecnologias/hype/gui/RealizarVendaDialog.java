@@ -497,6 +497,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
+        try{
         if(produtosVendidos.size() <= 0) {
             JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(radioCartao.isSelected() || radioPromissoria.isSelected()) { 
@@ -519,9 +520,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 //fecha janela
                 setVisible(false);
                 dispose();
-            } catch (Exception ex) {
-                Logger.getLogger(RealizarLocacaoDialog.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
+        }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
