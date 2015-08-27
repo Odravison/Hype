@@ -37,36 +37,49 @@ public class ClienteJpaController implements Serializable {
     public void create(Cliente cliente) throws PreexistingEntityException, Exception {
         if (cliente.getLocacoes() == null) {
             cliente.setLocacoes(new ArrayList<Locacao>());
+            System.out.println("===========>>>>>>>>>>>> 1");
         }
         EntityManager em = null;
         try {
+            System.out.println("===========>>>>>>>>>>>> 2");
             em = getEntityManager();
             em.getTransaction().begin();
             List<Locacao> attachedLocacoes = new ArrayList<Locacao>();
             for (Locacao locacoesLocacaoToAttach : cliente.getLocacoes()) {
+                System.out.println("===========>>>>>>>>>>>> 3");
                 locacoesLocacaoToAttach = em.getReference(locacoesLocacaoToAttach.getClass(), locacoesLocacaoToAttach.getId());
                 attachedLocacoes.add(locacoesLocacaoToAttach);
             }
             cliente.setLocacoes(attachedLocacoes);
+            System.out.println("===========>>>>>>>>>>>> 4");
             em.persist(cliente);
+            System.out.println("===========>>>>>>>>>>>> 5");
             for (Locacao locacoesLocacao : cliente.getLocacoes()) {
+                System.out.println("===========>>>>>>>>>>>> 5.1");
                 Cliente oldClienteOfLocacoesLocacao = locacoesLocacao.getCliente();
+                System.out.println("===========>>>>>>>>>>>> 5.2");
                 locacoesLocacao.setCliente(cliente);
+                System.out.println("===========>>>>>>>>>>>> 5.3");
+                System.out.println("===========>>>>>>>>>>>> 6");
                 locacoesLocacao = em.merge(locacoesLocacao);
                 if (oldClienteOfLocacoesLocacao != null) {
                     oldClienteOfLocacoesLocacao.getLocacoes().remove(locacoesLocacao);
+                    System.out.println("===========>>>>>>>>>>>> 7");
                     oldClienteOfLocacoesLocacao = em.merge(oldClienteOfLocacoesLocacao);
                 }
             }
             em.getTransaction().commit();
+            System.out.println("===========>>>>>>>>>>>> 8");
         } catch (Exception ex) {
             if (findCliente(cliente.getCpf()) != null) {
+                System.out.println("===========>>>>>>>>>>>> 9");
                 throw new PreexistingEntityException("Cliente " + cliente + " already exists.", ex);
             }
             throw ex;
         } finally {
             if (em != null) {
                 em.close();
+                System.out.println("===========>>>>>>>>>>>> 10");
             }
         }
     }

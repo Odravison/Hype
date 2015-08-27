@@ -13,38 +13,35 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Odravison
  */
-
 @Entity
 public class Cliente implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     private String cpf;
-    
+
     private String nome;
-    
-    @Temporal(javax.persistence.TemporalType.DATE)
+
+    @Temporal(TemporalType.DATE)
     private Calendar ultimaMedicao;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade= {CascadeType.ALL})
     private Endereco endereco;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade= {CascadeType.ALL})
     private Medidas medidas;
-    
+
     @Column(nullable = true)
     private String telefone;
 
@@ -52,7 +49,7 @@ public class Cliente implements Serializable {
 
     @OneToMany
     private List<Locacao> locacoes;
-    
+
     public Cliente() {
     }
 
@@ -65,7 +62,7 @@ public class Cliente implements Serializable {
         this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
         this.ultimaMedicao = Calendar.getInstance();
-        
+
     }
 
     @Override

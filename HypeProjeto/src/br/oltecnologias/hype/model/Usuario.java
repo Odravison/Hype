@@ -3,9 +3,8 @@ package br.oltecnologias.hype.model;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 public class Usuario implements Serializable {
@@ -57,5 +56,9 @@ public class Usuario implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public boolean isIsAdministrador() {
+        return isAdministrador;
     }
 }

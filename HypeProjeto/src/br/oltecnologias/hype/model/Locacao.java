@@ -6,7 +6,11 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -16,6 +20,7 @@ import javax.persistence.Temporal;
 public class Locacao implements Serializable {
 
     @Id
+    @GeneratedValue
     private int id;
 
     @OneToOne
@@ -23,6 +28,7 @@ public class Locacao implements Serializable {
 
     @OneToMany
     private List<Produto> produtos;
+    
     private double valorLocacao;
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -30,17 +36,17 @@ public class Locacao implements Serializable {
 
     @Temporal(javax.persistence.TemporalType.DATE)
     private Calendar dataDevolucao;
-    
+
     private String formaDePagamento;
-    
+
     private double valorDeEntrada = 0;
-    
+
     private double jaPago = 0;
 
     public Locacao() {
     }
 
-    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao, 
+    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
             Calendar dataDeDevolucao, String formaDePagamento) {
         this.cliente = cliente;
         this.produtos = produtos;
@@ -48,12 +54,12 @@ public class Locacao implements Serializable {
         this.dataLocacao = dataLocacao;
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
-        if (formaDePagamento.equals("A VISTA")){
-            this.valorLocacao = valorLocacao - (valorLocacao*Configuracao.getInstance().getDescontoAVista());
+        if (formaDePagamento.equals("A VISTA")) {
+            this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
     }
-    
-    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao, 
+
+    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
             Calendar dataDeDevolucao, String formaDePagamento, double valorDeEntrada) {
         this.cliente = cliente;
         this.produtos = produtos;

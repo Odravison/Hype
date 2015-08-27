@@ -17,7 +17,7 @@ public class Produto implements Serializable {
     private int quantidade;
     private int tam;
     
-    private String fornecedor; //Deveria ser do tipo Fornecedor
+    private String fornecedor;
     
     private String cor;
     private boolean isLocation;
@@ -118,5 +118,4 @@ public class Produto implements Serializable {
         else
             return "Venda";
     }
-
 }
