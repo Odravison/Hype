@@ -315,6 +315,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
         radioAVista.setBackground(new java.awt.Color(255, 255, 255));
         radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioAVista.setSelected(true);
         radioAVista.setText("À Vista");
         radioAVista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

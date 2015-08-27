@@ -31,19 +31,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="20" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="painelSelecionar" alignment="0" pref="572" max="32767" attributes="0"/>
                   <Component id="painelFormaPagamento" alignment="1" max="32767" attributes="0"/>
                   <Component id="painelProdutos" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
-                              <Component id="labelValorVenda" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="labelValorTotal" alignment="0" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="labelValorTotal" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="labelValorVenda" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="botaoConcluir" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -56,22 +52,23 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="painelSelecionar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="painelProdutos" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="painelFormaPagamento" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="labelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="botaoConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="labelValorVenda" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-              <Component id="labelValorVenda" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
+              <EmptySpace pref="43" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -200,7 +197,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaProdutosMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="modeloProdutos = new DefaultListModel();&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {&#xa;    modeloProdutos.addElement(produto.getDescricao());&#xa;}&#xa;listaProdutos.setModel(modeloProdutos);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="modeloProdutos = new DefaultListModel();&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {&#xa;    modeloProdutos.addElement(produto.getCodigo() + &quot; | &quot; + produto.getNome());&#xa;}&#xa;listaProdutos.setModel(modeloProdutos);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -316,7 +313,7 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="radioAVista" min="-2" max="-2" attributes="0"/>
@@ -372,10 +369,11 @@
             <Property name="text" type="java.lang.String" value="&#xc0; Vista"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioAVistaMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioAVistaActionPerformed"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="radioAVista.setSelected(true);&#xa;campoEntrada.setVisible(false);&#xa;campoParcelas.setVisible(false);"/>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="radioAVista.setSelected(true);&#xa;labelEntrada.setVisible(false);&#xa;labelParcelas.setVisible(false);&#xa;campoEntrada.setVisible(false);&#xa;campoParcelas.setVisible(false);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioCartao">
@@ -389,7 +387,7 @@
             <Property name="text" type="java.lang.String" value="Cart&#xe3;o"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioCartaoActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioCartaoMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioPromissoria">
@@ -403,7 +401,7 @@
             <Property name="text" type="java.lang.String" value="Promiss&#xf3;ria"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPromissoriaActionPerformed"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioPromissoriaMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelEntrada">

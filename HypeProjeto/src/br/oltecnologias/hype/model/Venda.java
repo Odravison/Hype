@@ -1,6 +1,8 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +24,8 @@ public class Venda implements Serializable {
     private double valor;
     
     private String formaDePagamento;
+    
+    private Calendar dataVenda;
 
     public Venda() {
     }
@@ -31,11 +35,12 @@ public class Venda implements Serializable {
      * @param produtos
      * @param valor
      */
-    public Venda(List<Produto> produtos, double valor, String formaDePagamento) {
+    public Venda(List<Produto> produtos, double valor, String formaDePagamento, Calendar dataVenda) {
         this.produtos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
-        if (formaDePagamento.equals("A VISTA")){
+        this.dataVenda = dataVenda;
+        if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
         }
     }
@@ -70,6 +75,18 @@ public class Venda implements Serializable {
 
     public void setFormaDePagamento(String formaDePagamento) {
         this.formaDePagamento = formaDePagamento;
+    }
+    
+    public String getProdutosVendidos() {
+        String produtosVendidos = "";
+        for(Produto produto: this.produtos) {
+            produtosVendidos += produto.getNome()+", ";
+        }
+        return produtosVendidos;
+    }
+    
+    public String getDataVenda() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataVenda.getTime());
     }
 
 }

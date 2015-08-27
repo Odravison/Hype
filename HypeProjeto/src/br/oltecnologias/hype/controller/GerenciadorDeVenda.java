@@ -3,6 +3,7 @@ package br.oltecnologias.hype.controller;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Venda;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class GerenciadorDeVenda {
@@ -21,14 +22,14 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public Venda realizarVenda(List<Produto> produtos, float valor, String formaPagamento) {
+    public Venda realizarVenda(List<Produto> produtos, float valor, String formaPagamento, Calendar dataVenda) {
         
-        Venda venda = new Venda(produtos, valor, formaPagamento);
+        Venda venda = new Venda(produtos, valor, formaPagamento, dataVenda);
         this.vendas.add(venda);
         return venda;
     }
 
-    public List<Venda> listarVendas() {
+    public List<Venda> getVendas() {
         return this.vendas;
     }
 }

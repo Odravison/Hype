@@ -8,6 +8,7 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Fornecedor;
@@ -386,6 +387,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaProdutos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabelaProdutos.getTableHeader().setResizingAllowed(false);
         tabelaProdutos.getTableHeader().setReorderingAllowed(false);
+        //Define a fonte do cabeçalho da tabela de produtos
+        tabelaProdutos.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+
+        tabelaProdutos.setRowHeight(25); // Altura das linhas
+
         String[] nomesColunasTabelaProdutos = {"Código", "Descrição do Produto", "Quantidade em estoque", "Finalidade"};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasProdutos = new ArrayList<>();
@@ -408,8 +414,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(230);
         // Redimensionando a largura da coluna de finalidade
         tabelaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);
-
-        tabelaProdutos.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlProduto.setViewportView(tabelaProdutos);
 
         labelFiltrarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -505,6 +509,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaFornecedores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabelaFornecedores.getTableHeader().setResizingAllowed(false);
         tabelaFornecedores.getTableHeader().setReorderingAllowed(false);
+        //Define a fonte do cabeçalho da tabela fornecedores
+        tabelaFornecedores.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+
+        tabelaFornecedores.setRowHeight(25); // Altura das linhas
+
         String[] nomesColunasTabelaFornecedores = {"CNPJ", "Fornecedor", "Endereço", "Contato"};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasFornecedores = new ArrayList<>();
@@ -527,8 +536,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(250);
         // Redimensionando a largura da coluna de número do celular
         tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);
-
-        tabelaFornecedores.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlFornecedores.setViewportView(tabelaFornecedores);
 
         labelFiltrarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -641,6 +648,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaLocacoes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabelaLocacoes.getTableHeader().setResizingAllowed(false);
         tabelaLocacoes.getTableHeader().setReorderingAllowed(false);
+        //Define a fonte do cabeçalho da tabela fornecedores
+        tabelaLocacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+        // Altura das linhas
+        tabelaLocacoes.setRowHeight(25);
+
         String[] nomesColunasTabelaLocacoes = {"Cliente", "Produtos Locados", "Vencimento", "Contato Cliente"};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
@@ -663,8 +675,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
         // Redimensionando a largura da coluna de última contato
         tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(170);
-
-        tabelaLocacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlFornecedores1.setViewportView(tabelaLocacoes);
 
         labelFiltrarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -769,25 +779,36 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlCliente1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaVendas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Data da venda", "Vendedor", "Valor da venda", "Itens", "Forma pagamento", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         tabelaVendas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabelaVendas.getTableHeader().setResizingAllowed(false);
         tabelaVendas.getTableHeader().setReorderingAllowed(false);
+        String[] nomesColunasTabelaVendas = {"Data da Venda", "Produtos Vendidos", "Valor", "Forma de pagamento"};
+        //Define a fonte do cabeçalho da tabela
+        tabelaVendas.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+        //Altura das linhas
+        tabelaVendas.setRowHeight(25);
+
+        //Lista que terá as linhas da tabela
+        List<Object[]> listaLinhasVendas = new ArrayList<>();
+
+        //Adicionando valores nas linhas
+        for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {
+            listaLinhasVendas.add(new Object[]{venda.getDataVenda(), venda.getProdutosVendidos(), venda.getValor(), venda.getFormaDePagamento()});
+        }
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaVendas = new DefaultTableModel(
+            listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas);
+
+        //define o model da tabela
+        tabelaVendas.setModel(modeloTabelaVendas);
+        // Redimensionando a largura da coluna data da venda
+        tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);
+        // Redimensionando a largura da coluna de nome
+        tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);
+        // Redimensionando a largura da coluna de número do celular
+        tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);
+        // Redimensionando a largura da coluna de última locação
+        tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);
         pnRlCliente1.setViewportView(tabelaVendas);
 
         labelOrdenar1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1529,7 +1550,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
         //Adiciona os dadosa nova venda na tabela
-        modeloTabelaVendas.addRow(new Object[]{ });
+        modeloTabelaVendas.addRow(new Object[]{venda.getDataVenda(), venda.getProdutosVendidos(), "R$ "+venda.getValor(), venda.getFormaDePagamento()});
         //Atualiza o model da tabela
         tabelaVendas.setModel(modeloTabelaVendas);
     }

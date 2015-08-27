@@ -163,7 +163,7 @@ public class Locacao implements Serializable {
     }
     
     public String getVencimento() {
-        return new SimpleDateFormat("dd.MM.yyyy").format(this.dataDevolucao.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
     }
     
     public String getContato() {
