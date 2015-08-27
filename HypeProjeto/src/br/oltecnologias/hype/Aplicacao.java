@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -60,7 +61,7 @@ public class Aplicacao {
 
         for (int i = 0; i < 6; i++) {
             Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
-            Fornecedor fornecedor = new Fornecedor("12345678864", enderecoo, "313131-3131");
+            String fornecedor = "EMIRATES";
             Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
             produtos.add(p);
 //            pjp.destroy(p.getCodigo());
@@ -72,8 +73,16 @@ public class Aplicacao {
 
         cliente.setLocacoes(locacoes);
         
-        ClienteJpaController cjp = new ClienteJpaController(emf);
-        cjp.create(cliente);
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        
+        em.persist(cliente);
+        
+        em.getTransaction().commit();
+        
+        
+//        ClienteJpaController cjp = new ClienteJpaController(emf);
+//        cjp.create(cliente);
 //        System.out.println(cjp.findCliente(cliente.getCpf()).getNome());
 //        cliente.setNome("lulisssss");
 //        cjp.edit(cliente);

@@ -7,13 +7,16 @@ package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
 import br.oltecnologias.hype.dao.exceptions.PreexistingEntityException;
+import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Endereco;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import br.oltecnologias.hype.model.Locacao;
+import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -44,32 +47,46 @@ public class ClienteJpaController implements Serializable {
             System.out.println("===========>>>>>>>>>>>> 2");
             em = getEntityManager();
             em.getTransaction().begin();
-            List<Locacao> attachedLocacoes = new ArrayList<Locacao>();
-            for (Locacao locacoesLocacaoToAttach : cliente.getLocacoes()) {
-                System.out.println("===========>>>>>>>>>>>> 3");
-                locacoesLocacaoToAttach = em.getReference(locacoesLocacaoToAttach.getClass(), locacoesLocacaoToAttach.getId());
-                attachedLocacoes.add(locacoesLocacaoToAttach);
-            }
-            cliente.setLocacoes(attachedLocacoes);
-            System.out.println("===========>>>>>>>>>>>> 4");
-            em.persist(cliente);
-            System.out.println("===========>>>>>>>>>>>> 5");
-            for (Locacao locacoesLocacao : cliente.getLocacoes()) {
-                System.out.println("===========>>>>>>>>>>>> 5.1");
-                Cliente oldClienteOfLocacoesLocacao = locacoesLocacao.getCliente();
-                System.out.println("===========>>>>>>>>>>>> 5.2");
-                locacoesLocacao.setCliente(cliente);
-                System.out.println("===========>>>>>>>>>>>> 5.3");
-                System.out.println("===========>>>>>>>>>>>> 6");
-                locacoesLocacao = em.merge(locacoesLocacao);
-                if (oldClienteOfLocacoesLocacao != null) {
-                    oldClienteOfLocacoesLocacao.getLocacoes().remove(locacoesLocacao);
-                    System.out.println("===========>>>>>>>>>>>> 7");
-                    oldClienteOfLocacoesLocacao = em.merge(oldClienteOfLocacoesLocacao);
+
+            if (em.find(Cliente.class, cliente.getCpf()) instanceof Cliente) {
+                if (em.find(Cliente.class, cliente.getCpf()).getCpf().equals(cliente.getCpf())) {
+                    throw new ClienteExistenteException("O cliente com CPF: " + cliente.getCpf() + " já existe.");
+                } else {
+                    Endereco endereco = cliente.getEndereco();
+                    List<Locacao> locacoes = cliente.getLocacoes();
+                    Medidas medidas = cliente.getMedidas();
+
                 }
             }
-            em.getTransaction().commit();
-            System.out.println("===========>>>>>>>>>>>> 8");
+
+//
+//            List<Locacao> attachedLocacoes = new ArrayList<Locacao>();
+//            for (Locacao locacoesLocacaoToAttach : cliente.getLocacoes()) {
+//                System.out.println("===========>>>>>>>>>>>> 3");
+//                locacoesLocacaoToAttach = em.getReference(locacoesLocacaoToAttach.getClass(), locacoesLocacaoToAttach.getId());
+//                attachedLocacoes.add(locacoesLocacaoToAttach);
+//            }
+//            cliente.setLocacoes(attachedLocacoes);
+//            System.out.println("===========>>>>>>>>>>>> 4");
+//            em.persist(cliente);
+//            System.out.println("===========>>>>>>>>>>>> 5");
+//            for (Locacao locacoesLocacao : cliente.getLocacoes()) {
+//                System.out.println("===========>>>>>>>>>>>> 5.1");
+//                System.out.println("========>>>>>>>>>>>> id: " + locacoesLocacao.getId());
+//                Cliente oldClienteOfLocacoesLocacao = locacoesLocacao.getCliente();
+//                System.out.println("===========>>>>>>>>>>>> 5.2");
+//                locacoesLocacao.setCliente(cliente);
+//                System.out.println("===========>>>>>>>>>>>> 5.3");
+//                System.out.println("===========>>>>>>>>>>>> 6");
+//                locacoesLocacao = em.merge(locacoesLocacao);
+//                if (oldClienteOfLocacoesLocacao != null) {
+//                    oldClienteOfLocacoesLocacao.getLocacoes().remove(locacoesLocacao);
+//                    System.out.println("===========>>>>>>>>>>>> 7");
+//                    oldClienteOfLocacoesLocacao = em.merge(oldClienteOfLocacoesLocacao);
+//                }
+//                em.getTransaction().commit();
+//                System.out.println("===========>>>>>>>>>>>> 8");
+//            }
         } catch (Exception ex) {
             if (findCliente(cliente.getCpf()) != null) {
                 System.out.println("===========>>>>>>>>>>>> 9");
@@ -98,6 +115,7 @@ public class ClienteJpaController implements Serializable {
                 attachedLocacoesNew.add(locacoesNewLocacaoToAttach);
             }
             locacoesNew = attachedLocacoesNew;
+
             cliente.setLocacoes(locacoesNew);
             cliente = em.merge(cliente);
             for (Locacao locacoesOldLocacao : locacoesOld) {
@@ -117,7 +135,9 @@ public class ClienteJpaController implements Serializable {
                     }
                 }
             }
-            em.getTransaction().commit();
+
+            em.getTransaction()
+                    .commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
@@ -140,6 +160,7 @@ public class ClienteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Cliente cliente;
+
             try {
                 cliente = em.getReference(Cliente.class, id);
                 cliente.getCpf();
@@ -172,12 +193,15 @@ public class ClienteJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Cliente.class));
+            cq
+                    .select(cq.from(Cliente.class
+                            ));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
+
             return q.getResultList();
         } finally {
             em.close();
@@ -186,6 +210,7 @@ public class ClienteJpaController implements Serializable {
 
     public Cliente findCliente(String id) {
         EntityManager em = getEntityManager();
+
         try {
             return em.find(Cliente.class, id);
         } finally {
@@ -197,7 +222,8 @@ public class ClienteJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Cliente> rt = cq.from(Cliente.class);
+            Root<Cliente> rt = cq.from(Cliente.class
+            );
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -205,5 +231,5 @@ public class ClienteJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }
