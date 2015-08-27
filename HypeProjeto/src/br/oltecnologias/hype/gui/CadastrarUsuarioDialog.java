@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.model.Usuario;
 import java.awt.Frame;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -262,6 +263,10 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
+    public Usuario getNovoUsuario() {
+        return novoUsuario;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -282,6 +287,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     protected boolean salvarSelecionado;
     private int maxCaracteresNome = 40;
+    protected Usuario novoUsuario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;

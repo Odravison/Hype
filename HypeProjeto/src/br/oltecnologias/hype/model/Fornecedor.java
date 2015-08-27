@@ -77,8 +77,8 @@ public class Fornecedor implements Serializable {
         this.cnpj = cnpj;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public String getEndereco() {
+        return this.endereco.getRua() + ", "+this.endereco.getBairro() + " - " + this.endereco.getCidade() + ", " + this.endereco.getUf();
     }
 
     public void setEndereco(Endereco endereco) {
@@ -107,4 +107,5 @@ public class Fornecedor implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
+   
 }

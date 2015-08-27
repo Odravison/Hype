@@ -10,6 +10,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.Venda;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -576,6 +577,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
+    public Venda getNovaVenda() {
+        return novaVenda;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -599,6 +604,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private float valorTotalLocacao;
     private List<Produto> produtosVendidos;
     protected boolean salvarSelecionado;
+    protected Venda novaVenda;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

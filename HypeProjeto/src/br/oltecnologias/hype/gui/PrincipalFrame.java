@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
@@ -478,23 +479,31 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaFornecedores.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Forncedor", "Endereço", "Contato", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         tabelaFornecedores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        String[] nomesColunasTabelaFornecedores = {"CNPJ", "Fornecedor", "Endereço", "Contato"};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhasFornecedores = new ArrayList<>();
+
+        //Adicionando valores nas linhas
+        for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {
+            listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
+        }
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaFornecedores = new DefaultTableModel(
+            listaLinhasFornecedores.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaFornecedores);
+
+        //define o model da tabela
+        tabelaFornecedores.setModel(modeloTabelaFornecedores);
+        // Redimensionando a largura da coluna de CPF
+        tabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(180);
+        // Redimensionando a largura da coluna de nome
+        tabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(340);
+        // Redimensionando a largura da coluna de número do celular
+        tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(250);
+        // Redimensionando a largura da coluna de número do celular
+        tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);
+
+        tabelaFornecedores.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlFornecedores.setViewportView(tabelaFornecedores);
 
         labelFiltrarFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -604,15 +613,31 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaLocacoes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Cliente", "Produtos Locados", "Contato", "Retorno", ""
-            }
-        ));
         tabelaLocacoes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        String[] nomesColunasTabelaLocacoes = {"Cliente", "Produtos Locados", "Vencimento", "Contato"};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhasLocacoes = new ArrayList<>();
+
+        //Adicionando valores nas linhas
+        for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
+            listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(), locacao.getVencimento(), locacao.getContato()});
+        }
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaLocacoes = new DefaultTableModel(
+            listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes);
+
+        //define o model da tabela
+        tabelaLocacoes.setModel(modeloTabelaLocacoes);
+        // Redimensionando a largura da coluna de cliente
+        tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(300);
+        // Redimensionando a largura da coluna de produtos locados
+        tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(340);
+        // Redimensionando a largura da coluna de número do vencimento
+        tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
+        // Redimensionando a largura da coluna de última contato
+        tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110);
+
+        tabelaLocacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
         pnRlFornecedores1.setViewportView(tabelaLocacoes);
 
         labelFiltrarFornecedores1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1177,7 +1202,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
             adicionarNovoClienteNaTabela(dialog.getNovoCliente());
-           
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovoClienteActionPerformed
@@ -1234,24 +1258,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         CadastrarFornecedorDialog dialog = new CadastrarFornecedorDialog(null);
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
-            
-            //lógica para atualizar a tabela... refazer apenas atualizando o modelo
-            String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "", ""};
-            //Essa lista terá as linhas da tabela
-            List<Object[]> listaLinhas = new ArrayList<>();
-            
-            //Adicionando valores nas linhas
-            for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-                listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
-                    "", "",
-                    "", ""});
-            }
-            //cria um defaultablemodel com as informações acima
-            DefaultTableModel modelo = new DefaultTableModel(
-                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);
-            //define o model da tabela
-            tabelaClientes.setModel(modelo);
-            
+            adicionarNovoFornecedorNaTabela(dialog.getNovoFornecedor());
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovoFornecedorActionPerformed
@@ -1278,24 +1285,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
-            
-            //lógica para atualizar a tabela... refazer apenas atualizando o modelo
-            String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "", ""};
-            //Essa lista terá as linhas da tabela
-            List<Object[]> listaLinhas = new ArrayList<>();
-            
-            //Adicionando valores nas linhas
-            for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-                listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
-                    "", "",
-                    "", ""});
-            }
-            //cria um defaultablemodel com as informações acima
-            DefaultTableModel modelo = new DefaultTableModel(
-                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);
-            //define o model da tabela
-            tabelaClientes.setModel(modelo);
-            
+            adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
@@ -1330,24 +1320,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         RealizarVendaDialog dialog = new RealizarVendaDialog(null);
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
-            
-            //lógica para atualizar a tabela... refazer apenas atualizando o modelo
-            String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "", ""};
-            //Essa lista terá as linhas da tabela
-            List<Object[]> listaLinhas = new ArrayList<>();
-            
-            //Adicionando valores nas linhas
-            for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-                listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
-                    "", "",
-                    "", ""});
-            }
-            //cria um defaultablemodel com as informações acima
-            DefaultTableModel modelo = new DefaultTableModel(
-                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunas);
-            //define o model da tabela
-            tabelaClientes.setModel(modelo);
-            
+            adicionarNovaVendaNaTabela(dialog.getNovaVenda());
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
@@ -1425,25 +1398,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         CadastrarUsuarioDialog dialog = new CadastrarUsuarioDialog(null);
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
-            //adicionarNovoUsuarioNaTabela(dialog.getNovoUsuario());
-            
-            
-            //lógica para atualizar a tabela... refazer apenas atualizando o modelo
-            //String[] nomesColunas = {"CPF", "Nome do Cliente", "Última Locação", "", "", "", ""};
-            //Essa lista terá as linhas da tabela
-            /*List<Object[]> listaLinhas = new ArrayList<>();
-            
-            //Adicionando valores nas linhas
-            for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-                listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), "20/04/2015",
-                    "", "",
-                    "", ""});
-            }
-            //Adiciona a nova linha no modelo da tabela de clientes
-            modeloTabelaClientes.addRow(listaLinhas.toArray(new Object[listaLinhas.size()][]));
-            //define o model da tabela
-            tabelaClientes.setModel(modeloTabelaClientes);*/
-            
+            adicionarNovoUsuarioNaTabela(dialog.getNovoUsuario());
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
@@ -1530,21 +1485,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
     
     public void adicionarNovoFornecedorNaTabela(Fornecedor fornecedor) {
         //Adiciona os dados do novo cliente na tabela
-        modeloTabelaFornecedores.addRow(new Object[]{});
+        modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
         //Atualiza o model da tabela
         tabelaFornecedores.setModel(modeloTabelaFornecedores);
     }
     
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         //Adiciona os dados do novo cliente na tabela
-        modeloTabelaLocacoes.addRow(new Object[]{});
+        modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(), locacao.getVencimento(), locacao.getContato()});
         //Atualiza o model da tabela
         tabelaLocacoes.setModel(modeloTabelaLocacoes);
     }
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
         //Adiciona os dados do novo cliente na tabela
-        modeloTabelaVendas.addRow(new Object[]{});
+        modeloTabelaVendas.addRow(new Object[]{ });
         //Atualiza o model da tabela
         tabelaVendas.setModel(modeloTabelaVendas);
     }
@@ -1552,14 +1507,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Qual seria a entrada????????
     public void adicionarNovoRelatorioNaTabela() {
         //Adiciona os dados do novo cliente na tabela
-        modeloTabelaRelatorios.addRow(new Object[]{});
+        modeloTabelaRelatorios.addRow(new Object[]{ });
         //Atualiza o model da tabela
         tabelaRelatorios.setModel(modeloTabelaRelatorios);
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
         //Adiciona os dados do novo cliente na tabela
-        modeloTabelaUsuarios.addRow(new Object[]{});
+        modeloTabelaUsuarios.addRow(new Object[]{ });
         //Atualiza o model da tabela
         tabelaUsuarios.setModel(modeloTabelaUsuarios);
     }

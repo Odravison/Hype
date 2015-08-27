@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.model.Fornecedor;
 import java.awt.Frame;
 import javax.swing.ImageIcon;
 
@@ -75,6 +76,10 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
+    public Fornecedor getNovoFornecedor() {
+        return novoFornecedor;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -93,6 +98,7 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
     }
 
     protected boolean salvarSelecionado;
+    protected Fornecedor novoFornecedor;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

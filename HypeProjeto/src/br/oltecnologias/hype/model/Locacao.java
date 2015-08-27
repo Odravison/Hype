@@ -3,6 +3,7 @@ package br.oltecnologias.hype.model;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
 import javax.persistence.Entity;
@@ -151,5 +152,21 @@ public class Locacao implements Serializable {
 
     public void setJaPago(double jaPago) {
         this.jaPago = jaPago;
+    }
+    
+    public String getProdutosLocados() {
+        String produtosLocados = "";
+        for(Produto produto: this.produtos) {
+            produtosLocados += produto.getNome() + ", ";
+        }
+        return produtosLocados;
+    }
+    
+    public String getVencimento() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(this.dataDevolucao.getTime());
+    }
+    
+    public String getContato() {
+        return this.cliente.getCelular();
     }
 }

@@ -12,6 +12,7 @@ import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.GeradorDeContrato;
+import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
 import java.util.ArrayList;
@@ -632,6 +633,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
+    public Locacao getNovaLocacao() {
+        return novaLocacao;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -655,6 +660,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private float valorTotalLocacao;
     private List<Produto> produtosLocados;
     protected boolean salvarSelecionado;
+    protected Locacao novaLocacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

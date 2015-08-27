@@ -25,7 +25,7 @@ public class GerenciadorDeLocacao {
         return singleton;
     }
 
-    public void realizarLocacao(Cliente cliente, List<Produto> produtos, float valor, Calendar dataLocacao, 
+    public Locacao realizarLocacao(Cliente cliente, List<Produto> produtos, float valor, Calendar dataLocacao, 
             Calendar dataDeDevolucao, String formaDePagamento) throws ProdutoInexistenteException {
         Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento);
         cliente.adicionarLocacao(locacao);
@@ -33,10 +33,10 @@ public class GerenciadorDeLocacao {
         for (Produto p: produtos){
             GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).removerQuant(p.getQuantidade());
         }
-
+        return locacao;
     }
 
-    public List<Locacao> listarLocacoes() {
+    public List<Locacao> getLocacoes() {
         return locacoes;
     }
 
