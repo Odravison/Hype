@@ -30,6 +30,8 @@ public class Fornecedor implements Serializable {
     
     private String telefone;
     
+    private String nome;
+    
     public Fornecedor() {
 
     }
@@ -81,8 +83,8 @@ public class Fornecedor implements Serializable {
         this.cnpj = cnpj;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public String getEndereco() {
+        return this.endereco.getRua() + ", "+this.endereco.getBairro() + " - " + this.endereco.getCidade() + ", " + this.endereco.getUf();
     }
 
     public void setEndereco(Endereco endereco) {
@@ -97,5 +99,19 @@ public class Fornecedor implements Serializable {
         this.telefone = telefone;
     }
     
+    public Fornecedor(String cnpj, Endereco endereco, String telefone, String nome) {
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
     
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+   
 }

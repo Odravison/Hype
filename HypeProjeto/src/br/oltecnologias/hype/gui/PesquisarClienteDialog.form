@@ -155,7 +155,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DefaultListModel modelo = new DefaultListModel();&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    modelo.addElement(cliente.getDescricao());&#xa;}&#xa;listaClientes.setModel(modelo);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DefaultListModel modelo = new DefaultListModel();&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    modelo.addElement(cliente.getCpf() + &quot; | &quot; + cliente.getNome());&#xa;}&#xa;listaClientes.setModel(modelo);"/>
               </AuxValues>
             </Component>
           </SubComponents>

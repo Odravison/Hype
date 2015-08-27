@@ -52,13 +52,8 @@
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Component id="painelSelecionar" alignment="0" pref="568" max="32767" attributes="0"/>
                           <Component id="painelLocador" alignment="0" pref="568" max="32767" attributes="0"/>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="painelFormaPagamento" max="32767" attributes="0"/>
-                                  <Component id="painelProdutos" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="painelFormaPagamento" max="32767" attributes="0"/>
+                          <Component id="painelProdutos" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="23" max="32767" attributes="0"/>
                   </Group>
@@ -181,6 +176,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoCancelarActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoCancelar.setIcon(new ImageIcon(&quot;Imagens\\Cancelar.png&quot;));"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="botaoConcluir">
       <Properties>
@@ -195,6 +193,9 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoConcluirActionPerformed"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoConcluir.setIcon(new ImageIcon(&quot;Imagens\\Salvar.png&quot;));"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="labelValorTotal">
       <Properties>
@@ -327,7 +328,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaProdutosMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="DefaultListModel modelo = new DefaultListModel();&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {&#xa;    modelo.addElement(produto.getDescricao());&#xa;}&#xa;listaProdutos.setModel(modelo);"/>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="modeloProdutos = new DefaultListModel();&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {&#xa;    modeloProdutos.addElement(produto.getCodigo() + &quot; | &quot; + produto.getNome());&#xa;}&#xa;listaProdutos.setModel(modeloProdutos);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -413,6 +414,9 @@
                   <Font name="Tahoma" size="12" style="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaProdutosLocadosMouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="modeloProdutosLocados = new DefaultListModel();&#xa;listaProdutosLocados.setModel(modeloProdutosLocados);"/>
               </AuxValues>
@@ -489,6 +493,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Cart&#xe3;o"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioCartaoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioPromissoria">
           <Properties>
@@ -500,6 +507,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Promiss&#xf3;ria"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPromissoriaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>

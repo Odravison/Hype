@@ -34,14 +34,16 @@ public class GerenciadorDePessoas {
         return singleton;
     }
 
-    public void cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
+    public Cliente cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
             String telefone, String celular) throws ClienteExistenteException {
         for (Cliente c : this.clientes) {
             if (c.getCpf().equals(cpf)) {
                 throw new ClienteExistenteException("CPF já cadastrado.");
             }
         }
-        this.clientes.add(new Cliente(cpf, nome, endereco, medidas, telefone, celular));
+        Cliente cliente = new Cliente(cpf, nome, endereco, medidas, telefone, celular);
+        this.clientes.add(cliente);
+        return cliente;
     }
 
     public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, 
@@ -85,13 +87,15 @@ public class GerenciadorDePessoas {
         return aux;
     }
 
-    public void cadastrarUsuario(String nome, String nickName, String senha, boolean isAdm) throws UsuarioExistenteException {
+    public Usuario cadastrarUsuario(String nome, String nickName, String senha, boolean isAdm) throws UsuarioExistenteException {
         for (Usuario u : this.usuarios) {
             if (u.getNickName().equals(nickName)) {
                 throw new UsuarioExistenteException("O NickName informado já está em uso.");
             }
         }
-        this.usuarios.add(new Usuario(nome, nickName, senha, isAdm));
+        Usuario usuario = new Usuario(nome, nickName, senha, isAdm);
+        this.usuarios.add(usuario);
+        return usuario;
     }
 
     public void editarUsuario(String nickAntigo, String nome, String senha, String nickNovo) throws UsuarioExistenteException {
@@ -119,13 +123,15 @@ public class GerenciadorDePessoas {
         throw new UsuarioInexistenteException("Administrador não cadastrado.");
     }
 
-    public void cadastrarFornecedor(String cnpj, Endereco endereco, String telefone, String nome) throws FornecedorExistenteException {
+    public Fornecedor cadastrarFornecedor(String cnpj, Endereco endereco, String telefone, String nome) throws FornecedorExistenteException {
         for (Fornecedor f : this.fornecedores) {
             if (f.getCnpj().equals(cnpj)) {
                 throw new FornecedorExistenteException("O CNPJ em questão já foi cadastrado.");
             }
         }
-        this.fornecedores.add(new Fornecedor(cnpj, endereco, telefone, nome));
+        Fornecedor fornecedor = new Fornecedor(cnpj, endereco, telefone, nome);
+        this.fornecedores.add(fornecedor);
+        return fornecedor;
     }
 
     public void editarFornecedor(String cnpjAntigo, String cnpjNovo, Endereco endereco, String telefone, String nome) throws FornecedorInexistenteException {
@@ -214,6 +220,13 @@ public class GerenciadorDePessoas {
         this.usuarios = usuarios;
     }
     
+    //Método para pesquisar os clientes que fizeram locações as mais recentes
+    // Retorno: uma lista de clientes ordenada pela data (mais recente para a menos recente) da sua última locação
+    //PesquisarUltimosLocatarios(String: nome): List<Cliente>
+
+    //Método para pesquisar os últimos clientes que foram cadastrados
+    //PesquisarUltimosClientesCadastrados(String: nome): List<Cliente>
+
     public void carregarPessoas() {
         // Método sera implementado quando houver bando de dados.
     }

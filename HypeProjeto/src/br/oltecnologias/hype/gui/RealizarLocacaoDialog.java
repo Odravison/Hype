@@ -12,7 +12,9 @@ import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.GeradorDeContrato;
+import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,8 +37,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public RealizarLocacaoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        valorTotalLocacao = 0;
+        locador = null;
+        produtosLocados = new ArrayList<Produto>();
+    }
+    
+     public RealizarLocacaoDialog(Frame owner) {
+        super(owner);
+        initComponents();
         valorTotalLocacao = 0;
         locador = null;
         produtosLocados = new ArrayList<Produto>();
@@ -140,6 +148,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -149,6 +158,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoConcluir.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoConcluir.setText("Concluir");
         botaoConcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoConcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConcluirActionPerformed(evt);
@@ -206,11 +216,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
         scPanelListarProdutos.setViewportView(listaProdutos);
-        DefaultListModel modelo = new DefaultListModel();
+        modeloProdutos = new DefaultListModel();
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
-            modelo.addElement(produto.getDescricao());
+            modeloProdutos.addElement(produto.getCodigo() + " | " + produto.getNome());
         }
-        listaProdutos.setModel(modelo);
+        listaProdutos.setModel(modeloProdutos);
 
         labelPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelPesquisar.setText("Pesquisar:");
@@ -268,6 +278,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         });
 
         listaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        listaProdutosLocados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProdutosLocadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaProdutosLocados);
         modeloProdutosLocados = new DefaultListModel();
         listaProdutosLocados.setModel(modeloProdutosLocados);
@@ -310,10 +325,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioCartao.setBackground(new java.awt.Color(255, 255, 255));
         radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCartao.setText("Cartão");
+        radioCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCartaoActionPerformed(evt);
+            }
+        });
 
         radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
         radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPromissoria.setText("Promissória");
+        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPromissoriaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("AINDA FALTA AS DATAS");
 
@@ -368,11 +393,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(painelSelecionar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
                             .addComponent(painelLocador, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, 0)))
+                            .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(painelProdutos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 23, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -412,28 +434,38 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        if(labelNomeCliente.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(produtosLocados.size() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            try {
-                //tirar
-                JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-                GeradorDeContrato.getInstance().gerarContrato(locador,Calendar.getInstance(), Calendar.getInstance(), produtosLocados);
-                
-                // O usuário que irá informar a data da locação ou o sistema irá pegar?
-                // tirar comentário, foi só para testar. Este método estava lançando exceção
-                //GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Calendar.getInstance(), 
-                        //Float.parseFloat(getValorTotalDaLocacao()));
-                
-                //fecha janela
-                setVisible(false);
-                dispose();
-                //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\n O contrato será impresso em instantes...");
-            } catch (Exception ex) {
-                Logger.getLogger(RealizarLocacaoDialog.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            if(labelNomeCliente.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(produtosLocados.size() <= 0) {
+                JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                try {
+                    String formaPagamento = "";
+                    
+                    if(radioAVista.isSelected()) {
+                        formaPagamento = "À Vista";
+                    }else if(radioCartao.isSelected()) {
+                        formaPagamento = "Cartão";
+                    } else if(radioPromissoria.isSelected()) {
+                        formaPagamento = "Promissória";
+                    } 
+
+                    // O usuário que irá informar a data de início e de fim da locação, quantidade de parcelas e entrada
+                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                            Calendar.getInstance(), formaPagamento);
+                    
+                    //tirar depois
+                    JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+                    
+                    concluirSelecionado = true;
+                    setVisible(false);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
@@ -473,11 +505,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if(campoPesquisar.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            DefaultListModel modelo = new DefaultListModel();
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(campoPesquisar.getText())) {
-                modelo.addElement(produto.getDescricao());
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
+                modeloProdutos.addElement(produto.getDescricao());
             }
-            listaProdutos.setModel(modelo);
+            listaProdutos.setModel(modeloProdutos);
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
@@ -489,7 +520,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             descricao.nextToken();
             descricao.nextToken();
-            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            // deve procurar apenas um produto, pelo seu código
+            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
             labelValorLocacao.setText(getValorTotalDaLocacao());
             
         }
@@ -504,7 +536,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             descricao.nextToken();
             descricao.nextToken();
-            removerProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            removerProdutoDaLocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
@@ -537,15 +569,40 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
         if(evt.getClickCount() == 2){            
-            // dá pra criar um único método na classe
             modeloProdutosLocados.addElement(listaProdutos.getSelectedValue().toString());
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             descricao.nextToken();
             descricao.nextToken();
-            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_listaProdutosMouseClicked
+
+    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
+        if(radioAVista.isSelected())
+            radioAVista.setSelected(false);
+        if(radioPromissoria.isSelected()) 
+            radioPromissoria.setSelected(false);
+    }//GEN-LAST:event_radioCartaoActionPerformed
+
+    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
+        if(radioCartao.isSelected())
+            radioCartao.setSelected(false);
+        if(radioAVista.isSelected()) 
+            radioAVista.setSelected(false);
+    }//GEN-LAST:event_radioPromissoriaActionPerformed
+
+    private void listaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosLocadosMouseClicked
+        if(evt.getClickCount() == 2){            
+            modeloProdutosLocados.removeElement(listaProdutosLocados.getSelectedValue().toString());
+            StringTokenizer descricao = new StringTokenizer(listaProdutosLocados.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            // Alterar para pesquisar pelo código do produto
+            removerProdutoDaLocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
+            labelValorLocacao.setText(getValorTotalDaLocacao());
+        }
+    }//GEN-LAST:event_listaProdutosLocadosMouseClicked
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -566,7 +623,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }
     
-    private void removerProdutoALocacao(List<Produto> produtos) {
+    private void removerProdutoDaLocacao(List<Produto> produtos) {
         for(Produto produto: produtos) {
             produtosLocados.remove(produto);
         }
@@ -578,6 +635,17 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             valor += produto.getValor();
         }
         return Float.toString(valor);
+    }
+    
+    public boolean alterarDados() {        
+        concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public Locacao getNovaLocacao() {
+        return novaLocacao;
     }
     
     /**
@@ -598,9 +666,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
 
     private DefaultListModel modeloProdutosLocados;
+    private DefaultListModel modeloProdutos;
     private Cliente locador;
     private float valorTotalLocacao;
     private List<Produto> produtosLocados;
+    protected boolean concluirSelecionado;
+    protected Locacao novaLocacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

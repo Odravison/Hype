@@ -26,7 +26,7 @@ public class GerenciadorDoSistema {
     }
 
     public void notificarVencimentoDeLocacao() {
-
+        //thread
     }
 
     public void transacaoDeCaixaListener(double valor) {

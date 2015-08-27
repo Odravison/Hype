@@ -5,7 +5,11 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.model.Fornecedor;
+import br.oltecnologias.hype.model.Produto;
+import java.awt.Frame;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -21,8 +25,11 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     public CadastrarProdutoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+    }
+    
+    public CadastrarProdutoDialog(Frame owner) {
+        super(owner);
+        initComponents();
     }
 
     /**
@@ -46,11 +53,11 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         campoCodigo = new javax.swing.JTextField();
         painelValores = new javax.swing.JPanel();
         labelTamanho = new javax.swing.JLabel();
-        campoTamanho = new javax.swing.JFormattedTextField();
         labelQuantidade = new javax.swing.JLabel();
         labelPreco = new javax.swing.JLabel();
         campoPreco = new javax.swing.JTextField();
         campoQuantidade = new javax.swing.JTextField();
+        campoTamanho = new javax.swing.JTextField();
         labelFornecedor = new javax.swing.JLabel();
         comboFornecedor = new javax.swing.JComboBox();
         botaoSalvar = new javax.swing.JButton();
@@ -120,7 +127,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         labelTipo.setText("Tipo:*");
 
         campoCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoCodigo.setPreferredSize(new java.awt.Dimension(38, 23));
         campoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoCodigoKeyTyped(evt);
@@ -141,8 +147,8 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                         .addComponent(labelCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22))
+                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
                     .addGroup(painelIdentificacaoLayout.createSequentialGroup()
                         .addComponent(labelCor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -173,7 +179,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                     .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelCor)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         painelValores.setBackground(new java.awt.Color(255, 255, 255));
@@ -182,13 +188,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
 
         labelTamanho.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTamanho.setText("Tamanho:*");
-
-        try {
-            campoTamanho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoTamanho.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         labelQuantidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQuantidade.setText("Quantidade:*");
@@ -210,6 +209,13 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
             }
         });
 
+        campoTamanho.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoTamanho.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoTamanhoKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelValoresLayout = new javax.swing.GroupLayout(painelValores);
         painelValores.setLayout(painelValoresLayout);
         painelValoresLayout.setHorizontalGroup(
@@ -218,8 +224,8 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addComponent(labelTamanho)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80)
+                .addComponent(campoTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55)
                 .addComponent(labelQuantidade)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,9 +255,16 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         labelFornecedor.setText("Fornecedor:");
 
         comboFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        comboFornecedor.setMaximumRowCount(3);
-        comboFornecedor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Selecione", "Fornecedor 1", "Fornecedor 2" }));
+        comboFornecedor.setMaximumRowCount(0);
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        comboFornecedor.addItem("Selecione");
+        for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
+            comboFornecedor.addItem(fornecedor.getNome());
+        }
+
+        comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());
+
+        comboFornecedor.setSelectedIndex(0);
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
@@ -287,6 +300,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -296,6 +310,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -332,7 +347,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         pack();
@@ -351,10 +366,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
                 || campoPreco.getText().length() >= maxCaracteresPreco) {
             
-            evt.consume();
+            evt.consume(); 
         }
         /*
-        if(campoPreco.getText().length() > 3 && campoPreco.getText().length() % 3 == 0){
+        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
             campoPreco.setText(campoPreco.getText()+".");
         } */
     }//GEN-LAST:event_campoPrecoKeyTyped
@@ -380,40 +395,45 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoCorKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        String fornecedor = "";
-        // Validar campos para cadastro
-        if(campoNome.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o nome do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCodigo.getText().length() <= 0 || campoCodigo.getText().length() < maxCaracteresCodigo) {
-            JOptionPane.showMessageDialog(null, "Informe o código do produto com 8 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoCor.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a cor do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoTamanho.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o tamanho do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoQuantidade.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a quantidade de peças do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoPreco.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o preço do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            
-            if(comboFornecedor.getSelectedItem().toString().equals("Selecione")) {
-                fornecedor = "Não informado";
+        try {
+            // Validar campos para cadastro
+            if(campoNome.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o nome do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoCodigo.getText().length() < maxCaracteresCodigo) {
+                JOptionPane.showMessageDialog(null, "Informe o código do produto com 8 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoCor.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a cor do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoTamanho.getText().length() < maxCaracteresTamanho) {
+                JOptionPane.showMessageDialog(null, "Informe o tamanho do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoQuantidade.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a quantidade de peças do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoPreco.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o preço do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                fornecedor = comboFornecedor.getSelectedItem().toString();
+                String fornecedor = "";
+                if (comboFornecedor.getSelectedItem().toString().equals("Selecione")) {
+                    fornecedor = "Não informado";
+                } else {
+                    fornecedor = comboFornecedor.getSelectedItem().toString();
+                }
+
+                try {
+                    novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(), 
+                            Float.parseFloat(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
+                            fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
+
+                    JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+
+                    salvarSelecionado = true; //O botão Salvar foi selecionado
+                    setVisible(false);
+
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }  
             }
-            try {
-                GerenciadorDeProduto.getInstance().cadastrarProduto(campoNome.getText(), Float.parseFloat(campoPreco.getText()),
-                        Integer.parseInt(campoQuantidade.getText()), fornecedor, campoCor.getText(),
-                        Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
-
-                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
-                setVisible(false);
-                dispose();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }  
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
@@ -422,24 +442,40 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
-        if(!numeros.contains(evt.getKeyChar()+"") || campoQuantidade.getText().length() >= maxCaracteresQuantidade) {
-            evt.consume();
-        }
+        validarNumerosETamanho(evt, campoQuantidade, maxCaracteresQuantidade); 
     }//GEN-LAST:event_campoQuantidadeKeyTyped
 
     private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
-        if(campoQuantidade.getText().length() >= maxCaracteresCodigo) {
+        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
             evt.consume();
         }
     }//GEN-LAST:event_campoCodigoKeyTyped
+
+    private void campoTamanhoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanhoKeyTyped
+        validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho); 
+    }//GEN-LAST:event_campoTamanhoKeyTyped
     
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
+        if(numeros.contains(evt.getKeyChar()+"") || campo.getText().length()>= maxCaracteres){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
-        } if(campo.getText().length()>= maxCaracteres){ 
-            evt.consume(); 
-            campo.setText(campo.getText().substring(0, maxCaracteres)); // Remove os caracters inválidos caso o usuário tenha colado o texto
-        }
+        } 
+    }
+    
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"") || campo.getText().length() >= maxCaracteres){// se o carácter que gerou o evento não estiver na lista 
+            evt.consume();
+        } 
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salvar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible após ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public Produto getNovoProduto() {
+        return novoProduto;
     }
     
     /**
@@ -465,6 +501,9 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private int maxCaracteresPreco = 10;
     private int maxCaracteresCodigo = 8;
     private int maxCaracteresQuantidade = 4;
+    private int maxCaracteresTamanho = 2;
+    protected boolean salvarSelecionado;
+    protected Produto novoProduto;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
@@ -473,7 +512,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoNome;
     private javax.swing.JTextField campoPreco;
     private javax.swing.JTextField campoQuantidade;
-    private javax.swing.JFormattedTextField campoTamanho;
+    private javax.swing.JTextField campoTamanho;
     private javax.swing.JComboBox comboFornecedor;
     private javax.swing.JLabel labelCodigo;
     private javax.swing.JLabel labelCor;

@@ -77,7 +77,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         listaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         DefaultListModel modelo = new DefaultListModel();
         for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-            modelo.addElement(cliente.getDescricao());
+            modelo.addElement(cliente.getCpf() + " | " + cliente.getNome());
         }
         listaClientes.setModel(modelo);
         scPanelClientes.setViewportView(listaClientes);
