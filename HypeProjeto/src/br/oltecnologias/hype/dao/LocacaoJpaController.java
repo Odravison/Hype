@@ -6,7 +6,6 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
-import br.oltecnologias.hype.dao.exceptions.PreexistingEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -33,7 +32,7 @@ public class LocacaoJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Locacao locacao) throws PreexistingEntityException, Exception {
+    public void create(Locacao locacao) {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -49,11 +48,6 @@ public class LocacaoJpaController implements Serializable {
                 cliente = em.merge(cliente);
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findLocacao(locacao.getId()) != null) {
-                throw new PreexistingEntityException("Locacao " + locacao + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();

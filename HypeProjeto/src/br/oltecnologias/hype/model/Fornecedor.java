@@ -9,11 +9,8 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -26,17 +23,12 @@ public class Fornecedor implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "id_fornecedor")
     private String cnpj;
     
-    @OneToOne(mappedBy = "fornecedor", cascade = CascadeType.ALL)
+    @OneToOne(cascade = {CascadeType.ALL})
     private Endereco endereco;
     
     private String telefone;
-    
-    @OneToOne
-    @JoinColumn(name = "id_produto")
-    private Produto produto;
     
     public Fornecedor() {
 
@@ -104,7 +96,6 @@ public class Fornecedor implements Serializable {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
-    
     
     
 }

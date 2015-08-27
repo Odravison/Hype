@@ -6,16 +6,15 @@
 package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.dao.exceptions.NonexistentEntityException;
+import br.oltecnologias.hype.model.Medidas;
 import java.io.Serializable;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import br.oltecnologias.hype.model.Cliente;
-import br.oltecnologias.hype.model.Medidas;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -37,21 +36,7 @@ public class MedidasJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cliente cliente = medidas.getCliente();
-            if (cliente != null) {
-                cliente = em.getReference(cliente.getClass(), cliente.getCpf());
-                medidas.setCliente(cliente);
-            }
             em.persist(medidas);
-            if (cliente != null) {
-                Medidas oldMedidasOfCliente = cliente.getMedidas();
-                if (oldMedidasOfCliente != null) {
-                    oldMedidasOfCliente.setCliente(null);
-                    oldMedidasOfCliente = em.merge(oldMedidasOfCliente);
-                }
-                cliente.setMedidas(medidas);
-                cliente = em.merge(cliente);
-            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -65,27 +50,7 @@ public class MedidasJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Medidas persistentMedidas = em.find(Medidas.class, medidas.getId());
-            Cliente clienteOld = persistentMedidas.getCliente();
-            Cliente clienteNew = medidas.getCliente();
-            if (clienteNew != null) {
-                clienteNew = em.getReference(clienteNew.getClass(), clienteNew.getCpf());
-                medidas.setCliente(clienteNew);
-            }
             medidas = em.merge(medidas);
-            if (clienteOld != null && !clienteOld.equals(clienteNew)) {
-                clienteOld.setMedidas(null);
-                clienteOld = em.merge(clienteOld);
-            }
-            if (clienteNew != null && !clienteNew.equals(clienteOld)) {
-                Medidas oldMedidasOfCliente = clienteNew.getMedidas();
-                if (oldMedidasOfCliente != null) {
-                    oldMedidasOfCliente.setCliente(null);
-                    oldMedidasOfCliente = em.merge(oldMedidasOfCliente);
-                }
-                clienteNew.setMedidas(medidas);
-                clienteNew = em.merge(clienteNew);
-            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -114,11 +79,6 @@ public class MedidasJpaController implements Serializable {
                 medidas.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The medidas with id " + id + " no longer exists.", enfe);
-            }
-            Cliente cliente = medidas.getCliente();
-            if (cliente != null) {
-                cliente.setMedidas(null);
-                cliente = em.merge(cliente);
             }
             em.remove(medidas);
             em.getTransaction().commit();

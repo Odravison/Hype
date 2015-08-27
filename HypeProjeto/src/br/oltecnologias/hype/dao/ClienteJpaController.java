@@ -13,7 +13,6 @@ import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import br.oltecnologias.hype.model.Medidas;
 import br.oltecnologias.hype.model.Locacao;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,50 +37,49 @@ public class ClienteJpaController implements Serializable {
     public void create(Cliente cliente) throws PreexistingEntityException, Exception {
         if (cliente.getLocacoes() == null) {
             cliente.setLocacoes(new ArrayList<Locacao>());
+            System.out.println("===========>>>>>>>>>>>> 1");
         }
         EntityManager em = null;
         try {
+            System.out.println("===========>>>>>>>>>>>> 2");
             em = getEntityManager();
             em.getTransaction().begin();
-            Medidas medidas = cliente.getMedidas();
-            if (medidas != null) {
-                medidas = em.getReference(medidas.getClass(), medidas.getId());
-                cliente.setMedidas(medidas);
-            }
             List<Locacao> attachedLocacoes = new ArrayList<Locacao>();
             for (Locacao locacoesLocacaoToAttach : cliente.getLocacoes()) {
+                System.out.println("===========>>>>>>>>>>>> 3");
                 locacoesLocacaoToAttach = em.getReference(locacoesLocacaoToAttach.getClass(), locacoesLocacaoToAttach.getId());
                 attachedLocacoes.add(locacoesLocacaoToAttach);
             }
             cliente.setLocacoes(attachedLocacoes);
+            System.out.println("===========>>>>>>>>>>>> 4");
             em.persist(cliente);
-            if (medidas != null) {
-                Cliente oldClienteOfMedidas = medidas.getCliente();
-                if (oldClienteOfMedidas != null) {
-                    oldClienteOfMedidas.setMedidas(null);
-                    oldClienteOfMedidas = em.merge(oldClienteOfMedidas);
-                }
-                medidas.setCliente(cliente);
-                medidas = em.merge(medidas);
-            }
+            System.out.println("===========>>>>>>>>>>>> 5");
             for (Locacao locacoesLocacao : cliente.getLocacoes()) {
+                System.out.println("===========>>>>>>>>>>>> 5.1");
                 Cliente oldClienteOfLocacoesLocacao = locacoesLocacao.getCliente();
+                System.out.println("===========>>>>>>>>>>>> 5.2");
                 locacoesLocacao.setCliente(cliente);
+                System.out.println("===========>>>>>>>>>>>> 5.3");
+                System.out.println("===========>>>>>>>>>>>> 6");
                 locacoesLocacao = em.merge(locacoesLocacao);
                 if (oldClienteOfLocacoesLocacao != null) {
                     oldClienteOfLocacoesLocacao.getLocacoes().remove(locacoesLocacao);
+                    System.out.println("===========>>>>>>>>>>>> 7");
                     oldClienteOfLocacoesLocacao = em.merge(oldClienteOfLocacoesLocacao);
                 }
             }
             em.getTransaction().commit();
+            System.out.println("===========>>>>>>>>>>>> 8");
         } catch (Exception ex) {
             if (findCliente(cliente.getCpf()) != null) {
+                System.out.println("===========>>>>>>>>>>>> 9");
                 throw new PreexistingEntityException("Cliente " + cliente + " already exists.", ex);
             }
             throw ex;
         } finally {
             if (em != null) {
                 em.close();
+                System.out.println("===========>>>>>>>>>>>> 10");
             }
         }
     }
@@ -92,14 +90,8 @@ public class ClienteJpaController implements Serializable {
             em = getEntityManager();
             em.getTransaction().begin();
             Cliente persistentCliente = em.find(Cliente.class, cliente.getCpf());
-            Medidas medidasOld = persistentCliente.getMedidas();
-            Medidas medidasNew = cliente.getMedidas();
             List<Locacao> locacoesOld = persistentCliente.getLocacoes();
             List<Locacao> locacoesNew = cliente.getLocacoes();
-            if (medidasNew != null) {
-                medidasNew = em.getReference(medidasNew.getClass(), medidasNew.getId());
-                cliente.setMedidas(medidasNew);
-            }
             List<Locacao> attachedLocacoesNew = new ArrayList<Locacao>();
             for (Locacao locacoesNewLocacaoToAttach : locacoesNew) {
                 locacoesNewLocacaoToAttach = em.getReference(locacoesNewLocacaoToAttach.getClass(), locacoesNewLocacaoToAttach.getId());
@@ -108,19 +100,6 @@ public class ClienteJpaController implements Serializable {
             locacoesNew = attachedLocacoesNew;
             cliente.setLocacoes(locacoesNew);
             cliente = em.merge(cliente);
-            if (medidasOld != null && !medidasOld.equals(medidasNew)) {
-                medidasOld.setCliente(null);
-                medidasOld = em.merge(medidasOld);
-            }
-            if (medidasNew != null && !medidasNew.equals(medidasOld)) {
-                Cliente oldClienteOfMedidas = medidasNew.getCliente();
-                if (oldClienteOfMedidas != null) {
-                    oldClienteOfMedidas.setMedidas(null);
-                    oldClienteOfMedidas = em.merge(oldClienteOfMedidas);
-                }
-                medidasNew.setCliente(cliente);
-                medidasNew = em.merge(medidasNew);
-            }
             for (Locacao locacoesOldLocacao : locacoesOld) {
                 if (!locacoesNew.contains(locacoesOldLocacao)) {
                     locacoesOldLocacao.setCliente(null);
@@ -166,11 +145,6 @@ public class ClienteJpaController implements Serializable {
                 cliente.getCpf();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cliente with id " + id + " no longer exists.", enfe);
-            }
-            Medidas medidas = cliente.getMedidas();
-            if (medidas != null) {
-                medidas.setCliente(null);
-                medidas = em.merge(medidas);
             }
             List<Locacao> locacoes = cliente.getLocacoes();
             for (Locacao locacoesLocacao : locacoes) {

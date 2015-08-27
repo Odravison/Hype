@@ -59,8 +59,9 @@ public class Aplicacao {
         List<Produto> produtos = new ArrayList<Produto>();
 
         for (int i = 0; i < 6; i++) {
-            Fornecedor fornecedor = new Fornecedor();
-            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, , "Azul", 40, true);
+            Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
+            Fornecedor fornecedor = new Fornecedor("12345678864", enderecoo, "313131-3131");
+            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
             produtos.add(p);
 //            pjp.destroy(p.getCodigo());
         }

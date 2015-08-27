@@ -1,2 +1,7 @@
 /*C3*/SET SCHEMA PUBLIC
-DISCONNECT
+\u000a    alter table Cliente_Locacao \u000a        drop constraint UK_gb29vqcwgde0u4hua8bthvjn5
+\u000a    alter table Cliente_Locacao \u000a        add constraint UK_gb29vqcwgde0u4hua8bthvjn5  unique (locacoes_id)
+\u000a    alter table Locacao_Produto \u000a        drop constraint UK_jmk0oiticvofd0wwn1xl09dv4
+\u000a    alter table Locacao_Produto \u000a        add constraint UK_jmk0oiticvofd0wwn1xl09dv4  unique (produtos_codigo)
+\u000a    alter table Venda_Produto \u000a        drop constraint UK_tb0r942vy1q25m6j0nu8e7cw6
+\u000a    alter table Venda_Produto \u000a        add constraint UK_tb0r942vy1q25m6j0nu8e7cw6  unique (produtos_codigo)

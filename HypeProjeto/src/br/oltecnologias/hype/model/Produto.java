@@ -17,7 +17,7 @@ public class Produto implements Serializable {
     private int quant;
     private int tam;
     
-    @OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
+    @OneToOne
     private Fornecedor fornecedor;
     
     private String cor;
@@ -112,5 +112,6 @@ public class Produto implements Serializable {
     public void setIsLocation(boolean isLocation) {
         this.isLocation = isLocation;
     }
-
+    
+    
 }

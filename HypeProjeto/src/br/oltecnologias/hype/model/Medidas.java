@@ -1,15 +1,16 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="MEDIDAS")
 public class Medidas implements Serializable {
     
     @Id
@@ -24,10 +25,6 @@ public class Medidas implements Serializable {
     private int blazer;
     private int comprimentoManga;
     private int comprimentoCalca;
-    
-    @OneToOne
-    @JoinColumn(name = "id_cliente")
-    private Cliente cliente;
 
     public Medidas(int calca, int colete, int camisa, int sapato, int blazer, int comprimentoManga, int comprimentoCalca, String observacao) {
         this.calca = calca;
@@ -128,11 +125,4 @@ public class Medidas implements Serializable {
         this.blazer = blazer;
     }
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 }

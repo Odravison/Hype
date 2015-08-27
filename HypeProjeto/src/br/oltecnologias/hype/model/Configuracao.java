@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 
 /**
@@ -23,7 +22,7 @@ import javax.persistence.OneToOne;
 public class Configuracao implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     private String nomeDaImpressora;
@@ -120,4 +119,6 @@ public class Configuracao implements Serializable {
     public void setDescontoAVista(double descontoAVista) {
         this.descontoAVista = descontoAVista * 0.01;
     }
+    
+    
 }

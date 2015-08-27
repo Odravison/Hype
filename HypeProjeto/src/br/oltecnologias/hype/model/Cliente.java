@@ -12,13 +12,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import org.hibernate.annotations.Cascade;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -30,26 +28,25 @@ public class Cliente implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name = "id_cliente")
     private String cpf;
 
     private String nome;
 
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     private Calendar ultimaMedicao;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToOne(cascade= {CascadeType.ALL})
     private Endereco endereco;
 
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    @OneToOne(cascade= {CascadeType.ALL})
     private Medidas medidas;
 
-    @Column(name="telefone", nullable = true)
+    @Column(nullable = true)
     private String telefone;
 
     private String celular;
 
-    @OneToMany(mappedBy="cliente", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany
     private List<Locacao> locacoes;
 
     public Cliente() {
