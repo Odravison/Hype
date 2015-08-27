@@ -34,6 +34,8 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         labelGerarRelatorio = new javax.swing.JLabel();
         labelDataInicial = new javax.swing.JLabel();
         labelDataFinal = new javax.swing.JLabel();
+        dateDataInicial = new com.toedter.calendar.JDateChooser();
+        dateDataFinal = new com.toedter.calendar.JDateChooser();
         botaoCancelar = new javax.swing.JButton();
         botaoGerar = new javax.swing.JButton();
 
@@ -63,25 +65,32 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         painelPeriodoLayout.setHorizontalGroup(
             painelPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPeriodoLayout.createSequentialGroup()
-                .addGap(195, 195, 195)
-                .addComponent(labelGerarRelatorio)
-                .addContainerGap(194, Short.MAX_VALUE))
-            .addGroup(painelPeriodoLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(labelDataInicial)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelDataFinal)
-                .addGap(181, 181, 181))
+                .addGroup(painelPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelPeriodoLayout.createSequentialGroup()
+                        .addGap(171, 171, 171)
+                        .addComponent(labelGerarRelatorio))
+                    .addGroup(painelPeriodoLayout.createSequentialGroup()
+                        .addGap(57, 57, 57)
+                        .addComponent(labelDataInicial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(69, 69, 69)
+                        .addComponent(labelDataFinal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(57, Short.MAX_VALUE))
         );
         painelPeriodoLayout.setVerticalGroup(
             painelPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPeriodoLayout.createSequentialGroup()
                 .addComponent(labelGerarRelatorio)
-                .addGap(39, 39, 39)
+                .addGap(32, 32, 32)
                 .addGroup(painelPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelDataInicial)
-                    .addComponent(labelDataFinal))
-                .addContainerGap(65, Short.MAX_VALUE))
+                    .addComponent(labelDataFinal)
+                    .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -115,7 +124,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
                     .addComponent(painelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,7 +135,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoCancelar)
                     .addComponent(botaoGerar))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -178,6 +187,8 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoGerar;
+    private com.toedter.calendar.JDateChooser dateDataFinal;
+    private com.toedter.calendar.JDateChooser dateDataInicial;
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
     private javax.swing.JLabel labelGerarRelatorio;
