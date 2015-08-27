@@ -34,14 +34,16 @@ public class GerenciadorDePessoas {
         return singleton;
     }
 
-    public void cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
+    public Cliente cadastrarCliiente(String cpf, String nome, Endereco endereco, Medidas medidas,
             String telefone, String celular) throws ClienteExistenteException {
         for (Cliente c : this.clientes) {
             if (c.getCpf().equals(cpf)) {
                 throw new ClienteExistenteException("CPF já cadastrado.");
             }
         }
-        this.clientes.add(new Cliente(cpf, nome, endereco, medidas, telefone, celular));
+        Cliente cliente = new Cliente(cpf, nome, endereco, medidas, telefone, celular);
+        this.clientes.add(cliente);
+        return cliente;
     }
 
     public void editarCliente(String cpfAntigo, String cpfNovo, Endereco endereco, 

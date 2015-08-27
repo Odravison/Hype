@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -108,8 +109,8 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public Calendar getUltimaMedicao() {
-        return ultimaMedicao;
+    public String getUltimaMedicao() {
+        return new SimpleDateFormat("dd.MM.yyyy").format(ultimaMedicao.getTime());
     }
 
     public void setUltimaMedicao(Calendar ultimaMedicao) {
@@ -154,6 +155,20 @@ public class Cliente implements Serializable {
 
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
+    }
+    
+    // retirar métodos depois que o banco de dados estiver integrado
+    public void adicionarLocacao(Locacao locacao) {
+        this.locacoes.add(locacao);
+    }
+
+    public void removerLocacao(Locacao locacao) {
+        for (Locacao l : this.locacoes) {
+            if (l.getId() == locacao.getId()) {
+                this.locacoes.remove(l);
+                break;
+            }
+        }
     }
     
     

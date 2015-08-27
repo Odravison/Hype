@@ -21,8 +21,8 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public void realizarVenda(List<Produto> produtos, float valor) {
-        Venda venda = new Venda(produtos, valor);
+    public void realizarVenda(List<Produto> produtos, float valor, String formaPagamento) {
+        Venda venda = new Venda(produtos, valor, formaPagamento);
         this.vendas.add(venda);
     }
 

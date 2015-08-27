@@ -162,17 +162,23 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        try {
-            // validar usuário no sistema
-            if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
-                new PrincipalFrame(campoLogin.getText()).setVisible(true);
-                setVisible(false);
-            } else {
-                System.out.println("entrou");
-                JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(campoLogin.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o login do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else if(campoSenha.getPassword().length <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                // validar usuário no sistema
+                if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
+                    new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                    setVisible(false);
+                } else {
+                    System.out.println("entrou");
+                    JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 

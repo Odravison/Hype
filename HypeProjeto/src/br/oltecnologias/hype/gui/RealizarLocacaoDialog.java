@@ -13,6 +13,7 @@ import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Produto;
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,8 +36,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public RealizarLocacaoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        valorTotalLocacao = 0;
+        locador = null;
+        produtosLocados = new ArrayList<Produto>();
+    }
+    
+     public RealizarLocacaoDialog(Frame owner) {
+        super(owner);
+        initComponents();
         valorTotalLocacao = 0;
         locador = null;
         produtosLocados = new ArrayList<Produto>();
@@ -140,6 +147,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -149,6 +157,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoConcluir.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoConcluir.setText("Concluir");
         botaoConcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoConcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConcluirActionPerformed(evt);
@@ -206,11 +215,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
         scPanelListarProdutos.setViewportView(listaProdutos);
-        DefaultListModel modelo = new DefaultListModel();
+        modeloProdutos = new DefaultListModel();
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
-            modelo.addElement(produto.getDescricao());
+            modeloProdutos.addElement(produto.getDescricao());
         }
-        listaProdutos.setModel(modelo);
+        listaProdutos.setModel(modeloProdutos);
 
         labelPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelPesquisar.setText("Pesquisar:");
@@ -268,6 +277,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         });
 
         listaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        listaProdutosLocados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProdutosLocadosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listaProdutosLocados);
         modeloProdutosLocados = new DefaultListModel();
         listaProdutosLocados.setModel(modeloProdutosLocados);
@@ -427,7 +441,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             try {
                 //tirar
                 JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-                GeradorDeContrato.getInstance().gerarContrato(locador,Calendar.getInstance(), Calendar.getInstance(), produtosLocados);
                 
                 // O usuário que irá informar a data da locação ou o sistema irá pegar?
                 // tirar comentário, foi só para testar. Este método estava lançando exceção
@@ -480,11 +493,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if(campoPesquisar.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            DefaultListModel modelo = new DefaultListModel();
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(campoPesquisar.getText())) {
-                modelo.addElement(produto.getDescricao());
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
+                modeloProdutos.addElement(produto.getDescricao());
             }
-            listaProdutos.setModel(modelo);
+            listaProdutos.setModel(modeloProdutos);
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
@@ -496,7 +508,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             descricao.nextToken();
             descricao.nextToken();
-            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            // deve procurar apenas um produto, pelo seu código
+            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
             labelValorLocacao.setText(getValorTotalDaLocacao());
             
         }
@@ -511,7 +524,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             descricao.nextToken();
             descricao.nextToken();
-            removerProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            removerProdutoDaLocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
@@ -544,12 +557,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
         if(evt.getClickCount() == 2){            
-            // dá pra criar um único método na classe
             modeloProdutosLocados.addElement(listaProdutos.getSelectedValue().toString());
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             descricao.nextToken();
             descricao.nextToken();
-            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_listaProdutosMouseClicked
@@ -567,6 +579,18 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if(radioAVista.isSelected()) 
             radioAVista.setSelected(false);
     }//GEN-LAST:event_radioPromissoriaActionPerformed
+
+    private void listaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosLocadosMouseClicked
+        if(evt.getClickCount() == 2){            
+            modeloProdutosLocados.removeElement(listaProdutosLocados.getSelectedValue().toString());
+            StringTokenizer descricao = new StringTokenizer(listaProdutosLocados.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            // Alterar para pesquisar pelo código do produto
+            removerProdutoDaLocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
+            labelValorLocacao.setText(getValorTotalDaLocacao());
+        }
+    }//GEN-LAST:event_listaProdutosLocadosMouseClicked
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -587,7 +611,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }
     
-    private void removerProdutoALocacao(List<Produto> produtos) {
+    private void removerProdutoDaLocacao(List<Produto> produtos) {
         for(Produto produto: produtos) {
             produtosLocados.remove(produto);
         }
@@ -599,6 +623,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             valor += produto.getValor();
         }
         return Float.toString(valor);
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     /**
@@ -619,9 +650,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
 
     private DefaultListModel modeloProdutosLocados;
+    private DefaultListModel modeloProdutos;
     private Cliente locador;
     private float valorTotalLocacao;
     private List<Produto> produtosLocados;
+    protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

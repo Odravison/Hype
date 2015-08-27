@@ -30,6 +30,8 @@ public class Fornecedor implements Serializable {
     
     private String telefone;
     
+    private String nome;
+    
     public Fornecedor() {
 
     }
@@ -91,6 +93,18 @@ public class Fornecedor implements Serializable {
         this.telefone = telefone;
     }
     
+    public Fornecedor(String cnpj, Endereco endereco, String telefone, String nome) {
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
     
-    
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 }

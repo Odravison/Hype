@@ -5,6 +5,9 @@
  */
 package br.oltecnologias.hype.gui;
 
+import java.awt.Frame;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Luender Lima
@@ -18,6 +21,13 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
     }
+    
+    public CadastrarFornecedorDialog(Frame owner) {
+        super(owner);
+        initComponents();
+        //botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        //botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -27,13 +37,25 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(240, 240, 240));
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
         setTitle("Cadastrar Cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 493, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 263, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -46,6 +68,13 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -63,7 +92,7 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
         });
     }
 
-
+    protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 }

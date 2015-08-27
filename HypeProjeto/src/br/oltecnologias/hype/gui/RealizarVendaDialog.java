@@ -5,17 +5,41 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.controller.GerenciadorDeVenda;
+import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.GeradorDeContrato;
+import br.oltecnologias.hype.model.Produto;
+import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luender Lima
  */
 public class RealizarVendaDialog extends java.awt.Dialog {
+    
 
     /**
      * Creates new form RealizarVendaDialog
      */
     public RealizarVendaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+        valorTotalLocacao = 0;
+        produtosVendidos = new ArrayList<Produto>();
+    }
+    
+    public RealizarVendaDialog(Frame owner) {
+        super(owner);
         initComponents();
     }
 
@@ -27,13 +51,331 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(240, 240, 240));
-        setTitle("Cadastrar Cliente");
+        painelSelecionar = new javax.swing.JPanel();
+        botaoSelecionarProdutos = new javax.swing.JButton();
+        campoPesquisar = new javax.swing.JTextField();
+        botaoBuscar = new javax.swing.JButton();
+        scPanelListarProdutos = new javax.swing.JScrollPane();
+        listaProdutos = new javax.swing.JList();
+        labelPesquisar = new javax.swing.JLabel();
+        painelProdutos = new javax.swing.JPanel();
+        botaoRemover = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listaProdutosVendidos = new javax.swing.JList();
+        painelFormaPagamento = new javax.swing.JPanel();
+        radioAVista = new javax.swing.JRadioButton();
+        radioCartao = new javax.swing.JRadioButton();
+        radioPromissoria = new javax.swing.JRadioButton();
+        labelEntrada = new javax.swing.JLabel();
+        campoEntrada = new javax.swing.JTextField();
+        labelParcelas = new javax.swing.JLabel();
+        campoParcelas = new javax.swing.JTextField();
+        botaoCancelar = new javax.swing.JButton();
+        botaoConcluir = new javax.swing.JButton();
+        labelValorTotal = new javax.swing.JLabel();
+        labelValorVenda = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
+        setTitle("Realizar Venda");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
             }
         });
+
+        painelSelecionar.setBackground(new java.awt.Color(255, 255, 255));
+        painelSelecionar.setBorder(javax.swing.BorderFactory.createTitledBorder("Selecionar Produtos"));
+        painelSelecionar.setPreferredSize(new java.awt.Dimension(564, 238));
+        painelSelecionar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelSelecionarMouseClicked(evt);
+            }
+        });
+
+        botaoSelecionarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoSelecionarProdutos.setText("Selecionar");
+        botaoSelecionarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSelecionarProdutos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSelecionarProdutosActionPerformed(evt);
+            }
+        });
+
+        campoPesquisar.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        campoPesquisar.setForeground(new java.awt.Color(204, 204, 255));
+        campoPesquisar.setText("Pesquisar Produto");
+        campoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoPesquisarMouseClicked(evt);
+            }
+        });
+        campoPesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPesquisarKeyTyped(evt);
+            }
+        });
+
+        botaoBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoBuscar.setText("   Buscar  ");
+        botaoBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoBuscarActionPerformed(evt);
+            }
+        });
+
+        listaProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        listaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProdutosMouseClicked(evt);
+            }
+        });
+        scPanelListarProdutos.setViewportView(listaProdutos);
+        modeloProdutos = new DefaultListModel();
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+            modeloProdutos.addElement(produto.getDescricao());
+        }
+        listaProdutos.setModel(modeloProdutos);
+
+        labelPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelPesquisar.setText("Pesquisar:");
+
+        javax.swing.GroupLayout painelSelecionarLayout = new javax.swing.GroupLayout(painelSelecionar);
+        painelSelecionar.setLayout(painelSelecionarLayout);
+        painelSelecionarLayout.setHorizontalGroup(
+            painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelSelecionarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
+                        .addComponent(labelPesquisar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoPesquisar)
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
+                        .addComponent(scPanelListarProdutos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoBuscar)
+                    .addComponent(botaoSelecionarProdutos))
+                .addGap(14, 14, 14))
+        );
+        painelSelecionarLayout.setVerticalGroup(
+            painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoBuscar)
+                    .addComponent(labelPesquisar))
+                .addGap(18, 18, 18)
+                .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scPanelListarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoSelecionarProdutos))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
+        painelProdutos.setBorder(javax.swing.BorderFactory.createTitledBorder("Produtos Vendidos"));
+        painelProdutos.setPreferredSize(new java.awt.Dimension(572, 200));
+        painelProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                painelProdutosMouseClicked(evt);
+            }
+        });
+
+        botaoRemover.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoRemover.setText("Remover");
+        botaoRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoRemoverActionPerformed(evt);
+            }
+        });
+
+        listaProdutosVendidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        listaProdutosVendidos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listaProdutosVendidosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(listaProdutosVendidos);
+        modeloProdutosVendidos = new DefaultListModel();
+        listaProdutosVendidos.setModel(modeloProdutosVendidos);
+
+        javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
+        painelProdutos.setLayout(painelProdutosLayout);
+        painelProdutosLayout.setHorizontalGroup(
+            painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelProdutosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(botaoRemover)
+                .addContainerGap())
+        );
+        painelProdutosLayout.setVerticalGroup(
+            painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelProdutosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelProdutosLayout.createSequentialGroup()
+                        .addComponent(botaoRemover)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        painelFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
+        painelFormaPagamento.setBorder(javax.swing.BorderFactory.createTitledBorder("Forma de Pagamento"));
+
+        radioAVista.setBackground(new java.awt.Color(255, 255, 255));
+        radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioAVista.setText("À Vista");
+        radioAVista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAVistaActionPerformed(evt);
+            }
+        });
+        radioAVista.setSelected(true);
+        campoEntrada.setVisible(false);
+        campoParcelas.setVisible(false);
+
+        radioCartao.setBackground(new java.awt.Color(255, 255, 255));
+        radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioCartao.setText("Cartão");
+        radioCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCartaoActionPerformed(evt);
+            }
+        });
+
+        radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
+        radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioPromissoria.setText("Promissória");
+        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPromissoriaActionPerformed(evt);
+            }
+        });
+
+        labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelEntrada.setText("Entrada:*  R$");
+
+        campoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        labelParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelParcelas.setText("Qtd. Parcelas:*");
+
+        campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout painelFormaPagamentoLayout = new javax.swing.GroupLayout(painelFormaPagamento);
+        painelFormaPagamento.setLayout(painelFormaPagamentoLayout);
+        painelFormaPagamentoLayout.setHorizontalGroup(
+            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                        .addComponent(radioAVista)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioCartao)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioPromissoria))
+                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                        .addComponent(labelEntrada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
+                        .addComponent(labelParcelas)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelFormaPagamentoLayout.setVerticalGroup(
+            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioAVista)
+                    .addComponent(radioCartao)
+                    .addComponent(radioPromissoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelEntrada)
+                    .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelParcelas)
+                    .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoCancelar.setText("Cancelar");
+        botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
+
+        botaoConcluir.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoConcluir.setText("Concluir");
+        botaoConcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoConcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoConcluirActionPerformed(evt);
+            }
+        });
+
+        labelValorTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorTotal.setText("Valor Total: ");
+
+        labelValorVenda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorVenda.setForeground(new java.awt.Color(0, 153, 0));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(20, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
+                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(labelValorVenda))
+                            .addComponent(labelValorTotal))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoConcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoCancelar)))
+                .addGap(23, 23, 23))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelValorTotal)
+                    .addComponent(botaoConcluir)
+                    .addComponent(botaoCancelar))
+                .addGap(7, 7, 7)
+                .addComponent(labelValorVenda)
+                .addGap(57, 57, 57))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -46,6 +388,194 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void botaoSelecionarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarProdutosActionPerformed
+        if(listaProdutos.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos locados", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            modeloProdutosVendidos.addElement(listaProdutos.getSelectedValue().toString());
+            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            labelValorVenda.setText(getValorTotalDaVenda());
+
+        }
+    }//GEN-LAST:event_botaoSelecionarProdutosActionPerformed
+
+    private void campoPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarMouseClicked
+        if(campoPesquisar.getText().equals("Pesquisar Produto"))
+        eliminarTextoDeCampo(campoPesquisar);
+
+    }//GEN-LAST:event_campoPesquisarMouseClicked
+
+    private void campoPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarKeyTyped
+        if(campoPesquisar.getText().equals("Pesquisar Produto"))
+        eliminarTextoDeCampo(campoPesquisar);
+
+    }//GEN-LAST:event_campoPesquisarKeyTyped
+
+    private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
+        if(campoPesquisar.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(campoPesquisar.getText())) {
+                modeloProdutos.addElement(produto.getDescricao());
+            }
+            listaProdutos.setModel(modeloProdutos);
+        }
+    }//GEN-LAST:event_botaoBuscarActionPerformed
+
+    private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
+        if(evt.getClickCount() == 2){
+            modeloProdutosVendidos.addElement(listaProdutos.getSelectedValue().toString());
+            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            labelValorVenda.setText(getValorTotalDaVenda());
+        }
+    }//GEN-LAST:event_listaProdutosMouseClicked
+
+    private void painelSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelSelecionarMouseClicked
+        if(campoPesquisar.getText().length() <= 0)
+        criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
+
+    }//GEN-LAST:event_painelSelecionarMouseClicked
+
+    private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
+        if(listaProdutosVendidos.isSelectionEmpty()) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            modeloProdutosVendidos.removeElement(listaProdutosVendidos.getSelectedValue().toString());
+            //Diminui o valor total da locação
+            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            labelValorVenda.setText(getValorTotalDaVenda());
+        }
+    }//GEN-LAST:event_botaoRemoverActionPerformed
+
+    private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
+        if(campoPesquisar.getText().length() <= 0)
+            criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
+
+    }//GEN-LAST:event_painelProdutosMouseClicked
+
+    private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
+        if(radioCartao.isSelected())
+            radioCartao.setSelected(false);
+        if(radioPromissoria.isSelected())
+            radioPromissoria.setSelected(false);
+
+    }//GEN-LAST:event_radioAVistaActionPerformed
+
+    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
+        if(radioAVista.isSelected())
+            radioAVista.setSelected(false);
+        if(radioPromissoria.isSelected())
+            radioPromissoria.setSelected(false);
+        
+        campoEntrada.setVisible(true);
+        campoParcelas.setVisible(true);
+    }//GEN-LAST:event_radioCartaoActionPerformed
+
+    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
+        if(radioCartao.isSelected())
+            radioCartao.setSelected(false);
+        if(radioAVista.isSelected())
+            radioAVista.setSelected(false);
+        
+        campoEntrada.setVisible(true);
+        campoParcelas.setVisible(true);
+    }//GEN-LAST:event_radioPromissoriaActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_botaoCancelarActionPerformed
+
+    private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
+        if(produtosVendidos.size() <= 0) {
+            JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else if(radioCartao.isSelected() || radioPromissoria.isSelected()) { 
+            if(campoEntrada.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o valor de entrada da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoParcelas.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            try {
+                //tirar
+                JOptionPane.showMessageDialog(null, "venda realizada com sucesso!\n\nImprimindo recibo...");
+                GeradorDeContrato.getInstance().gerarContrato(locador,Calendar.getInstance(), Calendar.getInstance(), produtosVendidos);
+
+                // O usuário que irá informar a data da locação ou o sistema irá pegar?
+                // tirar comentário, foi só para testar. Este método estava lançando exceção
+                //GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosVendidos, Calendar.getInstance(),
+                    //Float.parseFloat(getValorTotalDaVenda()));
+
+                //fecha janela
+                setVisible(false);
+                dispose();
+            } catch (Exception ex) {
+                Logger.getLogger(RealizarLocacaoDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_botaoConcluirActionPerformed
+
+    private void listaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosVendidosMouseClicked
+        if(evt.getClickCount() == 2){            
+            modeloProdutosVendidos.removeElement(listaProdutosVendidos.getSelectedValue().toString());
+            StringTokenizer descricao = new StringTokenizer(listaProdutosVendidos.getSelectedValue().toString(), " ");
+            descricao.nextToken();
+            descricao.nextToken();
+            // Alterar para pesquisar pelo código do produto
+            removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(descricao.nextToken()));
+            labelValorVenda.setText(getValorTotalDaVenda());
+        }
+    }//GEN-LAST:event_listaProdutosVendidosMouseClicked
+
+    public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
+        campo.setText("");
+        campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        campo.setForeground(new java.awt.Color(0, 0, 0));
+    }
+    
+    public void criarTextoEmCampo(javax.swing.JTextField campo, String mensagem) {
+        campo.setText(mensagem);
+        campo.setForeground(new java.awt.Color(153, 153, 153));
+        campo.setFont(new java.awt.Font("Tahoma", 2, 14));
+    }
+    
+    //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
+    private void adicionarProdutoAVenda(List<Produto> produtos) {
+        for(Produto produto: produtos) {
+            produtosVendidos.add(produto);
+        }
+    }
+    
+    private void removerProdutoDaVenda(List<Produto> produtos) {
+        for(Produto produto: produtos) {
+            produtosVendidos.remove(produto);
+        }
+    }
+
+    private String getValorTotalDaVenda() {
+        float valor = 0;
+        for(Produto produto: produtosVendidos) {
+            valor += produto.getValor();
+        }
+        return Float.toString(valor);
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -63,7 +593,35 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         });
     }
 
-
+    private DefaultListModel modeloProdutosVendidos;
+    private DefaultListModel modeloProdutos;
+    private Cliente locador;
+    private float valorTotalLocacao;
+    private List<Produto> produtosVendidos;
+    protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoBuscar;
+    private javax.swing.JButton botaoCancelar;
+    private javax.swing.JButton botaoConcluir;
+    private javax.swing.JButton botaoRemover;
+    private javax.swing.JButton botaoSelecionarProdutos;
+    private javax.swing.JTextField campoEntrada;
+    private javax.swing.JTextField campoParcelas;
+    private javax.swing.JTextField campoPesquisar;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelEntrada;
+    private javax.swing.JLabel labelParcelas;
+    private javax.swing.JLabel labelPesquisar;
+    private javax.swing.JLabel labelValorTotal;
+    private javax.swing.JLabel labelValorVenda;
+    private javax.swing.JList listaProdutos;
+    private javax.swing.JList listaProdutosVendidos;
+    private javax.swing.JPanel painelFormaPagamento;
+    private javax.swing.JPanel painelProdutos;
+    private javax.swing.JPanel painelSelecionar;
+    private javax.swing.JRadioButton radioAVista;
+    private javax.swing.JRadioButton radioCartao;
+    private javax.swing.JRadioButton radioPromissoria;
+    private javax.swing.JScrollPane scPanelListarProdutos;
     // End of variables declaration//GEN-END:variables
 }

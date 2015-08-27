@@ -14,7 +14,7 @@ public class Produto implements Serializable {
     private String codigo;
     private String nome;
     private double valor;
-    private int quant;
+    private int quantidade;
     private int tam;
     
     private String fornecedor; //Deveria ser do tipo Fornecedor
@@ -25,11 +25,11 @@ public class Produto implements Serializable {
     public Produto() {
     }
 
-    public Produto(String codigo, String nome, double valor, int quant, String fornecedor, String cor, int tam, boolean isLocation) {
+    public Produto(String codigo, String nome, double valor, int quantidade, String fornecedor, String cor, int tam, boolean isLocation) {
         this.codigo = codigo;
         this.nome = nome;
         this.valor = valor;
-        this.quant = quant;
+        this.quantidade = quantidade;
         this.tam = tam;
         this.fornecedor = fornecedor;
         this.cor = cor;
@@ -53,7 +53,7 @@ public class Produto implements Serializable {
     }
 
     public String getDescricao() {
-        return this.codigo + " | " + this.nome + " - Tam: " + this.tam + ", " + this.cor + " - R$ " + this.valor;
+        return this.nome + ", " + this.cor + " - Tam: " + this.tam + " - R$ " + this.valor;
     }
 
     public double getValor() {
@@ -64,12 +64,12 @@ public class Produto implements Serializable {
         this.valor = valor;
     }
 
-    public int getQuant() {
-        return quant;
+    public int getQuantidade() {
+        return quantidade;
     }
 
-    public void setQuant(int quant) {
-        this.quant = quant;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public String getFornecedor() {
@@ -89,11 +89,11 @@ public class Produto implements Serializable {
     }
 
     public void addQuant(int add) {
-        this.quant += add;
+        this.quantidade += add;
     }
 
     public void removerQuant(int add) {
-        this.quant -= add;
+        this.quantidade -= add;
     }
 
     public int getTam() {
@@ -104,12 +104,19 @@ public class Produto implements Serializable {
         this.tam = tam;
     }
     
-    public boolean isIsLocation() {
+    public boolean isLocation() {
         return isLocation;
     }
 
     public void setIsLocation(boolean isLocation) {
         this.isLocation = isLocation;
+    }
+    
+    public String getFinalidade() {
+        if(isLocation)
+            return "Locação";
+        else
+            return "Venda";
     }
 
 }

@@ -6,6 +6,8 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.model.Produto;
+import java.awt.Frame;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -21,8 +23,11 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     public CadastrarProdutoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+    }
+    
+    public CadastrarProdutoDialog(Frame owner) {
+        super(owner);
+        initComponents();
     }
 
     /**
@@ -287,6 +292,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -296,6 +302,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -402,13 +409,15 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 fornecedor = comboFornecedor.getSelectedItem().toString();
             }
             try {
-                GerenciadorDeProduto.getInstance().cadastrarProduto(campoNome.getText(), Float.parseFloat(campoPreco.getText()),
+                novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(), Float.parseFloat(campoPreco.getText()),
                         Integer.parseInt(campoQuantidade.getText()), fornecedor, campoCor.getText(),
                         Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
-
+                
                 JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+                
+                salvarSelecionado = true; //O botão Salvar foi selecionado
                 setVisible(false);
-                dispose();
+                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }  
@@ -442,6 +451,17 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         }
     }
     
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public Produto getNovoProduto() {
+        return novoProduto;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -465,6 +485,8 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private int maxCaracteresPreco = 10;
     private int maxCaracteresCodigo = 8;
     private int maxCaracteresQuantidade = 4;
+    protected boolean salvarSelecionado;
+    protected Produto novoProduto;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;

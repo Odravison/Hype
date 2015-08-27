@@ -21,10 +21,13 @@ public class GerenciadorDeProduto {
         }
         return singleton;
     }
-
-    public void cadastrarProduto(String nome, float valor,
+    
+    public Produto cadastrarProduto(String codigo, String nome, float valor,
             int quant, String fornecedor, String cor, int tamanho, boolean isLocation) {
-        this.produtos.add(new Produto(nome, valor, quant, fornecedor, cor, tamanho, isLocation));
+        
+        Produto produto = new Produto(codigo, nome, valor, quant, fornecedor, cor, tamanho, isLocation);
+        this.produtos.add(produto);
+        return produto;
     }
 
     public void editarProduto(String codigo, String nome, int tam,
@@ -51,6 +54,26 @@ public class GerenciadorDeProduto {
         }
         return aux;
     }
+      
+    public List<Produto> pesquisarProdutosDeLocacaoPeloNome(String nome) {
+        List<Produto> aux = new ArrayList<Produto>();
+        for (Produto p: this.produtos){
+            if (p.isLocation() && p.getNome().toUpperCase().contains(nome.toUpperCase())){
+                aux.add(p);
+            }
+        }
+        return aux;
+    }
+    
+    public List<Produto> pesquisarProdutosDeVendaPeloNome(String nome) {
+        List<Produto> aux = new ArrayList<Produto>();
+        for (Produto p: this.produtos){
+            if (!p.isLocation() && p.getNome().toUpperCase().contains(nome.toUpperCase())){
+                aux.add(p);
+            }
+        }
+        return aux;
+    }
 
     /**
      *
@@ -70,16 +93,29 @@ public class GerenciadorDeProduto {
     public List<Produto> getProdutosDeLocacao() {
         List<Produto> produtosDeLocacao = new ArrayList<Produto>();
         for(Produto produto: this.produtos) {
-            if(produto.isIsLocation()) {
+            if(produto.isLocation()) {
                 produtosDeLocacao.add(produto);
             }
         }
         return produtosDeLocacao;
+    }
+    
+    public List<Produto> getProdutosDeVenda() {
+        List<Produto> produtosDeVenda = new ArrayList<Produto>();
+        for(Produto produto: this.produtos) {
+            if(!produto.isLocation()) {
+                produtosDeVenda.add(produto);
+            }
+        }
+        return produtosDeVenda;
     }
 
     public void setProdutosDeLocacao(List<Produto> produtos) {
         this.produtos = produtos;
     }
     
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
 
 }
