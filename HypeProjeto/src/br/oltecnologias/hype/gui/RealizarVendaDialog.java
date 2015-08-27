@@ -35,13 +35,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     public RealizarVendaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        valorTotalLocacao = 0;
+        valorTotalVenda = 0;
         produtosVendidos = new ArrayList<Produto>();
     }
     
     public RealizarVendaDialog(Frame owner) {
         super(owner);
         initComponents();
+        produtosVendidos = new ArrayList<Produto>();
     }
 
     /**
@@ -135,7 +136,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         scPanelListarProdutos.setViewportView(listaProdutos);
         modeloProdutos = new DefaultListModel();
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
-            modeloProdutos.addElement(produto.getDescricao());
+            modeloProdutos.addElement(produto.getCodigo() + " | " + produto.getNome());
         }
         listaProdutos.setModel(modeloProdutos);
 
@@ -234,30 +235,37 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         radioAVista.setBackground(new java.awt.Color(255, 255, 255));
         radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioAVista.setText("À Vista");
+        radioAVista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioAVistaMouseClicked(evt);
+            }
+        });
         radioAVista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioAVistaActionPerformed(evt);
             }
         });
         radioAVista.setSelected(true);
+        labelEntrada.setVisible(false);
+        labelParcelas.setVisible(false);
         campoEntrada.setVisible(false);
         campoParcelas.setVisible(false);
 
         radioCartao.setBackground(new java.awt.Color(255, 255, 255));
         radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCartao.setText("Cartão");
-        radioCartao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioCartaoActionPerformed(evt);
+        radioCartao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioCartaoMouseClicked(evt);
             }
         });
 
         radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
         radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPromissoria.setText("Promissória");
-        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPromissoriaActionPerformed(evt);
+        radioPromissoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioPromissoriaMouseClicked(evt);
             }
         });
 
@@ -276,7 +284,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         painelFormaPagamentoLayout.setHorizontalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
                         .addComponent(radioAVista)
@@ -342,17 +350,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
                     .addComponent(painelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(90, 90, 90)
-                                .addComponent(labelValorVenda))
-                            .addComponent(labelValorTotal))
+                        .addComponent(labelValorTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorVenda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoConcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -362,20 +368,20 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelValorTotal)
-                    .addComponent(botaoConcluir)
-                    .addComponent(botaoCancelar))
-                .addGap(7, 7, 7)
-                .addComponent(labelValorVenda)
-                .addGap(57, 57, 57))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelValorTotal)
+                        .addComponent(botaoConcluir)
+                        .addComponent(botaoCancelar))
+                    .addComponent(labelValorVenda, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         pack();
@@ -471,26 +477,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     }//GEN-LAST:event_radioAVistaActionPerformed
 
-    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
-        if(radioAVista.isSelected())
-            radioAVista.setSelected(false);
-        if(radioPromissoria.isSelected())
-            radioPromissoria.setSelected(false);
-        
-        campoEntrada.setVisible(true);
-        campoParcelas.setVisible(true);
-    }//GEN-LAST:event_radioCartaoActionPerformed
-
-    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
-        if(radioCartao.isSelected())
-            radioCartao.setSelected(false);
-        if(radioAVista.isSelected())
-            radioAVista.setSelected(false);
-        
-        campoEntrada.setVisible(true);
-        campoParcelas.setVisible(true);
-    }//GEN-LAST:event_radioPromissoriaActionPerformed
-
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
         setVisible(false);
         dispose();
@@ -498,32 +484,60 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
         try{
-        if(produtosVendidos.size() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(radioCartao.isSelected() || radioPromissoria.isSelected()) { 
-            if(campoEntrada.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o valor de entrada da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoParcelas.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
-        } else {
-            try {
-                //tirar
-                JOptionPane.showMessageDialog(null, "venda realizada com sucesso!\n\nImprimindo recibo...");
-                GeradorDeContrato.getInstance().gerarContrato(locador,Calendar.getInstance(), Calendar.getInstance(), produtosVendidos);
+            String formaPagamento = "";
+            if(produtosVendidos.size() <= 0) {
+                JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(radioCartao.isSelected() || radioPromissoria.isSelected()) { 
+                if(campoEntrada.getText().length() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Informe o valor de entrada da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else if(campoParcelas.getText().length() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    
+                    if (radioCartao.isSelected()) {
+                        formaPagamento = "Cartão";
+                    } else {
+                        formaPagamento = "Promissória";
+                    }
+                    
+                    try {
+                        novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
+                                , formaPagamento, Calendar.getInstance());
+                        JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
+                        
+                        //Código para gerar recibo
+                        
+                        concluirSelecionado = true;
+                        //Fecha janela
+                        setVisible(false);
+                        
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                    
+                }
+            } else {
+                
+                try {
+                    formaPagamento = "À Vista";
 
-                // O usuário que irá informar a data da locação ou o sistema irá pegar?
-                // tirar comentário, foi só para testar. Este método estava lançando exceção
-                //GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosVendidos, Calendar.getInstance(),
-                    //Float.parseFloat(getValorTotalDaVenda()));
+                    novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
+                                , formaPagamento, Calendar.getInstance());
+                    
+                    //Código para gerar o recibo
+                    //GeradorDeContrato.getInstance().gerarContrato(locador, Calendar.getInstance(), Calendar.getInstance(), produtosVendidos);
 
-                //fecha janela
-                setVisible(false);
-                dispose();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    //Alterar depois
+                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
+
+                    concluirSelecionado = true;
+                    //Fecha janela
+                    setVisible(false);
+                    
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             }
-        }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -540,6 +554,24 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             labelValorVenda.setText(getValorTotalDaVenda());
         }
     }//GEN-LAST:event_listaProdutosVendidosMouseClicked
+
+    private void radioCartaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCartaoMouseClicked
+        radioAVista.setSelected(false);
+        radioPromissoria.setSelected(false);
+        habilitarCampos();
+    }//GEN-LAST:event_radioCartaoMouseClicked
+
+    private void radioPromissoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioPromissoriaMouseClicked
+        radioCartao.setSelected(false);
+        radioAVista.setSelected(false);
+        habilitarCampos();
+    }//GEN-LAST:event_radioPromissoriaMouseClicked
+
+    private void radioAVistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioAVistaMouseClicked
+        radioCartao.setSelected(false);
+        radioPromissoria.setSelected(false);
+        desabilitarCampos();
+    }//GEN-LAST:event_radioAVistaMouseClicked
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -565,6 +597,20 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             produtosVendidos.remove(produto);
         }
     }
+    
+    public void habilitarCampos() {
+        labelEntrada.setVisible(true);
+        labelParcelas.setVisible(true);
+        campoEntrada.setVisible(true);
+        campoParcelas.setVisible(true);
+    }
+    
+    public void desabilitarCampos() {
+        labelEntrada.setVisible(false);
+        labelParcelas.setVisible(false);
+        campoEntrada.setVisible(false);
+        campoParcelas.setVisible(false);
+    }
 
     private String getValorTotalDaVenda() {
         float valor = 0;
@@ -575,10 +621,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }
     
     public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+        return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     public Venda getNovaVenda() {
@@ -604,10 +650,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private DefaultListModel modeloProdutosVendidos;
     private DefaultListModel modeloProdutos;
-    private Cliente locador;
-    private float valorTotalLocacao;
+    private float valorTotalVenda;
     private List<Produto> produtosVendidos;
-    protected boolean salvarSelecionado;
+    protected boolean concluirSelecionado;
     protected Venda novaVenda;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
