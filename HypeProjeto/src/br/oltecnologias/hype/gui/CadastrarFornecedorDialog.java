@@ -65,7 +65,7 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
-        setTitle("Cadastrar Cliente");
+        setTitle("Cadastrar Fornecedor");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

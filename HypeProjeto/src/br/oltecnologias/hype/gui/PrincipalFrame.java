@@ -134,6 +134,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         labelOrdenarUsuario = new javax.swing.JLabel();
         comboBoxUsuario = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
+        botaoAtivarTemporada = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -1162,6 +1163,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jButton1.setText("Gerar Recibo");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
+        botaoAtivarTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoAtivarTemporada.setText("Ativar Temporada");
+        botaoAtivarTemporada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAtivarTemporada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAtivarTemporadaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
         painelAdministrador.setLayout(painelAdministradorLayout);
         painelAdministradorLayout.setHorizontalGroup(
@@ -1172,7 +1182,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(painelAdministradorLayout.createSequentialGroup()
                         .addComponent(botaoNovoUsuario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1))
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoAtivarTemporada))
                     .addGroup(painelAdministradorLayout.createSequentialGroup()
                         .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -1190,8 +1202,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoNovoUsuario)
-                    .addComponent(jButton1))
-                .addGap(49, 49, 49)
+                    .addComponent(jButton1)
+                    .addComponent(botaoAtivarTemporada))
+                .addGap(48, 48, 48)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisarUsuario))
@@ -1201,7 +1214,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addContainerGap(75, Short.MAX_VALUE))
         );
 
         try {
@@ -1507,6 +1520,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_comboFiltrarClienteActionPerformed
+
+    private void botaoAtivarTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtivarTemporadaActionPerformed
+        AtivarTemporadaDialog dialog = new AtivarTemporadaDialog(new java.awt.Frame(), true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoAtivarTemporadaActionPerformed
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -1618,6 +1637,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private DefaultTableModel modeloTabelaUsuarios;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abas;
+    private javax.swing.JButton botaoAtivarTemporada;
     private javax.swing.JButton botaoFecharCaixa;
     private javax.swing.JButton botaoGerarRelatorio;
     private javax.swing.JButton botaoLocacoesAtrasadas;
