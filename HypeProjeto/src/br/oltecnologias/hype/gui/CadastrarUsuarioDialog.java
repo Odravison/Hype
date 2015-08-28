@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.model.Usuario;
 import java.awt.Frame;
 import javax.swing.ImageIcon;
@@ -48,6 +49,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         radioFuncionario = new javax.swing.JRadioButton();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setTitle("Cadastrar Usuário");
@@ -74,11 +76,21 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         labelNickName.setText("NickName:*");
 
         campoNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNickName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoNickNameKeyTyped(evt);
+            }
+        });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelSenha.setText("Senha:*");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoSenhaKeyTyped(evt);
+            }
+        });
 
         radioAdm.setBackground(new java.awt.Color(255, 255, 255));
         radioAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -168,14 +180,19 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setText("Obrigatório *");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
@@ -188,9 +205,11 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(jLabel1))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -206,18 +225,31 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        // Validar campos para cadastro
-        if(campoNome.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o nome do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoNickName.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a rua do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoSenha.getPassword().equals("")) {
-            JOptionPane.showMessageDialog(null, "Informe a cidade do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            // lógica para salvar um usuário
-            
-        }
+        try {
+            // Validar campos para cadastro
+            if(campoNome.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o nome do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoNickName.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o nickName do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(new String(campoSenha.getPassword()).length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
 
+                try {
+                    novoUsuario = GerenciadorDePessoas.getInstance().cadastrarUsuario(campoNome.getText(), campoNickName.getText(),
+                            new String(campoSenha.getPassword()), radioAdm.isSelected());
+
+                    JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+
+                    salvarSelecionado = true;
+                    setVisible(false);
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
@@ -226,23 +258,35 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void radioAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdmActionPerformed
-        if(radioFuncionario.isSelected())
+        if(radioFuncionario.isSelected()) {
             radioFuncionario.setSelected(false);
+        }
     }//GEN-LAST:event_radioAdmActionPerformed
 
     private void radioFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFuncionarioActionPerformed
-        if(radioAdm.isSelected())
+        if(radioAdm.isSelected()) {
             radioAdm.setSelected(false);
+        }
     }//GEN-LAST:event_radioFuncionarioActionPerformed
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
-        validarLetrasETamanho(evt, campoNome, maxCaracteresNome); // Mesmo tamanho para nomes de pessoas e ruas
+        validarLetrasETamanho(evt, campoNome, maxCaracteresNome); 
     }//GEN-LAST:event_campoNomeKeyTyped
+
+    private void campoNickNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNickNameKeyTyped
+        validarLetrasETamanho(evt, campoNickName, maxCaracteresNickName); 
+    }//GEN-LAST:event_campoNickNameKeyTyped
+
+    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
+        if(new String(campoSenha.getPassword()).length() >= maxCaracteresSenha){ 
+            evt.consume(); 
+        }
+    }//GEN-LAST:event_campoSenhaKeyTyped
 
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
-        } if(campo.getText().length()>= maxCaracteres){ 
+        } if(campo.getText().length() >= maxCaracteres){ 
             evt.consume(); 
             campo.setText(campo.getText().substring(0, maxCaracteres)); // Remove os caracters inválidos caso o usuário tenha colado o texto
         }
@@ -251,13 +295,13 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
         if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
-        } if(campo.getText().length()>= maxCaracteres){ 
+        } if(campo.getText().length() >= maxCaracteres){ 
             evt.consume(); 
         }
     }
     
     public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        salvarSelecionado = false;  //Marcamos que o salvar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
@@ -287,6 +331,8 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     protected boolean salvarSelecionado;
     private int maxCaracteresNome = 40;
+    private int maxCaracteresNickName = 15;
+    private int maxCaracteresSenha = 12;
     protected Usuario novoUsuario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
@@ -294,6 +340,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoNickName;
     private javax.swing.JTextField campoNome;
     private javax.swing.JPasswordField campoSenha;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelNickName;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelSenha;

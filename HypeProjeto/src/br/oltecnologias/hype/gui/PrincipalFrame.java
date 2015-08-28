@@ -1130,25 +1130,34 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         tabelaUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tabelaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nome", "Login", "Cadastrado desde", "", ""
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
         tabelaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         tabelaUsuarios.getTableHeader().setResizingAllowed(false);
         tabelaUsuarios.getTableHeader().setReorderingAllowed(false);
+        String[] nomesColunasTabelaUsuarios = {"Nome do Usuário", "NickName", "Categoria"};
+        //Define a fonte do cabeçalho da tabela usuários
+        tabelaUsuarios.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+        //Definindo o tamanho da linha
+        tabelaUsuarios.setRowHeight(25);
+
+        //Linhas da tabela
+        List<Object[]> listaLinhasUsuarios = new ArrayList<>();
+
+        //Adicionando valores nas linhas
+        for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
+            listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
+        }
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaUsuarios = new DefaultTableModel(
+            listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios);
+
+        //define o model da tabela
+        tabelaUsuarios.setModel(modeloTabelaUsuarios);
+        // Redimensionando a largura da coluna de nome
+        tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);
+        // Redimensionando a largura da coluna de nickName
+        tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(120);
+        // Redimensionando a largura da coluna de categoria
+        tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);
         pnRlUsuario.setViewportView(tabelaUsuarios);
 
         labelOrdenarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1584,7 +1593,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
         //Adiciona os dados do novo usuário na tabela
-        modeloTabelaUsuarios.addRow(new Object[]{ });
+        modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
         //Atualiza o model da tabela
         tabelaUsuarios.setModel(modeloTabelaUsuarios);
     }
