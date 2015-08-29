@@ -7,8 +7,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
-import br.oltecnologias.hype.model.Cliente;
-import br.oltecnologias.hype.model.GeradorDeContrato;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Frame;
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -35,7 +32,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     public RealizarVendaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        valorTotalVenda = 0;
         produtosVendidos = new ArrayList<Produto>();
     }
     
@@ -240,11 +236,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 radioAVistaMouseClicked(evt);
             }
         });
-        radioAVista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioAVistaActionPerformed(evt);
-            }
-        });
         radioAVista.setSelected(true);
         labelEntrada.setVisible(false);
         labelParcelas.setVisible(false);
@@ -339,10 +330,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             }
         });
 
-        labelValorTotal.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorTotal.setText("Valor Total: ");
 
-        labelValorVenda.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorVenda.setForeground(new java.awt.Color(0, 153, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -375,12 +366,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelValorTotal)
                         .addComponent(botaoConcluir)
                         .addComponent(botaoCancelar))
-                    .addComponent(labelValorVenda, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(labelValorVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
@@ -401,9 +392,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         } else {
             modeloProdutosVendidos.addElement(listaProdutos.getSelectedValue().toString());
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            try {
+                adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
             labelValorVenda.setText(getValorTotalDaVenda());
 
         }
@@ -436,9 +429,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(evt.getClickCount() == 2){
             modeloProdutosVendidos.addElement(listaProdutos.getSelectedValue().toString());
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            try {
+                adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
             labelValorVenda.setText(getValorTotalDaVenda());
         }
     }//GEN-LAST:event_listaProdutosMouseClicked
@@ -456,26 +451,20 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             modeloProdutosVendidos.removeElement(listaProdutosVendidos.getSelectedValue().toString());
             //Diminui o valor total da locação
             StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(descricao.nextToken()));
+            try {
+                removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
             labelValorVenda.setText(getValorTotalDaVenda());
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
-        if(campoPesquisar.getText().length() <= 0)
+        if(campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-
+        }
     }//GEN-LAST:event_painelProdutosMouseClicked
-
-    private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
-        if(radioCartao.isSelected())
-            radioCartao.setSelected(false);
-        if(radioPromissoria.isSelected())
-            radioPromissoria.setSelected(false);
-
-    }//GEN-LAST:event_radioAVistaActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
         setVisible(false);
@@ -501,12 +490,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     }
                     
                     try {
+                        
                         novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
-                                , formaPagamento, Calendar.getInstance());
+                                , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
+                                    Float.parseFloat(campoEntrada.getText()));
+                        
                         JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
-                        
-                        //Código para gerar recibo
-                        
+                                                
                         concluirSelecionado = true;
                         //Fecha janela
                         setVisible(false);
@@ -522,12 +512,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     formaPagamento = "À Vista";
 
                     novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
-                                , formaPagamento, Calendar.getInstance());
+                                , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
+                                    Float.parseFloat(campoEntrada.getText()));
                     
-                    //Código para gerar o recibo
-                    //GeradorDeContrato.getInstance().gerarContrato(locador, Calendar.getInstance(), Calendar.getInstance(), produtosVendidos);
-
-                    //Alterar depois
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
                     concluirSelecionado = true;
@@ -539,18 +526,19 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 }
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro na operação.\n\nPor favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void listaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosVendidosMouseClicked
-        if(evt.getClickCount() == 2){            
+        if (evt.getClickCount() == 2) {
             modeloProdutosVendidos.removeElement(listaProdutosVendidos.getSelectedValue().toString());
             StringTokenizer descricao = new StringTokenizer(listaProdutosVendidos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            // Alterar para pesquisar pelo código do produto
-            removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(descricao.nextToken()));
+            try {
+                removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
             labelValorVenda.setText(getValorTotalDaVenda());
         }
     }//GEN-LAST:event_listaProdutosVendidosMouseClicked
@@ -586,16 +574,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }
     
     //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
-    private void adicionarProdutoAVenda(List<Produto> produtos) {
-        for(Produto produto: produtos) {
-            produtosVendidos.add(produto);
-        }
+    private void adicionarProdutoAVenda(Produto produto) {
+        produtosVendidos.add(produto);
     }
     
-    private void removerProdutoDaVenda(List<Produto> produtos) {
-        for(Produto produto: produtos) {
-            produtosVendidos.remove(produto);
-        }
+    private void removerProdutoDaVenda(Produto produto) {
+        produtosVendidos.remove(produto);
     }
     
     public void habilitarCampos() {
@@ -650,7 +634,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private DefaultListModel modeloProdutosVendidos;
     private DefaultListModel modeloProdutos;
-    private float valorTotalVenda;
     private List<Produto> produtosVendidos;
     protected boolean concluirSelecionado;
     protected Venda novaVenda;

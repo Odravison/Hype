@@ -107,7 +107,7 @@ public class Cliente implements Serializable {
     }
 
     public String getUltimaMedicao() {
-        return new SimpleDateFormat("dd.MM.yyyy").format(ultimaMedicao.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
     }
 
     public void setUltimaMedicao(Calendar ultimaMedicao) {

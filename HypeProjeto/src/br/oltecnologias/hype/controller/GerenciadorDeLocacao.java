@@ -26,12 +26,12 @@ public class GerenciadorDeLocacao {
     }
 
     public Locacao realizarLocacao(Cliente cliente, List<Produto> produtos, float valor, Calendar dataLocacao, 
-            Calendar dataDeDevolucao, String formaDePagamento) throws ProdutoInexistenteException {
-        Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento);
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) throws ProdutoInexistenteException {
+        Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
         cliente.adicionarLocacao(locacao);
         this.locacoes.add(locacao);
         for (Produto p: produtos){
-            GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).removerQuant(p.getQuantidade());
+            GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).removerQuant(p.getQuantidade());
         }
         return locacao;
     }
@@ -49,7 +49,7 @@ public class GerenciadorDeLocacao {
                             && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                         emprestou = true;
                         for (Produto p : locacaoGer.getProdutos()) {
-                            GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).addQuant(p.getQuantidade());
+                            GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).addQuant(p.getQuantidade());
                         }
                         cliente.removerLocacao(locacaoCliente);
                         this.locacoes.remove(locacaoGer);

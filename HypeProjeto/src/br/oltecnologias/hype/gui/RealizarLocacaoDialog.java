@@ -14,7 +14,9 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +39,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public RealizarLocacaoDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        valorTotalLocacao = 0;
         locador = null;
         produtosLocados = new ArrayList<Produto>();
     }
@@ -45,7 +46,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
      public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
-        valorTotalLocacao = 0;
         locador = null;
         produtosLocados = new ArrayList<Produto>();
     }
@@ -87,14 +87,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelSimboloVezes = new javax.swing.JLabel();
         painelContrato = new javax.swing.JPanel();
         labelDataInicial = new javax.swing.JLabel();
-        dateDataInicial = new com.toedter.calendar.JDateChooser();
+        dateDataInicialContrato = new com.toedter.calendar.JDateChooser();
         labelDataFinal = new javax.swing.JLabel();
-        dateDataFinal = new com.toedter.calendar.JDateChooser();
+        dateDataFinalContrato = new com.toedter.calendar.JDateChooser();
         labelMensagemContrato = new javax.swing.JLabel();
         labelDesconto = new javax.swing.JLabel();
-        labelValorLocacao = new javax.swing.JLabel();
         campoDesconto = new javax.swing.JTextField();
         labelSimboloPorcentagem = new javax.swing.JLabel();
+        labelValorLocacao = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1235, 593));
@@ -113,7 +113,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
         painelLocador.setBackground(new java.awt.Color(255, 255, 255));
         painelLocador.setBorder(javax.swing.BorderFactory.createTitledBorder("Locador"));
-        painelLocador.setPreferredSize(new java.awt.Dimension(468, 364));
+        painelLocador.setPreferredSize(new java.awt.Dimension(568, 79));
         painelLocador.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 painelLocadorMouseClicked(evt);
@@ -133,6 +133,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         });
 
         labelNomeCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelNomeCliente.setPreferredSize(new java.awt.Dimension(10, 6));
 
         javax.swing.GroupLayout painelLocadorLayout = new javax.swing.GroupLayout(painelLocador);
         painelLocador.setLayout(painelLocadorLayout);
@@ -142,19 +143,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addComponent(labelCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNomeCliente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 379, Short.MAX_VALUE)
+                .addComponent(labelNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(botaoSelecionarCliente)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         painelLocadorLayout.setVerticalGroup(
             painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelLocadorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelCliente)
-                    .addComponent(labelNomeCliente)
-                    .addComponent(botaoSelecionarCliente))
+                .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(labelNomeCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSelecionarCliente)
+                        .addComponent(labelCliente)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -329,28 +331,29 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioAVista.setBackground(new java.awt.Color(255, 255, 255));
         radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioAVista.setSelected(true);
+        desabilitarCampos();
         radioAVista.setText("À Vista");
-        radioAVista.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioAVistaActionPerformed(evt);
+        radioAVista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioAVistaMouseClicked(evt);
             }
         });
 
         radioCartao.setBackground(new java.awt.Color(255, 255, 255));
         radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCartao.setText("Cartão");
-        radioCartao.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioCartaoActionPerformed(evt);
+        radioCartao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioCartaoMouseClicked(evt);
             }
         });
 
         radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
         radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPromissoria.setText("Promissória");
-        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPromissoriaActionPerformed(evt);
+        radioPromissoria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioPromissoriaMouseClicked(evt);
             }
         });
 
@@ -374,7 +377,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                        .addGap(139, 139, 139)
+                        .addGap(149, 149, 149)
                         .addComponent(radioAVista)
                         .addGap(18, 18, 18)
                         .addComponent(radioCartao)
@@ -391,7 +394,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloVezes)))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addGap(144, 144, 144))
         );
         painelFormaPagamentoLayout.setVerticalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -408,7 +411,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     .addComponent(labelParcelas)
                     .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSimboloVezes))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(31, 31, 31))
         );
 
         painelContrato.setBackground(new java.awt.Color(255, 255, 255));
@@ -434,11 +437,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     .addGroup(painelContratoLayout.createSequentialGroup()
                         .addComponent(labelDataInicial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(dateDataInicialContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(67, 67, 67)
                         .addComponent(labelDataFinal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dateDataFinalContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         painelContratoLayout.setVerticalGroup(
@@ -448,8 +451,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addComponent(labelMensagemContrato)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelContratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateDataFinalContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateDataInicialContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelDataInicial)
                     .addComponent(labelDataFinal))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -458,13 +461,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelDesconto.setText("Desconto:");
 
-        labelValorLocacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelValorLocacao.setForeground(new java.awt.Color(0, 153, 0));
-
         campoDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         labelSimboloPorcentagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelSimboloPorcentagem.setText("%");
+
+        labelValorLocacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelValorLocacao.setForeground(new java.awt.Color(0, 153, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -473,62 +476,56 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labelValorTotal)
-                                .addGap(108, 108, 108)
-                                .addComponent(labelDesconto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(labelSimboloPorcentagem)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(botaoConcluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(botaoCancelar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-                                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(painelContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                        .addComponent(labelValorLocacao)
-                        .addContainerGap(18, Short.MAX_VALUE))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(labelValorTotal)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(labelValorLocacao)
+                            .addGap(68, 68, 68)
+                            .addComponent(labelDesconto)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(labelSimboloPorcentagem)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoConcluir)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(botaoCancelar))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                                .addComponent(painelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(painelContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(painelContrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(468, 468, 468)
-                        .addComponent(labelValorLocacao))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(painelContrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botaoConcluir)
-                            .addComponent(botaoCancelar)
-                            .addComponent(labelValorTotal)
-                            .addComponent(labelDesconto)
-                            .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelSimboloPorcentagem))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(botaoCancelar)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoConcluir)
+                        .addComponent(labelValorTotal)
+                        .addComponent(labelDesconto)
+                        .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelSimboloPorcentagem)
+                        .addComponent(labelValorLocacao)))
+                .addGap(84, 84, 84))
         );
 
         pack();
@@ -549,38 +546,75 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
         try {
+            String formaPagamento = "";
             if(labelNomeCliente.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(produtosLocados.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else {
-                try {
-                    String formaPagamento = "";
-                    
-                    if(radioAVista.isSelected()) {
-                        formaPagamento = "À Vista";
-                    }else if(radioCartao.isSelected()) {
-                        formaPagamento = "Cartão";
-                    } else if(radioPromissoria.isSelected()) {
-                        formaPagamento = "Promissória";
-                    } 
+            } else{
+                Calendar dataInicial = Calendar.getInstance();
+                Calendar dataFinal = Calendar.getInstance();
 
-                    // O usuário que irá informar a data de início e de fim da locação, quantidade de parcelas e entrada
-                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
-                            Calendar.getInstance(), formaPagamento);
+                dataInicial.setTime(dateDataInicialContrato.getDate());
+                dataFinal.setTime(dateDataFinalContrato.getDate());
+                
+                if(radioCartao.isSelected() || radioPromissoria.isSelected()) {
+                    if(campoEntrada.getText().length() <= 0) {
+                        JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else if(campoParcelas.getText().length() <= 0) {
+                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        if (radioCartao.isSelected()) {
+                            formaPagamento = "Cartão";
+                        } else {
+                            formaPagamento = "Promissória";
+                        }
+                    }
                     
-                    //tirar depois
-                    JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+                    try {
+                        // falta registrar a entrada e as parcelas
+                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
+                                    Float.parseFloat(campoEntrada.getText()));
+
+                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+
+                        concluirSelecionado = true;
+                        //Fecha janela
+                        setVisible(false);
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
                     
-                    concluirSelecionado = true;
-                    setVisible(false);
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    formaPagamento = "À Vista";
+                    campoEntrada.setText("0");
+                    campoParcelas.setText("0");
+                    
+                    try {
+                        // falta registrar a entrada e as parcelas
+                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
+                                    Float.parseFloat(campoEntrada.getText()));
+
+                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+
+                        concluirSelecionado = true;
+                        //Fecha janela
+                        setVisible(false);
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
+                
+                
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void botaoSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarClienteActionPerformed
@@ -590,8 +624,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelNomeCliente.setText(dialog.getNomeClienteSelecionado());
             try {
                 locador = GerenciadorDePessoas.getInstance().pesquisarCliente(dialog.getCpfLocador());
-            } catch (ClienteInexistenteException ex) {
-                Logger.getLogger(RealizarLocacaoDialog.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClienteInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
         dialog.dispose();
@@ -673,14 +707,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         
     }//GEN-LAST:event_painelProdutosMouseClicked
 
-    private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
-        if(radioCartao.isSelected())
-            radioCartao.setSelected(false);
-        if(radioPromissoria.isSelected()) 
-            radioPromissoria.setSelected(false);
-        
-    }//GEN-LAST:event_radioAVistaActionPerformed
-
     private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
         if(evt.getClickCount() == 2){            
             modeloProdutosLocados.addElement(listaProdutos.getSelectedValue().toString());
@@ -691,20 +717,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_listaProdutosMouseClicked
-
-    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
-        if(radioAVista.isSelected())
-            radioAVista.setSelected(false);
-        if(radioPromissoria.isSelected()) 
-            radioPromissoria.setSelected(false);
-    }//GEN-LAST:event_radioCartaoActionPerformed
-
-    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
-        if(radioCartao.isSelected())
-            radioCartao.setSelected(false);
-        if(radioAVista.isSelected()) 
-            radioAVista.setSelected(false);
-    }//GEN-LAST:event_radioPromissoriaActionPerformed
 
     private void listaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
@@ -717,6 +729,27 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelValorLocacao.setText(getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_listaProdutosLocadosMouseClicked
+
+    private void radioAVistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioAVistaMouseClicked
+        painelLocador.setPreferredSize(new Dimension(568,79));
+        radioCartao.setSelected(false);
+        radioPromissoria.setSelected(false);
+        desabilitarCampos();
+    }//GEN-LAST:event_radioAVistaMouseClicked
+
+    private void radioCartaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCartaoMouseClicked
+        painelLocador.setPreferredSize(new Dimension(590,79));
+        radioAVista.setSelected(false);
+        radioPromissoria.setSelected(false);
+        habilitarCampos();
+    }//GEN-LAST:event_radioCartaoMouseClicked
+
+    private void radioPromissoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioPromissoriaMouseClicked
+        painelLocador.setPreferredSize(new Dimension(590,79));
+        radioCartao.setSelected(false);
+        radioAVista.setSelected(false);
+        habilitarCampos();
+    }//GEN-LAST:event_radioPromissoriaMouseClicked
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -751,6 +784,22 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         return Float.toString(valor);
     }
     
+    public void habilitarCampos() {
+        labelEntrada.setVisible(true);
+        labelParcelas.setVisible(true);
+        campoEntrada.setVisible(true);
+        campoParcelas.setVisible(true);
+        labelSimboloVezes.setVisible(true);
+    }
+    
+    public void desabilitarCampos() {
+        labelEntrada.setVisible(false);
+        labelParcelas.setVisible(false);
+        campoEntrada.setVisible(false);
+        campoParcelas.setVisible(false);
+        labelSimboloVezes.setVisible(false);
+    }
+    
     public boolean alterarDados() {        
         concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
@@ -782,7 +831,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private DefaultListModel modeloProdutosLocados;
     private DefaultListModel modeloProdutos;
     private Cliente locador;
-    private float valorTotalLocacao;
     private List<Produto> produtosLocados;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
@@ -797,8 +845,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoEntrada;
     private javax.swing.JTextField campoParcelas;
     private javax.swing.JTextField campoPesquisar;
-    private com.toedter.calendar.JDateChooser dateDataFinal;
-    private com.toedter.calendar.JDateChooser dateDataInicial;
+    private com.toedter.calendar.JDateChooser dateDataFinalContrato;
+    private com.toedter.calendar.JDateChooser dateDataInicialContrato;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelDataFinal;

@@ -34,7 +34,7 @@ public class GerenciadorDeProduto {
     public void editarProduto(String codigo, String nome, int tam,
             float valor, String fornecedor, String cor) {
         try {
-            Produto p = pesquisarProduto(codigo);
+            Produto p = pesquisarProdutoPeloCodigo(codigo);
             p.setCor(cor);
             p.setTam(tam);
             p.setFornecedor(fornecedor);
@@ -82,7 +82,7 @@ public class GerenciadorDeProduto {
      * @return
      * @throws br.oltecnologias.hype.exception.ProdutoInexistenteException
      */
-    public Produto pesquisarProduto(String codigo) throws ProdutoInexistenteException {
+    public Produto pesquisarProdutoPeloCodigo(String codigo) throws ProdutoInexistenteException {
         for (Produto p : this.produtos) {
             if (p.getCodigo().equals(codigo)) {
                 return p;

@@ -42,18 +42,25 @@ public class Locacao implements Serializable {
     private double valorDeEntrada = 0;
 
     private double jaPago = 0;
+    
+    private int parcelas;
+    
+    private float entrada;
 
+    
     public Locacao() {
     }
 
     public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.valorLocacao = valorLocacao;
         this.dataLocacao = dataLocacao;
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
+        this.parcelas = parcelas;
+        this.entrada = entrada;
         if (formaDePagamento.equals("A VISTA")) {
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
@@ -174,5 +181,21 @@ public class Locacao implements Serializable {
     
     public String getContato() {
         return this.cliente.getCelular();
+    }
+    
+    public int getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(int parcelas) {
+        this.parcelas = parcelas;
+    }
+
+    public float getEntrada() {
+        return entrada;
+    }
+
+    public void setEntrada(float entrada) {
+        this.entrada = entrada;
     }
 }
