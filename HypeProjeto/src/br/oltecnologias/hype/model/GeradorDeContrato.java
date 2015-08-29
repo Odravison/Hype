@@ -51,7 +51,7 @@ public class GeradorDeContrato {
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(dataLocacao.getTime());
         
         String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
-                    + "\\" + cliente.getNome()+ "\\" + "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
+                    + "\\" + cliente.getNome()+ "\\Contratos\\" +  "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
         
         
         FileInputStream fis = new FileInputStream(diretorio);
@@ -82,7 +82,7 @@ public class GeradorDeContrato {
 
         try {
             diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
-                    + "\\" + cliente.getNome());
+                    + "\\" + cliente.getNome() + "\\Contratos");
             
             diretorio.mkdir();
             

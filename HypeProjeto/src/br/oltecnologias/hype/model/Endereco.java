@@ -6,21 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Endereco implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id_endereco")
     private int id;
     private String rua;
     private String bairro;
     private String uf;
     private int numeroCasa;
-    private String cidade;   
-    
+    private String cidade;
+    private String cep = null;
+
     public Endereco() {
     }
 
@@ -30,6 +30,15 @@ public class Endereco implements Serializable {
         this.uf = uf;
         this.numeroCasa = numeroCasa;
         this.cidade = cidade;
+    }
+    
+    public Endereco(String rua, String bairro, String uf, int numeroCasa, String cidade, String cep) {
+        this.rua = rua;
+        this.bairro = bairro;
+        this.uf = uf;
+        this.numeroCasa = numeroCasa;
+        this.cidade = cidade;
+        this.cep = cep;
     }
 
     public String getRua() {
@@ -79,11 +88,19 @@ public class Endereco implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     @Override
     public String toString() {
         String endereco = this.rua + ", " + this.numeroCasa + " - " + this.bairro + ", " + this.cidade + ", " + this.uf;
 
         return endereco;
-    }    
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
 }

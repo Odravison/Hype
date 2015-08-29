@@ -312,7 +312,18 @@ public class GeradorDeRecibo {
         gerarRecibo(loc);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
-
+        
+        
+        String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
+                    + "\\" + loc.getCliente().getNome()+ "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf";
+        
+        
+        FileInputStream fis = new FileInputStream(diretorio);
+        PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf", Configuracao.getInstance().getNomeDaImpressora());
+        
+        
+        printPDFFile.print();
+        
     }
 
     private String getDescricaoCurta(List<Produto> produtos) {
@@ -328,8 +339,10 @@ public class GeradorDeRecibo {
         this.produtos = loc.getProdutos();
 
         Image logo = null;
-
-        double valorResta = loc.getValorLocacao() - (loc.getJaPago() + valorDessePagamento);
+        
+        loc.addValorJaPago(valorDessePagamento);
+        double valorResta = loc.getValorLocacao() - loc.getJaPago();
+        
 
         try {
 
@@ -360,7 +373,7 @@ public class GeradorDeRecibo {
         try {
 
             diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
-                    + "\\" + loc.getCliente().getNome());
+                    + "\\" + loc.getCliente().getNome() + "\\Contratos");
 
             diretorio.mkdir();
 
@@ -391,7 +404,7 @@ public class GeradorDeRecibo {
                     + "Forma de pagamento: " + loc.getFormaDePagamento() + "\n"
                     + "Referente à locação de " + descCurtaProd.toString() + "\n "
                     + "Valor Total: " + loc.getValorLocacao() + "\n"
-                    + "Pago neste dia: " + loc.getValorDeEntrada() + "\n"
+                    + "Pago neste dia: " + valorDessePagamento + "\n"
                     + "Resta: " + valorResta + "\n"
                     + "Para dia: " + loc.getDataLocacao(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);
@@ -426,7 +439,7 @@ public class GeradorDeRecibo {
             pdf.add(linhaAssinatura);
             
             String diretorioImpressao = Configuracao.getInstance().getDiretorioDeContratos()
-                    + "\\" + loc.getCliente().getNome() + "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
+                    + "\\" + loc.getCliente().getNome() + "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
             PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 

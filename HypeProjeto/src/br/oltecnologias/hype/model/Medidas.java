@@ -8,15 +8,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 @Entity
 public class Medidas implements Serializable {
-    
+
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id_medidas")
     private int id;
-    
+
     private int calca;
     private int colete;
     private int camisa;
@@ -36,22 +36,20 @@ public class Medidas implements Serializable {
         this.comprimentoCalca = comprimentoCalca;
         this.comprimentoManga = comprimentoManga;
     }
-    
-    public Medidas(){
-        
+
+    public Medidas() {
+
     }
 
     @Override
     public String toString() {
         return "Medidas{" + "\n Comp. Manga=" + comprimentoManga
-                + "\n Comp. Calça=" + comprimentoCalca 
+                + "\n Comp. Calça=" + comprimentoCalca
                 + "Tam. calça=" + calca
-                + "\n Colete=" + colete 
-                + "\n Camisa=" + camisa 
+                + "\n Colete=" + colete
+                + "\n Camisa=" + camisa
                 + "\n Sapato=" + sapato + '}';
     }
-    
-    
 
     public int getCalca() {
         return calca;
@@ -124,5 +122,4 @@ public class Medidas implements Serializable {
     public void setBlazer(int blazer) {
         this.blazer = blazer;
     }
-
 }

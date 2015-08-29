@@ -1,7 +1,14 @@
-/*C3*/SET SCHEMA PUBLIC
-\u000a    alter table Cliente_Locacao \u000a        drop constraint UK_gb29vqcwgde0u4hua8bthvjn5
-\u000a    alter table Cliente_Locacao \u000a        add constraint UK_gb29vqcwgde0u4hua8bthvjn5  unique (locacoes_id)
-\u000a    alter table Locacao_Produto \u000a        drop constraint UK_jmk0oiticvofd0wwn1xl09dv4
-\u000a    alter table Locacao_Produto \u000a        add constraint UK_jmk0oiticvofd0wwn1xl09dv4  unique (produtos_codigo)
-\u000a    alter table Venda_Produto \u000a        drop constraint UK_tb0r942vy1q25m6j0nu8e7cw6
-\u000a    alter table Venda_Produto \u000a        add constraint UK_tb0r942vy1q25m6j0nu8e7cw6  unique (produtos_codigo)
+/*C2*/SET SCHEMA PUBLIC
+drop table cliente cascade\u000a
+drop table configuracao cascade\u000a
+drop table despesa cascade\u000a
+drop table empresa cascade\u000a
+drop table endereco cascade\u000a
+drop table fornecedor cascade\u000a
+drop table locacao cascade\u000a
+drop table medidas cascade\u000a
+drop table produto cascade\u000a
+drop table usuario cascade\u000a
+drop table venda cascade\u000a
+drop table venda_produto
+DISCONNECT

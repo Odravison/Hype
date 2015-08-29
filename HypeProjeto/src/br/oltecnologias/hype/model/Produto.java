@@ -4,21 +4,24 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Produto implements Serializable {
 
     @Id
+    @Column(name = "id_produto")
     private String codigo;
     private String nome;
     private double valor;
     private int quantidade;
     private int tam;
-    
+
     private String fornecedor;
-    
+
     private String cor;
     private boolean isLocation;
 
@@ -103,7 +106,7 @@ public class Produto implements Serializable {
     public void setTam(int tam) {
         this.tam = tam;
     }
-    
+
     public boolean isLocation() {
         return isLocation;
     }
@@ -111,11 +114,12 @@ public class Produto implements Serializable {
     public void setIsLocation(boolean isLocation) {
         this.isLocation = isLocation;
     }
-    
+
     public String getFinalidade() {
-        if(isLocation)
+        if (isLocation) {
             return "Locação";
-        else
+        } else {
             return "Venda";
+        }
     }
 }

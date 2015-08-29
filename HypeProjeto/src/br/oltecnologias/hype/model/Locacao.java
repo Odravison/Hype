@@ -6,26 +6,41 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Locacao implements Serializable {
 
     @Id
     @GeneratedValue
+    @Column(name="id_locacao")
     private int id;
 
-    @OneToOne
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "id_cliente")
+//    @Fetch(FetchMode.JOIN)
+//    @Cascade(CascadeType.MERGE)
+    
+    @Transient
     private Cliente cliente;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="fk_locacao")
     private List<Produto> produtos;
-    
+
     private double valorLocacao;
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -65,6 +80,7 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.valorDeEntrada = valorDeEntrada;
+        this.jaPago = valorDeEntrada;
     }
 
     public void gerarContrato() throws DocumentException, IOException, Exception {
@@ -156,20 +172,24 @@ public class Locacao implements Serializable {
     public void setJaPago(double jaPago) {
         this.jaPago = jaPago;
     }
-    
+
     public String getProdutosLocados() {
         String produtosLocados = "";
-        for(Produto produto: this.produtos) {
+        for (Produto produto : this.produtos) {
             produtosLocados += produto.getNome() + ", ";
         }
         return produtosLocados;
     }
-    
+
     public String getVencimento() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
     }
-    
+
     public String getContato() {
         return this.cliente.getCelular();
+    }
+    
+    public void addValorJaPago(double valorDessePagamento){
+        this.jaPago += valorDessePagamento;
     }
 }

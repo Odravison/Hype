@@ -3,10 +3,11 @@ package br.oltecnologias.hype;
 //import br.oltecnologias.hype.dao.ClienteJpaController;
 //import br.oltecnologias.hype.dao.ConfiguracaoJpaController;
 //import br.oltecnologias.hype.dao.MedidasJpaController;
-import br.oltecnologias.hype.dao.ClienteJpaController;
-import br.oltecnologias.hype.dao.ConfiguracaoJpaController;
-import br.oltecnologias.hype.dao.MedidasJpaController;
-import br.oltecnologias.hype.dao.ProdutoJpaController;
+//import br.oltecnologias.hype.dao.ClienteJpaController;
+//import br.oltecnologias.hype.dao.ConfiguracaoJpaController;
+//import br.oltecnologias.hype.dao.MedidasJpaController;
+//import br.oltecnologias.hype.dao.ProdutoJpaController;
+import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
@@ -21,9 +22,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -49,7 +47,7 @@ public class Aplicacao {
 
         Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
         Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
-        Cliente cliente = new Cliente("1234566", "Luender Viado Lima", end, medidas, telefone1, telefone2);
+//        Cliente cliente = new Cliente("1234566", "Luender Viado Lima", end, medidas, telefone1, telefone2);
 
         
 
@@ -57,32 +55,43 @@ public class Aplicacao {
         
 //        ProdutoJpaController pjp = new ProdutoJpaController(emf);
 //        
-        List<Produto> produtos = new ArrayList<Produto>();
-
-        for (int i = 0; i < 6; i++) {
-            Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
-            String fornecedor = "EMIRATES";
-            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
-            produtos.add(p);
+//        List<Produto> produtos = new ArrayList<Produto>();
+//
+//        for (int i = 0; i < 6; i++) {
+//            Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
+//            String fornecedor = "EMIRATES";
+//            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
+//            produtos.add(p);
 //            pjp.destroy(p.getCodigo());
+//        }
+//        
+//        Locacao locacao = new Locacao(cliente, produtos, 234, Calendar.getInstance(), Calendar.getInstance(), telefone2);
+//        List<Locacao> locacoes = new ArrayList<Locacao>();
+//        locacoes.add(locacao);
+//
+//        cliente.setLocacoes(locacoes);
+//        cliente.setCpf("9999999999999");
+        
+        
+        ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
+//        cjp.create(cliente);
+        
+        Cliente cliente = cjp.findByCpf("1234566");
+        cliente.setCelular("111111111");
+        
+        
+        cjp.editarCliente(cliente);
+        
+        
+        for (Cliente c: cjp.getAllClientes()){
+            System.out.println("===========>>>>>> " + c.getNome());
         }
         
-        Locacao locacao = new Locacao(cliente, produtos, 234, Calendar.getInstance(), Calendar.getInstance(), telefone2);
-        List<Locacao> locacoes = new ArrayList<Locacao>();
-        locacoes.add(locacao);
-
-        cliente.setLocacoes(locacoes);
+//        cjp.removerCliente(cliente.getCpf());
         
-        EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
-        
-        em.persist(cliente);
-        
-        em.getTransaction().commit();
+        System.out.println("===========>>>>>>>>>>> verify " + cjp.existsByCpf(cliente.getCpf()));
         
         
-//        ClienteJpaController cjp = new ClienteJpaController(emf);
-//        cjp.create(cliente);
 //        System.out.println(cjp.findCliente(cliente.getCpf()).getNome());
 //        cliente.setNome("lulisssss");
 //        cjp.edit(cliente);
