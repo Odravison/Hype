@@ -3,6 +3,7 @@ package br.oltecnologias.hype.model;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Calendar;
@@ -61,7 +62,7 @@ public class Locacao implements Serializable {
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
         this.entrada = entrada;
-        if (formaDePagamento.equals("A VISTA")) {
+        if (formaDePagamento.equals("À VISTA")) {
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
     }
@@ -198,4 +199,9 @@ public class Locacao implements Serializable {
     public void setEntrada(float entrada) {
         this.entrada = entrada;
     }
+    
+    public String getValorLocacaoInString() {
+        return new DecimalFormat("#.##").format(this.valorLocacao);
+    }
+
 }

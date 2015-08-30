@@ -22,9 +22,10 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public Venda realizarVenda(List<Produto> produtos, float valor, String formaPagamento, Calendar dataVenda, int parcelas, float entrada) {
+    public Venda realizarVenda(List<Produto> produtos, float valor, String formaPagamento, Calendar dataVenda, int parcelas, float entrada, int desconto) {
         
-        Venda venda = new Venda(produtos, valor, formaPagamento, dataVenda, parcelas, entrada);
+        float valorFinal = valor - ((desconto * valor)/100);
+        Venda venda = new Venda(produtos, valorFinal, formaPagamento, dataVenda, parcelas, entrada);
         this.vendas.add(venda);
         return venda;
     }

@@ -27,8 +27,10 @@ public class GerenciadorDeLocacao {
     }
 
     public Locacao realizarLocacao(Cliente cliente, List<Produto> produtos, float valor, Calendar dataLocacao, 
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) throws ProdutoInexistenteException {
-        Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada, int desconto) throws ProdutoInexistenteException {
+        
+        float valorFinal = valor - ((desconto * valor)/100);
+        Locacao locacao = new Locacao(cliente, produtos, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
         cliente.adicionarLocacao(locacao);
         this.locacoes.add(locacao);
         for (Produto p: produtos){

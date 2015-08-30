@@ -10,6 +10,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
+import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -106,9 +107,9 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         radioVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioVenda.setText("Venda");
         radioVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        radioVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioVendaActionPerformed(evt);
+        radioVenda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioVendaMouseClicked(evt);
             }
         });
 
@@ -117,9 +118,9 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         radioAluguel.setSelected(true);
         radioAluguel.setText("Aluguel");
         radioAluguel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        radioAluguel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioAluguelActionPerformed(evt);
+        radioAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                radioAluguelMouseClicked(evt);
             }
         });
 
@@ -244,11 +245,11 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                         .addComponent(labelPreco)
                         .addComponent(campoPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelQuantidade)
+                        .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelTamanho)
-                        .addComponent(campoTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(painelValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelQuantidade)
-                            .addComponent(campoQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(campoTamanho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -375,18 +376,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         } */
     }//GEN-LAST:event_campoPrecoKeyTyped
 
-    private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
-        if(radioVenda.isSelected()) {
-            radioVenda.setSelected(false);
-        }
-    }//GEN-LAST:event_radioAluguelActionPerformed
-
-    private void radioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioVendaActionPerformed
-        if(radioAluguel.isSelected()) {
-            radioAluguel.setSelected(false);
-        }
-    }//GEN-LAST:event_radioVendaActionPerformed
-
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
         validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
     }//GEN-LAST:event_campoNomeKeyTyped
@@ -417,7 +406,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 } else {
                     fornecedor = comboFornecedor.getSelectedItem().toString();
                 }
-
+                                
                 try {
                     novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(), 
                             Float.parseFloat(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
@@ -455,17 +444,37 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private void campoTamanhoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanhoKeyTyped
         validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho); 
     }//GEN-LAST:event_campoTamanhoKeyTyped
+
+    private void radioVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioVendaMouseClicked
+        if (radioAluguel.isSelected()) {
+            radioAluguel.setSelected(false);
+            radioVenda.setSelected(true);
+        }
+    }//GEN-LAST:event_radioVendaMouseClicked
+
+    private void radioAluguelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioAluguelMouseClicked
+        if (radioVenda.isSelected()) {
+            radioVenda.setSelected(false);
+            radioAluguel.setSelected(true);
+        }
+    }//GEN-LAST:event_radioAluguelMouseClicked
     
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"") || campo.getText().length()>= maxCaracteres){// se o carácter que gerou o evento estiver na lista 
+        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
         } 
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
     }
     
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"") || campo.getText().length() >= maxCaracteres){// se o carácter que gerou o evento não estiver na lista 
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
         } 
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
     }
     
     public boolean alterarDados() {        

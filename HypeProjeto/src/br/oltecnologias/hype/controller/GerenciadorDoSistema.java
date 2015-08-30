@@ -128,8 +128,14 @@ public class GerenciadorDoSistema {
     }
     
     public Movimentacao cadastrarMovimentacao(String movimento, float valor, Calendar data, Usuario responsavel, String beneficiario) {
+        
         Movimentacao movimentacao = new Movimentacao(movimento, valor, data, responsavel, beneficiario);
         this.movimentacoes.add(movimentacao);
+        if(movimento.toUpperCase().equals("DESPESA") ) {
+            this.valorCaixaDiario -= valor;
+        } else {
+            this.valorCaixaDiario += valor;
+        }
         return movimentacao;
     }
     

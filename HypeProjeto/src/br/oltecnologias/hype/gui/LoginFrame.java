@@ -1,8 +1,9 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
-import br.oltecnologias.hype.exception.UsuarioInexistenteException;
-import br.oltecnologias.hype.model.Usuario;
+import br.oltecnologias.hype.model.Configuracao;
+import br.oltecnologias.hype.model.Empresa;
+import br.oltecnologias.hype.model.Endereco;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -170,6 +171,9 @@ public class LoginFrame extends javax.swing.JFrame {
             try {
                 // Validar usuário no sistema
                 if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
+                    //Cadastrando a empresa - Tirar depois 
+                    Configuracao.getInstance().setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-9999", 
+                        new Endereco("Fulano de Tal", "Centro", "PB", 100, "João Pessoa")));
                     new PrincipalFrame(campoLogin.getText()).setVisible(true);
                     setVisible(false);
                 } else {

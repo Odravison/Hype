@@ -461,6 +461,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setText("Desconto:");
 
         campoDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoDescontoKeyTyped(evt);
+            }
+        });
 
         labelSimboloPorcentagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelSimboloPorcentagem.setText("%");
@@ -551,6 +556,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             } else if(produtosLocados.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else{
+                //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
+                if (campoDesconto.getText().length() <= 0) {
+                    campoDesconto.setText("0");
+                }
+                
                 Calendar dataInicial = Calendar.getInstance();
                 Calendar dataFinal = Calendar.getInstance();
 
@@ -568,24 +578,24 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         } else {
                             formaPagamento = "Promissória";
                         }
+                        
+                        try {
+
+                            novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                                    Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+
+                            JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+
+                            concluirSelecionado = true;
+                            //Fecha janela
+                            setVisible(false);
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
                     }
-                    
-                    try {
-                        // falta registrar a entrada e as parcelas
-                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
-                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()));
-
-                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                    
+                                        
                 } else {
                     formaPagamento = "À Vista";
                     campoEntrada.setText("0");
@@ -595,7 +605,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         // falta registrar a entrada e as parcelas
                         novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
                                 Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()));
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
                         
                         novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", Float.parseFloat(getValorTotalDaLocacao()), 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
@@ -615,7 +625,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         
     }//GEN-LAST:event_botaoConcluirActionPerformed
@@ -753,6 +763,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioAVista.setSelected(false);
         habilitarCampos();
     }//GEN-LAST:event_radioPromissoriaMouseClicked
+
+    private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
+        validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
+        if(Integer.parseInt(campoDesconto.getText()) > 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoDescontoKeyTyped
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -764,6 +781,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campo.setText(mensagem);
         campo.setForeground(new java.awt.Color(153, 153, 153));
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
+    }
+    
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+            evt.consume();
+        }
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
     }
     
     //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
@@ -834,7 +860,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
     }
-
+    
+    private String numeros = "0987654321"; // Alguns campos não devem aceitar números
+    private int maxCaracteresDesconto = 3;
     private DefaultListModel modeloProdutosLocados;
     private DefaultListModel modeloProdutos;
     private Cliente locador;

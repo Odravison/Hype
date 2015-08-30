@@ -245,7 +245,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioVendaActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioVendaMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="radioAluguel">
@@ -263,7 +263,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioAluguelActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioAluguelMouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelTipo">
@@ -330,13 +330,13 @@
                               <Component id="labelPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="campoPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="labelQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="campoQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelTamanho" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="campoTamanho" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                  <Component id="labelQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="campoQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace pref="27" max="32767" attributes="0"/>

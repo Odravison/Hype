@@ -284,20 +284,15 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoSenhaKeyTyped
 
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
+        if(numeros.contains(evt.getKeyChar()+"") && campo.getText().length() >= maxCaracteres){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
-        } if(campo.getText().length() >= maxCaracteres){ 
-            evt.consume(); 
-            campo.setText(campo.getText().substring(0, maxCaracteres)); // Remove os caracters inválidos caso o usuário tenha colado o texto
-        }
+        } 
     }
     
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+        if(!numeros.contains(evt.getKeyChar()+"") && campo.getText().length() >= maxCaracteres){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
-        } if(campo.getText().length() >= maxCaracteres){ 
-            evt.consume(); 
-        }
+        } 
     }
     
     public boolean alterarDados() {        
