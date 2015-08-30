@@ -51,12 +51,12 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="abas" alignment="0" max="32767" attributes="0"/>
                       <Component id="painelTopo" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -125,7 +125,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="labelLogoEmpresa.setIcon(new ImageIcon(&quot;Imagens\\mini-logo-wide.png&quot;));"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="labelLogoEmpresa.setIcon(new ImageIcon(&quot;Imagens\\Mini Logo Terni Velucci.png&quot;));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNomeLogin">
@@ -169,6 +169,9 @@
             </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="0"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[1346, 700]"/>
             </Property>
           </Properties>
 
@@ -214,18 +217,22 @@
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="labelOrdenar" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelFiltrarClientes" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="comboFiltrarCliente" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="botaoEditarCliente" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="botaoExcluirCliente" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoVerLocacoesCliente" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoVerMedidas" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="pnRlCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="501" max="32767" attributes="0"/>
+                          <EmptySpace pref="519" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -239,16 +246,20 @@
                               <Component id="campoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboFiltrarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="botaoEditarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="botaoExcluirCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoVerLocacoesCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoVerMedidas" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboFiltrarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="pnRlCliente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -362,12 +373,12 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaClientesMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;N&#xfa;mero de celular&quot;, &quot;&#xda;ltima Medi&#xe7;&#xe3;o&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicao()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;Contato&quot;, &quot;&#xda;ltima Medi&#xe7;&#xe3;o&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicao()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="labelOrdenar">
+                <Component class="javax.swing.JLabel" name="labelFiltrarClientes">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -380,13 +391,16 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Editar"/>
+                    <Property name="text" type="java.lang.String" value="  Editar  "/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoEditarClienteActionPerformed"/>
+                  </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoEditarProduto.setVisible(false);"/>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoEditarCliente.setVisible(false);"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="botaoExcluirCliente">
@@ -394,13 +408,41 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Excluir"/>
+                    <Property name="text" type="java.lang.String" value="  Excluir  "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirClienteActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoExcluirCliente.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoVerLocacoesCliente">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Loca&#xe7;&#xf5;es Feitas"/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
                   </Properties>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirProduto.setVisible(false);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerLocacoesCliente.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoVerMedidas">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ver Medidas"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerMedidas.setVisible(false);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -450,7 +492,7 @@
                                   <Component id="pnRlProduto" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="551" max="32767" attributes="0"/>
+                          <EmptySpace pref="569" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -598,7 +640,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Editar"/>
+                    <Property name="text" type="java.lang.String" value="   Editar   "/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
@@ -612,11 +654,14 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Excluir"/>
+                    <Property name="text" type="java.lang.String" value="   Excluir   "/>
                     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirProdutoActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirProduto.setVisible(false);"/>
                   </AuxValues>
@@ -655,14 +700,20 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarFornecedor" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelFiltrarFornecedores" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarFornecedores" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelFiltrarFornecedores" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxOrdenarFornecedores" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="botaoEditarFornecedor" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoExcluirFornecedor" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlFornecedores" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlFornecedores" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="331" max="32767" attributes="0"/>
+                          <EmptySpace pref="349" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -676,10 +727,16 @@
                               <Component id="campoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelFiltrarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboBoxOrdenarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="botaoEditarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoExcluirFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboBoxOrdenarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="pnRlFornecedores" min="-2" max="-2" attributes="0"/>
@@ -793,6 +850,37 @@
                     </Property>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JButton" name="botaoEditarFornecedor">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Editar   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoEditarFornecedor.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirFornecedor">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Excluir   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirFornecedorActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirFornecedor.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="painelLocacoes">
@@ -821,11 +909,6 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelFiltrarFornecedores1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarFornecedores1" min="-2" max="-2" attributes="0"/>
-                              </Group>
                               <Component id="pnRlLocacoes" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="botaoNovaLocacao" min="-2" max="-2" attributes="0"/>
@@ -835,12 +918,33 @@
                                   <Component id="botaoLocacoesExtraviadas" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="campoPesquisarLocacao" min="-2" pref="454" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="campoPesquisarLocacao" alignment="0" min="-2" pref="454" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="labelFiltrarLocacoes" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="comboBoxOrdenarFornecedores1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="botaoPesquisarLocacao" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                          <Component id="botaoGerarReciboLocacao" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="botaoVerRecibosLocacao" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="botaoVerContrato" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="botaoFinalizarLocacao" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="botaoExcluirLocacao" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="botaoPesquisarLocacao" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="221" max="32767" attributes="0"/>
+                          <EmptySpace pref="239" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -858,14 +962,19 @@
                               <Component id="campoPesquisarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelFiltrarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelFiltrarLocacoes" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="comboBoxOrdenarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoVerContrato" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoExcluirLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoGerarReciboLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoVerRecibosLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoFinalizarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="pnRlLocacoes" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="73" max="32767" attributes="0"/>
+                          <EmptySpace pref="72" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -976,7 +1085,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="labelFiltrarFornecedores1">
+                <Component class="javax.swing.JLabel" name="labelFiltrarLocacoes">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -1004,6 +1113,70 @@
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoVerContrato">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ver Contrato"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerContrato.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirLocacao">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Excluir   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirLocacaoActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoExcluirLocacao.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoGerarReciboLocacao">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Gerar Recibo"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoGerarReciboLocacao.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoVerRecibosLocacao">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ver Recibos"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerRecibosLocacao.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoFinalizarLocacao">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Finalizar Loca&#xe7;&#xe3;o"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoFinalizarLocacao.setVisible(false);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -1033,20 +1206,30 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelOrdenar1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarCliente1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="pnRlVendas" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoNovaVenda" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarVenda" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarFornecedor1" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelFiltrarVenda" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxOrdenarCliente1" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="botaoGerarReciboVenda" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoVerRecibosVenda" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoEditarVenda" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoExcluirVenda" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlVendas" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="551" max="32767" attributes="0"/>
+                          <EmptySpace pref="569" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1060,10 +1243,18 @@
                               <Component id="campoPesquisarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarFornecedor1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelOrdenar1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboBoxOrdenarCliente1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="botaoEditarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoExcluirVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoVerRecibosVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoGerarReciboVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboBoxOrdenarCliente1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="pnRlVendas" min="-2" max="-2" attributes="0"/>
@@ -1163,18 +1354,71 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaVendas = {&quot;Data da Venda&quot;, &quot;Produtos Vendidos&quot;, &quot;Valor&quot;, &quot;Forma de pagamento&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaVendas.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaVendas.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasVendas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {&#xa;    listaLinhasVendas.add(new Object[]{venda.getDataVenda(), venda.getProdutosVendidos(), venda.getValor(), venda.getFormaDePagamento()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaVendas = new DefaultTableModel(&#xa;                    listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaVendas.setModel(modeloTabelaVendas);&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaVendas = {&quot;Data da Venda&quot;, &quot;Produtos Vendidos&quot;, &quot;Valor&quot;, &quot;Forma de pagamento&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaVendas.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaVendas.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasVendas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {&#xa;    listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), venda.getValor(), venda.getFormaDePagamento()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaVendas = new DefaultTableModel(&#xa;                    listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaVendas.setModel(modeloTabelaVendas);&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="labelOrdenar1">
+                <Component class="javax.swing.JLabel" name="labelFiltrarVenda">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Filtrar por:"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoEditarVenda">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Editar   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoEditarVenda.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirVenda">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Excluir   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirVendaActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirVenda.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoVerRecibosVenda">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ver Recibos"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerRecibosVenda.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoGerarReciboVenda">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Gerar Recibo"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoGerarReciboVenda.setVisible(false);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -1205,15 +1449,19 @@
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
                                           <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="botaoEditarMovimentacao" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="botaoExcluirMovimentacao" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Component id="pnRlCaixaERelatorios" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                                      <Component id="pnRlCaixaERelatorios" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace pref="31" max="32767" attributes="0"/>
+                                  <EmptySpace pref="589" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="botaoGerarRelatorio" min="-2" max="-2" attributes="0"/>
@@ -1223,9 +1471,7 @@
                                   <Component id="botaoRegistrarDespesa" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="labelValorCaixa" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="campoValorCaixa" min="-2" pref="146" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="203" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -1245,20 +1491,23 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="labelValorCaixa" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="campoValorCaixa" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="labelValorCaixa" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="botaoEditarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoExcluirMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlCaixaERelatorios" min="-2" pref="359" max="-2" attributes="0"/>
-                          <EmptySpace pref="127" max="32767" attributes="0"/>
+                          <Component id="pnRlCaixaERelatorios" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="126" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1290,31 +1539,30 @@
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="pnRlCaixaERelatorios">
+                  <Properties>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[716, 359]"/>
+                    </Property>
+                  </Properties>
                   <AuxValues>
                     <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
                   </AuxValues>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTable" name="tabelaRelatorios">
+                    <Component class="javax.swing.JTable" name="tabelaMovimentacoes">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaRelatorios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaMovimentacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
-                        </Property>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="5" rowCount="0">
-                            <Column editable="true" title="Movimento" type="java.lang.String"/>
-                            <Column editable="true" title="Valor" type="java.lang.Object"/>
-                            <Column editable="true" title="Data" type="java.lang.Object"/>
-                            <Column editable="true" title="Respons&#xe1;vel" type="java.lang.Object"/>
-                            <Column editable="true" title="Motivo" type="java.lang.Object"/>
-                          </Table>
                         </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaMovimentacoes = {&quot;Movimento&quot;, &quot;Valor&quot;, &quot;Data&quot;, &quot;Respons&#xe1;vel&quot;, &quot;Benefici&#xe1;rio&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaMovimentacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaMovimentacoes.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasMovimentacoes = new ArrayList&lt;&gt;();&#xa;&#xa;//Adicionando valores nas linhas&#xa;for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {&#xa;    listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), Float.toString(movimentacao.getValor()), &#xa;            movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});&#xa;}&#xa;&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaMovimentacoes = new DefaultTableModel(&#xa;                    listaLinhasMovimentacoes.toArray(new Object[listaLinhasMovimentacoes.size()][]), nomesColunasTabelaMovimentacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaMovimentacoes.getColumnModel().getColumn(1).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaMovimentacoes.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(260);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(190);"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1334,25 +1582,21 @@
                     <Property name="text" type="java.lang.String" value="Valor em Caixa:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="campoValorCaixa">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="18" style="0"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JComboBox" name="comboBoxOrdenarCaixaEMovimentacao">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="3"/>
+                    <Property name="maximumRowCount" type="int" value="7"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Mais Recentes"/>
-                        <StringItem index="1" value="Mias Antigos"/>
-                        <StringItem index="2" value="Pend&#xea;ncias"/>
+                      <StringArray count="7">
+                        <StringItem index="0" value="Todas"/>
+                        <StringItem index="1" value="Vendas"/>
+                        <StringItem index="2" value="Loca&#xe7;&#xf5;es"/>
                         <StringItem index="3" value="Despesas"/>
+                        <StringItem index="4" value="Mais Recentes"/>
+                        <StringItem index="5" value="Mias Antigas"/>
+                        <StringItem index="6" value="Pend&#xea;ncias"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1375,6 +1619,37 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRegistrarDespesaActionPerformed"/>
                   </Events>
                 </Component>
+                <Component class="javax.swing.JButton" name="botaoEditarMovimentacao">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Editar   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoEditarMovimentacao.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirMovimentacao">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="   Excluir   "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirMovimentacaoActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirMovimentacao.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="painelConfiguracoes">
@@ -1389,6 +1664,10 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelConfiguracoesMouseClicked"/>
               </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="}&#xa;} catch (UsuarioInexistenteException e) {&#xa;    setVisible(false);&#xa;    new LoginFrame().setVisible(true);&#xa;}"/>
+                <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="try {&#xa;&#x9;if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {"/>
+              </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Configura&#xe7;&#xe3;o">
@@ -1403,24 +1682,20 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelDiretorioContratos" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="campoDiretorioContratos" min="-2" pref="454" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="botaoProcurarDiretorioContratos" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="botaoSalvarDiretorioContratos" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="labelDiretorioDocumentos" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoDiretorioBackup" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="botaoProcurarDiretorioBackup" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="botaoSalvarDiretorioBackup" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="labelDiretorioBackups" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="campoDiretorioDocumentos" min="-2" pref="454" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="botaoSalvarDiretorioContratos" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="647" max="32767" attributes="0"/>
+                          <EmptySpace pref="756" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1432,18 +1707,16 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="campoDiretorioBackup" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botaoProcurarDiretorioBackup" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoSalvarDiretorioBackup" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                          <Component id="labelDiretorioContratos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="labelDiretorioDocumentos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="campoDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botaoProcurarDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="campoDiretorioDocumentos" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoSalvarDiretorioContratos" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="438" max="32767" attributes="0"/>
+                          <EmptySpace pref="443" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1463,18 +1736,6 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarDiretorioBackupActionPerformed"/>
                   </Events>
-                </Component>
-                <Component class="javax.swing.JButton" name="botaoProcurarDiretorioBackup">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Procurar"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Procurar diret&#xf3;rio"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="campoDiretorioBackup">
                   <Properties>
@@ -1518,19 +1779,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarDiretorioContratosActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="botaoProcurarDiretorioContratos">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Procurar"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Procurar diret&#xf3;rio"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="campoDiretorioContratos">
+                <Component class="javax.swing.JTextField" name="campoDiretorioDocumentos">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="2"/>
@@ -1545,16 +1794,16 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioContratosMouseClicked"/>
-                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioContratosKeyTyped"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioDocumentosMouseClicked"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioDocumentosKeyTyped"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="labelDiretorioContratos">
+                <Component class="javax.swing.JLabel" name="labelDiretorioDocumentos">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Diret&#xf3;rio de Contratos"/>
+                    <Property name="text" type="java.lang.String" value="Diret&#xf3;rio de Documentos"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -1573,7 +1822,7 @@
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="}&#xa;} catch (UsuarioInexistenteException e) {&#xa;    setVisible(false);&#xa;    new LoginFrame().setVisible(true);&#xa;}"/>
-                <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="try {&#xa;if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {"/>
+                <AuxValue name="JavaCodeGenerator_LayoutCodePost" type="java.lang.String" value="try {&#xa;    if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {"/>
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
@@ -1592,8 +1841,6 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="botaoAtivarTemporada" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -1601,14 +1848,20 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarUsuario" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelOrdenarUsuario" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboBoxUsuario" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelFiltrarUsuario" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxUsuario" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="botaoEditarUsuario" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoExcluirUsuario" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="726" max="32767" attributes="0"/>
+                          <EmptySpace pref="744" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1618,7 +1871,6 @@
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="botaoNovoUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoAtivarTemporada" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
@@ -1626,14 +1878,20 @@
                               <Component id="campoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelOrdenarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboBoxUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                  <Component id="botaoEditarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoExcluirUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboBoxUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="pnRlUsuario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="75" max="32767" attributes="0"/>
+                          <EmptySpace pref="74" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1719,7 +1977,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="labelOrdenarUsuario">
+                <Component class="javax.swing.JLabel" name="labelFiltrarUsuario">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -1744,17 +2002,6 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Gerar Recibo"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                </Component>
                 <Component class="javax.swing.JButton" name="botaoAtivarTemporada">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1768,6 +2015,40 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAtivarTemporadaActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirUsuario">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="  Excluir  "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirUsuarioActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoExcluirUsuario.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoEditarUsuario">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="  Editar  "/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoEditarUsuarioActionPerformed"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoEditarUsuario.setVisible(false);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

@@ -4,6 +4,7 @@ import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;

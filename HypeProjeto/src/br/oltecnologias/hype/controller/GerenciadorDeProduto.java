@@ -30,6 +30,10 @@ public class GerenciadorDeProduto {
         this.produtos.add(produto);
         return produto;
     }
+    
+    public void removerProduto(String codigo) throws ProdutoInexistenteException {
+        this.produtos.remove(pesquisarProdutoPeloCodigo(codigo));
+    }
 
     public void editarProduto(String codigo, String nome, int tam,
             float valor, String fornecedor, String cor) {

@@ -8,21 +8,21 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
+import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -358,12 +358,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         });
 
         labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelEntrada.setText("Entrada: R$");
+        labelEntrada.setText("Entrada:* R$");
 
         campoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         labelParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelParcelas.setText("Parcelas:");
+        labelParcelas.setText("Parcelas:*");
 
         campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -375,26 +375,25 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         painelFormaPagamentoLayout.setHorizontalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addContainerGap(91, Short.MAX_VALUE)
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                        .addGap(149, 149, 149)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormaPagamentoLayout.createSequentialGroup()
                         .addComponent(radioAVista)
                         .addGap(18, 18, 18)
                         .addComponent(radioCartao)
                         .addGap(18, 18, 18)
                         .addComponent(radioPromissoria))
-                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormaPagamentoLayout.createSequentialGroup()
                         .addComponent(labelEntrada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
+                        .addGap(77, 77, 77)
                         .addComponent(labelParcelas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloVezes)))
-                .addGap(144, 144, 144))
+                .addContainerGap(144, Short.MAX_VALUE))
         );
         painelFormaPagamentoLayout.setVerticalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -411,7 +410,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     .addComponent(labelParcelas)
                     .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSimboloVezes))
-                .addGap(31, 31, 31))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         painelContrato.setBackground(new java.awt.Color(255, 255, 255));
@@ -597,7 +596,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
                                 Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
                                     Float.parseFloat(campoEntrada.getText()));
-
+                        
+                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", Float.parseFloat(getValorTotalDaLocacao()), 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
+                                                Configuracao.getInstance().getEmpresa().getNome());
+                        
                         JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
 
                         concluirSelecionado = true;
@@ -811,6 +814,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         return novaLocacao;
     }
     
+    public Movimentacao getNovaMovimentacao() {
+        return novaMovimentacao;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -834,6 +841,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private List<Produto> produtosLocados;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
+    private Movimentacao novaMovimentacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

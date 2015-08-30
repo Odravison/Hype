@@ -16,12 +16,12 @@ public class Movimentacao {
     
     private long id;
     private String movimento;
-    private String valor;
+    private float valor;
     private Calendar data;
     private Usuario responsavel;
     private String beneficiario;
 
-    public Movimentacao(String movimento, String valor, Calendar data, Usuario responsavel, String beneficiario) {
+    public Movimentacao(String movimento, float valor, Calendar data, Usuario responsavel, String beneficiario) {
         this.movimento = movimento;
         this.valor = valor;
         this.data = data;
@@ -48,11 +48,11 @@ public class Movimentacao {
         this.movimento = movimento;
     }
 
-    public String getValor() {
+    public float getValor() {
         return valor;
     }
 
-    public void setValor(String valor) {
+    public void setValor(float valor) {
         this.valor = valor;
     }
 

@@ -168,12 +168,11 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                // validar usuário no sistema
+                // Validar usuário no sistema
                 if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
                     new PrincipalFrame(campoLogin.getText()).setVisible(true);
                     setVisible(false);
                 } else {
-                    System.out.println("entrou");
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception e) {
