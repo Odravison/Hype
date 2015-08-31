@@ -114,7 +114,11 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
+<<<<<<< HEAD
     public String getUltimaMedicaoToShow() {
+=======
+    public String getUltimaMedicao() {
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
         return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
     }
 

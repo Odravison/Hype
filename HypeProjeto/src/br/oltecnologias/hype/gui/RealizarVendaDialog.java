@@ -7,7 +7,14 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
+<<<<<<< HEAD
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+=======
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.model.Configuracao;
+import br.oltecnologias.hype.model.Movimentacao;
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Frame;
@@ -72,6 +79,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         botaoConcluir = new javax.swing.JButton();
         labelValorTotal = new javax.swing.JLabel();
         labelValorVenda = new javax.swing.JLabel();
+        campoDesconto = new javax.swing.JTextField();
+        labelDesconto = new javax.swing.JLabel();
+        labelSimboloPorcentagem = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
@@ -336,6 +346,19 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelValorVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorVenda.setForeground(new java.awt.Color(0, 153, 0));
 
+        campoDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoDescontoKeyTyped(evt);
+            }
+        });
+
+        labelDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelDesconto.setText("Desconto:");
+
+        labelSimboloPorcentagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelSimboloPorcentagem.setText("%");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -351,6 +374,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelValorVenda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelDesconto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelSimboloPorcentagem)
+                        .addGap(56, 56, 56)
                         .addComponent(botaoConcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar)))
@@ -370,7 +399,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelValorTotal)
                         .addComponent(botaoConcluir)
+<<<<<<< HEAD
                         .addComponent(botaoCancelar))
+=======
+                        .addComponent(botaoCancelar)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(labelDesconto)
+                            .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelSimboloPorcentagem)))
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                     .addComponent(labelValorVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
@@ -493,7 +530,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         
                         novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
+<<<<<<< HEAD
                                     Float.parseFloat(campoEntrada.getText()));
+=======
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+                        
+                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
+                                                Configuracao.getInstance().getEmpresa().getNome());
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                         
                         JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
                                                 
@@ -513,8 +558,19 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
                     novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
+<<<<<<< HEAD
                                     Float.parseFloat(campoEntrada.getText()));
+=======
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                     
+<<<<<<< HEAD
+=======
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
+                                                Configuracao.getInstance().getEmpresa().getNome());
+                    
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
                     concluirSelecionado = true;
@@ -526,7 +582,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 }
             }
         } catch(Exception e) {
+<<<<<<< HEAD
             JOptionPane.showMessageDialog(null, "Ocorreu um erro na operação.\n\nPor favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
+=======
+            JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
@@ -561,6 +621,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         desabilitarCampos();
     }//GEN-LAST:event_radioAVistaMouseClicked
 
+    private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
+        validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
+        if(Integer.parseInt(campoDesconto.getText()) > 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoDescontoKeyTyped
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -573,11 +640,29 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
     
+<<<<<<< HEAD
+    //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
+    private void adicionarProdutoAVenda(Produto produto) {
+        produtosVendidos.add(produto);
+=======
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+            evt.consume();
+        }
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
+    }
+    
+<<<<<<< HEAD
+=======
     //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
     private void adicionarProdutoAVenda(Produto produto) {
         produtosVendidos.add(produto);
     }
     
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     private void removerProdutoDaVenda(Produto produto) {
         produtosVendidos.remove(produto);
     }
@@ -615,6 +700,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         return novaVenda;
     }
     
+    public Movimentacao getNovaMovimentacao() {
+        return novaMovimentacao;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -636,20 +725,26 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private DefaultListModel modeloProdutos;
     private List<Produto> produtosVendidos;
     protected boolean concluirSelecionado;
+    private String numeros = "0987654321"; // Alguns campos não devem aceitar números
+    private int maxCaracteresDesconto = 3;
     protected Venda novaVenda;
+    protected Movimentacao novaMovimentacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoConcluir;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaoSelecionarProdutos;
+    private javax.swing.JTextField campoDesconto;
     private javax.swing.JTextField campoEntrada;
     private javax.swing.JTextField campoParcelas;
     private javax.swing.JTextField campoPesquisar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelDesconto;
     private javax.swing.JLabel labelEntrada;
     private javax.swing.JLabel labelParcelas;
     private javax.swing.JLabel labelPesquisar;
+    private javax.swing.JLabel labelSimboloPorcentagem;
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JLabel labelValorVenda;
     private javax.swing.JList listaProdutos;

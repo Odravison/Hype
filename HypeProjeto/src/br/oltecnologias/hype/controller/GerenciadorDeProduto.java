@@ -36,6 +36,10 @@ public class GerenciadorDeProduto {
         this.produtos.add(produto);
         return produto;
     }
+    
+    public void removerProduto(String codigo) throws ProdutoInexistenteException {
+        this.produtos.remove(pesquisarProdutoPeloCodigo(codigo));
+    }
 
     public void editarProduto(String codigo, String nome, int tam,
             float valor, String fornecedor, String cor) {
@@ -89,6 +93,7 @@ public class GerenciadorDeProduto {
      * @throws br.oltecnologias.hype.exception.ProdutoInexistenteException
      */
     public Produto pesquisarProdutoPeloCodigo(String codigo) throws ProdutoInexistenteException {
+<<<<<<< HEAD
         emf = Persistence.createEntityManagerFactory("closetpu");
         pjp = new ProdutoJpaRepository (emf);
         
@@ -103,6 +108,14 @@ public class GerenciadorDeProduto {
 //            }
 //        }
 //        throw new ProdutoInexistenteException("Produto não cadastrado.");
+=======
+        for (Produto p : this.produtos) {
+            if (p.getCodigo().equals(codigo)) {
+                return p;
+            }
+        }
+        throw new ProdutoInexistenteException("Produto não cadastrado.");
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     }
 
     public List<Produto> getProdutosDeLocacao() {

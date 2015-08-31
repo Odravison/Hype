@@ -283,21 +283,39 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoSenhaKeyTyped
 
+<<<<<<< HEAD
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
         } if(campo.getText().length() >= maxCaracteres){ 
+=======
+    private void campoNickNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNickNameKeyTyped
+        validarLetrasETamanho(evt, campoNickName, maxCaracteresNickName); 
+    }//GEN-LAST:event_campoNickNameKeyTyped
+
+    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
+        if(new String(campoSenha.getPassword()).length() >= maxCaracteresSenha){ 
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
             evt.consume(); 
-            campo.setText(campo.getText().substring(0, maxCaracteres)); // Remove os caracters inválidos caso o usuário tenha colado o texto
         }
+    }//GEN-LAST:event_campoSenhaKeyTyped
+
+    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
+        if(numeros.contains(evt.getKeyChar()+"") && campo.getText().length() >= maxCaracteres){// se o carácter que gerou o evento estiver na lista 
+            evt.consume();
+        } 
     }
     
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+        if(!numeros.contains(evt.getKeyChar()+"") && campo.getText().length() >= maxCaracteres){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
+<<<<<<< HEAD
         } if(campo.getText().length() >= maxCaracteres){ 
             evt.consume(); 
         }
+=======
+        } 
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     }
     
     public boolean alterarDados() {        

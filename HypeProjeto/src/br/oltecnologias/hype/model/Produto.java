@@ -1,6 +1,7 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -56,7 +57,7 @@ public class Produto implements Serializable {
     }
 
     public String getDescricao() {
-        return this.nome + ", " + this.cor + " - Tam: " + this.tam + " - R$ " + this.valor;
+        return this.nome + ", " + this.cor + " - Tam: " + this.tam + " - R$ " + new DecimalFormat("#.##").format(this.valor);
     }
 
     public double getValor() {
@@ -121,5 +122,9 @@ public class Produto implements Serializable {
         } else {
             return "Venda";
         }
+    }
+    
+    public String getValorInString() {
+        return new DecimalFormat("#.##").format(this.valor);
     }
 }

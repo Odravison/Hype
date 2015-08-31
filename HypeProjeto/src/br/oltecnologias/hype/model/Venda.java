@@ -93,7 +93,7 @@ public class Venda implements Serializable {
         return produtosVendidos;
     }
     
-    public String getDataVenda() {
+    public String getDataVendaInString() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataVenda.getTime());
     }
     

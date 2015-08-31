@@ -7,6 +7,7 @@ import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +38,10 @@ public class GerenciadorDeLocacao {
     }
 
     public Locacao realizarLocacao(Cliente cliente, List<Produto> produtos, float valor, Calendar dataLocacao, 
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) throws ProdutoInexistenteException {
-        Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada, int desconto) throws ProdutoInexistenteException {
+        
+        float valorFinal = valor - ((desconto * valor)/100);
+        Locacao locacao = new Locacao(cliente, produtos, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
         cliente.adicionarLocacao(locacao);
         this.locacoes.add(locacao);
         for (Produto p: produtos){
@@ -68,7 +71,11 @@ public class GerenciadorDeLocacao {
                             && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                         emprestou = true;
                         for (Produto p : locacaoGer.getProdutos()) {
+<<<<<<< HEAD
                             System.out.println("===============>>>>> " + p.getCodigo());
+=======
+
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                             GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).addQuant(p.getQuantidade());
                         }
                         cliente.removerLocacao(locacaoCliente);

@@ -1,7 +1,13 @@
 package br.oltecnologias.hype.controller;
 
 import br.oltecnologias.hype.exception.DespesaInexistenteException;
+import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.model.Despesa;
+<<<<<<< HEAD
+=======
+import br.oltecnologias.hype.model.Movimentacao;
+import br.oltecnologias.hype.model.Usuario;
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,13 +16,16 @@ import java.util.Calendar;
 
 public class GerenciadorDoSistema {
 
+    private Usuario usuarioLogado;
     private double valorCaixaDiario;
     private List<Despesa> despesas;
+    private List<Movimentacao> movimentacoes;
     private static GerenciadorDoSistema singleton = null;
 
     private GerenciadorDoSistema() {
         valorCaixaDiario = 0;
         despesas = new ArrayList<Despesa>();
+        movimentacoes = new ArrayList<Movimentacao>();
 
     }
 
@@ -90,6 +99,25 @@ public class GerenciadorDoSistema {
         this.despesas = despesas;
     }
     
+<<<<<<< HEAD
+=======
+    public List<Movimentacao> getMovimentacoes() {
+        return movimentacoes;
+    }
+
+    public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+        this.movimentacoes = movimentacoes;
+    }
+    
+    public Usuario getUsuarioLogado() {
+        return usuarioLogado;
+    }
+
+    public void setUsuarioLogado(Usuario usuarioLogado) {
+        this.usuarioLogado = usuarioLogado;
+    }
+    
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     //????
     public static GerenciadorDoSistema getSingleton() {
         return singleton;
@@ -100,9 +128,40 @@ public class GerenciadorDoSistema {
     }
     
     public void gerarRelatorioDeCaixa(Calendar dataInicial, Calendar dataFinal) throws IOException {
+<<<<<<< HEAD
         //Abrir o pdf do contrato gerado no sistema
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();  
         desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf")); 
+=======
+        //Abrir o pdf do relatório gerado no sistema
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();  
+        desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf")); 
+    }
+    
+    public Movimentacao cadastrarMovimentacao(String movimento, float valor, Calendar data, Usuario responsavel, String beneficiario) {
+        
+        Movimentacao movimentacao = new Movimentacao(movimento, valor, data, responsavel, beneficiario);
+        this.movimentacoes.add(movimentacao);
+        if(movimento.toUpperCase().equals("DESPESA") ) {
+            this.valorCaixaDiario -= valor;
+        } else {
+            this.valorCaixaDiario += valor;
+        }
+        return movimentacao;
+    }
+    
+    public void removerMovimentacao(long id) throws MovimentacaoInexistenteException {
+        this.movimentacoes.remove(pesquisarMovimentacao(id));
+    }
+    
+    public Movimentacao pesquisarMovimentacao(long id) throws MovimentacaoInexistenteException{
+        for(Movimentacao movimentacao: this.movimentacoes) {
+            if(movimentacao.getId() == id) {
+                return movimentacao;
+            }
+        }
+        throw new MovimentacaoInexistenteException("A movimentação em questão não existe.");
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     }
 
 }

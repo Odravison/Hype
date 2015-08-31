@@ -465,21 +465,20 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
+                  <EmptySpace pref="91" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="radioAVista" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="radioCartao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="radioPromissoria" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="104" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="labelEntrada" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="campoEntrada" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                           <Component id="labelParcelas" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="campoParcelas" min="-2" pref="30" max="-2" attributes="0"/>
@@ -487,7 +486,7 @@
                           <Component id="labelSimboloVezes" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
+                  <EmptySpace pref="144" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -508,7 +507,11 @@
                       <Component id="campoParcelas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelSimboloVezes" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
+<<<<<<< HEAD
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+=======
+                  <EmptySpace pref="31" max="32767" attributes="0"/>
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
               </Group>
           </Group>
         </DimensionLayout>
@@ -562,6 +565,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+<<<<<<< HEAD
             <Property name="text" type="java.lang.String" value="Entrada: R$"/>
           </Properties>
         </Component>
@@ -578,6 +582,24 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Parcelas:"/>
+=======
+            <Property name="text" type="java.lang.String" value="Entrada:* R$"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="campoEntrada">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="labelParcelas">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Parcelas:*"/>
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="campoParcelas">
@@ -713,3 +735,10 @@
     </Component>
   </SubComponents>
 </Form>
+<<<<<<< HEAD
+
+=======
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDescontoKeyTyped"/>
+      </Events>
+>>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
