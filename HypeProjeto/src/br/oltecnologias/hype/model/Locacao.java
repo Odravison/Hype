@@ -57,11 +57,7 @@ public class Locacao implements Serializable {
     }
 
     public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
-<<<<<<< HEAD
             Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada) {
-=======
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) {
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
         this.cliente = cliente;
         this.produtos = produtos;
         this.valorLocacao = valorLocacao;
@@ -70,11 +66,7 @@ public class Locacao implements Serializable {
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
         this.entrada = entrada;
-<<<<<<< HEAD
-        if (formaDePagamento.equals("A VISTA")) {
-=======
         if (formaDePagamento.equals("À VISTA")) {
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
     }
@@ -204,7 +196,6 @@ public class Locacao implements Serializable {
     public void setParcelas(int parcelas) {
         this.parcelas = parcelas;
     }
-<<<<<<< HEAD
     
     public void addValorJaPago(double valorDessePagamento){
         this.jaPago += valorDessePagamento;
@@ -217,11 +208,6 @@ public class Locacao implements Serializable {
     public void setEntrada(double entrada) {
         this.entrada = entrada;
     }
-=======
-
-    public float getEntrada() {
-        return entrada;
-    }
 
     public void setEntrada(float entrada) {
         this.entrada = entrada;
@@ -230,6 +216,4 @@ public class Locacao implements Serializable {
     public String getValorLocacaoInString() {
         return new DecimalFormat("#.##").format(this.valorLocacao);
     }
-
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
 }
