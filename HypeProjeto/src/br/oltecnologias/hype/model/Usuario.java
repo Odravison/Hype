@@ -61,4 +61,11 @@ public class Usuario implements Serializable {
     public boolean isIsAdministrador() {
         return isAdministrador;
     }
+    
+    public String getCategoria() {
+        if(isAdministrador) {
+            return "Administrador";
+        }
+        return "Funcionário";
+    }
 }

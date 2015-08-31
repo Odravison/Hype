@@ -7,7 +7,10 @@ package br.oltecnologias.hype;
 //import br.oltecnologias.hype.dao.ConfiguracaoJpaController;
 //import br.oltecnologias.hype.dao.MedidasJpaController;
 //import br.oltecnologias.hype.dao.ProdutoJpaController;
+import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.dao.ClienteJpaRepository;
+import br.oltecnologias.hype.dao.LocacaoJpaRepository;
+import br.oltecnologias.hype.dao.ProdutoJpaRepository;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
@@ -47,44 +50,63 @@ public class Aplicacao {
 
         Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
         Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
-//        Cliente cliente = new Cliente("1234566", "Luender Viado Lima", end, medidas, telefone1, telefone2);
+        
+        Cliente cliente = new Cliente("1234566", "Luender Viado Lima", end, medidas, telefone1, telefone2);
 
         
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         
-//        ProdutoJpaController pjp = new ProdutoJpaController(emf);
-//        
-//        List<Produto> produtos = new ArrayList<Produto>();
-//
-//        for (int i = 0; i < 6; i++) {
-//            Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
-//            String fornecedor = "EMIRATES";
-//            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
-//            produtos.add(p);
-//            pjp.destroy(p.getCodigo());
-//        }
-//        
-//        Locacao locacao = new Locacao(cliente, produtos, 234, Calendar.getInstance(), Calendar.getInstance(), telefone2);
-//        List<Locacao> locacoes = new ArrayList<Locacao>();
-//        locacoes.add(locacao);
-//
-//        cliente.setLocacoes(locacoes);
+        List<Produto> produtos = new ArrayList<Produto>();
+
+        for (int i = 0; i < 6; i++) {
+            Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
+            String fornecedor = "EMIRATES";
+            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
+            produtos.add(p);
+        }
+        
+        Locacao locacao = new Locacao(cliente, produtos, 300.99, Calendar.getInstance(), Calendar.getInstance(), "A VISTA", 3, 300);
+        List<Locacao> locacoes = new ArrayList<Locacao>();
+        locacoes.add(locacao);
+
+        cliente.setLocacoes(locacoes);
 //        cliente.setCpf("9999999999999");
         
         
         ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
-//        cjp.create(cliente);
+        cjp.create(cliente);
         
-        Cliente cliente = cjp.findByCpf("1234566");
-        cliente.setCelular("111111111");
+//        Cliente cliente2 = cjp.findByCpf("1234566");
+//        cliente.setCelular("111111111");
+//        
         
-        
-        cjp.editarCliente(cliente);
-        
+//        cjp.editarCliente(cliente);
+//      
+        EntityManagerFactory emf2 = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf2);
         
         for (Cliente c: cjp.getAllClientes()){
-            System.out.println("===========>>>>>> " + c.getNome());
+            System.out.println("===========>>>>>> " + c.getNome() + "Com quantidade de locação: " + c.getLocacoes().size());
+        }
+        
+        
+        
+        
+        
+        for (Locacao l: ljp.getLocacaoByCliente(cliente.getCpf())){
+            System.out.println("============>>>>>>>>>> " + l.getContato());
+                    
+        }
+        
+//        ljp.removerLocacao(locacao);
+        GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId(), cliente);
+        
+//        ProdutoJpaRepository ppp = new ProdutoJpaRepository(emf2);
+//        ppp.apagarProduto("AT40P5071");
+        
+        for (Cliente c: cjp.getAllClientes()){
+            System.out.println("Quantidade de locacao >>> " + c.getLocacoes().size());
         }
         
 //        cjp.removerCliente(cliente.getCpf());
@@ -98,6 +120,7 @@ public class Aplicacao {
 //        cjp.destroy(cliente.getCpf());
 
         emf.close();
+        emf2.close();
 
         System.out.println("Funfou");
 

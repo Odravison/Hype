@@ -28,6 +28,10 @@ public class Venda implements Serializable {
     private String formaDePagamento;
     
     private Calendar dataVenda;
+    
+    private int quantidadeParcelas;
+
+    private float entrada;
 
     public Venda() {
     }
@@ -37,11 +41,13 @@ public class Venda implements Serializable {
      * @param produtos
      * @param valor
      */
-    public Venda(List<Produto> produtos, double valor, String formaDePagamento, Calendar dataVenda) {
+    public Venda(List<Produto> produtos, double valor, String formaDePagamento, Calendar dataVenda, int quantidadeParcelas, float entrada) {
         this.produtos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
         this.dataVenda = dataVenda;
+        this.quantidadeParcelas = quantidadeParcelas;
+        this.entrada = entrada;
         if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
         }
@@ -89,6 +95,22 @@ public class Venda implements Serializable {
     
     public String getDataVenda() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataVenda.getTime());
+    }
+    
+    public int getQuantidadeParcelas() {
+        return quantidadeParcelas;
+    }
+
+    public void setQuantidadeParcelas(int quantidadeParcelas) {
+        this.quantidadeParcelas = quantidadeParcelas;
+    }
+
+    public float getEntrada() {
+        return entrada;
+    }
+
+    public void setEntrada(float entrada) {
+        this.entrada = entrada;
     }
 
 }

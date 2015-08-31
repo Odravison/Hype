@@ -1,5 +1,8 @@
 package br.oltecnologias.hype.controller;
 
+import br.oltecnologias.hype.dao.ClienteJpaRepository;
+import br.oltecnologias.hype.dao.LocacaoJpaRepository;
+import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
@@ -8,11 +11,19 @@ import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class GerenciadorDeLocacao {
 
     private List<Locacao> locacoes;
     private static GerenciadorDeLocacao singleton = null;
+    
+    private LocacaoJpaRepository ljp;
+    private ClienteJpaRepository cjp;
+    
+    private EntityManagerFactory emf;
+    private EntityManagerFactory emfPessoas;
 
     private GerenciadorDeLocacao() {
         locacoes = new ArrayList<Locacao>();
@@ -26,33 +37,44 @@ public class GerenciadorDeLocacao {
     }
 
     public Locacao realizarLocacao(Cliente cliente, List<Produto> produtos, float valor, Calendar dataLocacao, 
-            Calendar dataDeDevolucao, String formaDePagamento) throws ProdutoInexistenteException {
-        Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento);
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) throws ProdutoInexistenteException {
+        Locacao locacao = new Locacao(cliente, produtos, valor, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
         cliente.adicionarLocacao(locacao);
         this.locacoes.add(locacao);
         for (Produto p: produtos){
-            GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).removerQuant(p.getQuantidade());
+            GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).removerQuant(p.getQuantidade());
         }
         return locacao;
     }
 
     public List<Locacao> getLocacoes() {
-        return locacoes;
+        emf = Persistence.createEntityManagerFactory("closetpu");
+        ljp = new LocacaoJpaRepository(emf);
+        
+        return ljp.getAllLocacao();
     }
 
-    public void finalizarLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException, LocacaoInexistenteException {
+    public void finalizarLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException, LocacaoInexistenteException, ClienteInexistenteException {
+        emf = Persistence.createEntityManagerFactory("closetpu");
+        ljp = new LocacaoJpaRepository(emf);
+        
+        
         boolean emprestou = false;
-        for (Locacao locacaoCliente : cliente.getLocacoes()) {
+        
+        for (Locacao locacaoCliente : ljp.getLocacaoByCliente(cliente.getCpf())) {
             if (locacaoCliente.getId() == idLoc) {
-                for (Locacao locacaoGer : this.locacoes) {
+                for (Locacao locacaoGer : ljp.getAllLocacao()) {
                     if (locacaoGer.getId() == idLoc
                             && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                         emprestou = true;
                         for (Produto p : locacaoGer.getProdutos()) {
-                            GerenciadorDeProduto.getInstance().pesquisarProduto(p.getCodigo()).addQuant(p.getQuantidade());
+                            System.out.println("===============>>>>> " + p.getCodigo());
+                            GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).addQuant(p.getQuantidade());
                         }
                         cliente.removerLocacao(locacaoCliente);
-                        this.locacoes.remove(locacaoGer);
+                        cjp.editarCliente(cliente);
+                        
+//                        this.locacoes.remove(locacaoGer);
                     }
                 }
             }

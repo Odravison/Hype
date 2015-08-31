@@ -29,8 +29,8 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
     public CadastrarFornecedorDialog(Frame owner) {
         super(owner);
         initComponents();
-        //botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        //botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
     }
 
     /**
@@ -65,7 +65,7 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
 
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
-        setTitle("Cadastrar Cliente");
+        setTitle("Cadastrar Fornecedor");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -219,11 +219,10 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
                         .addComponent(painelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(labelNome)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelCNPJ)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)

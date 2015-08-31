@@ -5,6 +5,8 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import java.io.File;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
@@ -52,7 +54,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         painelPeriodo.setBorder(javax.swing.BorderFactory.createTitledBorder("Período"));
 
         labelGerarRelatorio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelGerarRelatorio.setText("Gerar realatório entre as datas:");
+        labelGerarRelatorio.setText("Gerar relatório entre as datas:");
 
         labelDataInicial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDataInicial.setText("Data Inicial:");
@@ -70,15 +72,15 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                         .addGap(171, 171, 171)
                         .addComponent(labelGerarRelatorio))
                     .addGroup(painelPeriodoLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
+                        .addGap(43, 43, 43)
                         .addComponent(labelDataInicial)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(69, 69, 69)
+                        .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
                         .addComponent(labelDataFinal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         painelPeriodoLayout.setVerticalGroup(
             painelPeriodoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,14 +152,19 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
-        if(dateDataInicial.getDate().toString().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione uma data inicial para que o relatório possa ser gerado", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(dateDataFinal.getDate().toString().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Selecione uma data final para que o relatório possa ser gerado", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            Calendar.getInstance().setTime(dateDataInicial.getDate());
-            Calendar.getInstance().setTime(dateDataFinal.getDate());
-            //Lógica para gerar um relatório
+        try {
+            Calendar dataInicial = Calendar.getInstance();
+            Calendar dataFinal = Calendar.getInstance();
+            
+            dataInicial.setTime(dateDataInicial.getDate());
+            dataFinal.setTime(dateDataFinal.getDate());
+            
+            GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
+            
+            setVisible(false);
+            dispose();
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Informe as datas corretamente para a geração do relatório", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoGerarActionPerformed
 

@@ -2,6 +2,8 @@ package br.oltecnologias.hype.controller;
 
 import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.model.Despesa;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -75,8 +77,7 @@ public class GerenciadorDoSistema {
     public void restaurarDadosDeBackup() {
         
     }
-
-
+    
     public void carregarSistema() {
         
     }
@@ -88,13 +89,20 @@ public class GerenciadorDoSistema {
     public void setDespesas(List<Despesa> despesas) {
         this.despesas = despesas;
     }
-
+    
+    //????
     public static GerenciadorDoSistema getSingleton() {
         return singleton;
     }
-
+    //????
     public static void setSingleton(GerenciadorDoSistema singleton) {
         GerenciadorDoSistema.singleton = singleton;
+    }
+    
+    public void gerarRelatorioDeCaixa(Calendar dataInicial, Calendar dataFinal) throws IOException {
+        //Abrir o pdf do contrato gerado no sistema
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();  
+        desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf")); 
     }
 
 }

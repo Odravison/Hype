@@ -94,7 +94,9 @@ public class ProdutoJpaRepository implements ProdutoRepository {
                 throw new ProdutoInexistenteException("Produto com código: " + codigo + " não foi cadastrado!");
             }
 
-            em.remove(em.find(Produto.class, codigo));
+            em.remove(em.getReference(Produto.class, codigo));
+            
+            em.getTransaction().commit();
 
         } finally {
             if (em != null) {

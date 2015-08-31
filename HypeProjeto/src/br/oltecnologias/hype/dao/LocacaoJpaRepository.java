@@ -131,6 +131,8 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             l.setProdutos(locacao.getProdutos());
             l.setValorDeEntrada(locacao.getValorDeEntrada());
             l.setValorLocacao(locacao.getValorLocacao());
+            l.setParcelas(locacao.getParcelas());
+            l.setEntrada(locacao.getEntrada());
             
             em.merge(l);
 
@@ -146,6 +148,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
     @Override
     public void removerLocacao(Locacao locacao) throws LocacaoInexistenteException {
         EntityManager em = null;
+        Locacao loca = null;
         
         try{
             em = getEntityManager();
@@ -155,8 +158,8 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             }
             
             em.getTransaction().begin();
-            em.remove(locacao);
-            
+            loca = em.merge(locacao);
+            em.remove(loca);
             em.getTransaction().commit();
             
         }finally{
@@ -173,7 +176,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
         List<Locacao> locacoes = new ArrayList<Locacao>();
         try {
             em = getEntityManager();
-            Query q = em.createQuery("SELECT c FROM Locacao c");
+            Query q = em.createQuery("SELECT l FROM Locacao l");
             locacoes = q.getResultList();
 
         } finally {
@@ -184,5 +187,25 @@ public class LocacaoJpaRepository implements LocacaoRepository {
 
         return locacoes;
     }
+
+    @Override
+    public List<Locacao> getLocacaoByCliente(String idCliente) {
+        EntityManager em = null;
+        List<Locacao> locacoes = new ArrayList<Locacao>();
+        try {
+            em = getEntityManager();
+            Query q = em.createQuery("SELECT l FROM Locacao as l WHERE l.cliente.cpf = :parametro", Locacao.class);
+            q.setParameter("parametro", idCliente);
+            locacoes = q.getResultList();
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
+        return locacoes;
+    }
+    
     
 }

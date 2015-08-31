@@ -1,14 +1,20 @@
 package br.oltecnologias.hype.controller;
 
+import br.oltecnologias.hype.dao.ProdutoJpaRepository;
 import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class GerenciadorDeProduto {
 
     private List<Produto> produtos;
+    private ProdutoJpaRepository pjp;
+    
+    private EntityManagerFactory emf;
     
     private static GerenciadorDeProduto singleton = null;
 
@@ -34,7 +40,7 @@ public class GerenciadorDeProduto {
     public void editarProduto(String codigo, String nome, int tam,
             float valor, String fornecedor, String cor) {
         try {
-            Produto p = pesquisarProduto(codigo);
+            Produto p = pesquisarProdutoPeloCodigo(codigo);
             p.setCor(cor);
             p.setTam(tam);
             p.setFornecedor(fornecedor);
@@ -82,13 +88,21 @@ public class GerenciadorDeProduto {
      * @return
      * @throws br.oltecnologias.hype.exception.ProdutoInexistenteException
      */
-    public Produto pesquisarProduto(String codigo) throws ProdutoInexistenteException {
-        for (Produto p : this.produtos) {
-            if (p.getCodigo().equals(codigo)) {
-                return p;
-            }
-        }
-        throw new ProdutoInexistenteException("Produto não cadastrado.");
+    public Produto pesquisarProdutoPeloCodigo(String codigo) throws ProdutoInexistenteException {
+        emf = Persistence.createEntityManagerFactory("closetpu");
+        pjp = new ProdutoJpaRepository (emf);
+        
+        Produto p = null;
+        p = pjp.findById(codigo);
+        return p;
+        
+        
+//        for (Produto p : this.produtos) {
+//            if (p.getCodigo().equals(codigo)) {
+//                return p;
+//            }
+//        }
+//        throw new ProdutoInexistenteException("Produto não cadastrado.");
     }
 
     public List<Produto> getProdutosDeLocacao() {

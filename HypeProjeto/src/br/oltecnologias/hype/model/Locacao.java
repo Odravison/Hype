@@ -15,11 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Entity
 public class Locacao implements Serializable {
@@ -29,15 +25,11 @@ public class Locacao implements Serializable {
     @Column(name="id_locacao")
     private int id;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "id_cliente")
-//    @Fetch(FetchMode.JOIN)
-//    @Cascade(CascadeType.MERGE)
-    
-    @Transient
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="id_cliente")
     private Cliente cliente;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="fk_locacao")
     private List<Produto> produtos;
 
@@ -54,18 +46,25 @@ public class Locacao implements Serializable {
     private double valorDeEntrada = 0;
 
     private double jaPago = 0;
+    
+    private int parcelas;
+    
+    private double entrada;
 
+    
     public Locacao() {
     }
 
     public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.valorLocacao = valorLocacao;
         this.dataLocacao = dataLocacao;
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
+        this.parcelas = parcelas;
+        this.entrada = entrada;
         if (formaDePagamento.equals("A VISTA")) {
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
@@ -189,7 +188,23 @@ public class Locacao implements Serializable {
         return this.cliente.getCelular();
     }
     
+    public int getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(int parcelas) {
+        this.parcelas = parcelas;
+    }
+    
     public void addValorJaPago(double valorDessePagamento){
         this.jaPago += valorDessePagamento;
+    }
+
+    public double getEntrada() {
+        return entrada;
+    }
+
+    public void setEntrada(double entrada) {
+        this.entrada = entrada;
     }
 }

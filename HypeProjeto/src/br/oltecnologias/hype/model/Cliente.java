@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -53,7 +54,7 @@ public class Cliente implements Serializable {
     @Column(nullable = false, name="celular")
     private String celular;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name="fk_cliente")
     private List<Locacao> locacoes;
 
@@ -114,7 +115,7 @@ public class Cliente implements Serializable {
     }
 
     public String getUltimaMedicaoToShow() {
-        return new SimpleDateFormat("dd.MM.yyyy").format(ultimaMedicao.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
     }
 
     public void setUltimaMedicao(Calendar ultimaMedicao) {

@@ -51,12 +51,12 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="27" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="abas" alignment="0" max="32767" attributes="0"/>
                       <Component id="painelTopo" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="19" max="32767" attributes="0"/>
+                  <EmptySpace pref="28" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -212,14 +212,20 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarCliente" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelOrdenar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboFiltrarCliente" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelOrdenar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboFiltrarCliente" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="botaoEditarCliente" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoExcluirCliente" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlCliente" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="501" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -233,13 +239,17 @@
                               <Component id="campoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelOrdenar" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="comboFiltrarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                  <Component id="botaoEditarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoExcluirCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlCliente" min="-2" pref="359" max="-2" attributes="0"/>
+                          <Component id="pnRlCliente" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -321,8 +331,12 @@
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
+                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[786, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -333,11 +347,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaClientes">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
-                        </Property>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="0" rowCount="0"/>
                         </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -347,8 +358,11 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaClientesMouseClicked"/>
+                      </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;N&#xfa;mero de celular&quot;, &quot;&#xda;ltima Medi&#xe7;&#xe3;o&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaClientes.setRowHeight(25); // altura em pixels  &#xa;&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicao()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes);&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;N&#xfa;mero de celular&quot;, &quot;&#xda;ltima Medi&#xe7;&#xe3;o&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicao()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(110);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -360,6 +374,34 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Filtrar por:"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoEditarCliente">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Editar"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoEditarProduto.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirCliente">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Excluir"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirProduto.setVisible(false);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -395,14 +437,20 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarProduto" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlProduto" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="labelFiltrarProdutos" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarProdutos" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelFiltrarProdutos" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="comboBoxOrdenarProdutos" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="botaoEditarProduto" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="botaoExcluirProduto" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="pnRlProduto" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="551" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -420,10 +468,12 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelFiltrarProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="comboBoxOrdenarProdutos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoEditarProduto" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoExcluirProduto" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlProduto" min="-2" pref="359" max="-2" attributes="0"/>
-                          <EmptySpace pref="73" max="32767" attributes="0"/>
+                          <Component id="pnRlProduto" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="71" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -477,8 +527,12 @@
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="pnRlProduto">
                   <Properties>
+                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[736, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -489,11 +543,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaProdutos">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
-                        </Property>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="0" rowCount="0"/>
                         </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -503,8 +554,11 @@
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaProdutosMouseClicked"/>
+                      </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaProdutos.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o do Produto&quot;, &quot;Quantidade em estoque&quot;, &quot;Finalidade&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {&#xa;    listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade(), produto.getFinalidade()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos);&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(130);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(380);&#xa;// Redimensionando a largura da coluna de quantidade em estoque&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(230);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaProdutos.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o do Produto&quot;, &quot;Quantidade&quot;, &quot;Finalidade&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa; &#xa;//Adicionando valores nas linhas&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {&#xa;    listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade(), produto.getFinalidade()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(130);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(380);&#xa;// Redimensionando a largura da coluna de quantidade em estoque&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -538,6 +592,34 @@
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoEditarProduto">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Editar"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoEditarProduto.setVisible(false);"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoExcluirProduto">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Excluir"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirProduto.setVisible(false);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -578,9 +660,9 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboBoxOrdenarFornecedores" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlFornecedores" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                              <Component id="pnRlFornecedores" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="331" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -600,7 +682,7 @@
                               <Component id="comboBoxOrdenarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlFornecedores" min="-2" pref="359" max="-2" attributes="0"/>
+                          <Component id="pnRlFornecedores" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -655,8 +737,12 @@
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="pnRlFornecedores">
                   <Properties>
+                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[956, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -667,7 +753,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaFornecedores">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaFornecedores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
@@ -676,7 +762,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaFornecedores.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaFornecedores.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaFornecedores = {&quot;CNPJ&quot;, &quot;Fornecedor&quot;, &quot;Endere&#xe7;o&quot;, &quot;Contato&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasFornecedores = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;    listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaFornecedores = new DefaultTableModel(&#xa;                    listaLinhasFornecedores.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaFornecedores);&#xa;&#xa;//define o model da tabela&#xa;tabelaFornecedores.setModel(modeloTabelaFornecedores);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(250);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaFornecedores.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaFornecedores.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaFornecedores = {&quot;CNPJ&quot;, &quot;Fornecedor&quot;, &quot;Endere&#xe7;o&quot;, &quot;Contato&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasFornecedores = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;    listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaFornecedores = new DefaultTableModel(&#xa;                    listaLinhasFornecedores.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaFornecedores){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaFornecedores.setModel(modeloTabelaFornecedores);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(250);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -740,7 +826,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboBoxOrdenarFornecedores1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlFornecedores1" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                              <Component id="pnRlLocacoes" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="botaoNovaLocacao" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -754,7 +840,7 @@
                                   <Component id="botaoPesquisarLocacao" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="221" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -778,7 +864,7 @@
                               <Component id="comboBoxOrdenarFornecedores1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlFornecedores1" min="-2" pref="359" max="-2" attributes="0"/>
+                          <Component id="pnRlLocacoes" min="-2" max="-2" attributes="0"/>
                           <EmptySpace pref="73" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -858,10 +944,14 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoLocacoesExtraviadasActionPerformed"/>
                   </Events>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="pnRlFornecedores1">
+                <Container class="javax.swing.JScrollPane" name="pnRlLocacoes">
                   <Properties>
+                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[1066, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -872,7 +962,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaLocacoes">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
@@ -881,7 +971,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;Cliente&quot;, &quot;Produtos Locados&quot;, &quot;Vencimento&quot;, &quot;Contato Cliente&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {&#xa;    listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(), locacao.getVencimento(), locacao.getContato()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes);&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(270);&#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(400);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do vencimento&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima contato&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(170);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;Cliente&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;Vencimento&quot;, &quot;Contato Cliente&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {&#xa;    listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(), locacao.getValorLocacao(), locacao.getVencimento(), locacao.getContato()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(270);&#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(400);&#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do vencimento&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima contato&#xa;tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(170);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -948,7 +1038,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboBoxOrdenarCliente1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlCliente1" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                              <Component id="pnRlVendas" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoNovaVenda" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarVenda" min="-2" pref="454" max="-2" attributes="0"/>
@@ -956,7 +1046,7 @@
                                   <Component id="botaoPesquisarFornecedor1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="551" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -976,7 +1066,7 @@
                               <Component id="comboBoxOrdenarCliente1" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlCliente1" min="-2" pref="359" max="-2" attributes="0"/>
+                          <Component id="pnRlVendas" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1046,10 +1136,14 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="pnRlCliente1">
+                <Container class="javax.swing.JScrollPane" name="pnRlVendas">
                   <Properties>
+                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[736, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -1060,7 +1154,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaVendas">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaVendas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
@@ -1069,7 +1163,7 @@
                         </Property>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaVendas = {&quot;Data da Venda&quot;, &quot;Produtos Vendidos&quot;, &quot;Valor&quot;, &quot;Forma de pagamento&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaVendas.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaVendas.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasVendas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {&#xa;    listaLinhasVendas.add(new Object[]{venda.getDataVenda(), venda.getProdutosVendidos(), venda.getValor(), venda.getFormaDePagamento()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaVendas = new DefaultTableModel(&#xa;                    listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas);&#xa;&#xa;//define o model da tabela&#xa;tabelaVendas.setModel(modeloTabelaVendas);&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaVendas = {&quot;Data da Venda&quot;, &quot;Produtos Vendidos&quot;, &quot;Valor&quot;, &quot;Forma de pagamento&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaVendas.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaVendas.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasVendas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {&#xa;    listaLinhasVendas.add(new Object[]{venda.getDataVenda(), venda.getProdutosVendidos(), venda.getValor(), venda.getFormaDePagamento()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaVendas = new DefaultTableModel(&#xa;                    listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaVendas.setModel(modeloTabelaVendas);&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -1093,6 +1187,9 @@
                   <Color id="Cursor Padr&#xe3;o"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="painelCaixaERelatoriosMouseClicked"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="Relat&#xf3;rio e Caixa">
@@ -1201,7 +1298,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaRelatorios">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaRelatorios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
@@ -1496,20 +1593,22 @@
                                   <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="botaoAtivarTemporada" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarUsuario" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarUsuario" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="pnRlUsuario" alignment="0" min="-2" pref="1256" max="-2" attributes="0"/>
+                              <Component id="pnRlUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="labelOrdenarUsuario" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="comboBoxUsuario" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="31" max="32767" attributes="0"/>
+                          <EmptySpace pref="726" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1520,8 +1619,9 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="botaoNovoUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoAtivarTemporada" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="campoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1532,8 +1632,8 @@
                               <Component id="comboBoxUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="pnRlUsuario" min="-2" pref="359" max="-2" attributes="0"/>
-                          <EmptySpace pref="74" max="32767" attributes="0"/>
+                          <Component id="pnRlUsuario" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="75" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1586,8 +1686,12 @@
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="pnRlUsuario">
                   <Properties>
+                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[546, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -1598,23 +1702,20 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaUsuarios">
                       <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="5" rowCount="0">
-                            <Column editable="true" title="Nome" type="java.lang.String"/>
-                            <Column editable="true" title="Login" type="java.lang.Object"/>
-                            <Column editable="true" title="Cadastrado desde" type="java.lang.Object"/>
-                            <Column editable="true" title="" type="java.lang.Object"/>
-                            <Column editable="true" title="" type="java.lang.Object"/>
-                          </Table>
-                        </Property>
                         <Property name="autoResizeMode" type="int" value="0"/>
+                        <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
+                          <TableColumnModel selectionModel="0"/>
+                        </Property>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                           <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaUsuarios = {&quot;Nome do Usu&#xe1;rio&quot;, &quot;NickName&quot;, &quot;Categoria&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela usu&#xe1;rios&#xa;tabelaUsuarios.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Definindo o tamanho da linha&#xa;tabelaUsuarios.setRowHeight(25); &#xa;&#xa;//Linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasUsuarios = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {&#xa;    listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaUsuarios = new DefaultTableModel(&#xa;                    listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaUsuarios.setModel(modeloTabelaUsuarios);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);&#xa;// Redimensionando a largura da coluna de nickName&#xa;tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(120);&#xa;// Redimensionando a largura da coluna de categoria&#xa;tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
@@ -1653,6 +1754,20 @@
                       <Color id="Cursor em Forma de M&#xe3;o"/>
                     </Property>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoAtivarTemporada">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Ativar Temporada"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAtivarTemporadaActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

@@ -28,4 +28,6 @@ public interface LocacaoRepository {
     
     public List<Locacao> getAllLocacao();
     
+    public List<Locacao> getLocacaoByCliente(String idCliente);
+    
 }
