@@ -1,8 +1,5 @@
 package br.oltecnologias.hype.controller;
 
-import br.oltecnologias.hype.dao.ClienteJpaRepository;
-import br.oltecnologias.hype.dao.LocacaoJpaRepository;
-import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
@@ -12,19 +9,11 @@ import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class GerenciadorDeLocacao {
 
     private List<Locacao> locacoes;
     private static GerenciadorDeLocacao singleton = null;
-    
-    private LocacaoJpaRepository ljp;
-    private ClienteJpaRepository cjp;
-    
-    private EntityManagerFactory emf;
-    private EntityManagerFactory emfPessoas;
 
     private GerenciadorDeLocacao() {
         locacoes = new ArrayList<Locacao>();
@@ -51,37 +40,22 @@ public class GerenciadorDeLocacao {
     }
 
     public List<Locacao> getLocacoes() {
-        emf = Persistence.createEntityManagerFactory("closetpu");
-        ljp = new LocacaoJpaRepository(emf);
-        
-        return ljp.getAllLocacao();
+        return locacoes;
     }
 
-    public void finalizarLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException, LocacaoInexistenteException, ClienteInexistenteException {
-        emf = Persistence.createEntityManagerFactory("closetpu");
-        ljp = new LocacaoJpaRepository(emf);
-        
-        
+    public void finalizarLocacao(int idLoc, Cliente cliente) throws ProdutoInexistenteException, LocacaoInexistenteException {
         boolean emprestou = false;
-        
-        for (Locacao locacaoCliente : ljp.getLocacaoByCliente(cliente.getCpf())) {
+        for (Locacao locacaoCliente : cliente.getLocacoes()) {
             if (locacaoCliente.getId() == idLoc) {
-                for (Locacao locacaoGer : ljp.getAllLocacao()) {
+                for (Locacao locacaoGer : this.locacoes) {
                     if (locacaoGer.getId() == idLoc
                             && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                         emprestou = true;
                         for (Produto p : locacaoGer.getProdutos()) {
-<<<<<<< HEAD
-                            System.out.println("===============>>>>> " + p.getCodigo());
-=======
-
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                             GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).addQuant(p.getQuantidade());
                         }
                         cliente.removerLocacao(locacaoCliente);
-                        cjp.editarCliente(cliente);
-                        
-//                        this.locacoes.remove(locacaoGer);
+                        this.locacoes.remove(locacaoGer);
                     }
                 }
             }

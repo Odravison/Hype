@@ -19,7 +19,6 @@ import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Dimension;
 import java.awt.Frame;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -376,28 +375,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         painelFormaPagamentoLayout.setHorizontalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-<<<<<<< HEAD
-                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                        .addGap(149, 149, 149)
-                        .addComponent(radioAVista)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioCartao)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioPromissoria))
-                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addComponent(labelEntrada)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
-                        .addComponent(labelParcelas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelSimboloVezes)))
-                .addGap(144, 144, 144))
-=======
                 .addContainerGap(91, Short.MAX_VALUE)
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormaPagamentoLayout.createSequentialGroup()
@@ -417,7 +394,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloVezes)))
                 .addContainerGap(144, Short.MAX_VALUE))
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
         );
         painelFormaPagamentoLayout.setVerticalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,6 +410,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     .addComponent(labelParcelas)
                     .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSimboloVezes))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         painelContrato.setBackground(new java.awt.Color(255, 255, 255));
@@ -484,11 +461,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setText("Desconto:");
 
         campoDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-<<<<<<< HEAD
-                .addGap(31, 31, 31))
-=======
-                .addContainerGap(31, Short.MAX_VALUE))
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
+        campoDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoDescontoKeyTyped(evt);
+            }
+        });
 
         labelSimboloPorcentagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelSimboloPorcentagem.setText("%");
@@ -579,14 +556,70 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             } else if(produtosLocados.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else{
-<<<<<<< HEAD
-=======
-        campoDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDescontoKeyTyped(evt);
-            }
-        });
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
+                //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
+                if (campoDesconto.getText().length() <= 0) {
+                    campoDesconto.setText("0");
+                }
+                
+                Calendar dataInicial = Calendar.getInstance();
+                Calendar dataFinal = Calendar.getInstance();
+
+                dataInicial.setTime(dateDataInicialContrato.getDate());
+                dataFinal.setTime(dateDataFinalContrato.getDate());
+                
+                if(radioCartao.isSelected() || radioPromissoria.isSelected()) {
+                    if(campoEntrada.getText().length() <= 0) {
+                        JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else if(campoParcelas.getText().length() <= 0) {
+                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        if (radioCartao.isSelected()) {
+                            formaPagamento = "Cartão";
+                        } else {
+                            formaPagamento = "Promissória";
+                        }
+                        
+                        try {
+
+                            novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                                    Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+
+                            JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+
+                            concluirSelecionado = true;
+                            //Fecha janela
+                            setVisible(false);
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                                        
+                } else {
+                    formaPagamento = "À Vista";
+                    campoEntrada.setText("0");
+                    campoParcelas.setText("0");
+                    
+                    try {
+                        // falta registrar a entrada e as parcelas
+                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+                        
+                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", Float.parseFloat(getValorTotalDaLocacao()), 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
+                                                Configuracao.getInstance().getEmpresa().getNome());
+                        
+                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+
+                        concluirSelecionado = true;
+                        //Fecha janela
+                        setVisible(false);
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
                 
                 
@@ -730,67 +763,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioAVista.setSelected(false);
         habilitarCampos();
     }//GEN-LAST:event_radioPromissoriaMouseClicked
-<<<<<<< HEAD
-                Calendar dataInicial = Calendar.getInstance();
-                Calendar dataFinal = Calendar.getInstance();
 
-                dataInicial.setTime(dateDataInicialContrato.getDate());
-                dataFinal.setTime(dateDataFinalContrato.getDate());
-                
-                if(radioCartao.isSelected() || radioPromissoria.isSelected()) {
-                    if(campoEntrada.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else if(campoParcelas.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        if (radioCartao.isSelected()) {
-                            formaPagamento = "Cartão";
-                        } else {
-                            formaPagamento = "Promissória";
-                        }
-                    }
-                    
-                    try {
-                        // falta registrar a entrada e as parcelas
-                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
-                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()));
-
-                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                    
-                } else {
-                    formaPagamento = "À Vista";
-                    campoEntrada.setText("0");
-                    campoParcelas.setText("0");
-                    
-                    try {
-                        // falta registrar a entrada e as parcelas
-                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
-                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()));
-
-                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-=======
-                //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                if (campoDesconto.getText().length() <= 0) {
-                    campoDesconto.setText("0");
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
+    private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
+        validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
+        if(Integer.parseInt(campoDesconto.getText()) > 100) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoDescontoKeyTyped
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -933,67 +912,3 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
 
 }
-<<<<<<< HEAD
-=======
-                Calendar dataInicial = Calendar.getInstance();
-                Calendar dataFinal = Calendar.getInstance();
-
-                dataInicial.setTime(dateDataInicialContrato.getDate());
-                dataFinal.setTime(dateDataFinalContrato.getDate());
-                
-                if(radioCartao.isSelected() || radioPromissoria.isSelected()) {
-                    if(campoEntrada.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else if(campoParcelas.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        if (radioCartao.isSelected()) {
-                            formaPagamento = "Cartão";
-                        } else {
-                            formaPagamento = "Promissória";
-                        }
-                        
-                        try {
-
-                            novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
-                                    Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
-
-                            JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-
-                            concluirSelecionado = true;
-                            //Fecha janela
-                            setVisible(false);
-
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-                                        
-                } else {
-                    formaPagamento = "À Vista";
-                    campoEntrada.setText("0");
-                    campoParcelas.setText("0");
-                    
-                    try {
-                        // falta registrar a entrada e as parcelas
-                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
-                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
-                        
-                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", Float.parseFloat(getValorTotalDaLocacao()), 
-                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome());
-                        
-                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-                
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5

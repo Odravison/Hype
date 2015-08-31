@@ -7,14 +7,10 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
-<<<<<<< HEAD
-import br.oltecnologias.hype.exception.ProdutoInexistenteException;
-=======
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Movimentacao;
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Frame;
@@ -399,15 +395,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelValorTotal)
                         .addComponent(botaoConcluir)
-<<<<<<< HEAD
-                        .addComponent(botaoCancelar))
-=======
                         .addComponent(botaoCancelar)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelDesconto)
                             .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelSimboloPorcentagem)))
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                     .addComponent(labelValorVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(43, Short.MAX_VALUE))
         );
@@ -530,15 +522,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         
                         novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-<<<<<<< HEAD
-                                    Float.parseFloat(campoEntrada.getText()));
-=======
                                     Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
                         
                         novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
                                                 Configuracao.getInstance().getEmpresa().getNome());
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                         
                         JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
                                                 
@@ -558,19 +546,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
                     novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-<<<<<<< HEAD
-                                    Float.parseFloat(campoEntrada.getText()));
-=======
                                     Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                     
-<<<<<<< HEAD
-=======
                     novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
                                                 Configuracao.getInstance().getEmpresa().getNome());
                     
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
                     concluirSelecionado = true;
@@ -582,11 +563,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 }
             }
         } catch(Exception e) {
-<<<<<<< HEAD
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro na operação.\n\nPor favor, tente novamente.", "Erro", JOptionPane.ERROR_MESSAGE);
-=======
             JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
@@ -640,11 +617,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
     
-<<<<<<< HEAD
-    //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
-    private void adicionarProdutoAVenda(Produto produto) {
-        produtosVendidos.add(produto);
-=======
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
         if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
@@ -652,17 +624,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(campo.getText().length()>= maxCaracteres){
             evt.consume();
         }
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     }
     
-<<<<<<< HEAD
-=======
     //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
     private void adicionarProdutoAVenda(Produto produto) {
         produtosVendidos.add(produto);
     }
     
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     private void removerProdutoDaVenda(Produto produto) {
         produtosVendidos.remove(produto);
     }

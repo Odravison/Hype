@@ -329,21 +329,14 @@
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="labelPreco" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="campoPreco" alignment="3" min="-2" max="-2" attributes="0"/>
-<<<<<<< HEAD
-=======
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="labelQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="campoQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
                           </Group>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelTamanho" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="campoTamanho" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                                  <Component id="labelQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="campoQuantidade" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
                           </Group>
                       </Group>
                       <EmptySpace pref="27" max="32767" attributes="0"/>

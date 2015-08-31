@@ -1,20 +1,14 @@
 package br.oltecnologias.hype.controller;
 
-import br.oltecnologias.hype.dao.ProdutoJpaRepository;
 import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 public class GerenciadorDeProduto {
 
     private List<Produto> produtos;
-    private ProdutoJpaRepository pjp;
-    
-    private EntityManagerFactory emf;
     
     private static GerenciadorDeProduto singleton = null;
 
@@ -93,29 +87,12 @@ public class GerenciadorDeProduto {
      * @throws br.oltecnologias.hype.exception.ProdutoInexistenteException
      */
     public Produto pesquisarProdutoPeloCodigo(String codigo) throws ProdutoInexistenteException {
-<<<<<<< HEAD
-        emf = Persistence.createEntityManagerFactory("closetpu");
-        pjp = new ProdutoJpaRepository (emf);
-        
-        Produto p = null;
-        p = pjp.findById(codigo);
-        return p;
-        
-        
-//        for (Produto p : this.produtos) {
-//            if (p.getCodigo().equals(codigo)) {
-//                return p;
-//            }
-//        }
-//        throw new ProdutoInexistenteException("Produto não cadastrado.");
-=======
         for (Produto p : this.produtos) {
             if (p.getCodigo().equals(codigo)) {
                 return p;
             }
         }
         throw new ProdutoInexistenteException("Produto não cadastrado.");
->>>>>>> 31c767a680c1e0e63ba2bd61a93aed21744e37d5
     }
 
     public List<Produto> getProdutosDeLocacao() {
