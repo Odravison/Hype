@@ -114,12 +114,16 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getUltimaMedicaoToShow() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
+    public Calendar getUltimaMedicao() {
+        return this.ultimaMedicao;
     }
 
     public void setUltimaMedicao(Calendar ultimaMedicao) {
         this.ultimaMedicao = ultimaMedicao;
+    }
+    
+    public String getUltimaMedicaoInString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
     }
 
     public Endereco getEndereco() {
@@ -161,8 +165,7 @@ public class Cliente implements Serializable {
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
     }
-
-    // retirar métodos depois que o banco de dados estiver integrado
+    
     public void adicionarLocacao(Locacao locacao) {
         this.locacoes.add(locacao);
     }
@@ -174,12 +177,6 @@ public class Cliente implements Serializable {
                 break;
             }
         }
-    }
-
-    public Calendar getUltimaMedicao() {
-        return ultimaMedicao;
-    }
-    
-    
+    }    
 
 }

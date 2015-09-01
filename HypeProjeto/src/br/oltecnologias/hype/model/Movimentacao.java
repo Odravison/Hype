@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.model;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -82,6 +83,10 @@ public class Movimentacao {
     
     public String getDataInString() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.data.getTime());
+    }
+    
+    public String getValorInString() {
+        return new DecimalFormat("#.##").format(this.valor);
     }
     
 }

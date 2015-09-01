@@ -5,7 +5,6 @@
  */
 package br.oltecnologias.hype.gui;
 
-import java.awt.Color;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -31,12 +30,13 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        painelDados = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        sliderTemporada = new javax.swing.JSlider();
         labelTemporada = new javax.swing.JLabel();
+        painelCor = new javax.swing.JPanel();
+        sliderTemporada = new javax.swing.JSlider();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
 
@@ -48,8 +48,8 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Temporada"));
+        painelDados.setBackground(new java.awt.Color(255, 255, 255));
+        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Temporada"));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Percentual de desconto da temporada:*");
@@ -59,8 +59,24 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("%");
 
-        sliderTemporada.setBackground(new java.awt.Color(0, 0, 0));
-        sliderTemporada.setForeground(new java.awt.Color(0, 153, 51));
+        labelTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTemporada.setText("Temporada Desativada:");
+
+        painelCor.setBackground(new java.awt.Color(204, 0, 0));
+        painelCor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout painelCorLayout = new javax.swing.GroupLayout(painelCor);
+        painelCor.setLayout(painelCorLayout);
+        painelCorLayout.setHorizontalGroup(
+            painelCorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 54, Short.MAX_VALUE)
+        );
+        painelCorLayout.setVerticalGroup(
+            painelCorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 28, Short.MAX_VALUE)
+        );
+
+        sliderTemporada.setBackground(new java.awt.Color(255, 255, 255));
         sliderTemporada.setPaintTrack(false);
         sliderTemporada.setSnapToTicks(true);
         sliderTemporada.setValue(0);
@@ -72,41 +88,44 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             }
         });
 
-        labelTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTemporada.setText("Temporada Desativada:");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
+        painelDados.setLayout(painelDadosLayout);
+        painelDadosLayout.setHorizontalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addContainerGap(114, Short.MAX_VALUE))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelTemporada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(painelCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sliderTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(160, Short.MAX_VALUE))
+                        .addComponent(sliderTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(30, Short.MAX_VALUE))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        painelDadosLayout.setVerticalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(sliderTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTemporada))
-                .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2))
+                        .addGap(16, 16, 16)
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelTemporada)
+                            .addComponent(painelCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -133,26 +152,26 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoSalvar)
                     .addComponent(botaoCancelar))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -168,12 +187,14 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
 
     private void sliderTemporadaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTemporadaStateChanged
         if(sliderTemporada.getValue() > 60) {
-            sliderTemporada.setBackground(new Color(0, 153, 51));
+            sliderTemporada.setBackground(new java.awt.Color(0, 153, 51));
             labelTemporada.setText("Temporada Ativada: ");
+            painelCor.setBackground(new java.awt.Color(0, 153, 51));
             sliderTemporada.setValue(100);
         } else {
             labelTemporada.setText("Temporada desativada: ");
-            sliderTemporada.setBackground(new Color(0, 0, 0));
+            sliderTemporada.setBackground(new java.awt.Color(255, 255, 255));
+            painelCor.setBackground(new java.awt.Color(204, 0, 0));
             sliderTemporada.setValue(0);
         }
     }//GEN-LAST:event_sliderTemporadaStateChanged
@@ -214,9 +235,10 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelTemporada;
+    private javax.swing.JPanel painelCor;
+    private javax.swing.JPanel painelDados;
     private javax.swing.JSlider sliderTemporada;
     // End of variables declaration//GEN-END:variables
 }

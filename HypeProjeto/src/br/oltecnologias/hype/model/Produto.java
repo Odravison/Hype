@@ -117,7 +117,7 @@ public class Produto implements Serializable {
     }
 
     public String getFinalidade() {
-        if (isLocation) {
+        if(isLocation) {
             return "Locação";
         } else {
             return "Venda";

@@ -77,6 +77,10 @@ public class Venda implements Serializable {
     public void setValor(double valor) {
         this.valor = valor;
     }
+    
+    public String getValorInString() {
+        return new DecimalFormat("#.##").format(this.valor);
+    }
 
     public String getFormaDePagamento() {
         return formaDePagamento;

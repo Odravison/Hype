@@ -83,7 +83,11 @@ public class Fornecedor implements Serializable {
         this.cnpj = cnpj;
     }
 
-    public String getEndereco() {
+    public Endereco getEndereco() {
+        return this.endereco;
+    }
+    
+    public String getEnderecoInString() {
         return this.endereco.getRua() + ", "+this.endereco.getBairro() + " - " + this.endereco.getCidade() + ", " + this.endereco.getUf();
     }
 

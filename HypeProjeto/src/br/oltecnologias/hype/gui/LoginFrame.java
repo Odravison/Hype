@@ -1,6 +1,7 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
@@ -44,7 +45,7 @@ public class LoginFrame extends javax.swing.JFrame {
         labelLogo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("hype!");
+        setTitle("Closet");
         setName("frameLogin"); // NOI18N
         setPreferredSize(new java.awt.Dimension(1366, 730));
         setResizable(false);
@@ -174,8 +175,14 @@ public class LoginFrame extends javax.swing.JFrame {
                     //Cadastrando a empresa - Tirar depois 
                     Configuracao.getInstance().setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-9999", 
                         new Endereco("Fulano de Tal", "Centro", "PB", 100, "João Pessoa")));
+                    
+                    GerenciadorDoSistema.getInstance().setUsuarioLogado(
+                            GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
+                    
                     new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                    //new PrincipalFrame().setVisible(true);
                     setVisible(false);
+                    dispose();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }

@@ -45,19 +45,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
      */
     public PrincipalFrame(String login) {
         loginUsuario = login;
-        try {
-            GerenciadorDoSistema.getInstance().setUsuarioLogado(GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(login));
-        } catch (UsuarioInexistenteException e) {
-            new LoginFrame().setVisible(true);
-            setVisible(false);
-        }
         initComponents();
         
         //labelLogoSistema.setIcon(new ImageIcon("Imagens\\.png"));
     }
 
     /**
-     * Creates new form PrinFrame
+     * Cria um novo form PrincipalFrame
      */
     public PrincipalFrame() {
         initComponents();
@@ -75,8 +69,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelGeral = new javax.swing.JPanel();
         painelTopo = new javax.swing.JPanel();
         labelLogoEmpresa = new javax.swing.JLabel();
-        labelNomeLogin = new javax.swing.JLabel();
-        labelLogoSistema = new javax.swing.JLabel();
+        labelLoginUsuario = new javax.swing.JLabel();
         botaoSair = new javax.swing.JLabel();
         abas = new javax.swing.JTabbedPane();
         painelClientes = new javax.swing.JPanel();
@@ -166,21 +159,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoRegistrarDespesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Closet");
+        setPreferredSize(new java.awt.Dimension(1366, 731));
         setResizable(false);
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
-        painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
+        painelGeral.setPreferredSize(new java.awt.Dimension(1366, 725));
 
         painelTopo.setBackground(new java.awt.Color(255, 255, 255));
 
-        labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\Mini Logo Terni Velucci.png"));
+        labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\Mini Logo Empresa.png"));
         labelLogoEmpresa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
-        labelNomeLogin.setText("Logado com " + loginUsuario);
+        labelLoginUsuario.setToolTipText("");
+        labelLoginUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelLoginUsuario.setText("Logado com "+loginUsuario);
 
+        botaoSair.setIcon(new ImageIcon("Imagens\\Sair do sistema.png"));
         botaoSair.setToolTipText("Sair do Sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSair.setIcon(new ImageIcon("Imagens\\Sair do sistema.png"));
         botaoSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botaoSairMouseClicked(evt);
@@ -195,25 +192,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(labelLogoEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelLogoSistema)
-                .addGap(38, 38, 38)
-                .addComponent(botaoSair))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelNomeLogin)
-                .addGap(91, 91, 91))
+                .addComponent(labelLoginUsuario)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoSair)
+                .addGap(16, 16, 16))
         );
         painelTopoLayout.setVerticalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelLogoSistema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
                 .addGap(8, 8, 8))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addContainerGap(26, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelNomeLogin, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelLoginUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(botaoSair, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
@@ -300,7 +292,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         //Adicionando valores nas linhas
         for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-            listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicao()});
+            listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicaoInString()});
         }
         //cria um defaultablemodel com as informações acima
         modeloTabelaClientes = new DefaultTableModel(
@@ -318,9 +310,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         //define o model da tabela
         tabelaClientes.setModel(modeloTabelaClientes);
         // Redimensionando a largura da coluna de CPF
-        tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(180);
+        tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);
         // Redimensionando a largura da coluna de nome
-        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(340);
+        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(380);
         // Redimensionando a largura da coluna de número do celular
         tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);
         // Redimensionando a largura da coluna de última locação
@@ -362,6 +354,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         botaoVerMedidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         botaoVerMedidas.setText("Ver Medidas");
+        botaoVerMedidas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVerMedidas.setVisible(false);
 
         javax.swing.GroupLayout painelClientesLayout = new javax.swing.GroupLayout(painelClientes);
@@ -376,20 +369,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botaoPesquisarCliente))
-                    .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelClientesLayout.createSequentialGroup()
-                            .addComponent(labelFiltrarClientes)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(botaoEditarCliente)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoExcluirCliente)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoVerLocacoesCliente)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoVerMedidas))
-                        .addComponent(pnRlCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(painelClientesLayout.createSequentialGroup()
+                        .addComponent(labelFiltrarClientes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(164, 164, 164)
+                        .addComponent(botaoVerLocacoesCliente)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoVerMedidas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoEditarCliente)
+                        .addGap(4, 4, 4)
+                        .addComponent(botaoExcluirCliente))
+                    .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(519, Short.MAX_VALUE))
         );
         painelClientesLayout.setVerticalGroup(
@@ -401,7 +393,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisarCliente))
-                .addGap(38, 38, 38)
+                .addGap(37, 37, 37)
                 .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoEditarCliente)
@@ -411,7 +403,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelFiltrarClientes)
                         .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19)
+                .addGap(20, 20, 20)
                 .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -459,7 +451,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         pnRlProduto.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnRlProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pnRlProduto.setPreferredSize(new java.awt.Dimension(846, 359));
+        pnRlProduto.setPreferredSize(new java.awt.Dimension(1176, 359));
 
         tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -498,7 +490,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de código
     tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(130);
     // Redimensionando a largura da coluna de descrição
-    tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(380);
+    tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(710);
     // Redimensionando a largura da coluna de finalidade
     tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna de quantidade em estoque
@@ -558,7 +550,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoExcluirProduto))
                     .addComponent(pnRlProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(459, Short.MAX_VALUE))
+            .addContainerGap(129, Short.MAX_VALUE))
     );
     painelProdutosLayout.setVerticalGroup(
         painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -577,7 +569,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(botaoExcluirProduto))
             .addGap(18, 18, 18)
             .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(71, Short.MAX_VALUE))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     abas.addTab("  Produtos  ", painelProdutos);
@@ -623,7 +615,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     pnRlFornecedores.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlFornecedores.setPreferredSize(new java.awt.Dimension(956, 359));
+    pnRlFornecedores.setPreferredSize(new java.awt.Dimension(1130, 359));
 
     tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     tabelaFornecedores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -641,7 +633,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Adicionando valores nas linhas
     for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {
-        listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
+        listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEnderecoInString(), fornecedor.getTelefone()});
     }
     //cria um defaultablemodel com as informações acima
     modeloTabelaFornecedores = new DefaultTableModel(
@@ -663,7 +655,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de nome
     tabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(340);
     // Redimensionando a largura da coluna de número do celular
-    tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(250);
+    tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(430);
     // Redimensionando a largura da coluna de número do celular
     tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);
     tabelaFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -719,7 +711,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoExcluirFornecedor))
                     .addComponent(pnRlFornecedores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(349, Short.MAX_VALUE))
+            .addContainerGap(175, Short.MAX_VALUE))
     );
     painelFornecedoresLayout.setVerticalGroup(
         painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -823,7 +815,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de cliente
     tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(270);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(400);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(610);
     // Redimensionando a largura da coluna de valor total
     tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna de número do vencimento
@@ -881,30 +873,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelLocacoesLayout.createSequentialGroup()
             .addGap(32, 32, 32)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(pnRlLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoNovaLocacao)
                 .addGroup(painelLocacoesLayout.createSequentialGroup()
-                    .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(painelLocacoesLayout.createSequentialGroup()
-                            .addComponent(labelFiltrarLocacoes)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
-                    .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(painelLocacoesLayout.createSequentialGroup()
-                            .addGap(12, 12, 12)
-                            .addComponent(botaoGerarReciboLocacao)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoVerRecibosLocacao)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoVerContrato)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoFinalizarLocacao)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(botaoExcluirLocacao))
-                        .addComponent(botaoPesquisarLocacao))))
-            .addContainerGap(239, Short.MAX_VALUE))
+                    .addComponent(botaoPesquisarLocacao))
+                .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(painelLocacoesLayout.createSequentialGroup()
+                        .addComponent(labelFiltrarLocacoes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoGerarReciboLocacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoVerRecibosLocacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoVerContrato)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoFinalizarLocacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoExcluirLocacao))
+                    .addComponent(pnRlLocacoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addContainerGap(35, Short.MAX_VALUE))
     );
     painelLocacoesLayout.setVerticalGroup(
         painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -915,19 +905,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarLocacao))
-            .addGap(39, 39, 39)
-            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelFiltrarLocacoes)
-                .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoVerContrato)
-                .addComponent(botaoExcluirLocacao)
-                .addComponent(botaoFinalizarLocacao)
-                .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoVerRecibosLocacao)
-                    .addComponent(botaoGerarReciboLocacao)))
-            .addGap(18, 18, 18)
-            .addComponent(pnRlLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(72, Short.MAX_VALUE))
+            .addGap(40, 40, 40)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelFiltrarLocacoes)
+                        .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(pnRlLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addGap(1, 1, 1)
+                    .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoVerRecibosLocacao)
+                            .addComponent(botaoGerarReciboLocacao))
+                        .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botaoVerContrato)
+                            .addComponent(botaoExcluirLocacao)
+                            .addComponent(botaoFinalizarLocacao)))))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
 
     abas.addTab("  Locações  ", painelLocacoes);
@@ -995,7 +991,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Adicionando valores nas linhas
     for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {
-        listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), venda.getValor(), venda.getFormaDePagamento()});
+        listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), venda.getValorInString(), venda.getFormaDePagamento()});
     }
     //cria um defaultablemodel com as informações acima
     modeloTabelaVendas = new DefaultTableModel(
@@ -1120,7 +1116,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoFecharCaixa.setText("Fechar Caixa");
     botaoFecharCaixa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-    pnRlCaixaERelatorios.setPreferredSize(new java.awt.Dimension(786, 359));
+    pnRlCaixaERelatorios.setPreferredSize(new java.awt.Dimension(916, 359));
 
     tabelaMovimentacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     tabelaMovimentacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1138,7 +1134,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
-        listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+Float.toString(movimentacao.getValor()),
+        listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
             movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
     }
 
@@ -1157,16 +1153,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //define o model da tabela
     tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);
-    // Redimensionando a largura da coluna data da venda
+    // Redimensionando a largura da coluna de movimento
     tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de nome
+    // Redimensionando a largura da coluna de valor
     tabelaMovimentacoes.getColumnModel().getColumn(1).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de número do celular
+    // Redimensionando a largura da coluna de data
     tabelaMovimentacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de número do celular
-    tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(260);
-    // Redimensionando a largura da coluna de número do celular
-    tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(190);
+    // Redimensionando a largura da coluna de responsável
+    tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(340);
+    // Redimensionando a largura da coluna de beneficiário
+    tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(240);
     tabelaMovimentacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaMovimentacoesMouseClicked(evt);
@@ -1215,7 +1211,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(botaoExcluirMovimentacao))
                         .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(519, Short.MAX_VALUE))
+                    .addContainerGap(389, Short.MAX_VALUE))
                 .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
                     .addComponent(botaoGerarRelatorio)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1248,7 +1244,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(18, 18, 18)
             .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(126, Short.MAX_VALUE))
+            .addContainerGap(100, Short.MAX_VALUE))
     );
 
     abas.addTab("Relatório e Caixa", painelCaixaERelatorios);
@@ -1353,7 +1349,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoSalvarDiretorioContratos))
-            .addContainerGap(443, Short.MAX_VALUE))
+            .addContainerGap(417, Short.MAX_VALUE))
     );
 
     try {
@@ -1463,7 +1459,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboBoxUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
     botaoAtivarTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoAtivarTemporada.setText("Ativar Temporada");
+    botaoAtivarTemporada.setText("Temporada de Desconto");
     botaoAtivarTemporada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoAtivarTemporada.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1546,7 +1542,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(18, 18, 18)
             .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(75, Short.MAX_VALUE))
+            .addContainerGap())
     );
 
     try {
@@ -1564,7 +1560,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     painelGeralLayout.setHorizontalGroup(
         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelGeralLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap()
             .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1575,9 +1571,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelGeralLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 676, Short.MAX_VALUE)
-            .addContainerGap())
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+            .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -1589,8 +1584,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
+            .addGap(0, 0, 0))
     );
 
     pack();
@@ -1851,11 +1846,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_painelAdministradorMouseClicked
 
-    private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
-        setVisible(false);
-        new LoginFrame().setVisible(true);
-    }//GEN-LAST:event_botaoSairMouseClicked
-
     private void botaoPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarClienteActionPerformed
         if(campoPesquisarCliente.getText().equals("Pesquisar Cliente") || campoPesquisarCliente.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2082,8 +2072,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaLocacoesMouseClicked
 
     private void botaoRegistrarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarDespesaActionPerformed
+        RegistrarDespesaDialog dialog = new RegistrarDespesaDialog(null);
+        dialog.setLocationRelativeTo(null);
+        if (dialog.alterarDados()) {
+            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+        }
+        dialog.dispose();
         atualizarValorEmCaixa();
     }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
+
+    private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
+        new LoginFrame().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_botaoSairMouseClicked
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -2099,9 +2101,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     
     public void adicionarNovoClienteNaTabela(Cliente cliente) {
         //Adiciona os dados do novo cliente na tabela
-        modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicao()});
+        modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getUltimaMedicaoInString()});
         //Atualiza o model da tabela
-        tabelaClientes.setModel(modeloTabelaClientes);
+        //tabelaClientes.setModel(modeloTabelaClientes);
     }
     
     public void adicionarNovoProdutoNaTabela(Produto produto) {
@@ -2109,14 +2111,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
             produto.getQuantidade(), produto.getFinalidade()});
         //Atualiza o model da tabela
-        tabelaProdutos.setModel(modeloTabelaProdutos);
+        //tabelaProdutos.setModel(modeloTabelaProdutos);
     }
     
     public void adicionarNovoFornecedorNaTabela(Fornecedor fornecedor) {
         //Adiciona os dados do novo fornecedor na tabela
         modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
         //Atualiza o model da tabela
-        tabelaFornecedores.setModel(modeloTabelaFornecedores);
+        //tabelaFornecedores.setModel(modeloTabelaFornecedores);
     }
     
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
@@ -2124,29 +2126,29 @@ public class PrincipalFrame extends javax.swing.JFrame {
         modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(),
             "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getContato()});
         //Atualiza o model da tabela
-        tabelaLocacoes.setModel(modeloTabelaLocacoes); 
+        //tabelaLocacoes.setModel(modeloTabelaLocacoes); 
     }
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
         //Adiciona os dadosa nova venda na tabela
-        modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValor(), venda.getFormaDePagamento()});
+        modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
         //Atualiza o model da tabela
-        tabelaVendas.setModel(modeloTabelaVendas);
+        //tabelaVendas.setModel(modeloTabelaVendas);
     }
     
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
-        modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+Float.toString(movimentacao.getValor()), 
+        modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
             movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
         //Atualiza o model da tabela
-        tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);
+        //tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
         //Adiciona os dados do novo usuário na tabela
         modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
         //Atualiza o model da tabela
-        tabelaUsuarios.setModel(modeloTabelaUsuarios);
+        //tabelaUsuarios.setModel(modeloTabelaUsuarios);
     }
     
     public void removerClienteDaTabela(int indice) {
@@ -2178,14 +2180,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
     
     public void atualizarValorEmCaixa() {
-        double valorEmCaixa = GerenciadorDoSistema.getInstance().getValorCaixaDiario();
-        if(valorEmCaixa > 0) {
+        if(GerenciadorDoSistema.getInstance().getValorCaixaDiario() > 0) {
             labelValorEmCaixa.setForeground(new Color(0, 153, 0));
-            labelValorEmCaixa.setText(Double.toString(valorEmCaixa));
         } else{
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
-            labelValorEmCaixa.setText(Double.toString(valorEmCaixa));
         }
+        labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(GerenciadorDoSistema.getInstance().getValorCaixaDiario()));
     }
     
     
@@ -2297,9 +2297,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelFiltrarProdutos;
     private javax.swing.JLabel labelFiltrarUsuario;
     private javax.swing.JLabel labelFiltrarVenda;
+    private javax.swing.JLabel labelLoginUsuario;
     private javax.swing.JLabel labelLogoEmpresa;
-    private javax.swing.JLabel labelLogoSistema;
-    private javax.swing.JLabel labelNomeLogin;
     private javax.swing.JLabel labelValorCaixa;
     private javax.swing.JLabel labelValorEmCaixa;
     private javax.swing.JPanel painelAdministrador;

@@ -5,6 +5,9 @@
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" red="ff" type="rgb"/>
     </Property>
+    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[834, 730]"/>
+    </Property>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="title" type="java.lang.String" value="Realizar Venda"/>
   </Properties>
@@ -31,26 +34,26 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="painelSelecionar" alignment="0" pref="572" max="32767" attributes="0"/>
-                  <Component id="painelFormaPagamento" alignment="1" max="32767" attributes="0"/>
-                  <Component id="painelProdutos" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Group type="102" attributes="0">
                       <Component id="labelValorTotal" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="labelValorVenda" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="labelValorVenda" min="-2" pref="105" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Component id="labelDesconto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="campoDesconto" min="-2" pref="43" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="labelSimboloPorcentagem" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="botaoConcluir" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="botaoCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="painelFormaPagamento" alignment="1" pref="788" max="32767" attributes="0"/>
+                  <Component id="painelProdutos" alignment="1" pref="788" max="32767" attributes="0"/>
+                  <Component id="painelSelecionar" alignment="1" pref="788" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
@@ -59,27 +62,32 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Component id="painelSelecionar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="painelProdutos" min="-2" max="-2" attributes="0"/>
+              <Component id="painelSelecionar" min="-2" pref="270" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="painelProdutos" min="-2" pref="209" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="painelFormaPagamento" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botaoConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="labelDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="campoDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelSimboloPorcentagem" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="labelValorTotal" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="labelValorVenda" max="32767" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
+                      <Component id="labelValorVenda" min="-2" pref="29" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="43" max="32767" attributes="0"/>
+              <EmptySpace pref="59" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -109,22 +117,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
+                      <Group type="102" attributes="0">
                           <Component id="labelPesquisar" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="campoPesquisar" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="scPanelListarProdutos" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
+                      <Component id="scPnTabelaProdutos" pref="653" max="32767" attributes="0"/>
                   </Group>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="botaoBuscar" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="botaoSelecionarProdutos" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoSelecionarProdutos" alignment="1" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoBuscar" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -139,10 +144,13 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scPanelListarProdutos" alignment="0" min="-2" pref="140" max="-2" attributes="0"/>
-                      <Component id="botaoSelecionarProdutos" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="botaoSelecionarProdutos" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="157" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="scPnTabelaProdutos" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -191,28 +199,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoBuscarActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="scPanelListarProdutos">
-          <AuxValues>
-            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-          </AuxValues>
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JList" name="listaProdutos">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaProdutosMouseClicked"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="modeloProdutos = new DefaultListModel();&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {&#xa;    modeloProdutos.addElement(produto.getCodigo() + &quot; | &quot; + produto.getNome());&#xa;}&#xa;listaProdutos.setModel(modeloProdutos);"/>
-              </AuxValues>
-            </Component>
-          </SubComponents>
-        </Container>
         <Component class="javax.swing.JLabel" name="labelPesquisar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -221,6 +207,28 @@
             <Property name="text" type="java.lang.String" value="Pesquisar:"/>
           </Properties>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="scPnTabelaProdutos">
+          <AuxValues>
+            <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+          </AuxValues>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JTable" name="tabelaProdutos">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Tahoma" size="14" style="0"/>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaProdutosMouseClicked"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); &#xa;// Altura das linhas&#xa;tabelaProdutos.setRowHeight(20); &#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o&quot;, &quot;Qtd&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa; &#xa;//Adicionando valores nas linhas&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {&#xa;    listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(45);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(487);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(20);"/>
+              </AuxValues>
+            </Component>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="painelProdutos">
@@ -246,7 +254,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="441" max="32767" attributes="0"/>
+                  <Component id="scPnTabelaProdutosLocados" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="botaoRemover" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -257,14 +265,13 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="botaoRemover" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="jScrollPane1" alignment="0" pref="155" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="botaoRemover" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="scPnTabelaProdutosLocados" min="-2" pref="161" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -284,24 +291,24 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRemoverActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+        <Container class="javax.swing.JScrollPane" name="scPnTabelaProdutosLocados">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="listaProdutosVendidos">
+            <Component class="javax.swing.JTable" name="tabelaProdutosVendidos">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="12" style="0"/>
+                  <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listaProdutosVendidosMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaProdutosVendidosMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="modeloProdutosVendidos = new DefaultListModel();&#xa;listaProdutosVendidos.setModel(modeloProdutosVendidos);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabelaProdutosVendidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutosVendidos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); &#xa;// Altura das linhas&#xa;tabelaProdutosVendidos.setRowHeight(20); &#xa;&#xa;String[] nomesColunasTabelaProdutosVendidos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o&quot;, &quot;Qtd&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutosVendidos = new ArrayList&lt;&gt;();&#xa; &#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutosVendidos = new DefaultTableModel(&#xa;                    listaLinhasProdutosVendidos.toArray(new Object[listaLinhasProdutosVendidos.size()][]), nomesColunasTabelaProdutosVendidos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutosVendidos.setModel(modeloTabelaProdutosVendidos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutosVendidos.getColumnModel().getColumn(0).setPreferredWidth(45);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutosVendidos.getColumnModel().getColumn(1).setPreferredWidth(487);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutosVendidos.getColumnModel().getColumn(2).setPreferredWidth(20);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -318,27 +325,38 @@
             <TitledBorder title="Forma de Pagamento"/>
           </Border>
         </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[336, 130]"/>
+        </Property>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="radioAVista" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="radioCartao" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="radioPromissoria" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="labelEntrada" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="campoEntrada" min="-2" pref="69" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                           <Component id="labelParcelas" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
+                              <Component id="radioCredito" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                              <Component id="radioDebito" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="radioAVista" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="radioCartao" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="radioPromissoria" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -356,14 +374,19 @@
                       <Component id="radioCartao" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="radioPromissoria" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="radioCredito" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="radioDebito" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="13" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="campoEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelParcelas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="campoParcelas" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -377,10 +400,14 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="&#xc0; Vista"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioAVistaMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioAVistaActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="radioAVista.setSelected(true);&#xa;labelEntrada.setVisible(false);&#xa;labelParcelas.setVisible(false);&#xa;campoEntrada.setVisible(false);&#xa;campoParcelas.setVisible(false);"/>
@@ -395,9 +422,12 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Cart&#xe3;o"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioCartaoMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioCartaoActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="radioPromissoria">
@@ -409,9 +439,12 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Promiss&#xf3;ria"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="radioPromissoriaMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioPromissoriaActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelEntrada">
@@ -419,7 +452,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Entrada:*  R$"/>
+            <Property name="text" type="java.lang.String" value="Entrada: R$"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="campoEntrada">
@@ -443,6 +476,47 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="radioCredito">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Cr&#xe9;dito"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioCreditoActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="radioCredito.setVisible(false);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="radioDebito">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="selected" type="boolean" value="true"/>
+            <Property name="text" type="java.lang.String" value="D&#xe9;bito"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="radioDebitoActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="radioDebito.setVisible(false);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

@@ -13,19 +13,19 @@ import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
-import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.StringTokenizer;
-import javax.swing.DefaultListModel;
+
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -69,22 +69,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoSelecionarProdutos = new javax.swing.JButton();
         campoPesquisar = new javax.swing.JTextField();
         botaoBuscar = new javax.swing.JButton();
-        scPanelListarProdutos = new javax.swing.JScrollPane();
-        listaProdutos = new javax.swing.JList();
-        labelPesquisar = new javax.swing.JLabel();
+        scPnProdutos = new javax.swing.JScrollPane();
+        tabelaProdutos = new javax.swing.JTable();
         painelProdutos = new javax.swing.JPanel();
         botaoRemover = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaProdutosLocados = new javax.swing.JList();
-        painelFormaPagamento = new javax.swing.JPanel();
-        radioAVista = new javax.swing.JRadioButton();
-        radioCartao = new javax.swing.JRadioButton();
-        radioPromissoria = new javax.swing.JRadioButton();
-        labelEntrada = new javax.swing.JLabel();
-        campoEntrada = new javax.swing.JTextField();
-        labelParcelas = new javax.swing.JLabel();
-        campoParcelas = new javax.swing.JTextField();
-        labelSimboloVezes = new javax.swing.JLabel();
+        scPnTabelaProdutosLocados = new javax.swing.JScrollPane();
+        tabelaProdutosLocados = new javax.swing.JTable();
         painelContrato = new javax.swing.JPanel();
         labelDataInicial = new javax.swing.JLabel();
         dateDataInicialContrato = new com.toedter.calendar.JDateChooser();
@@ -95,9 +85,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campoDesconto = new javax.swing.JTextField();
         labelSimboloPorcentagem = new javax.swing.JLabel();
         labelValorLocacao = new javax.swing.JLabel();
+        painelFormaPagamento = new javax.swing.JPanel();
+        radioAVista = new javax.swing.JRadioButton();
+        radioCartao = new javax.swing.JRadioButton();
+        radioPromissoria = new javax.swing.JRadioButton();
+        labelEntrada = new javax.swing.JLabel();
+        campoEntrada = new javax.swing.JTextField();
+        labelParcelas = new javax.swing.JLabel();
+        campoParcelas = new javax.swing.JTextField();
+        radioCredito = new javax.swing.JRadioButton();
+        radioDebito = new javax.swing.JRadioButton();
 
+        setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1235, 593));
+        setPreferredSize(new java.awt.Dimension(1366, 620));
         setResizable(false);
         setTitle("Realizar Locação");
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -143,10 +144,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addComponent(labelCliente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addComponent(labelNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botaoSelecionarCliente)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap())
         );
         painelLocadorLayout.setVerticalGroup(
             painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +155,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(labelNomeCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(botaoSelecionarCliente)
                         .addComponent(labelCliente)))
                 .addContainerGap(20, Short.MAX_VALUE))
@@ -192,7 +193,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
 
-        botaoSelecionarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoSelecionarProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         botaoSelecionarProdutos.setText("Selecionar");
         botaoSelecionarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSelecionarProdutos.addActionListener(new java.awt.event.ActionListener() {
@@ -216,7 +217,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         });
 
         botaoBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoBuscar.setText("   Buscar  ");
+        botaoBuscar.setText("Pesquisar");
         botaoBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,21 +225,54 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
 
-        listaProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        listaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+        scPnProdutos.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scPnProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        scPnProdutos.setPreferredSize(new java.awt.Dimension(478, 402));
+
+        tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //Define a fonte do cabeçalho da tabela de produtos
+        tabelaProdutos.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
+        // Altura das linhas
+        tabelaProdutos.setRowHeight(20);
+
+        String[] nomesColunasTabelaProdutos = {"Código", "Descrição", "Qtd"};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhasProdutos = new ArrayList<>();
+
+        //Adicionando valores nas linhas
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
+            listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+        }
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaProdutos = new DefaultTableModel(
+            listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){
+
+            boolean[] canEdit = new boolean [] {false, false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return canEdit [columnIndex];
+            }
+
+        };
+
+        //define o model da tabela
+        tabelaProdutos.setModel(modeloTabelaProdutos);
+        // Redimensionando a largura da coluna de código
+        tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        // Redimensionando a largura da coluna de descrição
+        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(387);
+        // Redimensionando a largura da coluna de finalidade
+        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaProdutosMouseClicked(evt);
+                tabelaProdutosMouseClicked(evt);
             }
         });
-        scPanelListarProdutos.setViewportView(listaProdutos);
-        modeloProdutos = new DefaultListModel();
-        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
-            modeloProdutos.addElement(produto.getCodigo() + " | " + produto.getNome());
-        }
-        listaProdutos.setModel(modeloProdutos);
-
-        labelPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelPesquisar.setText("Pesquisar:");
+        scPnProdutos.setViewportView(tabelaProdutos);
 
         javax.swing.GroupLayout painelSelecionarLayout = new javax.swing.GroupLayout(painelSelecionar);
         painelSelecionar.setLayout(painelSelecionarLayout);
@@ -247,16 +281,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             .addGroup(painelSelecionarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
-                        .addComponent(labelPesquisar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoPesquisar))
-                    .addComponent(scPanelListarProdutos))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(campoPesquisar)
+                    .addComponent(scPnProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoBuscar)
-                    .addComponent(botaoSelecionarProdutos))
-                .addGap(14, 14, 14))
+                    .addGroup(painelSelecionarLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(botaoSelecionarProdutos))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoBuscar)))
+                .addContainerGap())
         );
         painelSelecionarLayout.setVerticalGroup(
             painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,14 +298,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoBuscar)
-                    .addComponent(labelPesquisar))
+                    .addComponent(botaoBuscar))
                 .addGap(18, 18, 18)
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelSelecionarLayout.createSequentialGroup()
                         .addComponent(botaoSelecionarProdutos)
-                        .addGap(0, 115, Short.MAX_VALUE))
-                    .addComponent(scPanelListarProdutos))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(scPnProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -283,7 +316,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
 
-        botaoRemover.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoRemover.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         botaoRemover.setText("Remover");
         botaoRemover.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoRemover.addActionListener(new java.awt.event.ActionListener() {
@@ -292,129 +325,73 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         });
 
-        listaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        listaProdutosLocados.addMouseListener(new java.awt.event.MouseAdapter() {
+        scPnTabelaProdutosLocados.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scPnTabelaProdutosLocados.setPreferredSize(new java.awt.Dimension(532, 402));
+
+        tabelaProdutosLocados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //Define a fonte do cabeçalho da tabela de produtos
+        tabelaProdutosLocados.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
+        // Altura das linhas
+        tabelaProdutosLocados.setRowHeight(20);
+
+        String[] nomesColunasTabelaProdutosLocados = {"Código", "Descrição", "Qtd"};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhasProdutosLocados = new ArrayList<>();
+
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaProdutosLocados = new DefaultTableModel(
+            listaLinhasProdutosLocados.toArray(new Object[listaLinhasProdutosLocados.size()][]), nomesColunasTabelaProdutosLocados){
+
+            boolean[] canEdit = new boolean [] {false, false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return canEdit [columnIndex];
+            }
+
+        };
+
+        //define o model da tabela
+        tabelaProdutosLocados.setModel(modeloTabelaProdutosLocados);
+        // Redimensionando a largura da coluna de código
+        tabelaProdutosLocados.getColumnModel().getColumn(0).setPreferredWidth(80);
+        // Redimensionando a largura da coluna de descrição
+        tabelaProdutosLocados.getColumnModel().getColumn(1).setPreferredWidth(387);
+        // Redimensionando a largura da coluna de finalidade
+        tabelaProdutosLocados.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tabelaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaProdutosLocados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaProdutosLocadosMouseClicked(evt);
+                tabelaProdutosLocadosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(listaProdutosLocados);
-        modeloProdutosLocados = new DefaultListModel();
-        listaProdutosLocados.setModel(modeloProdutosLocados);
+        scPnTabelaProdutosLocados.setViewportView(tabelaProdutosLocados);
 
         javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
         painelProdutos.setLayout(painelProdutosLayout);
         painelProdutosLayout.setHorizontalGroup(
             painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelProdutosLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelProdutosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(scPnTabelaProdutosLocados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoRemover)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelProdutosLayout.setVerticalGroup(
             painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelProdutosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(painelProdutosLayout.createSequentialGroup()
-                        .addComponent(botaoRemover)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-
-        painelFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
-        painelFormaPagamento.setBorder(javax.swing.BorderFactory.createTitledBorder("Forma de Pagamento"));
-
-        radioAVista.setBackground(new java.awt.Color(255, 255, 255));
-        radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        radioAVista.setSelected(true);
-        desabilitarCampos();
-        radioAVista.setText("À Vista");
-        radioAVista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioAVistaMouseClicked(evt);
-            }
-        });
-
-        radioCartao.setBackground(new java.awt.Color(255, 255, 255));
-        radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        radioCartao.setText("Cartão");
-        radioCartao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioCartaoMouseClicked(evt);
-            }
-        });
-
-        radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
-        radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        radioPromissoria.setText("Promissória");
-        radioPromissoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioPromissoriaMouseClicked(evt);
-            }
-        });
-
-        labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelEntrada.setText("Entrada:* R$");
-
-        campoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        labelParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelParcelas.setText("Parcelas:*");
-
-        campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        labelSimboloVezes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSimboloVezes.setText("X");
-
-        javax.swing.GroupLayout painelFormaPagamentoLayout = new javax.swing.GroupLayout(painelFormaPagamento);
-        painelFormaPagamento.setLayout(painelFormaPagamentoLayout);
-        painelFormaPagamentoLayout.setHorizontalGroup(
-            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                .addContainerGap(91, Short.MAX_VALUE)
-                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormaPagamentoLayout.createSequentialGroup()
-                        .addComponent(radioAVista)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioCartao)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioPromissoria))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelFormaPagamentoLayout.createSequentialGroup()
-                        .addComponent(labelEntrada)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77)
-                        .addComponent(labelParcelas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelSimboloVezes)))
-                .addContainerGap(144, Short.MAX_VALUE))
-        );
-        painelFormaPagamentoLayout.setVerticalGroup(
-            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(radioAVista)
-                    .addComponent(radioCartao)
-                    .addComponent(radioPromissoria))
-                .addGap(18, 18, 18)
-                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelEntrada)
-                    .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelParcelas)
-                    .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelSimboloVezes))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(botaoRemover)
+                    .addComponent(scPnTabelaProdutosLocados, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         painelContrato.setBackground(new java.awt.Color(255, 255, 255));
         painelContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Contrato"));
+        painelContrato.setPreferredSize(new java.awt.Dimension(571, 130));
 
         labelDataInicial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDataInicial.setText("Data Inicial:*");
@@ -430,7 +407,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         painelContratoLayout.setHorizontalGroup(
             painelContratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelContratoLayout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
+                .addContainerGap(87, Short.MAX_VALUE)
                 .addGroup(painelContratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(labelMensagemContrato)
                     .addGroup(painelContratoLayout.createSequentialGroup()
@@ -441,20 +418,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(labelDataFinal)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateDataFinalContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         painelContratoLayout.setVerticalGroup(
             painelContratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelContratoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(labelMensagemContrato)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(painelContratoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(dateDataFinalContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(dateDataInicialContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelDataInicial)
                     .addComponent(labelDataFinal))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         labelDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -473,6 +450,129 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelValorLocacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorLocacao.setForeground(new java.awt.Color(0, 153, 0));
 
+        painelFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
+        painelFormaPagamento.setBorder(javax.swing.BorderFactory.createTitledBorder("Forma de Pagamento"));
+        painelFormaPagamento.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        painelFormaPagamento.setPreferredSize(new java.awt.Dimension(636, 130));
+
+        radioAVista.setBackground(new java.awt.Color(255, 255, 255));
+        radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioAVista.setSelected(true);
+        radioAVista.setText("À Vista");
+        radioAVista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioAVista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAVistaActionPerformed(evt);
+            }
+        });
+        radioAVista.setSelected(true);
+        labelEntrada.setVisible(false);
+        labelParcelas.setVisible(false);
+        campoEntrada.setVisible(false);
+        campoParcelas.setVisible(false);
+
+        radioCartao.setBackground(new java.awt.Color(255, 255, 255));
+        radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioCartao.setText("Cartão");
+        radioCartao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCartaoActionPerformed(evt);
+            }
+        });
+
+        radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
+        radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioPromissoria.setText("Promissória");
+        radioPromissoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPromissoriaActionPerformed(evt);
+            }
+        });
+
+        labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelEntrada.setText("Entrada: R$");
+
+        campoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        labelParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelParcelas.setText("Qtd. Parcelas:*");
+
+        campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        radioCredito.setBackground(new java.awt.Color(255, 255, 255));
+        radioCredito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioCredito.setText("Crédito");
+        radioCredito.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioCredito.setVisible(false);
+        radioCredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCreditoActionPerformed(evt);
+            }
+        });
+
+        radioDebito.setBackground(new java.awt.Color(255, 255, 255));
+        radioDebito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioDebito.setSelected(true);
+        radioDebito.setText("Débito");
+        radioDebito.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioDebito.setVisible(false);
+        radioDebito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioDebitoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelFormaPagamentoLayout = new javax.swing.GroupLayout(painelFormaPagamento);
+        painelFormaPagamento.setLayout(painelFormaPagamentoLayout);
+        painelFormaPagamentoLayout.setHorizontalGroup(
+            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                        .addComponent(labelEntrada)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(79, 79, 79)
+                        .addComponent(labelParcelas))
+                    .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addComponent(radioCredito)
+                            .addGap(77, 77, 77)
+                            .addComponent(radioDebito))
+                        .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                            .addComponent(radioAVista)
+                            .addGap(18, 18, 18)
+                            .addComponent(radioCartao)
+                            .addGap(18, 18, 18)
+                            .addComponent(radioPromissoria))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelFormaPagamentoLayout.setVerticalGroup(
+            painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioAVista)
+                    .addComponent(radioCartao)
+                    .addComponent(radioPromissoria))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 5, Short.MAX_VALUE)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioCredito)
+                    .addComponent(radioDebito))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelEntrada)
+                    .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelParcelas)
+                    .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -480,44 +580,46 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+                        .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(labelValorTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelDesconto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelSimboloPorcentagem)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(labelValorTotal)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(labelValorLocacao)
-                            .addGap(68, 68, 68)
-                            .addComponent(labelDesconto)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(labelSimboloPorcentagem)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(botaoConcluir)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(botaoCancelar))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
-                                .addComponent(painelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(painelContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(painelContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(painelContrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(painelContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -528,8 +630,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(labelDesconto)
                         .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelSimboloPorcentagem)
-                        .addComponent(labelValorLocacao)))
-                .addGap(84, 84, 84))
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
 
         pack();
@@ -549,12 +651,27 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
+        JOptionPane pane = new JOptionPane();
+        JDialog dialog = null;
         try {
             String formaPagamento = "";
+            
             if(labelNomeCliente.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Selecione o cliente que irá realizar a locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+                
+                //JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(produtosLocados.size() <= 0) {
-                JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Selecione os produtos para a locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+                
+                //JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else{
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoDesconto.getText().length() <= 0) {
@@ -569,9 +686,21 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 
                 if(radioCartao.isSelected() || radioPromissoria.isSelected()) {
                     if(campoEntrada.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        pane.setMessage("Informe o valor de entrada da locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
+                        //JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
                     } else if(campoParcelas.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        pane.setMessage("Informe a quantidade de parcelas da locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                        
+                        //JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
                     } else {
                         if (radioCartao.isSelected()) {
                             formaPagamento = "Cartão";
@@ -585,14 +714,26 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                                     Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
                                     Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
 
-                            JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+                            pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
+                            pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                            dialog = pane.createDialog("Mensagem");
+                            dialog.setAlwaysOnTop(true);
+                            dialog.setVisible(true);
+
+                            //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
 
                             concluirSelecionado = true;
                             //Fecha janela
                             setVisible(false);
 
                         } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            pane.setMessage(e.getMessage());
+                            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                            dialog = pane.createDialog("Aviso");
+                            dialog.setAlwaysOnTop(true);
+                            dialog.setVisible(true);
+                            
+                            //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                         }
                     }
                                         
@@ -611,21 +752,35 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
                                                 Configuracao.getInstance().getEmpresa().getNome());
                         
-                        JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+                        pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
+                        pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                        dialog = pane.createDialog("Mensagem");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                        //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
 
                         concluirSelecionado = true;
                         //Fecha janela
                         setVisible(false);
 
                     } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        pane.setMessage(e.getMessage());
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                        
+                        //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                
-                
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
+            pane.setMessage(e.getMessage());
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            //JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         
     }//GEN-LAST:event_botaoConcluirActionPerformed
@@ -638,7 +793,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             try {
                 locador = GerenciadorDePessoas.getInstance().pesquisarCliente(dialog.getCpfLocador());
             } catch (ClienteInexistenteException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane pane = new JOptionPane();
+                pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
         dialog.dispose();
@@ -664,41 +825,59 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         if(campoPesquisar.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane pane = new JOptionPane();
+            pane.setMessage("É preciso informar o nome ou o código do produto para a pesquisa");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            JDialog messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
+            messageDialog.setVisible(true);
+            //JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
-                modeloProdutos.addElement(produto.getDescricao());
+                modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
-            listaProdutos.setModel(modeloProdutos);
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void botaoSelecionarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarProdutosActionPerformed
-        if(listaProdutos.isSelectionEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos locados", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaProdutos.getSelectedRow() < 0) {
+            JOptionPane pane = new JOptionPane();
+            pane.setMessage("Selecione um produto na lista para poder adicioná-lo aos produtos locados");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            JDialog messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
+            messageDialog.setVisible(true);
+            //JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos locados", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            modeloProdutosLocados.addElement(listaProdutos.getSelectedValue().toString());
-            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            // deve procurar apenas um produto, pelo seu código
-            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
-            labelValorLocacao.setText(getValorTotalDaLocacao());
-            
+            try {
+                adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                
+                labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane pane = new JOptionPane();
+                pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            } 
         }
     }//GEN-LAST:event_botaoSelecionarProdutosActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        if(listaProdutosLocados.isSelectionEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaProdutosLocados.getSelectedRow() < 0) {
+            JOptionPane pane = new JOptionPane();
+            pane.setMessage("Selecione um produto para remoção");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            JDialog messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
+            messageDialog.setVisible(true);
+            //JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            modeloProdutosLocados.removeElement(listaProdutosLocados.getSelectedValue().toString());
-            //Diminui o valor total da locação
-            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            removerProdutoDaLocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
-            labelValorLocacao.setText(getValorTotalDaLocacao());
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow());
+            labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -720,56 +899,69 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         
     }//GEN-LAST:event_painelProdutosMouseClicked
 
-    private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
-        if(evt.getClickCount() == 2){            
-            modeloProdutosLocados.addElement(listaProdutos.getSelectedValue().toString());
-            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
-            labelValorLocacao.setText(getValorTotalDaLocacao());
-        }
-    }//GEN-LAST:event_listaProdutosMouseClicked
-
-    private void listaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosLocadosMouseClicked
-        if(evt.getClickCount() == 2){            
-            modeloProdutosLocados.removeElement(listaProdutosLocados.getSelectedValue().toString());
-            StringTokenizer descricao = new StringTokenizer(listaProdutosLocados.getSelectedValue().toString(), " ");
-            descricao.nextToken();
-            descricao.nextToken();
-            // Alterar para pesquisar pelo código do produto
-            removerProdutoDaLocacao(GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(descricao.nextToken()));
-            labelValorLocacao.setText(getValorTotalDaLocacao());
-        }
-    }//GEN-LAST:event_listaProdutosLocadosMouseClicked
-
-    private void radioAVistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioAVistaMouseClicked
-        painelLocador.setPreferredSize(new Dimension(568,79));
-        radioCartao.setSelected(false);
-        radioPromissoria.setSelected(false);
-        desabilitarCampos();
-    }//GEN-LAST:event_radioAVistaMouseClicked
-
-    private void radioCartaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCartaoMouseClicked
-        painelLocador.setPreferredSize(new Dimension(590,79));
-        radioAVista.setSelected(false);
-        radioPromissoria.setSelected(false);
-        habilitarCampos();
-    }//GEN-LAST:event_radioCartaoMouseClicked
-
-    private void radioPromissoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioPromissoriaMouseClicked
-        painelLocador.setPreferredSize(new Dimension(590,79));
-        radioCartao.setSelected(false);
-        radioAVista.setSelected(false);
-        habilitarCampos();
-    }//GEN-LAST:event_radioPromissoriaMouseClicked
-
     private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
         validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
         if(Integer.parseInt(campoDesconto.getText()) > 100) {
             evt.consume();
         }
     }//GEN-LAST:event_campoDescontoKeyTyped
+
+    private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
+        if(evt.getClickCount() == 2){            
+            try {
+                adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                
+                labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane pane = new JOptionPane();
+                pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_tabelaProdutosMouseClicked
+
+    private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
+        if(evt.getClickCount() == 2){            
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow());
+            labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+        }
+    }//GEN-LAST:event_tabelaProdutosLocadosMouseClicked
+
+    private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
+        radioCartao.setSelected(false);
+        radioPromissoria.setSelected(false);
+        desabilitarCampos();
+        desabilitarRadios();
+    }//GEN-LAST:event_radioAVistaActionPerformed
+
+    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
+        radioAVista.setSelected(false);
+        radioPromissoria.setSelected(false);
+        habilitarRadios();
+        desabilitarCampos();
+    }//GEN-LAST:event_radioCartaoActionPerformed
+
+    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
+        radioCartao.setSelected(false);
+        radioAVista.setSelected(false);
+        habilitarCampos();
+        desabilitarRadios();
+    }//GEN-LAST:event_radioPromissoriaActionPerformed
+
+    private void radioCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreditoActionPerformed
+        radioDebito.setSelected(false);
+        habilitarCampos();
+    }//GEN-LAST:event_radioCreditoActionPerformed
+
+    private void radioDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDebitoActionPerformed
+        radioCredito.setSelected(false);
+        desabilitarCampos();
+    }//GEN-LAST:event_radioDebitoActionPerformed
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -791,19 +983,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             evt.consume();
         }
     }
-    
-    //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
-    private void adicionarProdutoALocacao(List<Produto> produtos) {
-        for(Produto produto: produtos) {
-            produtosLocados.add(produto);
-        }
-    }
-    
-    private void removerProdutoDaLocacao(List<Produto> produtos) {
-        for(Produto produto: produtos) {
-            produtosLocados.remove(produto);
-        }
-    }
 
     private String getValorTotalDaLocacao() {
         float valor = 0;
@@ -818,7 +997,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setVisible(true);
         campoEntrada.setVisible(true);
         campoParcelas.setVisible(true);
-        labelSimboloVezes.setVisible(true);
     }
     
     public void desabilitarCampos() {
@@ -826,14 +1004,40 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setVisible(false);
         campoEntrada.setVisible(false);
         campoParcelas.setVisible(false);
-        labelSimboloVezes.setVisible(false);
+    }
+    
+    public void habilitarRadios() {
+        radioCredito.setSelected(false);
+        radioDebito.setSelected(true);
+        radioCredito.setVisible(true);
+        radioDebito.setVisible(true);
+    }
+    
+    public void desabilitarRadios() {
+        radioCredito.setVisible(false);
+        radioDebito.setVisible(false);
     }
     
     public boolean alterarDados() {        
-        concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        concluirSelecionado = false;  //Marcamos que o salvar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
         return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public void adicionarProdutoALocacao(Produto produto) {
+        //Adiciona os dados do novo produto na tabela
+        modeloTabelaProdutosLocados.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+        //Atualiza o model da tabela
+        //tabelaProdutosLocados.setModel(modeloTabelaProdutosLocados);
+        //trocar para hash
+        produtosLocados.add(produto);
+    }
+    
+    public void removerProdutoDaLocacao(int indice) {
+        modeloTabelaProdutosLocados.removeRow(indice);
+        //trocar para hash
+        produtosLocados.remove(indice);
     }
     
     public Locacao getNovaLocacao() {
@@ -863,13 +1067,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
-    private DefaultListModel modeloProdutosLocados;
-    private DefaultListModel modeloProdutos;
     private Cliente locador;
     private List<Produto> produtosLocados;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
     private Movimentacao novaMovimentacao;
+    private DefaultTableModel modeloTabelaProdutos;
+    private DefaultTableModel modeloTabelaProdutosLocados;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
@@ -883,7 +1087,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoPesquisar;
     private com.toedter.calendar.JDateChooser dateDataFinalContrato;
     private com.toedter.calendar.JDateChooser dateDataInicialContrato;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
@@ -892,13 +1095,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelMensagemContrato;
     private javax.swing.JLabel labelNomeCliente;
     private javax.swing.JLabel labelParcelas;
-    private javax.swing.JLabel labelPesquisar;
     private javax.swing.JLabel labelSimboloPorcentagem;
-    private javax.swing.JLabel labelSimboloVezes;
     private javax.swing.JLabel labelValorLocacao;
     private javax.swing.JLabel labelValorTotal;
-    private javax.swing.JList listaProdutos;
-    private javax.swing.JList listaProdutosLocados;
     private javax.swing.JPanel painelContrato;
     private javax.swing.JPanel painelFormaPagamento;
     private javax.swing.JPanel painelLocador;
@@ -906,8 +1105,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JPanel painelSelecionar;
     private javax.swing.JRadioButton radioAVista;
     private javax.swing.JRadioButton radioCartao;
+    private javax.swing.JRadioButton radioCredito;
+    private javax.swing.JRadioButton radioDebito;
     private javax.swing.JRadioButton radioPromissoria;
-    private javax.swing.JScrollPane scPanelListarProdutos;
+    private javax.swing.JScrollPane scPnProdutos;
+    private javax.swing.JScrollPane scPnTabelaProdutosLocados;
+    private javax.swing.JTable tabelaProdutos;
+    private javax.swing.JTable tabelaProdutosLocados;
     // End of variables declaration//GEN-END:variables
 
 

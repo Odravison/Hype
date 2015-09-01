@@ -61,7 +61,7 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
         campoTelefone = new javax.swing.JFormattedTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
@@ -271,8 +271,8 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("* Obrigatório");
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("* Obrigatório");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -283,7 +283,7 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(painelDadosPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(labelObrigatorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -296,10 +296,11 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar)
-                    .addComponent(jLabel1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(labelObrigatorio))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -388,9 +389,12 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"") && campo.getText().length()>= maxCaracteres){// se o caracter que gerou o evento estiver na lista 
+        if(numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento estiver na lista 
             evt.consume();
         } 
+        if(campo.getText().length()>= maxCaracteres) {
+            evt.consume();
+        }
     }
     
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
@@ -446,12 +450,12 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoRua;
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JComboBox comboUf;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelBairro;
     private javax.swing.JLabel labelCNPJ;
     private javax.swing.JLabel labelCidade;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
+    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelRua;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelUf;
