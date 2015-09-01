@@ -11,9 +11,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -26,28 +29,33 @@ import javax.persistence.TemporalType;
 @Entity
 public class Cliente implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     @Id
+    @Column(name = "id_cliente")
     private String cpf;
-
+    
+    @Column(name = "nome")
     private String nome;
 
     @Temporal(TemporalType.DATE)
+    @Column(name = "ultima_medicao")
     private Calendar ultimaMedicao;
 
-    @OneToOne(cascade= {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="fk_endereco")
     private Endereco endereco;
 
-    @OneToOne(cascade= {CascadeType.ALL})
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="fk_medidas")
     private Medidas medidas;
-
-    @Column(nullable = true)
+    
+    @Column(name = "telefone")
     private String telefone;
 
+    @Column(nullable = false, name="celular")
     private String celular;
-
-    @OneToMany
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @JoinColumn(name="fk_cliente")
     private List<Locacao> locacoes;
 
     public Cliente() {
@@ -106,12 +114,8 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getUltimaMedicaoInString() {
+    public String getUltimaMedicaoToShow() {
         return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
-    }
-
-    public Calendar getUltimaMedicao() {
-        return ultimaMedicao;
     }
 
     public void setUltimaMedicao(Calendar ultimaMedicao) {
@@ -157,7 +161,7 @@ public class Cliente implements Serializable {
     public void setLocacoes(List<Locacao> locacoes) {
         this.locacoes = locacoes;
     }
-    
+
     // retirar métodos depois que o banco de dados estiver integrado
     public void adicionarLocacao(Locacao locacao) {
         this.locacoes.add(locacao);
@@ -171,6 +175,11 @@ public class Cliente implements Serializable {
             }
         }
     }
+
+    public Calendar getUltimaMedicao() {
+        return ultimaMedicao;
+    }
     
     
+
 }

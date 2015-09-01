@@ -5,6 +5,8 @@
  */
 package br.oltecnologias.hype.model;
 
+import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -184,8 +186,8 @@ public class GeradorDeRecibo {
         return (s);
     }
 
-    public void gerarRecibo(Locacao loc) {
-        this.produtos = loc.getProdutos();
+    public void gerarRecibo(Locacao loc) throws LocacaoInexistenteException {
+        this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
 
@@ -308,7 +310,7 @@ public class GeradorDeRecibo {
 
     }
 
-    public void imprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException {
+    public void imprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException {
         gerarRecibo(loc);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
@@ -335,8 +337,8 @@ public class GeradorDeRecibo {
         return descricaoCurta;
     }
 
-    public void gerarPxsRecibos(Locacao loc, double valorDessePagamento) {
-        this.produtos = loc.getProdutos();
+    public void gerarPxsRecibos(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException {
+        this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
         

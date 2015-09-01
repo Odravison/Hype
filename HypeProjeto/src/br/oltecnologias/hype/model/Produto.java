@@ -57,7 +57,7 @@ public class Produto implements Serializable {
     }
 
     public String getDescricao() {
-        return this.nome + ", " + this.cor + " - Tam: " + this.tam + " - R$ " + new DecimalFormat("#.##").format(this.valor);
+        return this.nome + ", " + this.cor + " - Tam: " + this.tam + " - R$ " + this.valor;
     }
 
     public double getValor() {
@@ -123,7 +123,7 @@ public class Produto implements Serializable {
             return "Venda";
         }
     }
-    
+
     public String getValorInString() {
         return new DecimalFormat("#.##").format(this.valor);
     }

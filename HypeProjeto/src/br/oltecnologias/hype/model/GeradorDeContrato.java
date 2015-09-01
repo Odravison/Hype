@@ -5,6 +5,9 @@
  */
 package br.oltecnologias.hype.model;
 
+import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -20,8 +23,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 /**
  *
@@ -44,14 +50,14 @@ public class GeradorDeContrato {
 
     }
     
-    public void imprimirContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<Produto> produtos) throws IOException, Exception{
+    public void imprimirContrato(Locacao locacao) throws IOException, Exception{
         
-        gerarContrato(cliente, dataLocacao, dataDevolucao, produtos);
+        gerarContrato(locacao);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
-        String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(dataLocacao.getTime());
+        String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
         
         String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
-                    + "\\" + cliente.getNome()+ "\\Contratos\\" +  "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
+                    + "\\" + locacao.getCliente().getNome()+ "\\Contratos\\" +  "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
         
         
         FileInputStream fis = new FileInputStream(diretorio);
@@ -62,27 +68,28 @@ public class GeradorDeContrato {
     }
 
     // Deveria receber uma locação, pois todos os dados últeis para gerar o contrato se encontram nela
-    public void gerarContrato(Cliente cliente, Calendar dataLocacao, Calendar dataDevolucao, List<Produto> produtos)
-            throws DocumentException, IOException, Exception {
-        this.produtos = produtos;
+    public void gerarContrato(Locacao locacao) throws DocumentException, IOException, Exception {
+        
+        this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId());
+        
         Document pdf = new Document();
         File diretorio = null;
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
-        String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(dataLocacao.getTime());
+        String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
 
         String dia = new SimpleDateFormat("dd").format(Calendar.getInstance().getTime());
         String mes = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(Calendar.getInstance().getTime());
         String ano = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
 
-        String dataLocFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataLocacao.getTime());
-        String dataDevFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataDevolucao.getTime());
+        String dataLocFormatada = new SimpleDateFormat("dd/MM/yyyy").format(locacao.getDataLocacao().getTime());
+        String dataDevFormatada = new SimpleDateFormat("dd/MM/yyyy").format(locacao.getDataDevolucao().getTime());
         Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
         Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
         Font courier12 = new Font(Font.FontFamily.COURIER, 12);
 
         try {
             diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
-                    + "\\" + cliente.getNome() + "\\Contratos");
+                    + "\\" + locacao.getCliente().getNome() + "\\Contratos");
             
             diretorio.mkdir();
             
@@ -124,7 +131,7 @@ public class GeradorDeContrato {
             System.out.println("Tirar: chagou aqui! 6");
 
             Paragraph dadosCliente;
-            dadosCliente = new Paragraph("Locador: " + cliente.getNome() + ", portador do nº de CPF: " + cliente.getCpf(), timesNewRoman12);
+            dadosCliente = new Paragraph("Locador: " + locacao.getCliente().getNome() + ", portador do nº de CPF: " + locacao.getCliente().getCpf(), timesNewRoman12);
             dadosCliente.setSpacingAfter(40);
             dadosCliente.setAlignment(Paragraph.ALIGN_CENTER);
             

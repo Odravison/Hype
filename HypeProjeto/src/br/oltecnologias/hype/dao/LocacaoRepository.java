@@ -8,6 +8,7 @@ package br.oltecnologias.hype.dao;
 import br.oltecnologias.hype.exception.LocacaoExistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
+import br.oltecnologias.hype.model.Produto;
 import java.util.List;
 
 /**
@@ -29,5 +30,7 @@ public interface LocacaoRepository {
     public List<Locacao> getAllLocacao();
     
     public List<Locacao> getLocacaoByCliente(String idCliente);
+    
+    public List<Produto> getProdutosFromLocacao(int idLocacao) throws LocacaoInexistenteException;
     
 }

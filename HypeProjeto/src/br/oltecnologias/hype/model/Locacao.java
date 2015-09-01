@@ -5,31 +5,57 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Calendar;
+import java.util.HashMap;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Locacao implements Serializable {
 
     @Id
     @GeneratedValue
+    @Column(name = "id_locacao")
     private int id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
 
-    @OneToMany
-    private List<Produto> produtos;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinColumn(name="fk_locacao")
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)  //o nome da propriedade de "value" que liga a esta classe  
+//    @JoinColumn(name = "fk_locacao")
+//    @ElementCollection
+//    @MapKeyColumn(name="CODIGO")
+//    @Column(name="QUANTIDADE")
+//    @CollectionTable(name="locacao_produtos", joinColumns=@JoinColumn(name="id_locacao"))
+//    @ElementCollection
+//
+//    @CollectionTable(
+//            name = "PRODUTOS_LOCACAO",
+//            joinColumns = @JoinColumn(name = "id_locacao"))
+//    @Column(name = "produtos")
     
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @CollectionTable(name = "PRODUTOS")
+//    @MapKeyColumn(name = "CODIGO")
+//    @Column(name = "QUANTIDADE")
+    
+    @Transient
+    private HashMap<String, Integer> produtos;
+
     private double valorLocacao;
 
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -43,48 +69,40 @@ public class Locacao implements Serializable {
     private double valorDeEntrada = 0;
 
     private double jaPago = 0;
-    
-    private int parcelas;
-    
-    private float entrada;
 
-    
+    private int parcelas;
+
+    private boolean ativa;
+
     public Locacao() {
     }
 
-    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, float entrada) {
+    public Locacao(Cliente cliente, HashMap<String, Integer> produtos, double valorLocacao, Calendar dataLocacao,
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada) {
         this.cliente = cliente;
         this.produtos = produtos;
+        this.valorDeEntrada = valorDeEntrada;
         this.valorLocacao = valorLocacao;
         this.dataLocacao = dataLocacao;
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
+        if (valorDeEntrada == 0) {
+            this.jaPago = valorLocacao;
+        }
         this.parcelas = parcelas;
-        this.entrada = entrada;
-        if (formaDePagamento.equals("À VISTA")) {
+        if (formaDePagamento.equals("A VISTA")) {
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
-    }
-
-    public Locacao(Cliente cliente, List<Produto> produtos, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, double valorDeEntrada) {
-        this.cliente = cliente;
-        this.produtos = produtos;
-        this.valorLocacao = valorLocacao;
-        this.dataLocacao = dataLocacao;
-        this.dataDevolucao = dataDeDevolucao;
-        this.formaDePagamento = formaDePagamento;
-        this.valorDeEntrada = valorDeEntrada;
+        this.ativa = true;
     }
 
     public void gerarContrato() throws DocumentException, IOException, Exception {
-        GeradorDeContrato.getInstance().gerarContrato(this.cliente, this.dataLocacao, this.dataDevolucao, this.produtos);
+        GeradorDeContrato.getInstance().gerarContrato(this);
 
     }
 
     public void imprimirContrato() throws DocumentException, IOException, Exception {
-        GeradorDeContrato.getInstance().imprimirContrato(this.cliente, this.dataLocacao, this.dataDevolucao, this.produtos);
+        GeradorDeContrato.getInstance().imprimirContrato(this);
     }
 
     public int getId() {
@@ -103,11 +121,11 @@ public class Locacao implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<Produto> getProdutos() {
+    public HashMap<String, Integer> getProdutos() {
         return produtos;
     }
 
-    public void setProdutos(List<Produto> produtos) {
+    public void setProdutos(HashMap<String, Integer> produtos) {
         this.produtos = produtos;
     }
 
@@ -135,15 +153,6 @@ public class Locacao implements Serializable {
         return dataDevolucao;
     }
 
-    public String produtosToString() {
-        String string = null;
-        for (Produto p : this.produtos) {
-            string += p.getDescricao();
-        }
-
-        return string;
-    }
-
     public String getFormaDePagamento() {
         return formaDePagamento;
     }
@@ -167,23 +176,15 @@ public class Locacao implements Serializable {
     public void setJaPago(double jaPago) {
         this.jaPago = jaPago;
     }
-    
-    public String getProdutosLocados() {
-        String produtosLocados = "";
-        for(Produto produto: this.produtos) {
-            produtosLocados += produto.getNome() + ", ";
-        }
-        return produtosLocados;
-    }
-    
+
     public String getVencimento() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
     }
-    
+
     public String getContato() {
         return this.cliente.getCelular();
     }
-    
+
     public int getParcelas() {
         return parcelas;
     }
@@ -192,16 +193,20 @@ public class Locacao implements Serializable {
         this.parcelas = parcelas;
     }
 
-    public float getEntrada() {
-        return entrada;
+    public void addValorJaPago(double valorDessePagamento) {
+        this.jaPago += valorDessePagamento;
     }
 
-    public void setEntrada(float entrada) {
-        this.entrada = entrada;
-    }
-    
     public String getValorLocacaoInString() {
         return new DecimalFormat("#.##").format(this.valorLocacao);
+    }
+
+    public boolean isAtiva() {
+        return ativa;
+    }
+
+    public void setAtiva(boolean ativa) {
+        this.ativa = ativa;
     }
 
 }

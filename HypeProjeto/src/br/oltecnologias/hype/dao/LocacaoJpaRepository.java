@@ -132,7 +132,8 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             l.setValorDeEntrada(locacao.getValorDeEntrada());
             l.setValorLocacao(locacao.getValorLocacao());
             l.setParcelas(locacao.getParcelas());
-            l.setEntrada(locacao.getEntrada());
+            l.setValorDeEntrada(locacao.getValorDeEntrada());
+            l.setAtiva(locacao.isAtiva());
             
             em.merge(l);
 
@@ -207,5 +208,28 @@ public class LocacaoJpaRepository implements LocacaoRepository {
         return locacoes;
     }
     
+    @Override
+    public List<Produto> getProdutosFromLocacao(int idLocacao) throws LocacaoInexistenteException{
+        List<Produto> produtos = new ArrayList<Produto>();
+        EntityManager em = null;
+        
+        try {
+            em = getEntityManager();
+            if (!existsLocacao(idLocacao)){
+                throw new LocacaoInexistenteException("Esta locação não existe, logo, não é possível buscar produtos!");
+            }
+            Query q = em.createQuery("FROM Produto WHERE fk_locacao = :parametro", Locacao.class);
+            q.setParameter("parametro", idLocacao);
+            produtos = q.getResultList();
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
+        return produtos;
+        
+    }
     
 }

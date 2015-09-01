@@ -51,6 +51,10 @@ public class Configuracao implements Serializable {
         return ConfiguracaoHolder.INSTANCE;
     }
 
+    public int getDiasDeExtravio() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private static class ConfiguracaoHolder {
         private static final Configuracao INSTANCE = new Configuracao();
 
