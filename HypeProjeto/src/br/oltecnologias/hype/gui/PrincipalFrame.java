@@ -45,19 +45,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
      */
     public PrincipalFrame(String login) {
         loginUsuario = login;
-        try {
-            GerenciadorDoSistema.getInstance().setUsuarioLogado(GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(login));
-        } catch (UsuarioInexistenteException e) {
-            new LoginFrame().setVisible(true);
-            setVisible(false);
-        }
         initComponents();
         
         //labelLogoSistema.setIcon(new ImageIcon("Imagens\\.png"));
     }
 
     /**
-     * Creates new form PrinFrame
+     * Cria um novo form PrincipalFrame
      */
     public PrincipalFrame() {
         initComponents();
@@ -75,7 +69,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelGeral = new javax.swing.JPanel();
         painelTopo = new javax.swing.JPanel();
         labelLogoEmpresa = new javax.swing.JLabel();
-        labelLogoSistema = new javax.swing.JLabel();
+        labelLoginUsuario = new javax.swing.JLabel();
         botaoSair = new javax.swing.JLabel();
         abas = new javax.swing.JTabbedPane();
         painelClientes = new javax.swing.JPanel();
@@ -165,20 +159,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoRegistrarDespesa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1366, 730));
+        setTitle("Closet");
+        setPreferredSize(new java.awt.Dimension(1366, 731));
         setResizable(false);
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
-        painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
+        painelGeral.setPreferredSize(new java.awt.Dimension(1366, 725));
 
         painelTopo.setBackground(new java.awt.Color(255, 255, 255));
 
         labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\Mini Logo Empresa.png"));
         labelLogoEmpresa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
 
+        labelLoginUsuario.setToolTipText("");
+        labelLoginUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelLoginUsuario.setText("Logado com "+loginUsuario);
+
+        botaoSair.setIcon(new ImageIcon("Imagens\\Sair do sistema.png"));
         botaoSair.setToolTipText("Sair do Sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSair.setIcon(new ImageIcon("Imagens\\Sair do sistema.png"));
         botaoSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botaoSairMouseClicked(evt);
@@ -193,18 +192,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(labelLogoEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelLogoSistema)
+                .addComponent(labelLoginUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(botaoSair)
+                .addGap(16, 16, 16))
         );
         painelTopoLayout.setVerticalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelLogoSistema, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-                    .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
                 .addGap(8, 8, 8))
-            .addComponent(botaoSair, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelLoginUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoSair, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
 
         abas.setBackground(new java.awt.Color(255, 255, 255));
@@ -392,14 +394,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(campoPesquisarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisarCliente))
                 .addGap(37, 37, 37)
-                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFiltrarClientes)
-                    .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoEditarCliente)
                         .addComponent(botaoExcluirCliente)
                         .addComponent(botaoVerLocacoesCliente)
-                        .addComponent(botaoVerMedidas)))
+                        .addComponent(botaoVerMedidas))
+                    .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelFiltrarClientes)
+                        .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20)
                 .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -1568,7 +1571,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelGeralLayout.createSequentialGroup()
             .addContainerGap()
             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
             .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE))
     );
 
@@ -1581,7 +1584,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, 730, Short.MAX_VALUE)
             .addGap(0, 0, 0))
     );
 
@@ -1843,11 +1846,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_painelAdministradorMouseClicked
 
-    private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
-        setVisible(false);
-        new LoginFrame().setVisible(true);
-    }//GEN-LAST:event_botaoSairMouseClicked
-
     private void botaoPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarClienteActionPerformed
         if(campoPesquisarCliente.getText().equals("Pesquisar Cliente") || campoPesquisarCliente.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2082,6 +2080,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.dispose();
         atualizarValorEmCaixa();
     }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
+
+    private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
+        new LoginFrame().setVisible(true);
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_botaoSairMouseClicked
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -2293,8 +2297,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelFiltrarProdutos;
     private javax.swing.JLabel labelFiltrarUsuario;
     private javax.swing.JLabel labelFiltrarVenda;
+    private javax.swing.JLabel labelLoginUsuario;
     private javax.swing.JLabel labelLogoEmpresa;
-    private javax.swing.JLabel labelLogoSistema;
     private javax.swing.JLabel labelValorCaixa;
     private javax.swing.JLabel labelValorEmCaixa;
     private javax.swing.JPanel painelAdministrador;
