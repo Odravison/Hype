@@ -8,6 +8,7 @@ package br.oltecnologias.hype;
 //import br.oltecnologias.hype.dao.MedidasJpaController;
 //import br.oltecnologias.hype.dao.ProdutoJpaController;
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import br.oltecnologias.hype.dao.ProdutoJpaRepository;
@@ -24,6 +25,7 @@ import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -40,148 +42,81 @@ public class Aplicacao {
      * @param args
      */
     public static void main(String[] args) throws DocumentException, IOException, Exception {
-        System.out.println("Opa");
-        System.out.println("Simulação de persistência do singleton: Configuração");
 
-        String telefone1 = "1234-5678";
-        String telefone2 = "1234-5678";
+        System.out.println("####################### Realizando os seguintes testes: ########################### \n"
+                + "Teste de cadastro/edição/remoção de produto; \n"
+                + "Teste de cadastro/edição/remoção de locações \n"
+                + "Teste de cadastro/edição/remoção de cliente \n"
+                + "SIMULAÇÃO DE UMA LOCAÇÃO");
 
-        Endereco end = new Endereco("Coronel", "13 de maio", "Paraíba", 49, "João Pessoa");
+        System.out.println(" ================== Criação das entidades ======================");
 
-        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
-        Medidas medidas2 = new Medidas(10, 10, 10, 10, 10, 10, 10, "obs1");
-        
-        Cliente cliente = new Cliente("1234566", "Luender Viado Lima", end, medidas, telefone1, telefone2);
+        Endereco endereco = new Endereco("Rua Onde Judas Perdeu as Botas", "Bairro de Canto Nenhum", "OZ", 40, "Cidade Fantasma");
+        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, 10, "Se liga Luender, a gente vai ganhar muito dinheiro");
 
-        
+        Cliente cliente = new Cliente("123456789012", "José Luender", endereco, medidas, "3224-2424", "8888-8888");
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        
-        List<Produto> produtos = new ArrayList<Produto>();
+        HashMap<String, Integer> produtosDeLocacao = new HashMap<String, Integer>();
+        List<Produto> produtosDeEstoque = new ArrayList<Produto>();
 
-        for (int i = 0; i < 6; i++) {
-            Endereco enderecoo = new Endereco("Av. Pres. Epitácio Pessoa", "Centro", "Paraíba", 1234, "João Pessoa");
-            String fornecedor = "EMIRATES";
-            Produto p = new Produto("AT40P507" + i, "Suéter1", 40, i + 1, fornecedor , "Azul", 40, true);
-            produtos.add(p);
+        for (int i = 0; i < 10; i++) {
+            produtosDeLocacao.put("AAAAAAA" + i, i + 1);
+
+            Produto p = new Produto("AAAAAAA" + i, "Roupa de Varal", 40.00, i, "Envio de Roupas.com", "Branca", 38, true);
+            produtosDeEstoque.add(p);
         }
-        
-        Locacao locacao = new Locacao(cliente, produtos, 300.99, Calendar.getInstance(), Calendar.getInstance(), "A VISTA", 3, 300);
+
+        Locacao locacao = new Locacao(cliente, produtosDeLocacao, 400.00, Calendar.getInstance(), Calendar.getInstance(), "À VISTA", 0, 0);
         List<Locacao> locacoes = new ArrayList<Locacao>();
         locacoes.add(locacao);
 
         cliente.setLocacoes(locacoes);
-//        cliente.setCpf("9999999999999");
-        
-        
-        ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
-        cjp.create(cliente);
-        
-//        Cliente cliente2 = cjp.findByCpf("1234566");
-//        cliente.setCelular("111111111");
-//        
-        
-//        cjp.editarCliente(cliente);
-//      
-        EntityManagerFactory emf2 = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf2);
-        
-        for (Cliente c: cjp.getAllClientes()){
-            System.out.println("===========>>>>>> " + c.getNome() + "Com quantidade de locação: " + c.getLocacoes().size());
-        }
-        
-        
-        
-        
-        
-        for (Locacao l: ljp.getLocacaoByCliente(cliente.getCpf())){
-            System.out.println("============>>>>>>>>>> " + l.getContato());
+
+        try {
+            System.out.println("COMEÇANDO OS TESTES DAS FUNÇÕES DE GERENCIADOR DE PESSOAS");
+            
+            GerenciadorDePessoas.getInstance().cadastrarCliiente(cliente);
+            System.out.println("CADASTRAR CLIENTE: ==================> OK");
+            
+            cliente.setCelular("9999999999");
+            GerenciadorDePessoas.getInstance().editarCliente(cliente);
+            System.out.println("EDITAR CLIENTE: ==================> OK");
+            
+            if (GerenciadorDePessoas.getInstance().getClientes().size() > 0){
+                System.out.println("GETCLIENTES: ==================> OK");
+            }
+            
+            if (GerenciadorDePessoas.getInstance().getMostRecentLocationsByClientes().size() > 0){
+                System.out.println("LISTAR LOCAÇÕES MAIS RECENTES: ==================> OK");
+            }
+            
+            if ( GerenciadorDePessoas.getInstance().pesquisarCliente("123456789012").equals(cliente)){
+                System.out.println("PESQUISAR CLIENTE: ==================> OK");
+            }
+            
+            int quantidade = 0; int comNomes = 0;
+            for (Cliente c: GerenciadorDePessoas.getInstance().pesquisarClientesPorNome("josé")){
+                quantidade++;
+                if (c.getNome().contains("josé")){
+                    comNomes++;
                     
+                }
+            }
+            System.out.println("Clientes cadastrados: " + quantidade + "Com nome que tenha o que foi pesquisado: " + comNomes);
+            
+            GerenciadorDePessoas.getInstance().removerCliente(cliente.getCpf());
+            if (GerenciadorDePessoas.getInstance().getClientes().size() == 0){
+                System.out.println("REMOVER CLIENTE: ==================> OK");
+            } else{
+                System.out.println("REMOVER CLIENTE: ==================> FALHOU");
+            }
+            
+            System.out.println("TODOS OS TESTES FORAM EXECUTADOS");
+            
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
         }
-        
-//        ljp.removerLocacao(locacao);
-        GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId(), cliente);
-        
-//        ProdutoJpaRepository ppp = new ProdutoJpaRepository(emf2);
-//        ppp.apagarProduto("AT40P5071");
-        
-        for (Cliente c: cjp.getAllClientes()){
-            System.out.println("Quantidade de locacao >>> " + c.getLocacoes().size());
-        }
-        
-//        cjp.removerCliente(cliente.getCpf());
-        
-        System.out.println("===========>>>>>>>>>>> verify " + cjp.existsByCpf(cliente.getCpf()));
-        
-        
-//        System.out.println(cjp.findCliente(cliente.getCpf()).getNome());
-//        cliente.setNome("lulisssss");
-//        cjp.edit(cliente);
-//        cjp.destroy(cliente.getCpf());
-
-        emf.close();
-        emf2.close();
-
-        System.out.println("Funfou");
-
-//        ConfiguracaoJpaController confJpa = new ConfiguracaoJpaController(emf);
-//        try {
-//            Configuracao config = Configuracao.getInstance();
-//            config.setDiasEmprestimo(4);
-//            config.setContratoOriginal("asdfasdfasdfasdf");
-//            config.setDiretorioDeBackup("asdfasdfasdfasfd");
-//            config.setDiretorioDeContratos("asdfasdfasdfasdf");
-//            Endereco endereco = new Endereco("asdfad", "asdfasdf", "asdfasdfasdf", 12, "asdfasdf");
-//            config.setEmpresa(new Empresa("asdfasdf", "asdfasdf", "asdfasdfa", endereco));
-//            
-//            confJpa.create(config);
-//            System.out.println("ID DA CONFIGURACAO ======>>>>" + Integer.toString(config.getId()));
-//            System.out.println("Quantas config ==============>>>> " + confJpa.getConfiguracaoCount());
-//            confJpa.destroy(config.getId());
-//            System.out.println("==============>>>> " + confJpa.getConfiguracaoCount());
-////            confJpa.create(config);
-////            config.setContratoOriginal("a");
-////            confJpa.edit(config);
-//            
-//        } catch (Exception ex) {
-//            Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//
-//        MedidasJpaController ctM = new MedidasJpaController(emf);
-//
-//        try {
-////            ctM.create(medidas);
-////            ctM.create(medidas2);
-//            cjp.create(cliente);
-//            
-//            for (Medidas med : ctM.findMedidasEntities()) {
-//                System.out.println("==============>>>> Medidas " +  med.getObservacao());
-//            }
-//        }catch(Exception e){
-//            Logger.getLogger(Aplicacao.class.getName()).log(Level.SEVERE, null, e);
-//        }
-//        
-//        emf.close();
-//
-//        System.out.println("Funcionou :D");
-//        System.out.println("SIMULAÇÃO DE CONTRATO");
-//
-//        Configuracao conf = Configuracao.getInstance();
-//        Endereco endereco = new Endereco("Av. Picamonhagaba", "Centro", "Paraíba", 40, "João Pessoa");
-//        conf.setEmpresa(new Empresa("1234566", "Luender sexShop", "1234-5678", endereco));
-//        conf.setDiasEmprestimo(2);
-//        conf.setDiretorioDeContratos("C:\\Users\\Odravison\\Desktop");
-//
-//        Cliente luender;
-//        luender = new Cliente("123456789012", "José Luender de Lima Santos", endereco, new Medidas(10, 10, 10, 10, 10, 10, 10, "osb"),
-//                "3222-2222", "(83)98763-3232");
-//
-//
-//        Locacao locacao = new Locacao(luender, produtos, 240, Calendar.getInstance());
-//
-//        GeradorDeContrato ger = GeradorDeContrato.getInstance();
-//        ger.imprimirContrato(luender, locacao.getDataLocacao(), locacao.getDataDevolucao(), produtos);
-//
-//        System.out.println("PASSOU");
     }
 }
