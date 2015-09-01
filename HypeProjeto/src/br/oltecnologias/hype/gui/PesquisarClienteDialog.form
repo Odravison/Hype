@@ -2,6 +2,7 @@
 
 <Form version="1.2" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
   <Properties>
+    <Property name="alwaysOnTop" type="boolean" value="true"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
     </Property>
@@ -30,20 +31,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="painelDados" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Component id="botaoOk" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="botaoVoltar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="painelDados" min="-2" max="-2" attributes="0"/>
-                  </Group>
               </Group>
-              <EmptySpace pref="31" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -52,12 +50,12 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="painelDados" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="botaoVoltar" min="-2" max="-2" attributes="0"/>
-                  <Component id="botaoOk" alignment="0" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="botaoVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="botaoOk" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="26" max="32767" attributes="0"/>
+              <EmptySpace pref="23" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,14 +79,11 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="scPanelClientes" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="labelCliente" min="-2" max="-2" attributes="0"/>
+                      <Component id="scPnClientes" pref="490" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="campoCliente" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoCliente" min="-2" pref="300" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="botaoPesquisar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -100,26 +95,17 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="labelCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="campoCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="botaoPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="scPanelClientes" pref="177" max="32767" attributes="0"/>
+                  <Component id="scPnClientes" pref="255" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="labelCliente">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Cliente:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JTextField" name="campoCliente">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -141,21 +127,21 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoPesquisarActionPerformed"/>
           </Events>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="scPanelClientes">
+        <Container class="javax.swing.JScrollPane" name="scPnClientes">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
           </AuxValues>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="listaClientes">
+            <Component class="javax.swing.JTable" name="tabelaClientes">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="DefaultListModel modelo = new DefaultListModel();&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    modelo.addElement(cliente.getCpf() + &quot; | &quot; + cliente.getNome());&#xa;}&#xa;listaClientes.setModel(modelo);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabelaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(20); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(100);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(396);"/>
               </AuxValues>
             </Component>
           </SubComponents>

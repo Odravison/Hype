@@ -1,6 +1,7 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -75,6 +76,10 @@ public class Venda implements Serializable {
 
     public void setValor(double valor) {
         this.valor = valor;
+    }
+    
+    public String getValorInString() {
+        return new DecimalFormat("#.##").format(this.valor);
     }
 
     public String getFormaDePagamento() {

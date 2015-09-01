@@ -21,6 +21,8 @@ import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -56,13 +58,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         botaoSelecionarProdutos = new javax.swing.JButton();
         campoPesquisar = new javax.swing.JTextField();
         botaoBuscar = new javax.swing.JButton();
-        scPanelListarProdutos = new javax.swing.JScrollPane();
-        listaProdutos = new javax.swing.JList();
         labelPesquisar = new javax.swing.JLabel();
+        scPnTabelaProdutos = new javax.swing.JScrollPane();
+        tabelaProdutos = new javax.swing.JTable();
         painelProdutos = new javax.swing.JPanel();
         botaoRemover = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        listaProdutosVendidos = new javax.swing.JList();
+        scPnTabelaProdutosLocados = new javax.swing.JScrollPane();
+        tabelaProdutosVendidos = new javax.swing.JTable();
         painelFormaPagamento = new javax.swing.JPanel();
         radioAVista = new javax.swing.JRadioButton();
         radioCartao = new javax.swing.JRadioButton();
@@ -71,6 +73,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         campoEntrada = new javax.swing.JTextField();
         labelParcelas = new javax.swing.JLabel();
         campoParcelas = new javax.swing.JTextField();
+        radioCredito = new javax.swing.JRadioButton();
+        radioDebito = new javax.swing.JRadioButton();
         botaoCancelar = new javax.swing.JButton();
         botaoConcluir = new javax.swing.JButton();
         labelValorTotal = new javax.swing.JLabel();
@@ -80,6 +84,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelSimboloPorcentagem = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(834, 730));
         setResizable(false);
         setTitle("Realizar Venda");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -129,21 +134,52 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             }
         });
 
-        listaProdutos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        listaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaProdutosMouseClicked(evt);
-            }
-        });
-        scPanelListarProdutos.setViewportView(listaProdutos);
-        modeloProdutos = new DefaultListModel();
-        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
-            modeloProdutos.addElement(produto.getCodigo() + " | " + produto.getNome());
-        }
-        listaProdutos.setModel(modeloProdutos);
-
         labelPesquisar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelPesquisar.setText("Pesquisar:");
+
+        tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //Define a fonte do cabeçalho da tabela de produtos
+        tabelaProdutos.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
+        // Altura das linhas
+        tabelaProdutos.setRowHeight(20);
+
+        String[] nomesColunasTabelaProdutos = {"Código", "Descrição", "Qtd"};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhasProdutos = new ArrayList<>();
+
+        //Adicionando valores nas linhas
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+            listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+        }
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaProdutos = new DefaultTableModel(
+            listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){
+
+            boolean[] canEdit = new boolean [] {false, false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return canEdit [columnIndex];
+            }
+
+        };
+
+        //define o model da tabela
+        tabelaProdutos.setModel(modeloTabelaProdutos);
+        // Redimensionando a largura da coluna de código
+        tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(45);
+        // Redimensionando a largura da coluna de descrição
+        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(487);
+        // Redimensionando a largura da coluna de finalidade
+        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaProdutosMouseClicked(evt);
+            }
+        });
+        scPnTabelaProdutos.setViewportView(tabelaProdutos);
 
         javax.swing.GroupLayout painelSelecionarLayout = new javax.swing.GroupLayout(painelSelecionar);
         painelSelecionar.setLayout(painelSelecionarLayout);
@@ -152,18 +188,16 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             .addGroup(painelSelecionarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
+                    .addGroup(painelSelecionarLayout.createSequentialGroup()
                         .addComponent(labelPesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoPesquisar)
-                        .addGap(29, 29, 29))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelSelecionarLayout.createSequentialGroup()
-                        .addComponent(scPanelListarProdutos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(campoPesquisar))
+                    .addComponent(scPnTabelaProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE))
+                .addGap(10, 10, 10)
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botaoBuscar)
-                    .addComponent(botaoSelecionarProdutos))
-                .addGap(14, 14, 14))
+                    .addComponent(botaoSelecionarProdutos, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoBuscar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         painelSelecionarLayout.setVerticalGroup(
             painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,9 +209,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addComponent(labelPesquisar))
                 .addGap(18, 18, 18)
                 .addGroup(painelSelecionarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scPanelListarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoSelecionarProdutos))
-                .addContainerGap(21, Short.MAX_VALUE))
+                    .addGroup(painelSelecionarLayout.createSequentialGroup()
+                        .addComponent(botaoSelecionarProdutos)
+                        .addGap(0, 157, Short.MAX_VALUE))
+                    .addComponent(scPnTabelaProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         painelProdutos.setBackground(new java.awt.Color(255, 255, 255));
@@ -198,15 +234,45 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             }
         });
 
-        listaProdutosVendidos.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        listaProdutosVendidos.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabelaProdutosVendidos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        //Define a fonte do cabeçalho da tabela de produtos
+        tabelaProdutosVendidos.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 14));
+        // Altura das linhas
+        tabelaProdutosVendidos.setRowHeight(20);
+
+        String[] nomesColunasTabelaProdutosVendidos = {"Código", "Descrição", "Qtd"};
+        //Essa lista terá as linhas da tabela
+        List<Object[]> listaLinhasProdutosVendidos = new ArrayList<>();
+
+        //cria um defaultablemodel com as informações acima
+        modeloTabelaProdutosVendidos = new DefaultTableModel(
+            listaLinhasProdutosVendidos.toArray(new Object[listaLinhasProdutosVendidos.size()][]), nomesColunasTabelaProdutosVendidos){
+
+            boolean[] canEdit = new boolean [] {false, false, false};
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex){
+                return canEdit [columnIndex];
+            }
+
+        };
+
+        //define o model da tabela
+        tabelaProdutosVendidos.setModel(modeloTabelaProdutosVendidos);
+        // Redimensionando a largura da coluna de código
+        tabelaProdutosVendidos.getColumnModel().getColumn(0).setPreferredWidth(45);
+        // Redimensionando a largura da coluna de descrição
+        tabelaProdutosVendidos.getColumnModel().getColumn(1).setPreferredWidth(487);
+        // Redimensionando a largura da coluna de finalidade
+        tabelaProdutosVendidos.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tabelaProdutosVendidos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaProdutosVendidos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listaProdutosVendidosMouseClicked(evt);
+                tabelaProdutosVendidosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(listaProdutosVendidos);
-        modeloProdutosVendidos = new DefaultListModel();
-        listaProdutosVendidos.setModel(modeloProdutosVendidos);
+        scPnTabelaProdutosLocados.setViewportView(tabelaProdutosVendidos);
 
         javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
         painelProdutos.setLayout(painelProdutosLayout);
@@ -214,7 +280,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelProdutosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+                .addComponent(scPnTabelaProdutosLocados)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(botaoRemover)
                 .addContainerGap())
@@ -223,23 +289,26 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelProdutosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelProdutosLayout.createSequentialGroup()
-                        .addComponent(botaoRemover)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
-                .addContainerGap())
+                .addComponent(botaoRemover)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelProdutosLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scPnTabelaProdutosLocados, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         painelFormaPagamento.setBackground(new java.awt.Color(255, 255, 255));
         painelFormaPagamento.setBorder(javax.swing.BorderFactory.createTitledBorder("Forma de Pagamento"));
+        painelFormaPagamento.setPreferredSize(new java.awt.Dimension(336, 130));
 
         radioAVista.setBackground(new java.awt.Color(255, 255, 255));
         radioAVista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioAVista.setSelected(true);
         radioAVista.setText("À Vista");
-        radioAVista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioAVistaMouseClicked(evt);
+        radioAVista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioAVista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAVistaActionPerformed(evt);
             }
         });
         radioAVista.setSelected(true);
@@ -251,23 +320,25 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         radioCartao.setBackground(new java.awt.Color(255, 255, 255));
         radioCartao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioCartao.setText("Cartão");
-        radioCartao.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioCartaoMouseClicked(evt);
+        radioCartao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioCartao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCartaoActionPerformed(evt);
             }
         });
 
         radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
         radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioPromissoria.setText("Promissória");
-        radioPromissoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioPromissoriaMouseClicked(evt);
+        radioPromissoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioPromissoriaActionPerformed(evt);
             }
         });
 
         labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelEntrada.setText("Entrada:*  R$");
+        labelEntrada.setText("Entrada: R$");
 
         campoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
@@ -275,6 +346,29 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelParcelas.setText("Qtd. Parcelas:*");
 
         campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        radioCredito.setBackground(new java.awt.Color(255, 255, 255));
+        radioCredito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioCredito.setText("Crédito");
+        radioCredito.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioCredito.setVisible(false);
+        radioCredito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioCreditoActionPerformed(evt);
+            }
+        });
+
+        radioDebito.setBackground(new java.awt.Color(255, 255, 255));
+        radioDebito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        radioDebito.setSelected(true);
+        radioDebito.setText("Débito");
+        radioDebito.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioDebito.setVisible(false);
+        radioDebito.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioDebitoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelFormaPagamentoLayout = new javax.swing.GroupLayout(painelFormaPagamento);
         painelFormaPagamento.setLayout(painelFormaPagamentoLayout);
@@ -284,17 +378,23 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                        .addComponent(radioAVista)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioCartao)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioPromissoria))
-                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
                         .addComponent(labelEntrada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79)
-                        .addComponent(labelParcelas)))
+                        .addComponent(labelParcelas))
+                    .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addComponent(radioCredito)
+                            .addGap(77, 77, 77)
+                            .addComponent(radioDebito))
+                        .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                            .addComponent(radioAVista)
+                            .addGap(18, 18, 18)
+                            .addComponent(radioCartao)
+                            .addGap(18, 18, 18)
+                            .addComponent(radioPromissoria))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -307,13 +407,17 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addComponent(radioAVista)
                     .addComponent(radioCartao)
                     .addComponent(radioPromissoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioCredito)
+                    .addComponent(radioDebito))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelEntrada)
                     .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelParcelas)
                     .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -360,48 +464,51 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
-                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorVenda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloPorcentagem)
-                        .addGap(56, 56, 56)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoConcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar)))
+                        .addComponent(botaoCancelar))
+                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(painelSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelValorTotal)
                         .addComponent(botaoConcluir)
-                        .addComponent(botaoCancelar)
+                        .addComponent(botaoCancelar))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelDesconto)
                             .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelSimboloPorcentagem)))
-                    .addComponent(labelValorVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                            .addComponent(labelSimboloPorcentagem))
+                        .addComponent(labelValorTotal, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(labelValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
@@ -416,18 +523,17 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoSelecionarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarProdutosActionPerformed
-        if(listaProdutos.isSelectionEmpty()) {
-            JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos locados", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaProdutos.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos vendidos", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            modeloProdutosVendidos.addElement(listaProdutos.getSelectedValue().toString());
-            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
             try {
-                adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
+                adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                
+                labelValorVenda.setText("R$ "+getValorTotalDaVenda());
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
-            labelValorVenda.setText(getValorTotalDaVenda());
-
+            } 
         }
     }//GEN-LAST:event_botaoSelecionarProdutosActionPerformed
 
@@ -447,45 +553,24 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(campoPesquisar.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(campoPesquisar.getText())) {
-                modeloProdutos.addElement(produto.getDescricao());
+            //Limpar o model dos produtos antes de acrescentar os objetos da pesquisa
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
+                modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
-            listaProdutos.setModel(modeloProdutos);
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
-
-    private void listaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosMouseClicked
-        if(evt.getClickCount() == 2){
-            modeloProdutosVendidos.addElement(listaProdutos.getSelectedValue().toString());
-            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            try {
-                adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
-            } catch (ProdutoInexistenteException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
-            labelValorVenda.setText(getValorTotalDaVenda());
-        }
-    }//GEN-LAST:event_listaProdutosMouseClicked
 
     private void painelSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelSelecionarMouseClicked
         if(campoPesquisar.getText().length() <= 0)
         criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-
     }//GEN-LAST:event_painelSelecionarMouseClicked
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        if(listaProdutosVendidos.isSelectionEmpty()) {
+        if(tabelaProdutosVendidos.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            modeloProdutosVendidos.removeElement(listaProdutosVendidos.getSelectedValue().toString());
-            //Diminui o valor total da locação
-            StringTokenizer descricao = new StringTokenizer(listaProdutos.getSelectedValue().toString(), " ");
-            try {
-                removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
-            } catch (ProdutoInexistenteException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
-            labelValorVenda.setText(getValorTotalDaVenda());
+            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow());
+            labelValorVenda.setText("R$ "+getValorTotalDaVenda());
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -567,43 +652,63 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
-    private void listaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listaProdutosVendidosMouseClicked
-        if (evt.getClickCount() == 2) {
-            modeloProdutosVendidos.removeElement(listaProdutosVendidos.getSelectedValue().toString());
-            StringTokenizer descricao = new StringTokenizer(listaProdutosVendidos.getSelectedValue().toString(), " ");
-            try {
-                removerProdutoDaVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(descricao.nextToken()));
-            } catch (ProdutoInexistenteException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
-            labelValorVenda.setText(getValorTotalDaVenda());
-        }
-    }//GEN-LAST:event_listaProdutosVendidosMouseClicked
-
-    private void radioCartaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioCartaoMouseClicked
-        radioAVista.setSelected(false);
-        radioPromissoria.setSelected(false);
-        habilitarCampos();
-    }//GEN-LAST:event_radioCartaoMouseClicked
-
-    private void radioPromissoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioPromissoriaMouseClicked
-        radioCartao.setSelected(false);
-        radioAVista.setSelected(false);
-        habilitarCampos();
-    }//GEN-LAST:event_radioPromissoriaMouseClicked
-
-    private void radioAVistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioAVistaMouseClicked
-        radioCartao.setSelected(false);
-        radioPromissoria.setSelected(false);
-        desabilitarCampos();
-    }//GEN-LAST:event_radioAVistaMouseClicked
-
     private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
         validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
         if(Integer.parseInt(campoDesconto.getText()) > 100) {
             evt.consume();
         }
     }//GEN-LAST:event_campoDescontoKeyTyped
+
+    private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
+        radioCartao.setSelected(false);
+        radioPromissoria.setSelected(false);
+        desabilitarCampos();
+        desabilitarRadios();
+    }//GEN-LAST:event_radioAVistaActionPerformed
+
+    private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
+        radioAVista.setSelected(false);
+        radioPromissoria.setSelected(false);
+        habilitarRadios();
+        desabilitarCampos();
+    }//GEN-LAST:event_radioCartaoActionPerformed
+
+    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
+        radioCartao.setSelected(false);
+        radioAVista.setSelected(false);
+        habilitarCampos();
+        desabilitarRadios();
+    }//GEN-LAST:event_radioPromissoriaActionPerformed
+
+    private void radioCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreditoActionPerformed
+        radioDebito.setSelected(false);
+        habilitarCampos();
+    }//GEN-LAST:event_radioCreditoActionPerformed
+
+    private void radioDebitoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDebitoActionPerformed
+        radioCredito.setSelected(false);
+        desabilitarCampos();
+    }//GEN-LAST:event_radioDebitoActionPerformed
+
+    private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
+        if(evt.getClickCount() == 2){            
+            try {
+                adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                
+                labelValorVenda.setText("R$ "+getValorTotalDaVenda());
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_tabelaProdutosMouseClicked
+
+    private void tabelaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosVendidosMouseClicked
+        if(evt.getClickCount() == 2){            
+            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow());
+            labelValorVenda.setText("R$ "+getValorTotalDaVenda());
+        }
+    }//GEN-LAST:event_tabelaProdutosVendidosMouseClicked
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -626,13 +731,17 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }
     
-    //Alterar para adicionar e remover apenas um produto que será pesquisado pelo cpf
     private void adicionarProdutoAVenda(Produto produto) {
+        //Adiciona os dados do novo produto na tabela
+        modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+        //trocar para hash
         produtosVendidos.add(produto);
     }
     
-    private void removerProdutoDaVenda(Produto produto) {
-        produtosVendidos.remove(produto);
+    private void removerProdutoDaVenda(int indice) {
+        modeloTabelaProdutosVendidos.removeRow(indice);
+        //trocar para hash
+        produtosVendidos.remove(indice);
     }
     
     public void habilitarCampos() {
@@ -647,6 +756,18 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelParcelas.setVisible(false);
         campoEntrada.setVisible(false);
         campoParcelas.setVisible(false);
+    }
+    
+    public void habilitarRadios() {
+        radioCredito.setSelected(false);
+        radioDebito.setSelected(true);
+        radioCredito.setVisible(true);
+        radioDebito.setVisible(true);
+    }
+    
+    public void desabilitarRadios() {
+        radioCredito.setVisible(false);
+        radioDebito.setVisible(false);
     }
 
     private String getValorTotalDaVenda() {
@@ -697,6 +818,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private int maxCaracteresDesconto = 3;
     protected Venda novaVenda;
     protected Movimentacao novaMovimentacao;
+    private DefaultTableModel modeloTabelaProdutos;
+    private DefaultTableModel modeloTabelaProdutosVendidos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
@@ -707,7 +830,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoEntrada;
     private javax.swing.JTextField campoParcelas;
     private javax.swing.JTextField campoPesquisar;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelDesconto;
     private javax.swing.JLabel labelEntrada;
     private javax.swing.JLabel labelParcelas;
@@ -715,14 +837,17 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelSimboloPorcentagem;
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JLabel labelValorVenda;
-    private javax.swing.JList listaProdutos;
-    private javax.swing.JList listaProdutosVendidos;
     private javax.swing.JPanel painelFormaPagamento;
     private javax.swing.JPanel painelProdutos;
     private javax.swing.JPanel painelSelecionar;
     private javax.swing.JRadioButton radioAVista;
     private javax.swing.JRadioButton radioCartao;
+    private javax.swing.JRadioButton radioCredito;
+    private javax.swing.JRadioButton radioDebito;
     private javax.swing.JRadioButton radioPromissoria;
-    private javax.swing.JScrollPane scPanelListarProdutos;
+    private javax.swing.JScrollPane scPnTabelaProdutos;
+    private javax.swing.JScrollPane scPnTabelaProdutosLocados;
+    private javax.swing.JTable tabelaProdutos;
+    private javax.swing.JTable tabelaProdutosVendidos;
     // End of variables declaration//GEN-END:variables
 }

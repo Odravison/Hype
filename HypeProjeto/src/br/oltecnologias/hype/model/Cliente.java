@@ -106,12 +106,16 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public String getUltimaMedicao() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
+    public Calendar getUltimaMedicao() {
+        return this.ultimaMedicao;
     }
 
     public void setUltimaMedicao(Calendar ultimaMedicao) {
         this.ultimaMedicao = ultimaMedicao;
+    }
+    
+    public String getUltimaMedicaoInString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
     }
 
     public Endereco getEndereco() {

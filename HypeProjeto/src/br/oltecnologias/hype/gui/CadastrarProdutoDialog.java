@@ -107,9 +107,9 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         radioVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioVenda.setText("Venda");
         radioVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        radioVenda.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioVendaMouseClicked(evt);
+        radioVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioVendaActionPerformed(evt);
             }
         });
 
@@ -118,9 +118,9 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         radioAluguel.setSelected(true);
         radioAluguel.setText("Aluguel");
         radioAluguel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        radioAluguel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                radioAluguelMouseClicked(evt);
+        radioAluguel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radioAluguelActionPerformed(evt);
             }
         });
 
@@ -188,7 +188,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         painelValores.setPreferredSize(new java.awt.Dimension(629, 100));
 
         labelTamanho.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTamanho.setText("Tamanho:*");
+        labelTamanho.setText("Tamanho:");
 
         labelQuantidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQuantidade.setText("Quantidade:*");
@@ -377,7 +377,9 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoPrecoKeyTyped
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
-        validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
+        if(campoNome.getText().length() >= maxCaracteresNome) {
+            evt.consume();
+        }
     }//GEN-LAST:event_campoNomeKeyTyped
 
     private void campoCorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCorKeyTyped
@@ -393,8 +395,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Informe o código do produto com 8 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoCor.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a cor do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoTamanho.getText().length() < maxCaracteresTamanho) {
-                JOptionPane.showMessageDialog(null, "Informe o tamanho do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoQuantidade.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de peças do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoPreco.getText().length() <= 0) {
@@ -405,6 +405,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                     fornecedor = "Não informado";
                 } else {
                     fornecedor = comboFornecedor.getSelectedItem().toString();
+                }
+                
+                if(campoTamanho.getText().length() == 0) {
+                    campoTamanho.setText("0");
                 }
                                 
                 try {
@@ -445,19 +449,13 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho); 
     }//GEN-LAST:event_campoTamanhoKeyTyped
 
-    private void radioVendaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioVendaMouseClicked
-        if (radioAluguel.isSelected()) {
-            radioAluguel.setSelected(false);
-            radioVenda.setSelected(true);
-        }
-    }//GEN-LAST:event_radioVendaMouseClicked
+    private void radioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioVendaActionPerformed
+        radioAluguel.setSelected(false);
+    }//GEN-LAST:event_radioVendaActionPerformed
 
-    private void radioAluguelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_radioAluguelMouseClicked
-        if (radioVenda.isSelected()) {
-            radioVenda.setSelected(false);
-            radioAluguel.setSelected(true);
-        }
-    }//GEN-LAST:event_radioAluguelMouseClicked
+    private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
+        radioVenda.setSelected(false);
+    }//GEN-LAST:event_radioAluguelActionPerformed
     
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 

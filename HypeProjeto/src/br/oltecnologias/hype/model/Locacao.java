@@ -43,7 +43,7 @@ public class Locacao implements Serializable {
     private double valorDeEntrada = 0;
 
     private double jaPago = 0;
-    
+        
     private int parcelas;
     
     private float entrada;
