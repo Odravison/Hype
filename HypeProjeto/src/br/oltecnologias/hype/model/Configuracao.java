@@ -6,13 +6,14 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Configuracao implements Serializable {
 
     private String nomeDaImpressora;
 
-    @OneToOne(cascade = {CascadeType.ALL})
+    @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Empresa empresa = null;
     
     private double descontoAVista;
@@ -42,22 +43,27 @@ public class Configuracao implements Serializable {
             + "Cláusula 6ª. Nenhuma peça locada será entregue ao CLIENTE sem o devido pagamento. E por estarem de acordo firmam o presente contrato.";
     
     private String diretorioDeContratos = null;
+    
     private String diretorioDeBackup = null;
+    
+    private int diasDeExtravio = 0;
+
 
     public Configuracao() {
     }
 
     public static Configuracao getInstance() {
+        
         return ConfiguracaoHolder.INSTANCE;
-    }
-
-    public int getDiasDeExtravio() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private static class ConfiguracaoHolder {
         private static final Configuracao INSTANCE = new Configuracao();
 
+    }
+    
+    public int getDiasDeExtravio() {
+        return this.diasDeExtravio;
     }
 
     public int getId() {
@@ -123,6 +129,9 @@ public class Configuracao implements Serializable {
     public void setDescontoAVista(double descontoAVista) {
         this.descontoAVista = descontoAVista * 0.01;
     }
-    
+
+    public void setDiasDeExtravio(int diasDeExtravio) {
+        this.diasDeExtravio = diasDeExtravio;
+    }
     
 }

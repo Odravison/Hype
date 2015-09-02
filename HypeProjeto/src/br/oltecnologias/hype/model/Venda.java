@@ -6,33 +6,37 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Venda implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     
-    @OneToMany
-    private List<Produto> produtos;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="fk_venda")
+    private List<ProdutosVendidos> produtosVendidos;
     
     private double valor;
     
     private String formaDePagamento;
     
+    @Temporal(TemporalType.DATE)
     private Calendar dataVenda;
     
     private int quantidadeParcelas;
 
-    private float entrada;
+    private double entrada;
     
     private int percentualDesconto;
 
@@ -44,9 +48,15 @@ public class Venda implements Serializable {
      *
      * @param produtos
      * @param valor
+     * @param formaDePagamento
+     * @param dataVenda
+     * @param quantidadeParcelas
+     * @param entrada
      */
-    public Venda(List<Produto> produtos, double valor, String formaDePagamento, Calendar dataVenda, int quantidadeParcelas, float entrada) {
-        this.produtos = produtos;
+    
+    public Venda(List<ProdutosVendidos> produtos, double valor, String formaDePagamento, 
+            Calendar dataVenda, int quantidadeParcelas, double entrada) {
+        this.produtosVendidos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
         this.dataVenda = dataVenda;
@@ -57,20 +67,20 @@ public class Venda implements Serializable {
         }
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
+    public List<ProdutosVendidos> getProdutosVendidos() {
+        return produtosVendidos;
     }
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
+    public void setProdutos(List<ProdutosVendidos> produtosVendidos) {
+        this.produtosVendidos = produtosVendidos;
     }
 
     public double getValor() {
@@ -93,14 +103,6 @@ public class Venda implements Serializable {
         this.formaDePagamento = formaDePagamento;
     }
     
-    public String getProdutosVendidosInString() {
-        String produtosVendidos = "";
-        for(Produto produto: this.produtos) {
-            produtosVendidos += produto.getNome()+", ";
-        }
-        return produtosVendidos;
-    }
-    
     public Calendar getDataVenda() {
         return this.dataVenda;
     }
@@ -113,11 +115,11 @@ public class Venda implements Serializable {
         this.quantidadeParcelas = quantidadeParcelas;
     }
 
-    public float getEntrada() {
+    public double getEntrada() {
         return entrada;
     }
 
-    public void setEntrada(float entrada) {
+    public void setEntrada(double entrada) {
         this.entrada = entrada;
     }
     

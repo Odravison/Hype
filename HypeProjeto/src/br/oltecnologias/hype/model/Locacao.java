@@ -1,27 +1,26 @@
 package br.oltecnologias.hype.model;
 
 import com.itextpdf.text.DocumentException;
+
 import java.io.IOException;
 import java.io.Serializable;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.List;
+
 import javax.persistence.CascadeType;
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyColumn;
-import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 @Entity
 public class Locacao implements Serializable {
@@ -29,7 +28,7 @@ public class Locacao implements Serializable {
     @Id
     @GeneratedValue
     @Column(name = "id_locacao")
-    private int id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
@@ -61,7 +60,9 @@ public class Locacao implements Serializable {
 //    @MapKeyJoinColumn(name = "codigo")
     
     
-    private HashMap<String, Integer> produtos;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "fk_locacao")
+    private List<ProdutosLocados> produtosLocados;
 
     private double valorLocacao;
 
@@ -84,10 +85,10 @@ public class Locacao implements Serializable {
     public Locacao() {
     }
 
-    public Locacao(Cliente cliente, HashMap<String, Integer> produtos, double valorLocacao, Calendar dataLocacao,
+    public Locacao(Cliente cliente, List<ProdutosLocados> produtosLocados, double valorLocacao, Calendar dataLocacao,
             Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada) {
         this.cliente = cliente;
-        this.produtos = produtos;
+        this.produtosLocados = produtosLocados;
         this.valorDeEntrada = valorDeEntrada;
         this.valorLocacao = valorLocacao;
         this.dataLocacao = dataLocacao;
@@ -112,11 +113,11 @@ public class Locacao implements Serializable {
         GeradorDeContrato.getInstance().imprimirContrato(this);
     }
 
-    public int getId() {
-        return id;
+    public long getId() {
+        return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -128,12 +129,12 @@ public class Locacao implements Serializable {
         this.cliente = cliente;
     }
 
-    public HashMap<String, Integer> getProdutos() {
-        return produtos;
+    public List<ProdutosLocados> getProdutos() {
+        return this.produtosLocados;
     }
 
-    public void setProdutos(HashMap<String, Integer> produtos) {
-        this.produtos = produtos;
+    public void setProdutos(List<ProdutosLocados> produtosLocados) {
+        this.produtosLocados = produtosLocados;
     }
 
     public double getValorLocacao() {

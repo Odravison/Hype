@@ -64,7 +64,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
     }
 
     @Override
-    public Locacao findById(int id) throws LocacaoInexistenteException {
+    public Locacao findById(long id) throws LocacaoInexistenteException {
         
         EntityManager em = null;
         
@@ -86,7 +86,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
     }
 
     @Override
-    public boolean existsLocacao(int id) {
+    public boolean existsLocacao(long id) {
         
         Object result = null;
         EntityManager em = null;
@@ -209,7 +209,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
     }
     
     @Override
-    public List<Produto> getProdutosFromLocacao(int idLocacao) throws LocacaoInexistenteException{
+    public List<Produto> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException{
         List<Produto> produtos = new ArrayList<Produto>();
         EntityManager em = null;
         

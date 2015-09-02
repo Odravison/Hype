@@ -11,6 +11,7 @@ import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutosLocados;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -38,7 +39,7 @@ public class GerenciadorDeLocacao {
     }
 
     // FALTA TESTAR
-    public Locacao realizarLocacao(Cliente cliente, HashMap<String, Integer> produtos, double valor, Calendar dataLocacao,
+    public Locacao realizarLocacao(Cliente cliente, List<ProdutosLocados> produtosLocados, double valor, Calendar dataLocacao,
             Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int desconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -53,16 +54,14 @@ public class GerenciadorDeLocacao {
             Cliente clienteQueLocou = cjp.findByCpf(cliente.getCpf());
 
             double valorFinal = valor - ((desconto / 100) * valor);
-            locacao = new Locacao(cliente, produtos, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
+            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
 
             clienteQueLocou.adicionarLocacao(locacao);
             cjp.editarCliente(clienteQueLocou);
             ljp.create(locacao);
 
-            for (Entry<String, Integer> entry : produtos.entrySet()) {
-                String codigo = entry.getKey();
-                int quantidade = entry.getValue();
-                GerenciadorDeProduto.getInstance().removerQuantidade(codigo, quantidade);
+            for (ProdutosLocados p : produtosLocados) {
+                GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
         } finally {
             emf.close();
@@ -232,7 +231,7 @@ public class GerenciadorDeLocacao {
         return produtosLocados;
     }
 
-    public List<Produto> getProdutosDeLocacao(int id) throws LocacaoInexistenteException {
+    public List<Produto> getProdutosDeLocacao(long id) throws LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
         List<Produto> aux = new ArrayList<Produto>();
@@ -255,14 +254,11 @@ public class GerenciadorDeLocacao {
         try {
             listaOrdenada = ljp.getAllLocacao();
 
-            Collections.sort(listaOrdenada, new Comparator() {
-                @Override
-                public int compare(Object o1, Object o2) {
-                    Locacao l1 = (Locacao) o1;
-                    Locacao l2 = (Locacao) o2;
-                    return l1.getDataLocacao().getTimeInMillis() < l2.getDataLocacao().getTimeInMillis() ? +1
-                            : (l1.getDataLocacao().getTimeInMillis() > l2.getDataLocacao().getTimeInMillis() ? -1 : 0);
-                }
+            Collections.sort(listaOrdenada, (Object o1, Object o2) -> {
+                Locacao l1 = (Locacao) o1;
+                Locacao l2 = (Locacao) o2;
+                return l1.getDataLocacao().getTimeInMillis() < l2.getDataLocacao().getTimeInMillis() ? +1
+                        : (l1.getDataLocacao().getTimeInMillis() > l2.getDataLocacao().getTimeInMillis() ? -1 : 0);
             });
 
         } finally {

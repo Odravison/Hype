@@ -53,8 +53,8 @@ public class GerenciadorDoSistema {
         return despesa;
     }
 
-    public void cadastrarDespesa(String nome, String obs, Calendar data, double valor) {
-        Despesa d = new Despesa(nome, obs, data, valor);
+    public void cadastrarDespesa(String nome, String obs, Calendar data, double valor, String emissor) {
+        Despesa d = new Despesa(nome, obs, data, valor, emissor);
         this.despesas.add(d);
     }
 
@@ -78,14 +78,6 @@ public class GerenciadorDoSistema {
             }
         }
         throw new DespesaInexistenteException("Esta despesa em questão não existe");
-    }
-
-    public void restaurarDadosDeBackup() {
-        
-    }
-    
-    public void carregarSistema() {
-        
     }
 
     public List<Despesa> getDespesas() {
@@ -112,22 +104,13 @@ public class GerenciadorDoSistema {
         this.usuarioLogado = usuarioLogado;
     }
     
-    //????
-    public static GerenciadorDoSistema getSingleton() {
-        return singleton;
-    }
-    //????
-    public static void setSingleton(GerenciadorDoSistema singleton) {
-        GerenciadorDoSistema.singleton = singleton;
-    }
-    
     public void gerarRelatorioDeCaixa(Calendar dataInicial, Calendar dataFinal) throws IOException {
         //Abrir o pdf do relatório gerado no sistema
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();  
         desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf")); 
     }
     
-    public Movimentacao cadastrarMovimentacao(String movimento, float valor, Calendar data, Usuario responsavel, String beneficiario) {
+    public Movimentacao cadastrarMovimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario) {
         
         Movimentacao movimentacao = new Movimentacao(movimento, valor, data, responsavel, beneficiario);
         this.movimentacoes.add(movimentacao);

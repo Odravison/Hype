@@ -1,13 +1,13 @@
 package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
+
 import java.util.Calendar;
-import javax.persistence.Column;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -15,8 +15,9 @@ import javax.persistence.TemporalType;
 public class Despesa implements Serializable {
 
     @Id
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+    
     private String nome;
     private String observacao;
     
@@ -24,23 +25,26 @@ public class Despesa implements Serializable {
     private Calendar data;
     
     private double valor;
+    
+    private String emissor;
 
-    public Despesa(String nome, String observacao, Calendar data, double valor) {
+    public Despesa(String nome, String observacao, Calendar data, double valor, String emissor) {
         this.nome = nome;
         this.observacao = observacao;
         this.data = data;
         this.valor = valor;
+        this.emissor = emissor;
     }
 
     public Despesa() {
         
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -75,6 +79,13 @@ public class Despesa implements Serializable {
     public void setValor(double valor) {
         this.valor = valor;
     }
-    
+
+    public String getEmissor() {
+        return emissor;
+    }
+
+    public void setEmissor(String emissor) {
+        this.emissor = emissor;
+    }
     
 }
