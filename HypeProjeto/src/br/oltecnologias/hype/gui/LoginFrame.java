@@ -193,13 +193,13 @@ public class LoginFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
     private void campoLoginKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoLoginKeyTyped
-        if(campoLogin.getText().length() >= 12) {
+        if(campoLogin.getText().length() >= maxCaracteresNickName) {
             evt.consume();
         }
     }//GEN-LAST:event_campoLoginKeyTyped
 
     private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
-        if(new String (campoSenha.getPassword()).length() >= 10) {
+        if(new String (campoSenha.getPassword()).length() >= maxCaracteresSenha) {
             evt.consume();
         }
     }//GEN-LAST:event_campoSenhaKeyTyped
@@ -239,6 +239,8 @@ public class LoginFrame extends javax.swing.JFrame {
         });
     }
 
+    private int maxCaracteresNickName = 15;
+    private int maxCaracteresSenha = 12;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoEntrar;
     private javax.swing.JTextField campoLogin;

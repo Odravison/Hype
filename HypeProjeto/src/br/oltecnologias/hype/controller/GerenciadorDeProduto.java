@@ -133,4 +133,10 @@ public class GerenciadorDeProduto {
             emf.close();
         }
     }
+    
+    
+    //************************************FAZER OS SEGUINTES MÉTODOS**************************************************//
+    //getProdutosDeLocacao();//Retorna uma lista com todos os produtos de locação cadastrados
+    //pesquisarProdutosDeLocacaoPeloNome(String nome); //se o nome está contido no nome do produto
+    
 }

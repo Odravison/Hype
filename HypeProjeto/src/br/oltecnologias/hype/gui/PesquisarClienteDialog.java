@@ -106,9 +106,9 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         //define o model da tabela
         tabelaClientes.setModel(modeloTabelaClientes);
         // Redimensionando a largura da coluna de CPF
-        tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(130);
         // Redimensionando a largura da coluna de nome
-        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(396);
+        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(366);
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         scPnClientes.setViewportView(tabelaClientes);
 

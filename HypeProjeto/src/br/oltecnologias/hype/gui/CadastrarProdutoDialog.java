@@ -10,7 +10,6 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
-import java.text.DecimalFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

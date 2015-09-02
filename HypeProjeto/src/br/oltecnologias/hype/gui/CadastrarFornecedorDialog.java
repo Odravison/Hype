@@ -368,7 +368,9 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
 
 
                 try {
-                    novoFornecedor = GerenciadorDePessoas.getInstance().cadastrarFornecedor(campoCnpj.getText(), endereco, campoTelefone.getText(), campoNome.getText());
+                    novoFornecedor = new Fornecedor(campoCnpj.getText(), endereco, campoTelefone.getText(), campoNome.getText());
+                            
+                    GerenciadorDePessoas.getInstance().cadastrarFornecedor(novoFornecedor);
                     JOptionPane.showMessageDialog(null, "Fornecedor cadastrado com sucesso!");
 
                     salvarSelecionado = true; //O botão Salvar foi selecionado
