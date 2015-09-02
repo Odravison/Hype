@@ -73,7 +73,7 @@ public class Locacao implements Serializable {
     private int parcelas;
 
     private boolean ativa;
-
+    
     public Locacao() {
     }
 
@@ -207,6 +207,14 @@ public class Locacao implements Serializable {
 
     public void setAtiva(boolean ativa) {
         this.ativa = ativa;
+    }
+    
+    public String getDataLocacaoInString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataLocacao.getTime());
+    }
+    
+    public String getEntradaInString() {
+        return new DecimalFormat("#.##").format(this.valorDeEntrada);
     }
 
 }

@@ -70,13 +70,13 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelCalca = new javax.swing.JLabel();
         labelColete = new javax.swing.JLabel();
         labelObservacao = new javax.swing.JLabel();
-        labelGravata = new javax.swing.JLabel();
         labelSapato = new javax.swing.JLabel();
+        labelCompriCalca = new javax.swing.JLabel();
         labelBlazer = new javax.swing.JLabel();
         scPnObservacao = new javax.swing.JScrollPane();
         areaObservacao = new javax.swing.JTextArea();
         labelCamisa = new javax.swing.JLabel();
-        labelComprimentoCalca = new javax.swing.JLabel();
+        labelComprimentoManga = new javax.swing.JLabel();
         labelCmCompriCal = new javax.swing.JLabel();
         labelCompriCal = new javax.swing.JLabel();
         campoComprimentoCalca = new javax.swing.JTextField();
@@ -309,17 +309,17 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelObservacao.setText("Observação:");
 
-        labelGravata.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelGravata.setText("Sapato:");
-
         labelSapato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSapato.setText("Comprimento da calça:");
+        labelSapato.setText("Sapato:");
+
+        labelCompriCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCompriCalca.setText("Comprimento da calça:");
 
         labelBlazer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelBlazer.setText("Blazer:");
 
         areaObservacao.setColumns(20);
-        areaObservacao.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        areaObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         areaObservacao.setRows(5);
         areaObservacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -331,8 +331,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelCamisa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCamisa.setText("Camisa:");
 
-        labelComprimentoCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelComprimentoCalca.setText("Comprimento da manga:");
+        labelComprimentoManga.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelComprimentoManga.setText("Comprimento da manga:");
 
         labelCmCompriCal.setText("cm");
 
@@ -402,12 +402,12 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                                 .addComponent(campoBlazer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(53, 53, 53))
                             .addGroup(painelMedidasLayout.createSequentialGroup()
-                                .addComponent(labelGravata)
+                                .addComponent(labelSapato)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(campoSapato, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelComprimentoCalca)
+                            .addComponent(labelComprimentoManga)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelMedidasLayout.createSequentialGroup()
                                 .addComponent(labelCalca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -420,7 +420,7 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                                 .addGap(5, 5, 5)
                                 .addComponent(labelCmCompriCal)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                                .addComponent(labelSapato)
+                                .addComponent(labelCompriCalca)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                             .addGroup(painelMedidasLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -457,9 +457,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                     .addComponent(campoCamisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(painelMedidasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelGravata)
                     .addComponent(labelSapato)
-                    .addComponent(labelComprimentoCalca)
+                    .addComponent(labelCompriCalca)
+                    .addComponent(labelComprimentoManga)
                     .addComponent(labelCmCompriCal)
                     .addComponent(labelCompriCal)
                     .addComponent(campoComprimentoCalca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -652,8 +652,10 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
                 medidas.setObservacao(areaObservacao.getText());
 
                 try {
-                    novoCliente = GerenciadorDePessoas.getInstance().cadastrarCliiente(campoCpf.getText(), campoNome.getText(), endereco, medidas,
+                    novoCliente = new Cliente(campoCpf.getText(), campoNome.getText(), endereco, medidas,
                             campoTelefone.getText(), campoCel.getText());
+                    
+                    GerenciadorDePessoas.getInstance().cadastrarCliiente(novoCliente);
                     
                     JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
 
@@ -781,9 +783,9 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelCmCompriCal;
     private javax.swing.JLabel labelColete;
     private javax.swing.JLabel labelCompriCal;
-    private javax.swing.JLabel labelComprimentoCalca;
+    private javax.swing.JLabel labelCompriCalca;
+    private javax.swing.JLabel labelComprimentoManga;
     private javax.swing.JLabel labelCpf;
-    private javax.swing.JLabel labelGravata;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
     private javax.swing.JLabel labelObrigatório;

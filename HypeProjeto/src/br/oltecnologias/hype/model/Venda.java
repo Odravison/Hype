@@ -33,6 +33,9 @@ public class Venda implements Serializable {
     private int quantidadeParcelas;
 
     private float entrada;
+    
+    private int percentualDesconto;
+
 
     public Venda() {
     }
@@ -90,7 +93,7 @@ public class Venda implements Serializable {
         this.formaDePagamento = formaDePagamento;
     }
     
-    public String getProdutosVendidos() {
+    public String getProdutosVendidosInString() {
         String produtosVendidos = "";
         for(Produto produto: this.produtos) {
             produtosVendidos += produto.getNome()+", ";
@@ -98,8 +101,8 @@ public class Venda implements Serializable {
         return produtosVendidos;
     }
     
-    public String getDataVenda() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataVenda.getTime());
+    public Calendar getDataVenda() {
+        return this.dataVenda;
     }
     
     public int getQuantidadeParcelas() {
@@ -117,9 +120,21 @@ public class Venda implements Serializable {
     public void setEntrada(float entrada) {
         this.entrada = entrada;
     }
+    
+    public String getEntradaInString() {
+        return new DecimalFormat("#.##").format(this.entrada);
+    }
 
-    public Object getDataVendaInString() {
-        return new DecimalFormat("#.##").format(this.valor);
+    public String getDataVendaInString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataVenda.getTime());
+    }
+    
+    public int getPercentualDesconto() {
+        return percentualDesconto;
+    }
+
+    public void setPercentualDesconto(int percentualDesconto) {
+        this.percentualDesconto = percentualDesconto;
     }
 
 }

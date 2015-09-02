@@ -12,6 +12,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
+import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
@@ -83,7 +84,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoEditarCliente = new javax.swing.JButton();
         botaoExcluirCliente = new javax.swing.JButton();
         botaoVerLocacoesCliente = new javax.swing.JButton();
-        botaoVerMedidas = new javax.swing.JButton();
         painelProdutos = new javax.swing.JPanel();
         botaoNovoProduto = new javax.swing.JButton();
         botaoPesquisarProduto = new javax.swing.JButton();
@@ -352,11 +352,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoVerLocacoesCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVerLocacoesCliente.setVisible(false);
 
-        botaoVerMedidas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoVerMedidas.setText("Ver Medidas");
-        botaoVerMedidas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoVerMedidas.setVisible(false);
-
         javax.swing.GroupLayout painelClientesLayout = new javax.swing.GroupLayout(painelClientes);
         painelClientes.setLayout(painelClientesLayout);
         painelClientesLayout.setHorizontalGroup(
@@ -373,10 +368,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(labelFiltrarClientes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(164, 164, 164)
+                        .addGap(275, 275, 275)
                         .addComponent(botaoVerLocacoesCliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoVerMedidas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoEditarCliente)
                         .addGap(4, 4, 4)
@@ -398,8 +391,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoEditarCliente)
                         .addComponent(botaoExcluirCliente)
-                        .addComponent(botaoVerLocacoesCliente)
-                        .addComponent(botaoVerMedidas))
+                        .addComponent(botaoVerLocacoesCliente))
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelFiltrarClientes)
                         .addComponent(comboFiltrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -789,13 +781,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Altura das linhas
     tabelaLocacoes.setRowHeight(25);
 
-    String[] nomesColunasTabelaLocacoes = {"Cliente", "Produtos Locados", "Valor Total", "Vencimento", "Contato Cliente"};
+    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Vencimento"};
     //Essa lista terá as linhas da tabela
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
 
     //Adicionando valores nas linhas
     for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
-        listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getContato()});
+        try {
+            listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+        } catch (LocacaoInexistenteException e) {
+        }
     }
     //cria um defaultablemodel com as informações acima
     modeloTabelaLocacoes = new DefaultTableModel(
@@ -812,16 +807,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
-    // Redimensionando a largura da coluna de cliente
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(270);
+    // Redimensionando a largura da coluna de CPF do cliente
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(120);
+    // Redimensionando a largura da coluna de nome do cliente
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(280);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(610);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(660);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de número do vencimento
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de última contato
-    tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(170);
+    // Redimensionando a largura da coluna de data do vencimento
+    tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(110);
     tabelaLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaLocacoesMouseClicked(evt);
@@ -1402,7 +1397,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     pnRlUsuario.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlUsuario.setPreferredSize(new java.awt.Dimension(546, 359));
+    pnRlUsuario.setPreferredSize(new java.awt.Dimension(596, 359));
 
     tabelaUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     tabelaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1440,7 +1435,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de nome
     tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);
     // Redimensionando a largura da coluna de nickName
-    tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(120);
+    tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(170);
     // Redimensionando a largura da coluna de categoria
     tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);
     tabelaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1518,7 +1513,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoExcluirUsuario))
                     .addComponent(pnRlUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(744, Short.MAX_VALUE))
+            .addContainerGap(709, Short.MAX_VALUE))
     );
     painelAdministradorLayout.setVerticalGroup(
         painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1621,7 +1616,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoEditarCliente.setVisible(false);
             botaoExcluirCliente.setVisible(false);
             botaoVerLocacoesCliente.setVisible(false);
-            botaoVerMedidas.setVisible(false);
             tabelaClientes.clearSelection();
         }
     }//GEN-LAST:event_painelClientesMouseClicked
@@ -1840,8 +1834,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
         //Se alguma linha da tabela estiver selecionada
         if(tabelaUsuarios.getSelectedRow() >= 0) {
-            botaoEditarUsuario.setVisible(true);
-            botaoExcluirUsuario.setVisible(true);
+            botaoEditarUsuario.setVisible(false);
+            botaoExcluirUsuario.setVisible(false);
             tabelaUsuarios.clearSelection();
         }
     }//GEN-LAST:event_painelAdministradorMouseClicked
@@ -1884,9 +1878,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAtivarTemporadaActionPerformed
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
-        if (evt.getClickCount() == 1) {
+        if(evt.getClickCount() == 1) {
             botaoEditarProduto.setVisible(true);
             botaoExcluirProduto.setVisible(true);
+        }
+        if(evt.getClickCount() == 2) {
+            try {
+                //Passa, como parâmetro, o produto pesquisado pelo código 
+                VerDadosProdutoDialog dialog = new VerDadosProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                            (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                    
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
@@ -1895,7 +1901,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoEditarCliente.setVisible(true);
             botaoExcluirCliente.setVisible(true);
             botaoVerLocacoesCliente.setVisible(true);
-            botaoVerMedidas.setVisible(true);
+        }
+        if (evt.getClickCount() == 2) {
+            try {
+                VerDadosClienteDialog dialog = new VerDadosClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
+                        (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (ClienteInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+            
         }
     }//GEN-LAST:event_tabelaClientesMouseClicked
 
@@ -2038,6 +2055,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoEditarFornecedor.setVisible(true);
             botaoExcluirFornecedor.setVisible(true);
         }
+        if(evt.getClickCount() == 2) {
+            try {
+                //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
+                VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
+                            (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
+                    
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (FornecedorInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_tabelaFornecedoresMouseClicked
 
     private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
@@ -2058,6 +2087,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             botaoEditarUsuario.setVisible(true);
             botaoExcluirUsuario.setVisible(true);
+        }
+        if(evt.getClickCount() == 2) {
+            try {
+                //Passa, como parâmetro, o usuário pesquisado pelo login
+                VerDadosUsuarioDialog dialog = new VerDadosUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
+                            (String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
+                    
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (UsuarioInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
@@ -2122,11 +2163,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
     
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
-        //Adiciona os dados da nova locação na tabela
-        modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getProdutosLocados(),
-            "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getContato()});
-        //Atualiza o model da tabela
-        //tabelaLocacoes.setModel(modeloTabelaLocacoes); 
+        try {
+            //Adiciona os dados da nova locação na tabela
+            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+            //Atualiza o model da tabela
+            //tabelaLocacoes.setModel(modeloTabelaLocacoes); 
+        } catch (LocacaoInexistenteException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
@@ -2270,7 +2316,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoSalvarDiretorioContratos;
     private javax.swing.JButton botaoVerContrato;
     private javax.swing.JButton botaoVerLocacoesCliente;
-    private javax.swing.JButton botaoVerMedidas;
     private javax.swing.JButton botaoVerRecibosLocacao;
     private javax.swing.JButton botaoVerRecibosVenda;
     private javax.swing.JTextField campoDiretorioBackup;

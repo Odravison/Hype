@@ -464,14 +464,14 @@
                                       <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="labelGravata" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelSapato" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="campoSapato" min="-2" pref="35" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="labelComprimentoCalca" min="-2" max="-2" attributes="0"/>
+                                  <Component id="labelComprimentoManga" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="labelCalca" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -486,7 +486,7 @@
                                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       <Component id="labelCmCompriCal" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace pref="46" max="32767" attributes="0"/>
-                                      <Component id="labelSapato" min="-2" max="-2" attributes="0"/>
+                                      <Component id="labelCompriCalca" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -534,9 +534,9 @@
                       </Group>
                       <EmptySpace pref="22" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelGravata" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelSapato" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelComprimentoCalca" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCompriCalca" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelComprimentoManga" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelCmCompriCal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelCompriCal" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="campoComprimentoCalca" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -578,7 +578,7 @@
                 <Property name="text" type="java.lang.String" value="Observa&#xe7;&#xe3;o:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="labelGravata">
+            <Component class="javax.swing.JLabel" name="labelSapato">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -586,7 +586,7 @@
                 <Property name="text" type="java.lang.String" value="Sapato:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="labelSapato">
+            <Component class="javax.swing.JLabel" name="labelCompriCalca">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -613,7 +613,7 @@
                   <Properties>
                     <Property name="columns" type="int" value="20"/>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Monospaced" size="14" style="0"/>
+                      <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="rows" type="int" value="5"/>
                   </Properties>
@@ -631,7 +631,7 @@
                 <Property name="text" type="java.lang.String" value="Camisa:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="labelComprimentoCalca">
+            <Component class="javax.swing.JLabel" name="labelComprimentoManga">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>

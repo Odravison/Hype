@@ -19,6 +19,7 @@ import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -40,14 +41,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
         locador = null;
-        produtosLocados = new ArrayList<Produto>();
+        produtosLocados = new HashMap<String, Integer>();
     }
     
      public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
         locador = null;
-        produtosLocados = new ArrayList<Produto>();
+        produtosLocados = new HashMap<String, Integer>();
     }
 
     /**
@@ -155,9 +156,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(labelNomeCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(painelLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(botaoSelecionarCliente)
-                        .addComponent(labelCliente)))
+                    .addComponent(botaoSelecionarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -987,7 +987,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private String getValorTotalDaLocacao() {
         float valor = 0;
         for(Produto produto: produtosLocados) {
-            valor += produto.getValor();
+            valor += produtosLocados.getValor();
         }
         return Float.toString(valor);
     }
@@ -1068,7 +1068,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
     private Cliente locador;
-    private List<Produto> produtosLocados;
+    //private HashMap<String, Integer> produtosLocados;
+    private HashMap<String, Integer> produtosLocados;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
     private Movimentacao novaMovimentacao;

@@ -304,4 +304,15 @@ public class GerenciadorDePessoas {
     //Método para pesquisar os últimos clientes que foram cadastrados
     
     //PesquisarUltimosClientesCadastrados(String: nome): List<Cliente>
+    
+    
+    //************************************FAZER OS SEGUINTES MÉTODOS**************************************************//
+    //pesquisarUsuarioPeloLogin(String login);
+    //pesquisarFornecedorPeloCnpj(String cnpj);
+    //isAdministrador(String login); //True, caso o usuário seja um adm, false, caso contrário
+    //getUsuarios(); //Retorna uma lista com todos os usuários cadastrados
+    //getFornecedores(); //Retorna uma lista com todos os fornecedores cadastrados
+    //cadastrarFornecedor(Fornecedor fornecedor);
+    //cadastrarUsuario(Usuario usuario);
+    
 }
