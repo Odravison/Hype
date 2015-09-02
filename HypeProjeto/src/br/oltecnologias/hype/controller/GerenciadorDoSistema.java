@@ -2,7 +2,9 @@ package br.oltecnologias.hype.controller;
 
 import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Despesa;
+import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Usuario;
 import java.io.File;
@@ -15,6 +17,8 @@ public class GerenciadorDoSistema {
 
     private Usuario usuarioLogado;
     private double valorCaixaDiario;
+    private boolean temporadaAtivada;
+    private int percentualDescontoTemporada;
     private List<Despesa> despesas;
     private List<Movimentacao> movimentacoes;
     private static GerenciadorDoSistema singleton = null;
@@ -60,18 +64,18 @@ public class GerenciadorDoSistema {
 
     public void editarDespesa(int id, String nome, String obs, Calendar data) throws DespesaInexistenteException {
         Despesa d;
-        d = this.pesquisarDespesaPeloId(id);
+        d = this.pesquisarDespesaPorId(id);
         d.setNome(nome);
         d.setObservacao(obs);
         d.setData(data);
 
     }
 
-    public void removerDespesas(int id) throws DespesaInexistenteException {
-        this.despesas.remove(pesquisarDespesaPeloId(id));
+    public void removerDespesas(long id) throws DespesaInexistenteException {
+        this.despesas.remove(pesquisarDespesaPorId(id));
     }
 
-    public Despesa pesquisarDespesaPeloId(int id) throws DespesaInexistenteException {
+    public Despesa pesquisarDespesaPorId(long id) throws DespesaInexistenteException {
         for (Despesa d : this.despesas) {
             if (d.getId() == id) {
                 return d;
@@ -127,7 +131,7 @@ public class GerenciadorDoSistema {
         desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf")); 
     }
     
-    public Movimentacao cadastrarMovimentacao(String movimento, float valor, Calendar data, Usuario responsavel, String beneficiario) {
+    public Movimentacao cadastrarMovimentacao(String movimento, double valor, Calendar data, Usuario responsavel, String beneficiario) {
         
         Movimentacao movimentacao = new Movimentacao(movimento, valor, data, responsavel, beneficiario);
         this.movimentacoes.add(movimentacao);
@@ -140,16 +144,49 @@ public class GerenciadorDoSistema {
     }
     
     public void removerMovimentacao(long id) throws MovimentacaoInexistenteException {
-        this.movimentacoes.remove(pesquisarMovimentacao(id));
+        this.movimentacoes.remove(pesquisarMovimentacaoPorId(id));
     }
     
-    public Movimentacao pesquisarMovimentacao(long id) throws MovimentacaoInexistenteException{
+    public Movimentacao pesquisarMovimentacaoPorId(long id) throws MovimentacaoInexistenteException{
         for(Movimentacao movimentacao: this.movimentacoes) {
             if(movimentacao.getId() == id) {
                 return movimentacao;
             }
         }
         throw new MovimentacaoInexistenteException("A movimentação em questão não existe.");
+    }
+    
+    public boolean isTemporadaAtivada() {
+        return temporadaAtivada;
+    }
+
+    public void setTemporadaAtivada(boolean temporadaAtivada) {
+        this.temporadaAtivada = temporadaAtivada;
+    }
+
+    public int getPercentualDescontoTemporada() {
+        return percentualDescontoTemporada;
+    }
+
+    public void setPercentualDescontoTemporada(int percentualDescontoTemporada) {
+        this.percentualDescontoTemporada = percentualDescontoTemporada;
+    }
+    
+    public void ativarTemporada(int percentualDesconto) {
+        setPercentualDescontoTemporada(percentualDesconto);
+        setTemporadaAtivada(true);
+    }
+    
+    public void desativarTemporada() {
+        setTemporadaAtivada(false);
+    }
+    
+    public void cadastrarEmpresa(Empresa empresa) {
+        //Código para cadastrar a empresa no sistema
+    }
+    
+    public boolean isEmpresaCadastrada() {
+        //true se a empresa já estiver cadastada, false, caso contário
     }
 
 }

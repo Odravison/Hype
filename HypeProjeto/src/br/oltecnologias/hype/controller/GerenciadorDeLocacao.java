@@ -271,4 +271,9 @@ public class GerenciadorDeLocacao {
         
         return listaOrdenada;
     }
+    
+    
+    /********************************FAZER OS SEGUINTES MÉTODOS**********************************/
+    //pesquisarLocacaoPorId(long id);
+    
 }

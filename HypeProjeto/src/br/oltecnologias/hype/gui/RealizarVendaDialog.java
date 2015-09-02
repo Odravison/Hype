@@ -79,12 +79,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         botaoConcluir = new javax.swing.JButton();
         labelValorTotal = new javax.swing.JLabel();
         labelValorVenda = new javax.swing.JLabel();
-        campoDesconto = new javax.swing.JTextField();
+        campoPercentualDesconto = new javax.swing.JTextField();
         labelDesconto = new javax.swing.JLabel();
         labelSimboloPorcentagem = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(834, 730));
         setResizable(false);
         setTitle("Realizar Venda");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -446,10 +445,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelValorVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorVenda.setForeground(new java.awt.Color(0, 153, 0));
 
-        campoDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPercentualDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDescontoKeyTyped(evt);
+                campoPercentualDescontoKeyTyped(evt);
             }
         });
 
@@ -473,7 +472,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         .addGap(22, 22, 22)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloPorcentagem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -501,7 +500,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(labelDesconto)
-                            .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelSimboloPorcentagem))
                         .addComponent(labelValorTotal, javax.swing.GroupLayout.Alignment.TRAILING))
                     .addGroup(layout.createSequentialGroup()
@@ -589,6 +588,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             String formaPagamento = "";
             if(produtosVendidos.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoPercentualDesconto.getText().length() > 0) { 
+                if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                    JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             } else if(radioCartao.isSelected() || radioPromissoria.isSelected()) { 
                 if(campoEntrada.getText().length() <= 0) {
                     JOptionPane.showMessageDialog(null, "Informe o valor de entrada da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -606,11 +609,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         
                         novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                         
                         novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome());
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId());
                         
                         JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
                                                 
@@ -630,11 +633,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
                     novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                     
                     novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome());
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId());
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
@@ -651,12 +654,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
-    private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
-        validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
-        if(Integer.parseInt(campoDesconto.getText()) > 100) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoDescontoKeyTyped
+    private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
+        validarNumerosETamanho(evt, campoPercentualDesconto, maxCaracteresDesconto);
+    }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
         radioCartao.setSelected(false);
@@ -772,7 +772,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private String getValorTotalDaVenda() {
         float valor = 0;
         for(Produto produto: produtosVendidos) {
-            valor += produto.getValor();
+            valor += produto.getValor() - (produto.getValor() * (GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()/100));
         }
         return Float.toString(valor);
     }
@@ -825,9 +825,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoConcluir;
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaoSelecionarProdutos;
-    private javax.swing.JTextField campoDesconto;
     private javax.swing.JTextField campoEntrada;
     private javax.swing.JTextField campoParcelas;
+    private javax.swing.JTextField campoPercentualDesconto;
     private javax.swing.JTextField campoPesquisar;
     private javax.swing.JLabel labelDesconto;
     private javax.swing.JLabel labelEntrada;

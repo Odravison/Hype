@@ -45,13 +45,15 @@ public class Venda implements Serializable {
      * @param produtos
      * @param valor
      */
-    public Venda(List<Produto> produtos, double valor, String formaDePagamento, Calendar dataVenda, int quantidadeParcelas, float entrada) {
+    public Venda(List<Produto> produtos, double valor, String formaDePagamento, Calendar dataVenda, int quantidadeParcelas, 
+            float entrada, int percentualDesconto) {
         this.produtos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
         this.entrada = entrada;
+        this.percentualDesconto = percentualDesconto;
         if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
         }

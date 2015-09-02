@@ -17,10 +17,13 @@ import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -41,13 +44,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
         locador = null;
+        valorTotalLocacao = 0;
         produtosLocados = new HashMap<String, Integer>();
+        decimalFormat = new DecimalFormat("#.##");
     }
     
      public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
         locador = null;
+        valorTotalLocacao = 0;
         produtosLocados = new HashMap<String, Integer>();
     }
 
@@ -83,7 +89,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         dateDataFinalContrato = new com.toedter.calendar.JDateChooser();
         labelMensagemContrato = new javax.swing.JLabel();
         labelDesconto = new javax.swing.JLabel();
-        campoDesconto = new javax.swing.JTextField();
+        campoPercentualDesconto = new javax.swing.JTextField();
         labelSimboloPorcentagem = new javax.swing.JLabel();
         labelValorLocacao = new javax.swing.JLabel();
         painelFormaPagamento = new javax.swing.JPanel();
@@ -437,10 +443,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelDesconto.setText("Desconto:");
 
-        campoDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPercentualDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDescontoKeyTyped(evt);
+                campoPercentualDescontoKeyTyped(evt);
             }
         });
 
@@ -591,7 +597,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(18, 18, 18)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloPorcentagem)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -628,7 +634,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(botaoConcluir)
                         .addComponent(labelValorTotal)
                         .addComponent(labelDesconto)
-                        .addComponent(campoDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelSimboloPorcentagem)
                         .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(77, Short.MAX_VALUE))
@@ -672,10 +678,18 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setVisible(true);
                 
                 //JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoPercentualDesconto.getText().length() > 0) { 
+                if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                    pane.setMessage("O percentual de desconto não pode estar acima de 100%");
+                    pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                    dialog = pane.createDialog("Aviso");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                }
             } else{
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                if (campoDesconto.getText().length() <= 0) {
-                    campoDesconto.setText("0");
+                if (campoPercentualDesconto.getText().length() <= 0) {
+                    campoPercentualDesconto.setText("0");
                 }
                 
                 Calendar dataInicial = Calendar.getInstance();
@@ -710,9 +724,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         
                         try {
 
-                            novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                            novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, Calendar.getInstance(),
                                     Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                            
+                            novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao, 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
 
                             pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
                             pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -744,13 +762,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     
                     try {
                         // falta registrar a entrada e as parcelas
-                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, Float.parseFloat(getValorTotalDaLocacao()), Calendar.getInstance(),
+                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, Calendar.getInstance(),
                                 Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoDesconto.getText()));
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                         
-                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", Float.parseFloat(getValorTotalDaLocacao()), 
+                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao, 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome());
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
                         
                         pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
                         pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -799,7 +817,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 JDialog messageDialog = pane.createDialog("Aviso");
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
-                //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
         dialog.dispose();
@@ -831,7 +848,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             JDialog messageDialog = pane.createDialog("Aviso");
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
@@ -847,13 +863,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             JDialog messageDialog = pane.createDialog("Aviso");
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos locados", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+                labelValorLocacao.setText("R$ "+valorTotalLocacao);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane pane = new JOptionPane();
                 pane.setMessage(e.getMessage());
@@ -861,7 +876,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 JDialog messageDialog = pane.createDialog("Aviso");
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
-                //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             } 
         }
     }//GEN-LAST:event_botaoSelecionarProdutosActionPerformed
@@ -874,10 +888,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             JDialog messageDialog = pane.createDialog("Aviso");
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow());
-            labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            labelValorLocacao.setText("R$ "+decimalFormat.format(valorTotalLocacao));
+            
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -899,12 +913,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         
     }//GEN-LAST:event_painelProdutosMouseClicked
 
-    private void campoDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDescontoKeyTyped
-        validarNumerosETamanho(evt, campoDesconto, maxCaracteresDesconto);
-        if(Integer.parseInt(campoDesconto.getText()) > 100) {
+    private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
+        validarNumerosETamanho(evt, campoPercentualDesconto, maxCaracteresDesconto);
+        if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
             evt.consume();
         }
-    }//GEN-LAST:event_campoDescontoKeyTyped
+    }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
         if(evt.getClickCount() == 2){            
@@ -912,7 +926,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+                labelValorLocacao.setText("R$ "+valorTotalLocacao);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane pane = new JOptionPane();
                 pane.setMessage(e.getMessage());
@@ -920,15 +934,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 JDialog messageDialog = pane.createDialog("Aviso");
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
-                //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow());
-            labelValorLocacao.setText("R$ "+getValorTotalDaLocacao());
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            labelValorLocacao.setText("R$ "+valorTotalLocacao);
         }
     }//GEN-LAST:event_tabelaProdutosLocadosMouseClicked
 
@@ -984,14 +997,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }
 
-    private String getValorTotalDaLocacao() {
-        float valor = 0;
-        for(Produto produto: produtosLocados) {
-            valor += produtosLocados.getValor();
-        }
-        return Float.toString(valor);
-    }
-    
     public void habilitarCampos() {
         labelEntrada.setVisible(true);
         labelParcelas.setVisible(true);
@@ -1026,18 +1031,45 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
     
     public void adicionarProdutoALocacao(Produto produto) {
+        int quantidade;
+        //Incrementa o valor da quantidade de produtos que está no map, caso a chave já exista
+        if(produtosLocados.get(produto.getCodigo()) != null) {
+            quantidade = produtosLocados.get(produto.getCodigo())+1;
+        } else {
+            quantidade = 1;
+        }
+        //Atualiza ou adiciona a quantidade no produto referente
+        produtosLocados.put(produto.getCodigo(), quantidade);
         //Adiciona os dados do novo produto na tabela
-        modeloTabelaProdutosLocados.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
-        //Atualiza o model da tabela
-        //tabelaProdutosLocados.setModel(modeloTabelaProdutosLocados);
-        //trocar para hash
-        produtosLocados.add(produto);
+        modeloTabelaProdutosLocados.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), quantidade});
+        //Atualiza o valor total da locação
+        valorTotalLocacao += produto.getValor();
     }
     
-    public void removerProdutoDaLocacao(int indice) {
-        modeloTabelaProdutosLocados.removeRow(indice);
-        //trocar para hash
-        produtosLocados.remove(indice);
+    public void removerProdutoDaLocacao(int indice, String codigo) {
+        //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
+        int quantidade = produtosLocados.get(codigo)-1;
+        //Remove o produto selecionada da lista de locação
+        if(quantidade == 0) {
+            modeloTabelaProdutosLocados.removeRow(indice);
+        } else {
+            //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
+            modeloTabelaProdutosLocados.setValueAt(Integer.toString(quantidade), indice, 2);
+        }
+        //Atualiza a quantidade no produto referente
+        produtosLocados.put(codigo, quantidade);
+        
+        try {
+            //Atualiza o valor total da locação
+            valorTotalLocacao += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
+        } catch (ProdutoInexistenteException e) {
+            JOptionPane pane = new JOptionPane();
+            pane.setMessage(e.getMessage());
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            JDialog messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
+            messageDialog.setVisible(true);
+        }
     }
     
     public Locacao getNovaLocacao() {
@@ -1070,11 +1102,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private Cliente locador;
     //private HashMap<String, Integer> produtosLocados;
     private HashMap<String, Integer> produtosLocados;
+    private double valorTotalLocacao;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
     private Movimentacao novaMovimentacao;
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaProdutosLocados;
+    private DecimalFormat decimalFormat;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
@@ -1082,9 +1116,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoRemover;
     private javax.swing.JButton botaoSelecionarCliente;
     private javax.swing.JButton botaoSelecionarProdutos;
-    private javax.swing.JTextField campoDesconto;
     private javax.swing.JTextField campoEntrada;
     private javax.swing.JTextField campoParcelas;
+    private javax.swing.JTextField campoPercentualDesconto;
     private javax.swing.JTextField campoPesquisar;
     private com.toedter.calendar.JDateChooser dateDataFinalContrato;
     private com.toedter.calendar.JDateChooser dateDataInicialContrato;

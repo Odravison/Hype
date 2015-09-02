@@ -300,10 +300,7 @@ public class GerenciadorDePessoas {
         return listaDeRetorno;
     }
 
-    //PesquisarUltimosLocatarios(String: nome): List<Cliente>
-    //Método para pesquisar os últimos clientes que foram cadastrados
     
-    //PesquisarUltimosClientesCadastrados(String: nome): List<Cliente>
     
     
     //************************************FAZER OS SEGUINTES MÉTODOS**************************************************//

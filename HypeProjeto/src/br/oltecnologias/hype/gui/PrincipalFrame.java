@@ -13,6 +13,7 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
+import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
@@ -157,6 +158,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoExcluirUsuario = new javax.swing.JButton();
         botaoEditarUsuario = new javax.swing.JButton();
         botaoRegistrarDespesa = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Closet");
@@ -781,14 +783,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Altura das linhas
     tabelaLocacoes.setRowHeight(25);
 
-    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Vencimento"};
+    String[] nomesColunasTabelaLocacoes = {"", "CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Vencimento"};
     //Essa lista terá as linhas da tabela
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
 
     //Adicionando valores nas linhas
     for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
         try {
-            listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+            listaLinhasLocacoes.add(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(), GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
         } catch (LocacaoInexistenteException e) {
         }
     }
@@ -796,7 +798,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -807,16 +809,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
+    // Redimensionando a largura da coluna id da locação
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(0);
     // Redimensionando a largura da coluna de CPF do cliente
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(120);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(120);
     // Redimensionando a largura da coluna de nome do cliente
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(280);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(280);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(660);
+    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(660);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de data do vencimento
     tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(110);
+    // Redimensionando a largura da coluna de data do vencimento
+    tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(110);
     tabelaLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaLocacoesMouseClicked(evt);
@@ -975,7 +979,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaVendas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     tabelaVendas.getTableHeader().setResizingAllowed(false);
     tabelaVendas.getTableHeader().setReorderingAllowed(false);
-    String[] nomesColunasTabelaVendas = {"Data da Venda", "Produtos Vendidos", "Valor Total", "Forma de pagamento"};
+    String[] nomesColunasTabelaVendas = {"", "Data da Venda", "Produtos Vendidos", "Valor Total", "Forma de pagamento"};
     //Define a fonte do cabeçalho da tabela
     tabelaVendas.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
     //Altura das linhas
@@ -986,13 +990,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Adicionando valores nas linhas
     for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {
-        listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), venda.getValorInString(), venda.getFormaDePagamento()});
+        listaLinhasVendas.add(new Object[]{Long.toString(venda.getId()), venda.getDataVendaInString(), venda.getProdutosVendidos(), venda.getValorInString(), venda.getFormaDePagamento()});
     }
     //cria um defaultablemodel com as informações acima
     modeloTabelaVendas = new DefaultTableModel(
         listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -1003,14 +1007,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //define o model da tabela
     tabelaVendas.setModel(modeloTabelaVendas);
+    // Redimensionando a largura da coluna id da venda
+    tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(0);
     // Redimensionando a largura da coluna data da venda
-    tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);
+    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(110);
     // Redimensionando a largura da coluna de nome
-    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);
+    tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(350);
     // Redimensionando a largura da coluna de número do celular
-    tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);
+    tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(110);
     // Redimensionando a largura da coluna de última locação
-    tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);
+    tabelaVendas.getColumnModel().getColumn(4).setPreferredWidth(160);
     tabelaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaVendasMouseClicked(evt);
@@ -1118,7 +1124,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaMovimentacoes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     tabelaMovimentacoes.getTableHeader().setResizingAllowed(false);
     tabelaMovimentacoes.getTableHeader().setReorderingAllowed(false);
-    String[] nomesColunasTabelaMovimentacoes = {"Movimento", "Valor", "Data", "Responsável", "Beneficiário"};
+    String[] nomesColunasTabelaMovimentacoes = {"", "Movimento", "Valor", "Data", "Responsável", "Beneficiário"};
     //Define a fonte do cabeçalho da tabela
     tabelaMovimentacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
     //Altura das linhas
@@ -1129,7 +1135,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
-        listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
+        listaLinhasMovimentacoes.add(new Object[]{Long.toString(movimentacao.getId()), movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
             movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
     }
 
@@ -1137,7 +1143,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     modeloTabelaMovimentacoes = new DefaultTableModel(
         listaLinhasMovimentacoes.toArray(new Object[listaLinhasMovimentacoes.size()][]), nomesColunasTabelaMovimentacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -1149,15 +1155,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //define o model da tabela
     tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);
     // Redimensionando a largura da coluna de movimento
-    tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de valor
+    tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(0);
+    // Redimensionando a largura da coluna de movimento
     tabelaMovimentacoes.getColumnModel().getColumn(1).setPreferredWidth(110);
-    // Redimensionando a largura da coluna de data
+    // Redimensionando a largura da coluna de valor
     tabelaMovimentacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
+    // Redimensionando a largura da coluna de data
+    tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(110);
     // Redimensionando a largura da coluna de responsável
-    tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(340);
+    tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(340);
     // Redimensionando a largura da coluna de beneficiário
-    tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(240);
+    tabelaMovimentacoes.getColumnModel().getColumn(5).setPreferredWidth(240);
     tabelaMovimentacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaMovimentacoesMouseClicked(evt);
@@ -1486,6 +1494,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    jButton1.setText("Editar Empresa");
+    jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
     javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
     painelAdministrador.setLayout(painelAdministradorLayout);
     painelAdministradorLayout.setHorizontalGroup(
@@ -1498,7 +1510,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(botaoRegistrarDespesa)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoAtivarTemporada))
+                    .addComponent(botaoAtivarTemporada)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton1))
                 .addGroup(painelAdministradorLayout.createSequentialGroup()
                     .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -1522,8 +1536,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(botaoNovoUsuario)
                 .addComponent(botaoAtivarTemporada)
-                .addComponent(botaoRegistrarDespesa))
-            .addGap(47, 47, 47)
+                .addComponent(botaoRegistrarDespesa)
+                .addComponent(jButton1))
+            .addGap(46, 46, 46)
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarUsuario))
@@ -2056,11 +2071,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoExcluirFornecedor.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
+            //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
             try {
-                //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
                 VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
-                            (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
-                    
+                        Long.parseLong((String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0))));
+                
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
             } catch (FornecedorInexistenteException e) {
@@ -2075,11 +2090,40 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoVerRecibosVenda.setVisible(true);
             botaoExcluirVenda.setVisible(true);
         }
+        if(evt.getClickCount() == 2) {
+            try {
+                //Passa, como parâmetro, a venda pesquisada pelo seu código 
+                VerDadosVendaDialog dialog = new VerDadosVendaDialog(null, GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
+                            (String) modeloTabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), 0)));
+                    
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (VendaInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
     private void tabelaMovimentacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMovimentacoesMouseClicked
         if (evt.getClickCount() == 1) {
             botaoExcluirMovimentacao.setVisible(true);
+        }
+        if(evt.getClickCount() == 2) {
+            //Passa, como parâmetro, a movimentacao pesquisada pelo id
+            try {
+                VerDadosMovimentacaoDialog dialog;
+                if() {
+                    dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
+                            Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                } else {
+                    dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                            Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                }
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (MovimentacaoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_tabelaMovimentacoesMouseClicked
 
@@ -2109,6 +2153,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoVerContrato.setVisible(true);
             botaoFinalizarLocacao.setVisible(true);
             botaoExcluirLocacao.setVisible(true);
+        }
+        if(evt.getClickCount() == 2) {
+            try {
+                //Passa, como parâmetro, a locação pesquisada pelo id
+                VerDadosLocacaoDialog dialog = new VerDadosLocacaoDialog(null, GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                            (String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0)));
+                    
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (LocacaoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_tabelaLocacoesMouseClicked
 
@@ -2165,7 +2221,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         try {
             //Adiciona os dados da nova locação na tabela
-            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+            modeloTabelaLocacoes.addRow(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                 "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
             //Atualiza o model da tabela
@@ -2178,23 +2234,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaVendaNaTabela(Venda venda) {
         //Adiciona os dadosa nova venda na tabela
         modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
-        //Atualiza o model da tabela
-        //tabelaVendas.setModel(modeloTabelaVendas);
+
     }
     
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
             movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
-        //Atualiza o model da tabela
-        //tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
         //Adiciona os dados do novo usuário na tabela
         modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
-        //Atualiza o model da tabela
-        //tabelaUsuarios.setModel(modeloTabelaUsuarios);
     }
     
     public void removerClienteDaTabela(int indice) {
@@ -2333,6 +2384,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
     private javax.swing.JComboBox comboBoxUsuario;
     private javax.swing.JComboBox comboFiltrarCliente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelFiltrarClientes;

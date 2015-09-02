@@ -7,6 +7,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Configuracao;
+import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Movimentacao;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
@@ -99,6 +100,7 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
         labelObservacao.setText("Observação:");
 
         areaObservacao.setColumns(20);
+        areaObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         areaObservacao.setRows(5);
         scPnObservacao.setViewportView(areaObservacao);
 
@@ -223,11 +225,12 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
             } else if(campoFavorecido.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o favorecido da despesa", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                GerenciadorDoSistema.getInstance().cadastrarDespesa(campoNome.getText(), areaObservacao.getText(), 
-                        Calendar.getInstance(), Float.parseFloat(campoValor.getText()));
+                novaDespesa = GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa(campoNome.getText(), areaObservacao.getText(), 
+                        Calendar.getInstance(), Float.parseFloat(campoValor.getText()), campoFavorecido.getText()));
                 
-                novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Despesa", Float.parseFloat(campoValor.getText()),
-                        Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), campoFavorecido.getText());
+                novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Despesa", Float.parseFloat(campoValor.getText()),
+                        Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), campoFavorecido.getText(), 
+                        novaDespesa.getId()));
                 
                 JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
                 
@@ -312,6 +315,7 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
 
     protected boolean salvarSelecionado;
     protected Movimentacao novaMovimentacao;
+    protected Despesa novaDespesa;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 30;
     private int maxCaracteresValor = 10;

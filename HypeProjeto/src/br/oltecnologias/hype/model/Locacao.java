@@ -71,6 +71,8 @@ public class Locacao implements Serializable {
     private double jaPago = 0;
 
     private int parcelas;
+    
+    private int percentualDesconto;
 
     private boolean ativa;
     
@@ -78,7 +80,7 @@ public class Locacao implements Serializable {
     }
 
     public Locacao(Cliente cliente, HashMap<String, Integer> produtos, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int percentualDesconto) {
         this.cliente = cliente;
         this.produtos = produtos;
         this.valorDeEntrada = valorDeEntrada;
@@ -90,9 +92,10 @@ public class Locacao implements Serializable {
             this.jaPago = valorLocacao;
         }
         this.parcelas = parcelas;
-        if (formaDePagamento.equals("A VISTA")) {
+        if (formaDePagamento.equals("À VISTA")) {
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
+        this.percentualDesconto = percentualDesconto;
         this.ativa = true;
     }
 
@@ -215,6 +218,14 @@ public class Locacao implements Serializable {
     
     public String getEntradaInString() {
         return new DecimalFormat("#.##").format(this.valorDeEntrada);
+    }
+    
+    public int getPercentualDesconto() {
+        return percentualDesconto;
+    }
+
+    public void setPercentualDesconto(int percentualDesconto) {
+        this.percentualDesconto = percentualDesconto;
     }
 
 }
