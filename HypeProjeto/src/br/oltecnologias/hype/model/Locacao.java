@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyColumn;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
@@ -47,13 +48,19 @@ public class Locacao implements Serializable {
 //            name = "PRODUTOS_LOCACAO",
 //            joinColumns = @JoinColumn(name = "id_locacao"))
 //    @Column(name = "produtos")
-    
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @CollectionTable(name = "PRODUTOS")
 //    @MapKeyColumn(name = "CODIGO")
 //    @Column(name = "QUANTIDADE")
+//    @ElementCollection
+//    @CollectionTable(name="produtos", joinColumns=@JoinColumn(name="id_locacao"))
+//    @Column(name="produtos")
+//    @MapKeyJoinColumn(name="codigo", referencedColumnName="quantidade")
     
-    @Transient
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+//    @MapKeyJoinColumn(name = "codigo")
+    
+    
     private HashMap<String, Integer> produtos;
 
     private double valorLocacao;
