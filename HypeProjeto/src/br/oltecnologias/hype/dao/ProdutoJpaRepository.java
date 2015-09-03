@@ -55,10 +55,9 @@ public class ProdutoJpaRepository implements ProdutoRepository {
 
         } catch (ProdutoExistenteException e) {
             System.out.println(e.getMessage());
-            
+
         } catch (ProdutoInexistenteException ex) {
-            
-            
+
         } finally {
             if (em != null) {
                 em.close();
@@ -162,14 +161,24 @@ public class ProdutoJpaRepository implements ProdutoRepository {
 
     @Override
     public boolean existsCodigo(String codigo) throws ProdutoInexistenteException {
-        Produto result;
-        
+        Object result = null;
+        EntityManager em = null;
+
         try {
-            result = findById(codigo);
-        } catch (ProdutoInexistenteException e) {
+            em = getEntityManager();
+            Query query = em.createQuery("SELECT 1 FROM Produto WHERE id_produto = ?");
+            query.setParameter(1, codigo);
+            query.setMaxResults(1);
+
+            result = query.getSingleResult();
+        } catch (NoResultException e) {
             result = null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
+
         return (result != null);
     }
-
 }

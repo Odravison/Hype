@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -71,14 +72,24 @@ public class DespesaJpaRepository implements DespesaRepository{
 
     @Override
     public boolean existsDespesa(long id) {
-        Despesa result;
-        
+        Object result = null;
+        EntityManager em = null;
+
         try {
-            result = findById(id);
-        } catch (DespesaInexistenteException ex) {
+            em = getEntityManager();
+            Query query = em.createQuery("SELECT 1 FROM Usuario WHERE id = ?");
+            query.setParameter(1, id);
+            query.setMaxResults(1);
+
+            result = query.getSingleResult();
+        } catch (NoResultException e) {
             result = null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
-        
+
         return (result != null);
         
     }

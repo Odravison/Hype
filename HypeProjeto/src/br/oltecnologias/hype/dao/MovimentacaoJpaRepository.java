@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 /**
@@ -70,11 +71,22 @@ public class MovimentacaoJpaRepository implements MovimentacaoRepository {
 
     @Override
     public boolean existsMovimentacao(long id) {
-        Movimentacao result;
+        Object result = null;
+        EntityManager em = null;
+
         try {
-            result = findById(id);
-        } catch (MovimentacaoInexistenteException ex) {
+            em = getEntityManager();
+            Query query = em.createQuery("SELECT 1 FROM Movimentacao WHERE id = ?");
+            query.setParameter(1, id);
+            query.setMaxResults(1);
+
+            result = query.getSingleResult();
+        } catch (NoResultException e) {
             result = null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
 
         return (result != null);
