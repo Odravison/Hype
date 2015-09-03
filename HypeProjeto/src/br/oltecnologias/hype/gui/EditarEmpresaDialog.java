@@ -7,6 +7,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -359,7 +360,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                     empresa.setNome(campoNome.getText());
                     empresa.setTelefone(campoTelefone.getText());
                     
-                    GerenciadorDoSistema.getInstance().editarEmpresa(empresa);
+                    //GerenciadorDoSistema.getInstance().editarEmpresa(empresa);
 
                     JOptionPane.showMessageDialog(null, "Empresa editada com sucesso!");
 
@@ -394,22 +395,6 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         }
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarEmpresaDialog dialog = new EditarEmpresaDialog(new java.awt.Frame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     private Empresa empresa;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números

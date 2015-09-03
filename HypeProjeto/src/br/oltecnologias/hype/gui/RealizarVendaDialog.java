@@ -9,15 +9,17 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Frame;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.StringTokenizer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -30,20 +32,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RealizarVendaDialog extends java.awt.Dialog {
     
-
-    /**
-     * Creates new form RealizarVendaDialog
-     */
-    public RealizarVendaDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        produtosVendidos = new ArrayList<Produto>();
-    }
-    
     public RealizarVendaDialog(Frame owner) {
         super(owner);
         initComponents();
-        produtosVendidos = new ArrayList<Produto>();
+        produtosVendidos = new ArrayList<ProdutoVendido>();
     }
 
     /**
@@ -148,7 +140,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         List<Object[]> listaLinhasProdutos = new ArrayList<>();
 
         //Adicionando valores nas linhas
-        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {
             listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
         }
         //cria um defaultablemodel com as informações acima
@@ -528,7 +520,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                labelValorVenda.setText("R$ "+getValorTotalDaVenda());
+                labelValorVenda.setText("R$ "+decimalFormat.format(valorTotalVenda));
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             } 
@@ -552,7 +544,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             //Limpar o model dos produtos antes de acrescentar os objetos da pesquisa
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
         }
@@ -567,8 +559,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(tabelaProdutosVendidos.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow());
-            labelValorVenda.setText("R$ "+getValorTotalDaVenda());
+            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) modeloTabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
+            labelValorVenda.setText("R$ "+decimalFormat.format(valorTotalVenda));
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -611,13 +603,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     
                     try {
                         
-                        novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
+                        novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, valorTotalVenda
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
                                     Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                         
-                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
-                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId());
+                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Venda", valorTotalVenda, 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(), 
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId()));
                         
                         JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
                                                 
@@ -635,13 +627,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 try {
                     formaPagamento = "À Vista";
 
-                    novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, Float.parseFloat(getValorTotalDaVenda())
+                    novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, valorTotalVenda
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
                                     Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                     
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Venda", Float.parseFloat(getValorTotalDaVenda()), 
-                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId());
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Venda", valorTotalVenda, 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(), 
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId()));
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
@@ -699,7 +691,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                labelValorVenda.setText("R$ "+getValorTotalDaVenda());
+                labelValorVenda.setText("R$ "+valorTotalVenda);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -708,8 +700,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private void tabelaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosVendidosMouseClicked
         if(evt.getClickCount() == 2){            
-            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow());
-            labelValorVenda.setText("R$ "+getValorTotalDaVenda());
+            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) modeloTabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
+            labelValorVenda.setText("R$ "+valorTotalVenda);
         }
     }//GEN-LAST:event_tabelaProdutosVendidosMouseClicked
 
@@ -732,19 +724,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(campo.getText().length()>= maxCaracteres){
             evt.consume();
         }
-    }
-    
-    private void adicionarProdutoAVenda(Produto produto) {
-        //Adiciona os dados do novo produto na tabela
-        modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
-        //trocar para hash
-        produtosVendidos.add(produto);
-    }
-    
-    private void removerProdutoDaVenda(int indice) {
-        modeloTabelaProdutosVendidos.removeRow(indice);
-        //trocar para hash
-        produtosVendidos.remove(indice);
     }
     
     public void habilitarCampos() {
@@ -772,13 +751,58 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         radioCredito.setVisible(false);
         radioDebito.setVisible(false);
     }
-
-    private String getValorTotalDaVenda() {
-        float valor = 0;
-        for(Produto produto: produtosVendidos) {
-            valor += produto.getValor() - (produto.getValor() * (GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()/100));
+    
+    public void adicionarProdutoAVenda(Produto produto) {
+        ProdutoVendido produtoVendido = getProdutoVendido(produto.getCodigo());
+        //Incrementa o valor da quantidade de produtos que está no map, caso a chave já exista
+        if(produtoVendido != null) {
+            //Atualiza a quantidade do produto na venda
+            produtoVendido.setQuantidade(produtoVendido.getQuantidade()+1);
+            //Atualiza a linha da tabela (2 = terceira coluna da tabela)
+            modeloTabelaProdutosVendidos.setValueAt(produtoVendido.getQuantidade(), tabelaProdutos.getSelectedRow(), 2);
+        } else {
+            produtoVendido = new ProdutoVendido(produto.getCodigo(), 1);
+            produtosVendidos.add(produtoVendido);
+            //Adiciona os dados do novo produto na tabela
+            modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produtoVendido.getQuantidade()});
         }
-        return Float.toString(valor);
+
+        //Atualiza o valor total da venda
+        valorTotalVenda += produto.getValor();
+    }
+    
+    public void removerProdutoDaVenda(int indice, String codigo) {
+        ProdutoVendido produtoLocado = getProdutoVendido(codigo);
+        if(produtoLocado != null) {
+            //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
+            int quantidade = produtoLocado.getQuantidade()-1;  
+            //Remove o produto selecionada da lista de locação
+            if(quantidade == 0) {
+                modeloTabelaProdutosVendidos.removeRow(indice);
+            } else {
+                //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
+                modeloTabelaProdutosVendidos.setValueAt(Integer.toString(quantidade), indice, 2);
+            }
+            //Atualiza a quantidade no produto referente
+            produtoLocado.setQuantidade(quantidade);
+            
+            try {
+                //Atualiza o valor total da locação
+                valorTotalVenda -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "O produto não foi encontrado", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }
+    
+    public ProdutoVendido getProdutoVendido(String codigo) {
+        for(ProdutoVendido produto: this.produtosVendidos) {
+            return produto;
+        }
+        return null;
     }
     
     public boolean alterarDados() {        
@@ -795,34 +819,19 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     public Movimentacao getNovaMovimentacao() {
         return novaMovimentacao;
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                RealizarVendaDialog dialog = new RealizarVendaDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     private DefaultListModel modeloProdutosVendidos;
     private DefaultListModel modeloProdutos;
-    private List<Produto> produtosVendidos;
+    private List<ProdutoVendido> produtosVendidos;
     protected boolean concluirSelecionado;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
     protected Venda novaVenda;
+    private double valorTotalVenda;
     protected Movimentacao novaMovimentacao;
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaProdutosVendidos;
+    private DecimalFormat decimalFormat;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

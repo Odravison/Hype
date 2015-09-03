@@ -212,7 +212,7 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public String getProdutosDeLocacaoInString(int idLocacao) throws LocacaoInexistenteException {
+    public String getProdutosDeLocacaoInString(long idLocacao) throws LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
         String produtosLocados = "";

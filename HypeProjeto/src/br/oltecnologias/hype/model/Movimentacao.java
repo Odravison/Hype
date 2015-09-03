@@ -45,12 +45,13 @@ public class Movimentacao implements Serializable {
     
     private String beneficiario;
 
-    public Movimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario) {
+    public Movimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario, long idDaOperacao) {
         this.movimento = movimento;
         this.valor = valor;
         this.data = data;
         this.responsavel = responsavel;
         this.beneficiario = beneficiario;
+        this.idDaOperacao = idDaOperacao;
     }
     
     public Movimentacao() {

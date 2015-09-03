@@ -37,4 +37,6 @@ public class GerenciadorDeVenda {
     public List<Venda> getVendas() {
         return this.vendas;
     }
+    
+    
 }

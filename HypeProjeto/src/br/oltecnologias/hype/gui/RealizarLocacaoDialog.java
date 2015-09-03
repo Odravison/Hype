@@ -16,14 +16,13 @@ import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import java.awt.Frame;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -37,24 +36,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RealizarLocacaoDialog extends java.awt.Dialog {
 
-    /**
-     * Creates new form RealizarLocacaoDialog
-     */
-    public RealizarLocacaoDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        locador = null;
-        valorTotalLocacao = 0;
-        produtosLocados = new HashMap<String, Integer>();
-        decimalFormat = new DecimalFormat("#.##");
-    }
     
      public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
         locador = null;
         valorTotalLocacao = 0;
-        produtosLocados = new HashMap<String, Integer>();
+        produtosLocados = new ArrayList<ProdutoLocado>();
+        decimalFormat = new DecimalFormat("#.##");
     }
 
     /**
@@ -249,7 +238,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         List<Object[]> listaLinhasProdutos = new ArrayList<>();
 
         //Adicionando valores nas linhas
-        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {
             listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
         }
         //cria um defaultablemodel com as informações acima
@@ -737,9 +726,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
                             Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
 
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao,
-                            Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(),
-                            Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Locação", valorTotalLocacao,
+                            Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
+                            Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId()));
 
                     pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
@@ -817,7 +806,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
         } else {
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
         }
@@ -908,7 +897,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             labelValorLocacao.setText("R$ "+valorTotalLocacao);
         }
     }//GEN-LAST:event_tabelaProdutosLocadosMouseClicked
@@ -999,45 +988,66 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
     
     public void adicionarProdutoALocacao(Produto produto) {
-        int quantidade;
+        ProdutoLocado produtoLocado = getProdutoLocado(produto.getCodigo());
         //Incrementa o valor da quantidade de produtos que está no map, caso a chave já exista
-        if(produtosLocados.get(produto.getCodigo()) != null) {
-            quantidade = produtosLocados.get(produto.getCodigo())+1;
+        if(produtoLocado != null) {
+            //Atualiza a quantidade do produto na locação
+            produtoLocado.setQuantidade(produtoLocado.getQuantidade()+1);
+            //Atualiza a linha da tabela (2 = terceira coluna da tabela)
+            modeloTabelaProdutosLocados.setValueAt(produtoLocado.getQuantidade(), tabelaProdutos.getSelectedRow(), 2);
         } else {
-            quantidade = 1;
+            produtoLocado = new ProdutoLocado(produto.getCodigo(), 1);
+            produtosLocados.add(produtoLocado);
+            //Adiciona os dados do novo produto na tabela
+            modeloTabelaProdutosLocados.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produtoLocado.getQuantidade()});
         }
-        //Atualiza ou adiciona a quantidade no produto referente
-        produtosLocados.put(produto.getCodigo(), quantidade);
-        //Adiciona os dados do novo produto na tabela
-        modeloTabelaProdutosLocados.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), quantidade});
+
         //Atualiza o valor total da locação
         valorTotalLocacao += produto.getValor();
     }
     
     public void removerProdutoDaLocacao(int indice, String codigo) {
-        //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
-        int quantidade = produtosLocados.get(codigo)-1;
-        //Remove o produto selecionada da lista de locação
-        if(quantidade == 0) {
-            modeloTabelaProdutosLocados.removeRow(indice);
+        ProdutoLocado produtoLocado = getProdutoLocado(codigo);
+        if(produtoLocado != null) {
+            //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
+            int quantidade = produtoLocado.getQuantidade()-1;  
+            //Remove o produto selecionada da lista de locação
+            if(quantidade == 0) {
+                modeloTabelaProdutosLocados.removeRow(indice);
+            } else {
+                //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
+                modeloTabelaProdutosLocados.setValueAt(Integer.toString(quantidade), indice, 2);
+            }
+            //Atualiza a quantidade no produto referente
+            produtoLocado.setQuantidade(quantidade);
+            
+            try {
+                //Atualiza o valor total da locação
+                valorTotalLocacao -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane pane = new JOptionPane();
+                pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+            }
         } else {
-            //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
-            modeloTabelaProdutosLocados.setValueAt(Integer.toString(quantidade), indice, 2);
-        }
-        //Atualiza a quantidade no produto referente
-        produtosLocados.put(codigo, quantidade);
-        
-        try {
-            //Atualiza o valor total da locação
-            valorTotalLocacao += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
-        } catch (ProdutoInexistenteException e) {
             JOptionPane pane = new JOptionPane();
-            pane.setMessage(e.getMessage());
+            pane.setMessage("O produto não foi encontrado");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             JDialog messageDialog = pane.createDialog("Aviso");
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
         }
+        
+    }
+    
+    public ProdutoLocado getProdutoLocado(String codigo) {
+        for(ProdutoLocado produto: this.produtosLocados) {
+            return produto;
+        }
+        return null;
     }
     
     public Locacao getNovaLocacao() {
@@ -1047,29 +1057,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public Movimentacao getNovaMovimentacao() {
         return novaMovimentacao;
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+
     
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
     private Cliente locador;
-    //private HashMap<String, Integer> produtosLocados;
-    private HashMap<String, Integer> produtosLocados;
+    private ArrayList<ProdutoLocado> produtosLocados;
     private double valorTotalLocacao;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;

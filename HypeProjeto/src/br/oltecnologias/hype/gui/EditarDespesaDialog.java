@@ -251,7 +251,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
                 movimentacao.setBeneficiario(campoFavorecido.getText());
                 movimentacao.setValor(Double.parseDouble(campoValor.getText()));
 
-                GerenciadorDoSistema.getInstance().editarMovimentacao(movimentacao);
+                //GerenciadorDoSistema.getInstance().editarMovimentacao(movimentacao);
 
                 JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
 
@@ -297,22 +297,6 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         return movimentacao;
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarDespesaDialog dialog = new EditarDespesaDialog(new java.awt.Frame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     private Despesa despesa;
     protected boolean salvarSelecionado;

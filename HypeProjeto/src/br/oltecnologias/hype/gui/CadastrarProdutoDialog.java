@@ -259,6 +259,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(0);
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         comboFornecedor.addItem("Selecione");
+        /* DESFAZER DEPOIS QUE O MÉTODO GETFORCENEDORES ESTIVER IMPLEMENTADO
         for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
             comboFornecedor.addItem(fornecedor.getNome());
         }
@@ -266,6 +267,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());
 
         comboFornecedor.setSelectedIndex(0);
+        */
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);

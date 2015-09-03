@@ -11,6 +11,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
+import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
@@ -638,9 +639,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     List<Object[]> listaLinhasFornecedores = new ArrayList<>();
 
     //Adicionando valores nas linhas
-    for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {
+    /*for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {
         listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEnderecoInString(), fornecedor.getTelefone()});
-    }
+    }*/
     //cria um defaultablemodel com as informações acima
     modeloTabelaFornecedores = new DefaultTableModel(
         listaLinhasFornecedores.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaFornecedores){
@@ -1460,9 +1461,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     List<Object[]> listaLinhasUsuarios = new ArrayList<>();
 
     //Adicionando valores nas linhas
-    for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
+    /*for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
         listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
-    }
+    }*/
     //cria um defaultablemodel com as informações acima
     modeloTabelaUsuarios = new DefaultTableModel(
         listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){
@@ -1750,7 +1751,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (dialog.alterarDados()) {
             adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            atualizarValorEmCaixa();
+            //atualizarValorEmCaixa();
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
@@ -1788,7 +1789,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (dialog.alterarDados()) {
             adicionarNovaVendaNaTabela(dialog.getNovaVenda());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            atualizarValorEmCaixa();
+            //atualizarValorEmCaixa();
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
@@ -2125,7 +2126,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
             try {
                 VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
-                        Long.parseLong((String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0))));
+                        (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
                 
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
@@ -2142,7 +2143,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoExcluirVenda.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
-            try {
+            /*try {
                 //Passa, como parâmetro, a venda pesquisada pelo seu código 
                 VerDadosVendaDialog dialog = new VerDadosVendaDialog(null, GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
                             (String) modeloTabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), 0)));
@@ -2151,7 +2152,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 dialog.setVisible(true);
             } catch (VendaInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+            }*/
         }
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
@@ -2166,13 +2167,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 if(((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 1)).toUpperCase().equals("DESPESA")) {
                     VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
                             Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                    
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
                 } else {
                     VerDadosMovimentacaoDialog dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
                             Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
                 }
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
-            } catch (MovimentacaoInexistenteException e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -2209,7 +2214,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             try {
                 //Passa, como parâmetro, a locação pesquisada pelo id
                 VerDadosLocacaoDialog dialog = new VerDadosLocacaoDialog(null, GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                            (String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0)));
+                            Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0))));
                     
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
@@ -2226,7 +2231,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
         }
         dialog.dispose();
-        atualizarValorEmCaixa();
+        //atualizarValorEmCaixa();
     }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
 
     private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
@@ -2270,9 +2275,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
         if(tabelaMovimentacoes.getSelectedRow() >= 0) {
             try {
-                //Pesquisa o cliente selecionado através do seu CPF (0 = primeira coluna da tabela)
-                EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPeloId(
-                        (String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)));
+                //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
+                EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                        Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
                 
                 dialog.setLocationRelativeTo(null);
                 //fazer aquela paradinha pra atualizar os dados na tabela
@@ -2363,7 +2368,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-            movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
@@ -2399,14 +2404,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         modeloTabelaUsuarios.removeRow(indice);
     }
     
-    public void atualizarValorEmCaixa() {
+    /*public void atualizarValorEmCaixa() {
         if(GerenciadorDoSistema.getInstance().getValorCaixaDiario() > 0) {
             labelValorEmCaixa.setForeground(new Color(0, 153, 0));
         } else{
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
         labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(GerenciadorDoSistema.getInstance().getValorCaixaDiario()));
-    }
+    }*/
     
     
     /**

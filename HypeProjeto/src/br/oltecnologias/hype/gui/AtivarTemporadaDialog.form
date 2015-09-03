@@ -201,7 +201,7 @@
             <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sliderTemporadaStateChanged"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {&#xa;    campoPercentualDesconto.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));&#xa;    campoPercentualDesconto.setEditable(false);&#xa;    painelCor.setBackground(new java.awt.Color(0, 153, 51));&#xa;    sliderTemporada.setValue(100);&#xa;    labelTemporada.setText(&quot;Temporada Ativada:&quot;);&#xa;} else {&#xa;    sliderTemporada.setValue(0);&#xa;    labelTemporada.setText(&quot;Temporada Desativada:&quot;);&#xa;    painelCor.setBackground(new java.awt.Color(204, 0, 0));&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="try {&#xa;    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {&#xa;        campoPercentualDesconto.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));&#xa;        campoPercentualDesconto.setEditable(false);&#xa;        painelCor.setBackground(new java.awt.Color(0, 153, 51));&#xa;        sliderTemporada.setValue(100);&#xa;        labelTemporada.setText(&quot;Temporada Ativada:&quot;);&#xa;    }&#xa;} catch(TemporadaInexistenteException e) {&#xa;    sliderTemporada.setValue(0);&#xa;    labelTemporada.setText(&quot;Temporada Desativada:&quot;);&#xa;    painelCor.setBackground(new java.awt.Color(204, 0, 0));&#xa;}"/>
           </AuxValues>
         </Component>
       </SubComponents>

@@ -295,23 +295,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         return usuario;
     }
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarUsuarioDialog dialog = new EditarUsuarioDialog(new java.awt.Frame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-    
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     protected boolean salvarSelecionado;
     private int maxCaracteresNome = 30;

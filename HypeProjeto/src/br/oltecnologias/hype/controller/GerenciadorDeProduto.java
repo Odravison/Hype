@@ -24,7 +24,7 @@ public class GerenciadorDeProduto {
         return singleton;
     }
 
-    public Produto cadastrarProduto(String codigo, String nome, float valor,
+    public Produto cadastrarProduto(String codigo, String nome, double valor,
             int quant, String fornecedor, String cor, int tamanho, boolean isLocation) throws ProdutoExistenteException, ProdutoInexistenteException {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
