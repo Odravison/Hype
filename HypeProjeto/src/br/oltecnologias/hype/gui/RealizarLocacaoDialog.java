@@ -669,7 +669,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
                 
-                //JOptionPane.showMessageDialog(null, "Selecione o cliente que irá realizar a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(produtosLocados.size() <= 0) {
                 pane.setMessage("Selecione os produtos para a locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
@@ -677,7 +676,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
                 
-                //JOptionPane.showMessageDialog(null, "Selecione os produtos para a locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoPercentualDesconto.getText().length() > 0) { 
                 if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
                     pane.setMessage("O percentual de desconto não pode estar acima de 100%");
@@ -686,44 +684,63 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 }
-            } else{
+            } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
+                pane.setMessage("Informe a forma de pagamento da locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+                
+            } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
+                pane.setMessage("Informe a forma de pagamento da locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+                    
+            } else if ((radioCartao.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
+                pane.setMessage("Informe a quantidade de parcelas da locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+
+            } else {
+                
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
+=======
+                }
+                //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
+                if (campoEntrada.getText().length() <= 0) {
+                    campoEntrada.setText("0");
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
                 }
                 
+                if (radioCartao.isSelected()) {
+                    formaPagamento = "Cartão";
+                } else if (radioPromissoria.isSelected()) {
+                    formaPagamento = "Promissória";
+                } else {
+                    formaPagamento = "À Vista";
+                    campoEntrada.setText("0");
+                    campoParcelas.setText("0");
+                }
+
                 Calendar dataInicial = Calendar.getInstance();
                 Calendar dataFinal = Calendar.getInstance();
 
                 dataInicial.setTime(dateDataInicialContrato.getDate());
                 dataFinal.setTime(dateDataFinalContrato.getDate());
-                
-                if(radioCartao.isSelected() || radioPromissoria.isSelected()) {
-                    if(campoEntrada.getText().length() <= 0) {
-                        pane.setMessage("Informe o valor de entrada da locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
 
-                        //JOptionPane.showMessageDialog(null, "Informe o valor de entrada da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else if(campoParcelas.getText().length() <= 0) {
-                        pane.setMessage("Informe a quantidade de parcelas da locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
-                        
-                        //JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else {
-                        if (radioCartao.isSelected()) {
-                            formaPagamento = "Cartão";
-                        } else {
-                            formaPagamento = "Promissória";
-                        }
-                        
-                        try {
+                try {
+                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, Calendar.getInstance(),
+                            Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
+                            Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
 
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
                             novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, Calendar.getInstance(),
                                     Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
                                     Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
@@ -731,74 +748,32 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao, 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
                                                 Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
+=======
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao,
+                            Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(),
+                            Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
 
-                            pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
-                            pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                            dialog = pane.createDialog("Mensagem");
-                            dialog.setAlwaysOnTop(true);
-                            dialog.setVisible(true);
+                    pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
+                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    dialog = pane.createDialog("Mensagem");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
 
-                            //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+                    //O botão concluir foi selecionado
+                    concluirSelecionado = true;
+                    //Fecha janela
+                    setVisible(false);
 
-                            concluirSelecionado = true;
-                            //Fecha janela
-                            setVisible(false);
-
-                        } catch (Exception e) {
-                            pane.setMessage(e.getMessage());
-                            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                            dialog = pane.createDialog("Aviso");
-                            dialog.setAlwaysOnTop(true);
-                            dialog.setVisible(true);
-                            
-                            //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
-                    }
-                                        
-                } else {
-                    formaPagamento = "À Vista";
-                    campoEntrada.setText("0");
-                    campoParcelas.setText("0");
-                    
-                    try {
-                        // falta registrar a entrada e as parcelas
-                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, Calendar.getInstance(),
-                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
-                        
-                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao, 
-                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
-                                                Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
-                        
-                        pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
-                        pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                        dialog = pane.createDialog("Mensagem");
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
-                        //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
-
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-
-                    } catch (Exception e) {
-                        pane.setMessage(e.getMessage());
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
-                        
-                        //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
                 }
+                                        
             }
         } catch(Exception e) {
-            pane.setMessage(e.getMessage());
+            pane.setMessage("Informe corretamente todos os dados necessários");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         
     }//GEN-LAST:event_botaoConcluirActionPerformed
@@ -1151,3 +1126,62 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
 
 }
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
+                            concluirSelecionado = true;
+                            //Fecha janela
+                            setVisible(false);
+
+                        } catch (Exception e) {
+                            pane.setMessage(e.getMessage());
+                            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                            dialog = pane.createDialog("Aviso");
+                            dialog.setAlwaysOnTop(true);
+                            dialog.setVisible(true);
+                            
+                            //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                                        
+                } else {
+                    formaPagamento = "À Vista";
+                    campoEntrada.setText("0");
+                    campoParcelas.setText("0");
+                    
+                    try {
+                        // falta registrar a entrada e as parcelas
+                        novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, Calendar.getInstance(),
+                                Calendar.getInstance(), formaPagamento, Integer.parseInt(campoParcelas.getText()), 
+                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                        
+                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao("Locação", valorTotalLocacao, 
+                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), 
+                                                Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId());
+                        
+                        pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
+                        pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                        dialog = pane.createDialog("Mensagem");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                        //JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!\n\nImprimindo contrato...");
+
+                        concluirSelecionado = true;
+                        //Fecha janela
+                        setVisible(false);
+
+                    } catch (Exception e) {
+                        pane.setMessage(e.getMessage());
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                        
+                        //JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+=======
+                } catch (Exception e) {
+                    pane.setMessage(e.getMessage());
+                    pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                    dialog = pane.createDialog("Aviso");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9

@@ -27,7 +27,7 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
 
     public EditarFornecedorDialog(java.awt.Frame parent, Fornecedor fornecedor) {
         super(parent);
-        this.fonecedor = fornecedor;
+        this.fornecedor = fornecedor;
         initComponents();
     }
     
@@ -59,6 +59,7 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         campoTelefone = new javax.swing.JFormattedTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -73,7 +74,7 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:");
+        labelNome.setText("Nome:*");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -83,7 +84,7 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         });
 
         labelCNPJ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCNPJ.setText("CNPJ:");
+        labelCNPJ.setText("CNPJ:*");
 
         painelEndereco.setBackground(new java.awt.Color(255, 255, 255));
         painelEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
@@ -158,7 +159,7 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
                         .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                         .addComponent(labelUf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,6 +270,9 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
             }
         });
 
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("* Obrigatório");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -278,7 +282,8 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(painelDadosPessoais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(419, 419, 419)
+                        .addComponent(labelObrigatorio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar)))
@@ -290,9 +295,11 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(labelObrigatorio))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -333,12 +340,10 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
-            if(campoCnpj.getText().charAt(16) == ' ') {//O último caractere do número de CNPJ não pode ser vazio
-                JOptionPane.showMessageDialog(null, "Informe o CNPJ completo do fornecedor", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }else if(campoNome.getText().length() <= 0) {
+            if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do fornecedor", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                // Nem todos os valores dos campos serão informados
+                // Talve, nem todos os valores dos campos seam informados
                 if(campoRua.getText().length() <= 0) {
                     campoRua.setText("Não informado");
                 }
@@ -355,14 +360,21 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
                     campoTelefone.setText("Não informado"); //O valor do campo não está sendo alterado
                 }
 
-                Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
-                    Integer.parseInt(campoNumero.getText()), campoCidade.getText());
+                Endereco endereco = fornecedor.getEndereco();
+                endereco.setBairro(campoBairro.getText());
+                endereco.setCidade(campoCidade.getText());
+                endereco.setNumeroCasa(Integer.parseInt(campoNumero.getText()));
+                endereco.setRua(campoRua.getText());
+                endereco.setUf(comboUf.getSelectedItem().toString());
+                
+                fornecedor.setNome(campoNome.getText());
+                fornecedor.setTelefone(campoTelefone.getText());
 
                 try {
-                    novoFornecedor = new Fornecedor(campoCnpj.getText(), endereco, campoTelefone.getText(), campoNome.getText());
 
-                    GerenciadorDePessoas.getInstance().cadastrarFornecedor(novoFornecedor);
-                    JOptionPane.showMessageDialog(null, "Fornecedor cadastrado com sucesso!");
+                    GerenciadorDePessoas.getInstance().editarFornecedor(fornecedor);
+                    
+                    JOptionPane.showMessageDialog(null, "Fornecedor editado com sucesso!");
 
                     salvarSelecionado = true; //O botão Salvar foi selecionado
                     setVisible(false);
@@ -381,6 +393,35 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
+        if(numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento estiver na lista 
+            evt.consume();
+        } 
+        if(campo.getText().length()>= maxCaracteres) {
+            evt.consume();
+        }
+    }
+    
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento não estiver na lista 
+            evt.consume();
+        } if(campo.getText().length()>= maxCaracteres){ 
+            evt.consume(); 
+        }
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public Fornecedor getFornecedor() {
+        return fornecedor;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -420,6 +461,7 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelCidade;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
+    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelRua;
     private javax.swing.JLabel labelTelefone;
     private javax.swing.JLabel labelUf;

@@ -24,21 +24,31 @@ public class Despesa implements Serializable {
     
     @Temporal(TemporalType.DATE)
     private Calendar data;
-    
     private double valor;
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
     
     private String emissor;
+=======
+    private String favorecido;
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
 
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
     private String favorecido;
 
 
 
     public Despesa(String nome, String observacao, Calendar data, double valor, String emissor, String favorecido) {
+=======
+    public Despesa(String nome, String observacao, Calendar data, double valor, String favorecido) {
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
         this.nome = nome;
         this.observacao = observacao;
         this.data = data;
         this.valor = valor;
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
         this.emissor = emissor;
+=======
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
         this.favorecido = favorecido;
     }
 
@@ -94,7 +104,11 @@ public class Despesa implements Serializable {
         this.emissor = emissor;
     }
     
+<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
     public String getValorInString(){
+=======
+    public String getValorInString() {
+>>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
         return new DecimalFormat("#.##").format(this.valor);
     }
     
