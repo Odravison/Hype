@@ -5,24 +5,47 @@
  */
 package br.oltecnologias.hype.model;
 
+import java.io.Serializable;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Luender Lima
  */
-public class Movimentacao {
+
+@Entity
+public class Movimentacao implements Serializable {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    
+    private long idDaOperacao;
+    
     private String movimento;
-    private float valor;
+    
+    private double valor;
+    
+    
+    @Temporal(TemporalType.DATE)
     private Calendar data;
-    private Usuario responsavel;
+    
+    private String responsavel;
+    
     private String beneficiario;
 
-    public Movimentacao(String movimento, float valor, Calendar data, Usuario responsavel, String beneficiario) {
+    public Movimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario) {
         this.movimento = movimento;
         this.valor = valor;
         this.data = data;
@@ -49,11 +72,11 @@ public class Movimentacao {
         this.movimento = movimento;
     }
 
-    public float getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(float valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 
@@ -65,11 +88,11 @@ public class Movimentacao {
         this.data = data;
     }
 
-    public Usuario getResponsavel() {
+    public String getResponsavel() {
         return responsavel;
     }
 
-    public void setResponsavel(Usuario responsavel) {
+    public void setResponsavel(String responsavel) {
         this.responsavel = responsavel;
     }
 
@@ -88,5 +111,19 @@ public class Movimentacao {
     public String getValorInString() {
         return new DecimalFormat("#.##").format(this.valor);
     }
+
+    public long getIdDaOperacao() {
+        return idDaOperacao;
+    }
+
+    public void setIdDaOperacao(long idDaOperacao) {
+        this.idDaOperacao = idDaOperacao;
+    }
     
+    public String getMovToString(){        
+        String mov = getDataInString() + "     " + getMovimento() + "     " + getResponsavel() + "     " + getValorInString();
+        return mov;
+        
+        
+    }
 }

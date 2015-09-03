@@ -10,6 +10,7 @@ import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -54,6 +55,10 @@ public class ProdutoJpaRepository implements ProdutoRepository {
 
         } catch (ProdutoExistenteException e) {
             System.out.println(e.getMessage());
+            
+        } catch (ProdutoInexistenteException ex) {
+            
+            
         } finally {
             if (em != null) {
                 em.close();
@@ -68,7 +73,6 @@ public class ProdutoJpaRepository implements ProdutoRepository {
         EntityManager em = null;
         try {
             em = getEntityManager();
-            em.getTransaction().begin();
 
             if (!existsCodigo(codigo)) {
                 throw new ProdutoInexistenteException("Produto com código: " + codigo + " não foi cadastrado!");
@@ -95,7 +99,7 @@ public class ProdutoJpaRepository implements ProdutoRepository {
             }
 
             em.remove(em.getReference(Produto.class, codigo));
-            
+
             em.getTransaction().commit();
 
         } finally {
@@ -113,8 +117,8 @@ public class ProdutoJpaRepository implements ProdutoRepository {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            
-            if (!existsCodigo(produto.getCodigo())){
+
+            if (!existsCodigo(produto.getCodigo())) {
                 throw new ProdutoInexistenteException("O produto com o código de número: " + produto.getCodigo() + " não se encontra cadastrado!");
             }
 
@@ -126,7 +130,7 @@ public class ProdutoJpaRepository implements ProdutoRepository {
             p.setQuantidade(produto.getQuantidade());
             p.setTam(produto.getTam());
             p.setValor(produto.getValor());
-            
+
             em.merge(p);
 
             em.getTransaction().commit();
@@ -157,25 +161,14 @@ public class ProdutoJpaRepository implements ProdutoRepository {
     }
 
     @Override
-    public boolean existsCodigo(String codigo) {
-        Object result = null;
-        EntityManager em = null;
-
+    public boolean existsCodigo(String codigo) throws ProdutoInexistenteException {
+        Produto result;
+        
         try {
-            em = getEntityManager();
-            Query query = em.createQuery("SELECT 1 FROM Produto WHERE id_produto = ?");
-            query.setParameter(1, codigo);
-            query.setMaxResults(1);
-
-            result = query.getSingleResult();
-        } catch (NoResultException e) {
+            result = findById(codigo);
+        } catch (ProdutoInexistenteException e) {
             result = null;
-        } finally {
-            if (em != null) {
-                em.close();
-            }
         }
-
         return (result != null);
     }
 

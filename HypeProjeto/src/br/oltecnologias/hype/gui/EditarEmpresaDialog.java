@@ -400,7 +400,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditarEmpresaDialog dialog = new EditarEmpresaDialog(new java.awt.Frame(), true);
+                EditarEmpresaDialog dialog = new EditarEmpresaDialog(new java.awt.Frame());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -412,6 +412,10 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     }
 
     private Empresa empresa;
+    private String numeros = "0987654321"; // Alguns campos não devem aceitar números
+    private int maxCaracteresNome = 35;
+    private int maxCaracteresBairro = 30;
+    private int maxCaracteresNumero = 4;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;

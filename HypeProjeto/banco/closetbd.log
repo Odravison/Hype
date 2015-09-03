@@ -1,14 +1,2 @@
 /*C2*/SET SCHEMA PUBLIC
-drop table cliente cascade\u000a
-drop table configuracao cascade\u000a
-drop table despesa cascade\u000a
-drop table empresa cascade\u000a
-drop table endereco cascade\u000a
-drop table fornecedor cascade\u000a
-drop table locacao cascade\u000a
-drop table medidas cascade\u000a
-drop table produto cascade\u000a
-drop table usuario cascade\u000a
-drop table venda cascade\u000a
-drop table venda_produto
 DISCONNECT

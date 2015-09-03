@@ -150,7 +150,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelResponsavel.setText(&quot;Respons&#xe1;vel: &quot;+movimentacao.getResponsavel().getNome());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelResponsavel.setText(&quot;Respons&#xe1;vel: &quot;+movimentacao.getResponsavel());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelData">

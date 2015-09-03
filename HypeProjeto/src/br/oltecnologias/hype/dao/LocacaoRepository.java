@@ -19,9 +19,9 @@ public interface LocacaoRepository {
     
     public void create(Locacao locacao) throws LocacaoExistenteException;
     
-    public Locacao findById(int id) throws LocacaoInexistenteException;
+    public Locacao findById(long id) throws LocacaoInexistenteException;
     
-    public boolean existsLocacao(int id);
+    public boolean existsLocacao(long id);
     
     public void removerLocacao(Locacao locacao)throws LocacaoInexistenteException;
     
@@ -31,6 +31,6 @@ public interface LocacaoRepository {
     
     public List<Locacao> getLocacaoByCliente(String idCliente);
     
-    public List<Produto> getProdutosFromLocacao(int idLocacao) throws LocacaoInexistenteException;
+    public List<Produto> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException;
     
 }

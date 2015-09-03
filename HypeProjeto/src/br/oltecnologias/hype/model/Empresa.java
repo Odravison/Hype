@@ -2,8 +2,8 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -15,7 +15,7 @@ public class Empresa implements Serializable {
     private String nome;
     private String telefone;
     
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     private Endereco endereco;
 
     public Empresa() {

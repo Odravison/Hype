@@ -1153,7 +1153,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
         listaLinhasMovimentacoes.add(new Object[]{Long.toString(movimentacao.getId()), movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
     }
 
     //cria um defaultablemodel com as informações acima

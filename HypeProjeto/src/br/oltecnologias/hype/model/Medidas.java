@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Medidas implements Serializable {
@@ -15,7 +13,7 @@ public class Medidas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_medidas")
-    private int id;
+    private long id;
 
     private int calca;
     private int colete;
@@ -107,11 +105,11 @@ public class Medidas implements Serializable {
         this.observacao = observacao;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

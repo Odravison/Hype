@@ -246,7 +246,8 @@ public class EditarDespesaDialog extends java.awt.Dialog {
                 
                 GerenciadorDoSistema.getInstance().editarDespesa(despesa);
                 
-                movimentacao = GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorOperacao(despesa.getId());
+                //Lista de movimentações
+                GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorOperacao(Long.toString(despesa.getId()));
                 movimentacao.setBeneficiario(campoFavorecido.getText());
                 movimentacao.setValor(Double.parseDouble(campoValor.getText()));
 
@@ -302,7 +303,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditarDespesaDialog dialog = new EditarDespesaDialog(new java.awt.Frame(), true);
+                EditarDespesaDialog dialog = new EditarDespesaDialog(new java.awt.Frame());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

@@ -301,7 +301,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                EditarUsuarioDialog dialog = new EditarUsuarioDialog(new java.awt.Frame(), true);
+                EditarUsuarioDialog dialog = new EditarUsuarioDialog(new java.awt.Frame());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);

@@ -5,7 +5,10 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -479,23 +482,6 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         return produto;
     }
     
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarProdutoDialog dialog = new EditarProdutoDialog(new java.awt.Frame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     private Produto produto;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números

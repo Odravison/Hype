@@ -13,7 +13,7 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id_endereco")
-    private int id;
+    private long id;
     private String rua;
     private String bairro;
     private String uf;
@@ -81,11 +81,11 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

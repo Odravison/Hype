@@ -54,7 +54,7 @@ public class Cliente implements Serializable {
     @Column(nullable = false, name="celular")
     private String celular;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="fk_cliente")
     private List<Locacao> locacoes;
 
