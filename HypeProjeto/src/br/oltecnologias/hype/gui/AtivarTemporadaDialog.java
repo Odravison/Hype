@@ -6,6 +6,9 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.exception.TemporadaInexistenteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -126,13 +129,15 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-            campoPercentualDesconto.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
-            campoPercentualDesconto.setEditable(false);
-            painelCor.setBackground(new java.awt.Color(0, 153, 51));
-            sliderTemporada.setValue(100);
-            labelTemporada.setText("Temporada Ativada:");
-        } else {
+        try {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+                campoPercentualDesconto.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
+                campoPercentualDesconto.setEditable(false);
+                painelCor.setBackground(new java.awt.Color(0, 153, 51));
+                sliderTemporada.setValue(100);
+                labelTemporada.setText("Temporada Ativada:");
+            }
+        } catch(TemporadaInexistenteException e) {
             sliderTemporada.setValue(0);
             labelTemporada.setText("Temporada Desativada:");
             painelCor.setBackground(new java.awt.Color(204, 0, 0));

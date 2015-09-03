@@ -48,10 +48,10 @@ public class GerenciadorDoSistema {
 
     }
 
-    public double getValorCaixaDiario() {
+    /*public double getValorCaixaDiario() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         DadosDoSistemaJpaRepository djp = new DadosDoSistemaJpaRepository(emf);
-    }
+    }*/
 
     public double getValorDespesas() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");

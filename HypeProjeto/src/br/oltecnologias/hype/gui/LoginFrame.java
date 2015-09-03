@@ -21,7 +21,7 @@ public class LoginFrame extends javax.swing.JFrame {
         ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Mini logo hype!.png");
         setIconImage(imagemTituloJanela.getImage());
         labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
-        if(!GerenciadorDoSistema.getInstance().empresaCadastrada()) {
+        if(!GerenciadorDoSistema.getInstance().isEmpresaCadastrada()) {
             CadastrarEmpresaDialog dialog = new CadastrarEmpresaDialog(null);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);

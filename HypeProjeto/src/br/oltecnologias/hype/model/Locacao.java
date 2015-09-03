@@ -83,11 +83,13 @@ public class Locacao implements Serializable {
 
     private boolean ativa;
     
+    private int percentualDesconto;
+    
     public Locacao() {
     }
 
     public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int percentualDesconto) {
         this.cliente = cliente;
         this.produtosLocados = produtosLocados;
         this.valorDeEntrada = valorDeEntrada;
@@ -225,5 +227,13 @@ public class Locacao implements Serializable {
     public String getEntradaInString() {
         return new DecimalFormat("#.##").format(this.valorDeEntrada);
     }
+    
+    public int getPercentualDesconto() {
+        return percentualDesconto;
+    }
 
+    public void setPercentualDesconto(int percentualDesconto) {
+        this.percentualDesconto = percentualDesconto;
+    }
+    
 }

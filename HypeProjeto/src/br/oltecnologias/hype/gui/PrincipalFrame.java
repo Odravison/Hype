@@ -11,6 +11,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
+import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
@@ -139,6 +140,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboBoxOrdenarCaixaEMovimentacao = new javax.swing.JComboBox();
         botaoExcluirMovimentacao = new javax.swing.JButton();
         labelValorEmCaixa = new javax.swing.JLabel();
+        botaoEditarDespesa = new javax.swing.JButton();
         painelConfiguracoes = new javax.swing.JPanel();
         botaoSalvarDiretorioBackup = new javax.swing.JButton();
         campoDiretorioBackup = new javax.swing.JTextField();
@@ -146,6 +148,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSalvarDiretorioContratos = new javax.swing.JButton();
         campoDiretorioDocumentos = new javax.swing.JTextField();
         labelDiretorioDocumentos = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
         botaoPesquisarUsuario = new javax.swing.JButton();
@@ -353,6 +356,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoVerLocacoesCliente.setText("Locações Feitas");
         botaoVerLocacoesCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVerLocacoesCliente.setVisible(false);
+        botaoVerLocacoesCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVerLocacoesClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelClientesLayout = new javax.swing.GroupLayout(painelClientes);
         painelClientes.setLayout(painelClientesLayout);
@@ -511,6 +519,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoEditarProduto.setText("   Editar   ");
     botaoEditarProduto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoEditarProduto.setVisible(false);
+    botaoEditarProduto.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoEditarProdutoActionPerformed(evt);
+        }
+    });
 
     botaoExcluirProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoExcluirProduto.setText("   Excluir   ");
@@ -626,9 +639,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     List<Object[]> listaLinhasFornecedores = new ArrayList<>();
 
     //Adicionando valores nas linhas
-    for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {
+    /*for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {
         listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEnderecoInString(), fornecedor.getTelefone()});
-    }
+    }*/
     //cria um defaultablemodel com as informações acima
     modeloTabelaFornecedores = new DefaultTableModel(
         listaLinhasFornecedores.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaFornecedores){
@@ -672,6 +685,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoEditarFornecedor.setText("   Editar   ");
     botaoEditarFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoEditarFornecedor.setVisible(false);
+    botaoEditarFornecedor.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoEditarFornecedorActionPerformed(evt);
+        }
+    });
 
     botaoExcluirFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoExcluirFornecedor.setText("   Excluir   ");
@@ -1136,7 +1154,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
         listaLinhasMovimentacoes.add(new Object[]{Long.toString(movimentacao.getId()), movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
     }
 
     //cria um defaultablemodel com as informações acima
@@ -1186,7 +1204,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
     botaoExcluirMovimentacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoExcluirMovimentacao.setText("   Excluir   ");
+    botaoExcluirMovimentacao.setText("Excluir Despesa   ");
     botaoExcluirMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoExcluirMovimentacao.setVisible(false);
     botaoExcluirMovimentacao.addActionListener(new java.awt.event.ActionListener() {
@@ -1197,6 +1215,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     labelValorEmCaixa.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
     labelValorEmCaixa.setForeground(new java.awt.Color(0, 153, 0));
+
+    botaoEditarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoEditarDespesa.setText("Editar Despesa");
+    botaoEditarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoEditarDespesa.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoEditarDespesaActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout painelCaixaERelatoriosLayout = new javax.swing.GroupLayout(painelCaixaERelatorios);
     painelCaixaERelatorios.setLayout(painelCaixaERelatoriosLayout);
@@ -1212,6 +1239,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoEditarDespesa)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(botaoExcluirMovimentacao))
                         .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(389, Short.MAX_VALUE))
@@ -1241,7 +1270,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(labelValorEmCaixa))))
             .addGap(39, 39, 39)
             .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(botaoExcluirMovimentacao)
+                .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoExcluirMovimentacao)
+                    .addComponent(botaoEditarDespesa))
                 .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFiltrarMovimentacao)
                     .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1318,6 +1349,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioDocumentos.setText("Diretório de Documentos");
 
+    jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    jButton2.setText("Alterar");
+    jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
     javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
     painelConfiguracoes.setLayout(painelConfiguracoesLayout);
     painelConfiguracoesLayout.setHorizontalGroup(
@@ -1326,16 +1361,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGap(32, 32, 32)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(labelDiretorioDocumentos)
-                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                    .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoSalvarDiretorioBackup))
                 .addComponent(labelDiretorioBackups)
-                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                    .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoSalvarDiretorioContratos)))
-            .addContainerGap(756, Short.MAX_VALUE))
+                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoSalvarDiretorioContratos))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSalvarDiretorioBackup))))
+            .addContainerGap(685, Short.MAX_VALUE))
     );
     painelConfiguracoesLayout.setVerticalGroup(
         painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1345,14 +1383,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoSalvarDiretorioBackup))
-            .addGap(31, 31, 31)
+                .addComponent(botaoSalvarDiretorioBackup)
+                .addComponent(jButton2))
+            .addGap(30, 30, 30)
             .addComponent(labelDiretorioDocumentos)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoSalvarDiretorioContratos))
-            .addContainerGap(417, Short.MAX_VALUE))
+            .addContainerGap(418, Short.MAX_VALUE))
     );
 
     try {
@@ -1422,9 +1461,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     List<Object[]> listaLinhasUsuarios = new ArrayList<>();
 
     //Adicionando valores nas linhas
-    for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
+    /*for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
         listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
-    }
+    }*/
     //cria um defaultablemodel com as informações acima
     modeloTabelaUsuarios = new DefaultTableModel(
         listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){
@@ -1483,6 +1522,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoEditarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoEditarUsuario.setText("  Editar  ");
     botaoEditarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoEditarUsuarioActionPerformed(evt);
+        }
+    });
     botaoEditarUsuario.setVisible(false);
 
     botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1707,7 +1751,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (dialog.alterarDados()) {
             adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            atualizarValorEmCaixa();
+            //atualizarValorEmCaixa();
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
@@ -1745,7 +1789,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (dialog.alterarDados()) {
             adicionarNovaVendaNaTabela(dialog.getNovaVenda());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            atualizarValorEmCaixa();
+            //atualizarValorEmCaixa();
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
@@ -1940,8 +1984,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarClienteActionPerformed
         if(tabelaClientes.getSelectedRow() >= 0) {
-            for(int i=0; i < modeloTabelaClientes.getColumnCount(); i++) {
-                System.out.println("valor coluna "+i+": "+modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), i));
+            try {
+                //Pesquisa o cliente selecionado através do seu CPF (0 = primeira coluna da tabela)
+                EditarClienteDialog dialog = new EditarClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
+                        (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                
+                dialog.setLocationRelativeTo(null);
+                //fazer aquela paradinha pra atualizar os dados na tabela
+                
+            } catch (ClienteInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_botaoEditarClienteActionPerformed
@@ -2074,7 +2126,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
             try {
                 VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
-                        Long.parseLong((String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0))));
+                        (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
                 
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
@@ -2091,7 +2143,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoExcluirVenda.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
-            try {
+            /*try {
                 //Passa, como parâmetro, a venda pesquisada pelo seu código 
                 VerDadosVendaDialog dialog = new VerDadosVendaDialog(null, GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
                             (String) modeloTabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), 0)));
@@ -2100,7 +2152,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 dialog.setVisible(true);
             } catch (VendaInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+            }*/
         }
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
@@ -2111,17 +2163,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(evt.getClickCount() == 2) {
             //Passa, como parâmetro, a movimentacao pesquisada pelo id
             try {
-                VerDadosMovimentacaoDialog dialog;
-                if() {
-                    dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
+                
+                if(((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 1)).toUpperCase().equals("DESPESA")) {
+                    VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
                             Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                    
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
                 } else {
-                    dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                    VerDadosMovimentacaoDialog dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
                             Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
                 }
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
-            } catch (MovimentacaoInexistenteException e) {
+            } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -2158,7 +2214,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             try {
                 //Passa, como parâmetro, a locação pesquisada pelo id
                 VerDadosLocacaoDialog dialog = new VerDadosLocacaoDialog(null, GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                            (String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0)));
+                            Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0))));
                     
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
@@ -2175,7 +2231,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
         }
         dialog.dispose();
-        atualizarValorEmCaixa();
+        //atualizarValorEmCaixa();
     }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
 
     private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
@@ -2183,6 +2239,78 @@ public class PrincipalFrame extends javax.swing.JFrame {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_botaoSairMouseClicked
+
+    private void botaoEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarProdutoActionPerformed
+        if(tabelaProdutos.getSelectedRow() >= 0) {
+            try {
+                //Pesquisa o cliente selecionado através do seu CPF (0 = primeira coluna da tabela)
+                EditarProdutoDialog dialog = new EditarProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                
+                dialog.setLocationRelativeTo(null);
+                //fazer aquela paradinha pra atualizar os dados na tabela
+                
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botaoEditarProdutoActionPerformed
+
+    private void botaoEditarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarFornecedorActionPerformed
+        if(tabelaFornecedores.getSelectedRow() >= 0) {
+            try {
+                //Pesquisa o cliente selecionado através do seu CPF (0 = primeira coluna da tabela)
+                EditarFornecedorDialog dialog = new EditarFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
+                        (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
+                
+                dialog.setLocationRelativeTo(null);
+                //fazer aquela paradinha pra atualizar os dados na tabela
+                
+            } catch (FornecedorInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botaoEditarFornecedorActionPerformed
+
+    private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
+        if(tabelaMovimentacoes.getSelectedRow() >= 0) {
+            try {
+                //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
+                EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                        Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0))));
+                
+                dialog.setLocationRelativeTo(null);
+                //fazer aquela paradinha pra atualizar os dados na tabela
+                
+            } catch (DespesaInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botaoEditarDespesaActionPerformed
+
+    private void botaoEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarUsuarioActionPerformed
+        if(tabelaUsuarios.getSelectedRow() >= 0) {
+            try {
+                //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
+                EditarUsuarioDialog dialog = new EditarUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
+                        (String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
+                
+                dialog.setLocationRelativeTo(null);
+                //fazer aquela paradinha pra atualizar os dados na tabela
+                
+            } catch (UsuarioInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botaoEditarUsuarioActionPerformed
+
+    private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
+        try {
+            //Abrir pasta do sistema com as locações feitas pelo usuários
+            Runtime.getRuntime().exec("explorer c:\\");
+        } catch (java.io.IOException e) {
+        }
+    }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -2240,7 +2368,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-            movimentacao.getDataInString(), movimentacao.getResponsavel().getNome(), movimentacao.getBeneficiario()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
@@ -2276,14 +2404,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         modeloTabelaUsuarios.removeRow(indice);
     }
     
-    public void atualizarValorEmCaixa() {
+    /*public void atualizarValorEmCaixa() {
         if(GerenciadorDoSistema.getInstance().getValorCaixaDiario() > 0) {
             labelValorEmCaixa.setForeground(new Color(0, 153, 0));
         } else{
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
         labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(GerenciadorDoSistema.getInstance().getValorCaixaDiario()));
-    }
+    }*/
     
     
     /**
@@ -2334,6 +2462,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane abas;
     private javax.swing.JButton botaoAtivarTemporada;
     private javax.swing.JButton botaoEditarCliente;
+    private javax.swing.JButton botaoEditarDespesa;
     private javax.swing.JButton botaoEditarFornecedor;
     private javax.swing.JButton botaoEditarProduto;
     private javax.swing.JButton botaoEditarUsuario;
@@ -2385,6 +2514,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxUsuario;
     private javax.swing.JComboBox comboFiltrarCliente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelFiltrarClientes;

@@ -37,7 +37,7 @@ public class GerenciadorDeLocacao {
 
     // FALTA TESTAR
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int desconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 
@@ -50,8 +50,8 @@ public class GerenciadorDeLocacao {
             List<Locacao> locacoes = ljp.getAllLocacao();
             Cliente clienteQueLocou = cjp.findByCpf(cliente.getCpf());
 
-            double valorFinal = valor - ((desconto / 100) * valor);
-            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada);
+            double valorFinal = valor - ((percentualDesconto / 100) * valor);
+            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
 
             clienteQueLocou.adicionarLocacao(locacao);
             cjp.editarCliente(clienteQueLocou);
@@ -212,7 +212,7 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public String getProdutosDeLocacaoInString(int idLocacao) throws LocacaoInexistenteException {
+    public String getProdutosDeLocacaoInString(long idLocacao) throws LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
         String produtosLocados = "";

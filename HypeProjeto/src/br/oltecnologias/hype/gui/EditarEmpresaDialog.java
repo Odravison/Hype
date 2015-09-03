@@ -5,6 +5,11 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.model.Empresa;
+import br.oltecnologias.hype.model.Endereco;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Cliente
@@ -14,8 +19,9 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     /**
      * Creates new form EditarEmpresaDialog
      */
-    public EditarEmpresaDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public EditarEmpresaDialog(java.awt.Frame parent, Empresa empresa) {
+        super(parent);
+        this.empresa = empresa;
         initComponents();
     }
 
@@ -47,6 +53,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         campoTelefone = new javax.swing.JFormattedTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -179,7 +186,6 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         labelTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTelefone.setText("Telefone:");
 
-        campoCnpj.setEditable(false);
         try {
             campoCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
         } catch (java.text.ParseException ex) {
@@ -257,20 +263,23 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
             }
         });
 
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("* Obrigatório");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelObrigatorio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(painelDadosPessoais2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(painelDadosPessoais2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
@@ -279,9 +288,11 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosPessoais2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(labelObrigatorio))
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
@@ -337,18 +348,26 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
             } else if(campoTelefone.getText().charAt(14) == ' ') { //O último caractere do número de telefone não pode ser vazio
                 JOptionPane.showMessageDialog(null, "Informe o número de telefone do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-
+                
                 try {
-                    GerenciadorDoSistema.getInstance().cadastrarEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
-                        campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
-                            Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
+                    Endereco endereco = empresa.getEndereco();
+                    endereco.setCidade(campoCidade.getText());
+                    endereco.setNumeroCasa(Integer.parseInt(campoNumero.getText()));
+                    endereco.setRua(campoRua.getText());
+                    endereco.setBairro(campoBairro.getText());
+                    endereco.setUf(comboUf.getSelectedItem().toString());
+                    
+                    empresa.setNome(campoNome.getText());
+                    empresa.setTelefone(campoTelefone.getText());
+                    
+                    //GerenciadorDoSistema.getInstance().editarEmpresa(empresa);
 
-                JOptionPane.showMessageDialog(null, "Empresa cadastrada com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Empresa editada com sucesso!");
 
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             }
-        }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -359,24 +378,29 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarEmpresaDialog dialog = new EditarEmpresaDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
+        if(numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento estiver na lista 
+            evt.consume();
+        } 
+        if(campo.getText().length()>= maxCaracteres) {
+            evt.consume();
+        }
     }
+    
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento não estiver na lista 
+            evt.consume();
+        } if(campo.getText().length()>= maxCaracteres){ 
+            evt.consume(); 
+        }
+    }
+    
 
-
+    private Empresa empresa;
+    private String numeros = "0987654321"; // Alguns campos não devem aceitar números
+    private int maxCaracteresNome = 35;
+    private int maxCaracteresBairro = 30;
+    private int maxCaracteresNumero = 4;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
@@ -415,6 +439,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelNumero;
     private javax.swing.JLabel labelNumero1;
     private javax.swing.JLabel labelNumero2;
+    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelRua;
     private javax.swing.JLabel labelRua1;
     private javax.swing.JLabel labelRua2;

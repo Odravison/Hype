@@ -22,6 +22,7 @@ public class Produto implements Serializable {
 
     private String cor;
     private boolean isLocation;
+    
 
     public Produto() {
     }

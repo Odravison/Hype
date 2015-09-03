@@ -56,7 +56,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         painelDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:");
+        labelNome.setText("Nome:*");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -66,7 +66,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNickName.setText("Login:");
+        labelNickName.setText("Login:*");
 
         campoNickName.setEditable(false);
         campoNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -77,7 +77,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSenha.setText("Senha:");
+        labelSenha.setText("Senha:*");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -106,7 +106,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelCategoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCategoria.setText("Categoria:");
+        labelCategoria.setText("Categoria:*");
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
@@ -293,23 +293,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
     
     public Usuario getUsuario() {
         return usuario;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarUsuarioDialog dialog = new EditarUsuarioDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
     
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números

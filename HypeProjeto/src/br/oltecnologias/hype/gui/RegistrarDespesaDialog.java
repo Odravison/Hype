@@ -18,14 +18,6 @@ import javax.swing.JOptionPane;
  * @author Cliente
  */
 public class RegistrarDespesaDialog extends java.awt.Dialog {
-
-    /**
-     * Creates new form ResgistrarDespesaDialog
-     */
-    public RegistrarDespesaDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
     
     public RegistrarDespesaDialog(java.awt.Frame owner) {
         super(owner);
@@ -225,12 +217,20 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
             } else if(campoFavorecido.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o favorecido da despesa", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                novaDespesa = GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa(campoNome.getText(), areaObservacao.getText(), 
-                        Calendar.getInstance(), Float.parseFloat(campoValor.getText()), campoFavorecido.getText()));
                 
-                novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Despesa", Float.parseFloat(campoValor.getText()),
-                        Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), campoFavorecido.getText(), 
-                        novaDespesa.getId()));
+                //Tirar depois
+                Despesa despesa = new Despesa(campoNome.getText(), areaObservacao.getText(), 
+                        Calendar.getInstance(), Double.parseDouble(campoValor.getText()), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
+                        campoFavorecido.getText());
+                
+                GerenciadorDoSistema.getInstance().cadastrarDespesa(despesa);
+                
+                //Tirar depois
+                novaDespesa = despesa;
+                        
+                novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Despesa", Double.parseDouble(campoValor.getText()),
+                        Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
+                        campoFavorecido.getText(), novaDespesa.getId()));
                 
                 JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
                 
@@ -294,23 +294,6 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
     
     public Movimentacao getNovaMovimentacao() {
         return novaMovimentacao;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                RegistrarDespesaDialog dialog = new RegistrarDespesaDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     protected boolean salvarSelecionado;

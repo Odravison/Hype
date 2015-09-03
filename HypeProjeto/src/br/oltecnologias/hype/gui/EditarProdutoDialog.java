@@ -5,7 +5,11 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -50,6 +54,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         comboFornecedor = new javax.swing.JComboBox();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -67,7 +72,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         painelIdentificacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Identificação"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:");
+        labelNome.setText("Nome:*");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -77,10 +82,10 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         });
 
         labelCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCodigo.setText("Código:");
+        labelCodigo.setText("Código:*");
 
         labelCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCor.setText("Cor:");
+        labelCor.setText("Cor:*");
 
         campoCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCor.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -111,7 +116,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         });
 
         labelTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTipo.setText("Finalidade:");
+        labelTipo.setText("Finalidade:*");
 
         campoCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -177,10 +182,10 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         labelTamanho.setText("Tamanho:");
 
         labelQuantidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelQuantidade.setText("Quantidade:");
+        labelQuantidade.setText("Quantidade:*");
 
         labelPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelPreco.setText("Preço: R$");
+        labelPreco.setText("Preço:* R$");
 
         campoPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoPreco.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -246,6 +251,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(0);
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         comboFornecedor.addItem("Selecione");
+        /*DESFAZER DEPOIS QUE O MÉTODO GETFORNECEDORES ESTIVER PRONTO
         for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
             comboFornecedor.addItem(fornecedor.getNome());
         }
@@ -253,6 +259,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());
 
         comboFornecedor.setSelectedIndex(0);
+        */
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
@@ -261,7 +268,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
             .addGroup(painelDadosGeraisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelValores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelValores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
                     .addComponent(painelIdentificacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(painelDadosGeraisLayout.createSequentialGroup()
@@ -305,16 +312,20 @@ public class EditarProdutoDialog extends java.awt.Dialog {
             }
         });
 
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("* Obrigatório");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(477, 477, 477)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelObrigatorio)
+                        .addGap(406, 406, 406)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar)))
@@ -326,9 +337,11 @@ public class EditarProdutoDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(labelObrigatorio))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -393,8 +406,6 @@ public class EditarProdutoDialog extends java.awt.Dialog {
             // Validar campos para cadastro
             if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoCodigo.getText().length() < maxCaracteresCodigo) {
-                JOptionPane.showMessageDialog(null, "Informe o código do produto com 8 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoCor.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a cor do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoQuantidade.getText().length() <= 0) {
@@ -414,13 +425,19 @@ public class EditarProdutoDialog extends java.awt.Dialog {
                 if(campoTamanho.getText().length() == 0) {
                     campoTamanho.setText("0");
                 }
+                
+                produto.setCor(campoCor.getText());
+                produto.setFornecedor(fornecedor);
+                produto.setIsLocation(radioAluguel.isSelected());
+                produto.setNome(campoNome.getText());
+                produto.setQuantidade(Integer.parseInt(campoQuantidade.getText()));
+                produto.setTam(Integer.parseInt(campoTamanho.getText()));
+                produto.setValor(Double.parseDouble(campoPreco.getText()));
 
                 try {
-                    novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(),
-                        Double.parseDouble(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()),
-                        fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
+                    GerenciadorDeProduto.getInstance().editarProduto(produto);
 
-                    JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Produto editado com sucesso!");
 
                     salvarSelecionado = true; //O botão Salvar foi selecionado
                     setVisible(false);
@@ -439,22 +456,35 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarProdutoDialog dialog = new EditarProdutoDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
+        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
+            evt.consume();
+        } 
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
     }
+    
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+            evt.consume();
+        } 
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salvar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible após ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public Produto getProduto() {
+        return produto;
+    }
+    
 
     private Produto produto;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
@@ -479,6 +509,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelCor;
     private javax.swing.JLabel labelFornecedor;
     private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelPreco;
     private javax.swing.JLabel labelQuantidade;
     private javax.swing.JLabel labelTamanho;

@@ -64,7 +64,7 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         labelValor.setText("Valor: "+movimentacao.getValorInString());
 
         labelResponsavel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelResponsavel.setText("Responsável: "+movimentacao.getResponsavel().getNome());
+        labelResponsavel.setText("Responsável: "+movimentacao.getResponsavel());
 
         labelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelData.setText("Data: "+movimentacao.getDataInString());
