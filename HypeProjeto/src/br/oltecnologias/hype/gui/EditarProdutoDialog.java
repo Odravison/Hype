@@ -5,30 +5,18 @@
  */
 package br.oltecnologias.hype.gui;
 
-import br.oltecnologias.hype.controller.GerenciadorDePessoas;
-import br.oltecnologias.hype.controller.GerenciadorDeProduto;
-import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
-import java.awt.Frame;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Luender Lima
+ * @author Cliente
  */
-public class CadastrarProdutoDialog extends java.awt.Dialog {
-
-    /**
-     * Creates new form CadastrarProdutoDialog
-     */
-    public CadastrarProdutoDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
+public class EditarProdutoDialog extends java.awt.Dialog {
     
-    public CadastrarProdutoDialog(Frame owner) {
-        super(owner);
+    public EditarProdutoDialog(java.awt.Frame parent, Produto produto) {
+        super(parent);
+        this.produto = produto;
         initComponents();
     }
 
@@ -62,11 +50,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         comboFornecedor = new javax.swing.JComboBox();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        labelObrigatorio = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(java.awt.Color.white);
         setResizable(false);
-        setTitle("Cadastrar Produto");
+        setTitle("Editar Produto");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -80,7 +67,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         painelIdentificacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Identificação"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:*");
+        labelNome.setText("Nome:");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -90,10 +77,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         });
 
         labelCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCodigo.setText("Código:*");
+        labelCodigo.setText("Código:");
 
         labelCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCor.setText("Cor:*");
+        labelCor.setText("Cor:");
 
         campoCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCor.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -124,7 +111,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         });
 
         labelTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTipo.setText("Finalidade:*");
+        labelTipo.setText("Finalidade:");
 
         campoCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -141,25 +128,25 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelIdentificacaoLayout.createSequentialGroup()
-                        .addComponent(labelNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
-                        .addComponent(labelCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(23, 23, 23))
-                    .addGroup(painelIdentificacaoLayout.createSequentialGroup()
                         .addComponent(labelCor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(80, 80, 80)
                         .addComponent(labelTipo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioVenda)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioAluguel)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(radioVenda))
+                    .addGroup(painelIdentificacaoLayout.createSequentialGroup()
+                        .addComponent(labelNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelIdentificacaoLayout.createSequentialGroup()
+                        .addComponent(labelCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(radioAluguel))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         painelIdentificacaoLayout.setVerticalGroup(
             painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,10 +177,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         labelTamanho.setText("Tamanho:");
 
         labelQuantidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelQuantidade.setText("Quantidade:*");
+        labelQuantidade.setText("Quantidade:");
 
         labelPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelPreco.setText("Preço:* R$");
+        labelPreco.setText("Preço: R$");
 
         campoPreco.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoPreco.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -318,20 +305,16 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
             }
         });
 
-        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        labelObrigatorio.setText("* Obrigatório ");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(labelObrigatorio)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(477, 477, 477)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar)))
@@ -343,12 +326,10 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelObrigatorio)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoSalvar)
-                        .addComponent(botaoCancelar)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoSalvar)
+                    .addComponent(botaoCancelar))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();
@@ -362,19 +343,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
-        if((campoPreco.getText().length() > 3 && !campoPreco.getText().contains(".")) || 
-                (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
-                || campoPreco.getText().length() >= maxCaracteresPreco) {
-            
-            evt.consume(); 
-        }
-        /*
-        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
-            campoPreco.setText(campoPreco.getText()+".");
-        } */
-    }//GEN-LAST:event_campoPrecoKeyTyped
-
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
         if(campoNome.getText().length() >= maxCaracteresNome) {
             evt.consume();
@@ -384,6 +352,41 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private void campoCorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCorKeyTyped
         validarLetrasETamanho(evt, campoCor, maxCaracteresCor);
     }//GEN-LAST:event_campoCorKeyTyped
+
+    private void radioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioVendaActionPerformed
+        radioAluguel.setSelected(false);
+    }//GEN-LAST:event_radioVendaActionPerformed
+
+    private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
+        radioVenda.setSelected(false);
+    }//GEN-LAST:event_radioAluguelActionPerformed
+
+    private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
+        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoCodigoKeyTyped
+
+    private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
+        if((campoPreco.getText().length() > 3 && !campoPreco.getText().contains(".")) ||
+            (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
+            || campoPreco.getText().length() >= maxCaracteresPreco) {
+
+            evt.consume();
+        }
+        /*
+        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
+            campoPreco.setText(campoPreco.getText()+".");
+        } */
+    }//GEN-LAST:event_campoPrecoKeyTyped
+
+    private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
+        validarNumerosETamanho(evt, campoQuantidade, maxCaracteresQuantidade);
+    }//GEN-LAST:event_campoQuantidadeKeyTyped
+
+    private void campoTamanhoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanhoKeyTyped
+        validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho);
+    }//GEN-LAST:event_campoTamanhoKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
@@ -407,15 +410,15 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 } else {
                     fornecedor = comboFornecedor.getSelectedItem().toString();
                 }
-                
+
                 if(campoTamanho.getText().length() == 0) {
                     campoTamanho.setText("0");
                 }
-                                
+
                 try {
-                    novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(), 
-                            Double.parseDouble(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
-                            fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
+                    novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(),
+                        Double.parseDouble(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()),
+                        fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
 
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
 
@@ -424,7 +427,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                }  
+                }
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -436,64 +439,13 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
-        validarNumerosETamanho(evt, campoQuantidade, maxCaracteresQuantidade); 
-    }//GEN-LAST:event_campoQuantidadeKeyTyped
-
-    private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
-        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoCodigoKeyTyped
-
-    private void campoTamanhoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanhoKeyTyped
-        validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho); 
-    }//GEN-LAST:event_campoTamanhoKeyTyped
-
-    private void radioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioVendaActionPerformed
-        radioAluguel.setSelected(false);
-    }//GEN-LAST:event_radioVendaActionPerformed
-
-    private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
-        radioVenda.setSelected(false);
-    }//GEN-LAST:event_radioAluguelActionPerformed
-    
-    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
-            evt.consume();
-        } 
-        if(campo.getText().length()>= maxCaracteres){
-            evt.consume();
-        }
-    }
-    
-    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
-            evt.consume();
-        } 
-        if(campo.getText().length()>= maxCaracteres){
-            evt.consume();
-        }
-    }
-    
-    public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salvar não foi selecionado
-        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible após ficar invisível.
-        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
-    }
-    
-    public Produto getNovoProduto() {
-        return novoProduto;
-    }
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastrarProdutoDialog dialog = new CadastrarProdutoDialog(new java.awt.Frame(), true);
+                EditarProdutoDialog dialog = new EditarProdutoDialog(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -504,6 +456,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         });
     }
 
+    private Produto produto;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 40;
     private int maxCaracteresCor = 25;
@@ -512,7 +465,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private int maxCaracteresQuantidade = 4;
     private int maxCaracteresTamanho = 2;
     protected boolean salvarSelecionado;
-    protected Produto novoProduto;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
@@ -527,7 +479,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelCor;
     private javax.swing.JLabel labelFornecedor;
     private javax.swing.JLabel labelNome;
-    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelPreco;
     private javax.swing.JLabel labelQuantidade;
     private javax.swing.JLabel labelTamanho;

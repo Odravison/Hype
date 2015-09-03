@@ -7,27 +7,19 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.model.Usuario;
-import java.awt.Frame;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Luender Lima
+ * @author Cliente
  */
-public class CadastrarUsuarioDialog extends java.awt.Dialog {
-
-    /**
-     * Creates new form CadastrarAdministradorDialog
-     */
-    public CadastrarUsuarioDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
+public class EditarUsuarioDialog extends java.awt.Dialog {
     
-    public CadastrarUsuarioDialog(Frame owner) {
-        super(owner);
-        initComponents(); 
+    public EditarUsuarioDialog(java.awt.Frame parent, Usuario usuario) {
+        super(parent);
+        this.usuario = usuario;
+        initComponents();
     }
 
     /**
@@ -48,12 +40,12 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         radioAdm = new javax.swing.JRadioButton();
         radioFuncionario = new javax.swing.JRadioButton();
         labelCategoria = new javax.swing.JLabel();
-        botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        botaoSalvar = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
-        setTitle("Cadastrar Usuário");
+        setBackground(java.awt.Color.white);
+        setResizable(false);
+        setTitle("Editar Usuário");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
@@ -64,7 +56,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         painelDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:*");
+        labelNome.setText("Nome:");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -74,8 +66,9 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNickName.setText("Login:*");
+        labelNickName.setText("Login:");
 
+        campoNickName.setEditable(false);
         campoNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNickName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -84,7 +77,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSenha.setText("Senha:*");
+        labelSenha.setText("Senha:");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -113,7 +106,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelCategoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCategoria.setText("Categoria:*");
+        labelCategoria.setText("Categoria:");
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
@@ -140,7 +133,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
                         .addComponent(radioAdm)
                         .addGap(18, 18, 18)
                         .addComponent(radioFuncionario)))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         painelDadosGeraisLayout.setVerticalGroup(
             painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,23 +150,13 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelSenha)
                     .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioAdm)
                     .addComponent(radioFuncionario)
                     .addComponent(labelCategoria))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap())
         );
-
-        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaoSalvar.setText(" Salvar ");
-        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
-            }
-        });
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
@@ -185,19 +168,24 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Obrigatório *");
+        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoSalvar.setText(" Salvar ");
+        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(187, 187, 187)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
@@ -210,12 +198,10 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoSalvar)
-                        .addComponent(botaoCancelar))
-                    .addComponent(jLabel1))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoSalvar)
+                    .addComponent(botaoCancelar))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -229,13 +215,40 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
+    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
+        validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
+    }//GEN-LAST:event_campoNomeKeyTyped
+
+    private void campoNickNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNickNameKeyTyped
+        if(campoNickName.getText().length() >= maxCaracteresNickName){// se o carácter que gerou o evento estiver na lista
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoNickNameKeyTyped
+
+    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
+        if(new String(campoSenha.getPassword()).length() >= maxCaracteresSenha){
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoSenhaKeyTyped
+
+    private void radioAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdmActionPerformed
+        radioFuncionario.setSelected(false);
+    }//GEN-LAST:event_radioAdmActionPerformed
+
+    private void radioFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFuncionarioActionPerformed
+        radioAdm.setSelected(false);
+    }//GEN-LAST:event_radioFuncionarioActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_botaoCancelarActionPerformed
+
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
             // Validar campos para cadastro
             if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoNickName.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o nickName do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(new String(campoSenha.getPassword()).length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(!radioAdm.isSelected() && !radioFuncionario.isSelected()) {
@@ -243,10 +256,11 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
             } else {
 
                 try {
-                    novoUsuario = new Usuario(campoNome.getText(), campoNickName.getText(), new String(campoSenha.getPassword()), 
-                            radioAdm.isSelected());
-                    
-                    GerenciadorDePessoas.getInstance().cadastrarUsuario(novoUsuario);
+                    usuario.setNome(campoNome.getText());
+                    usuario.setSenha(new String(campoSenha.getPassword()));
+                    usuario.setIsAdministrador(radioAdm.isSelected());
+
+                    GerenciadorDePessoas.getInstance().editarUsuario(usuario);
 
                     JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
 
@@ -260,35 +274,6 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
-
-    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_botaoCancelarActionPerformed
-
-    private void radioAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdmActionPerformed
-        radioFuncionario.setSelected(false);
-    }//GEN-LAST:event_radioAdmActionPerformed
-
-    private void radioFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioFuncionarioActionPerformed
-        radioAdm.setSelected(false);
-    }//GEN-LAST:event_radioFuncionarioActionPerformed
-
-    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
-        validarLetrasETamanho(evt, campoNome, maxCaracteresNome); 
-    }//GEN-LAST:event_campoNomeKeyTyped
-
-    private void campoNickNameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNickNameKeyTyped
-        if(campoNickName.getText().length() >= maxCaracteresNickName){// se o carácter que gerou o evento estiver na lista 
-            evt.consume();
-        } 
-    }//GEN-LAST:event_campoNickNameKeyTyped
-
-    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
-        if(new String(campoSenha.getPassword()).length() >= maxCaracteresSenha){ 
-            evt.consume(); 
-        }
-    }//GEN-LAST:event_campoSenhaKeyTyped
 
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -306,8 +291,8 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
-    public Usuario getNovoUsuario() {
-        return novoUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
     
     /**
@@ -316,7 +301,7 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastrarUsuarioDialog dialog = new CadastrarUsuarioDialog(new java.awt.Frame(), true);
+                EditarUsuarioDialog dialog = new EditarUsuarioDialog(new java.awt.Frame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
                         System.exit(0);
@@ -326,20 +311,19 @@ public class CadastrarUsuarioDialog extends java.awt.Dialog {
             }
         });
     }
-
+    
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     protected boolean salvarSelecionado;
     private int maxCaracteresNome = 30;
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
-    protected Usuario novoUsuario;
+    private Usuario usuario;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoNickName;
     private javax.swing.JTextField campoNome;
     private javax.swing.JPasswordField campoSenha;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelNickName;
     private javax.swing.JLabel labelNome;

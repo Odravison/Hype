@@ -188,5 +188,9 @@ public class GerenciadorDoSistema {
     public boolean isEmpresaCadastrada() {
         //true se a empresa já estiver cadastada, false, caso contário
     }
+    
+    public Despesa pesquisarDespesaPeloId(String id) {
+        //Retorna a despesa pesquisado pelo id
+    }
 
 }
