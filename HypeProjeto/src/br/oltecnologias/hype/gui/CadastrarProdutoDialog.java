@@ -398,8 +398,6 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de peças do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoPreco.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o preço do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(!radioAluguel.isSelected() && !radioVenda.isSelected()) {
-                JOptionPane.showMessageDialog(null, "Informe a finalidade do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 String fornecedor = "";
                 if (comboFornecedor.getSelectedItem().toString().equals("Selecione")) {

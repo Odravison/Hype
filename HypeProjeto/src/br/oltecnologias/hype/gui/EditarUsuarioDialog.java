@@ -56,7 +56,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         painelDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:*");
+        labelNome.setText("Nome:");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -66,7 +66,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNickName.setText("Login:*");
+        labelNickName.setText("Login:");
 
         campoNickName.setEditable(false);
         campoNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -77,7 +77,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSenha.setText("Senha:*");
+        labelSenha.setText("Senha:");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -106,7 +106,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         });
 
         labelCategoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCategoria.setText("Categoria:*");
+        labelCategoria.setText("Categoria:");
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);

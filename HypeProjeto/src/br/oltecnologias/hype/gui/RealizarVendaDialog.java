@@ -598,10 +598,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 } else if(campoParcelas.getText().length() <= 0) {
                     JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                    if (campoPercentualDesconto.getText().length() <= 0) {
-                        campoPercentualDesconto.setText("0");
-                    }
                     
                     if (radioCartao.isSelected()) {
                         formaPagamento = "Cartão";

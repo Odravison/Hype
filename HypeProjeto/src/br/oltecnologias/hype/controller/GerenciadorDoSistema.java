@@ -25,15 +25,6 @@ import javax.persistence.Persistence;
 
 public class GerenciadorDoSistema {
 
-<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
-=======
-    private Usuario usuarioLogado;
-    private double valorCaixaDiario;
-    private boolean temporadaAtivada;
-    private int percentualDescontoTemporada;
-    private List<Despesa> despesas;
-    private List<Movimentacao> movimentacoes;
->>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
     private static GerenciadorDoSistema singleton = null;
     private Usuario usuarioLogado;
     private Temporada temporada = null;
@@ -147,33 +138,13 @@ public class GerenciadorDoSistema {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         DespesaJpaRepository ddjp = new DespesaJpaRepository(emf);
 
-<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
         try {
-=======
-    public void editarDespesa(int id, String nome, String obs, Calendar data) throws DespesaInexistenteException {
-        Despesa d;
-        d = this.pesquisarDespesaPorId(id);
-        d.setNome(nome);
-        d.setObservacao(obs);
-        d.setData(data);
->>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
 
             return ddjp.getAllDespesas();
 
-<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
         } finally {
             if (emf != null) {
                 emf.close();
-=======
-    public void removerDespesas(long id) throws DespesaInexistenteException {
-        this.despesas.remove(pesquisarDespesaPorId(id));
-    }
-
-    public Despesa pesquisarDespesaPorId(long id) throws DespesaInexistenteException {
-        for (Despesa d : this.despesas) {
-            if (d.getId() == id) {
-                return d;
->>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9
             }
         }
     }
@@ -202,48 +173,28 @@ public class GerenciadorDoSistema {
     }
 
     public void gerarRelatorioDeCaixa(Calendar dataInicial, Calendar dataFinal) throws IOException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        String relatorio = "";
+
+        try {
+
+            for (Movimentacao mov : mjp.getAllMovimentacoes()) {
+                if (mov.getData().getTimeInMillis() >= dataInicial.getTimeInMillis()
+                        && mov.getData().getTimeInMillis() <= dataFinal.getTimeInMillis()) {
+                    relatorio += mov.getMovToString() + "\n";
+                    //FORMATAR ISSO DEPOIS
+                }
+            }
+
+        } finally {
+            if (emf != null) {
+                emf.close();
             }
         }
 
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf"));
-    }
-    
-    public boolean isTemporadaAtivada() {
-        return temporadaAtivada;
-    }
-
-    public void setTemporadaAtivada(boolean temporadaAtivada) {
-        this.temporadaAtivada = temporadaAtivada;
-    }
-
-    public int getPercentualDescontoTemporada() {
-        return percentualDescontoTemporada;
-    }
-
-    public void setPercentualDescontoTemporada(int percentualDescontoTemporada) {
-        this.percentualDescontoTemporada = percentualDescontoTemporada;
-    }
-    
-    public void ativarTemporada(int percentualDesconto) {
-        setPercentualDescontoTemporada(percentualDesconto);
-        setTemporadaAtivada(true);
-    }
-    
-    public void desativarTemporada() {
-        setTemporadaAtivada(false);
-    }
-    
-    public void cadastrarEmpresa(Empresa empresa) {
-        //Código para cadastrar a empresa no sistema
-    }
-    
-    public boolean isEmpresaCadastrada() {
-        //true se a empresa já estiver cadastada, false, caso contário
-    }
-    
-    public Despesa pesquisarDespesaPeloId(String id) {
-        //Retorna a despesa pesquisado pelo id
     }
 
     public Movimentacao cadastrarMovimentacao(Movimentacao movimentacao) {
@@ -407,48 +358,3 @@ public class GerenciadorDoSistema {
         
     }
 }
-<<<<<<< HEAD (cdf9800) - Versão Atualizada Odrav
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
-        String relatorio = "";
-
-        try {
-
-            for (Movimentacao mov : mjp.getAllMovimentacoes()) {
-                if (mov.getData().getTimeInMillis() >= dataInicial.getTimeInMillis()
-                        && mov.getData().getTimeInMillis() <= dataFinal.getTimeInMillis()) {
-                    relatorio += mov.getMovToString() + "\n";
-                    //FORMATAR ISSO DEPOIS
-                }
-            }
-
-        } finally {
-            if (emf != null) {
-                emf.close();
-=======
-        //Abrir o pdf do relatório gerado no sistema
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();  
-        desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf")); 
-    }
-    
-    public Movimentacao cadastrarMovimentacao(String movimento, double valor, Calendar data, Usuario responsavel, String beneficiario) {
-        
-        Movimentacao movimentacao = new Movimentacao(movimento, valor, data, responsavel, beneficiario);
-        this.movimentacoes.add(movimentacao);
-        if(movimento.toUpperCase().equals("DESPESA") ) {
-            this.valorCaixaDiario -= valor;
-        } else {
-            this.valorCaixaDiario += valor;
-        }
-        return movimentacao;
-    }
-    
-    public void removerMovimentacao(long id) throws MovimentacaoInexistenteException {
-        this.movimentacoes.remove(pesquisarMovimentacaoPorId(id));
-    }
-    
-    public Movimentacao pesquisarMovimentacaoPorId(long id) throws MovimentacaoInexistenteException{
-        for(Movimentacao movimentacao: this.movimentacoes) {
-            if(movimentacao.getId() == id) {
-                return movimentacao;
->>>>>>> c35b25f688ad50bbcfe2a73d92d302a702c3a7d9

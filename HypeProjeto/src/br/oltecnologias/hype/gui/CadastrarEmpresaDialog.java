@@ -396,7 +396,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
-    private int maxCaracteresNome = 35;
+    private int maxCaracteresNome = 40;
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
     // Variables declaration - do not modify//GEN-BEGIN:variables

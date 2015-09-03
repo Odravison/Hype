@@ -82,7 +82,6 @@ public class EditarClienteDialog extends java.awt.Dialog {
         campoComprimentoManga = new javax.swing.JTextField();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
-        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -97,7 +96,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
         painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados pessoais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:*");
+        labelNome.setText("Nome:");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -107,13 +106,13 @@ public class EditarClienteDialog extends java.awt.Dialog {
         });
 
         labelCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCpf.setText("CPF:*");
+        labelCpf.setText("CPF:");
 
         painelEndereco.setBackground(new java.awt.Color(255, 255, 255));
         painelEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
 
         labelRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelRua.setText("Rua:*");
+        labelRua.setText("Rua:");
 
         campoRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoRua.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -123,10 +122,10 @@ public class EditarClienteDialog extends java.awt.Dialog {
         });
 
         labelNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNumero.setText("Número:*");
+        labelNumero.setText("Número:");
 
         labelBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelBairro.setText("Bairro:*");
+        labelBairro.setText("Bairro:");
 
         campoBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoBairro.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -136,7 +135,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
         });
 
         labelCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCidade.setText("Cidade:*");
+        labelCidade.setText("Cidade:");
 
         campoCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -146,7 +145,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
         });
 
         labelUf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelUf.setText("UF:*");
+        labelUf.setText("UF:");
 
         comboUf.setMaximumRowCount(20);
         comboUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PB", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
@@ -216,7 +215,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
         labelTelResidencial.setText("Telefone residencial:");
 
         labelCel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCel.setText("Celular:*");
+        labelCel.setText("Celular:");
 
         campoCpf.setEditable(false);
         try {
@@ -255,7 +254,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                         .addGap(62, 62, 62)
                         .addComponent(labelCpf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(labelTelResidencial)
@@ -483,9 +482,6 @@ public class EditarClienteDialog extends java.awt.Dialog {
             }
         });
 
-        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        labelObrigatorio.setText("* Obrigatório");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -494,8 +490,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelObrigatorio)
-                        .addGap(380, 380, 380)
+                        .addGap(451, 451, 451)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
@@ -511,11 +506,9 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 .addGap(4, 4, 4)
                 .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoSalvar)
-                        .addComponent(botaoCancelar))
-                    .addComponent(labelObrigatorio))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoSalvar)
+                    .addComponent(botaoCancelar))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -590,7 +583,9 @@ public class EditarClienteDialog extends java.awt.Dialog {
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
-            if(campoNome.getText().length() <= 0) {
+            if(campoCpf.getText().charAt(13) == ' ') {//O último caractere do número de CPF não pode ser vazio
+                JOptionPane.showMessageDialog(null, "Informe o CPF completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }else if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoRua.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a rua do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -604,16 +599,17 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Informe o número de celular completo do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
 
-                Endereco endereco = cliente.getEndereco();
-                endereco.setCidade(campoCidade.getText());
-                endereco.setNumeroCasa(Integer.parseInt(campoNumero.getText()));
-                endereco.setRua(campoRua.getText());
-                endereco.setBairro(campoBairro.getText());
-                endereco.setUf(comboUf.getSelectedItem().toString());
+                Endereco endereco = new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
+                    Integer.parseInt(campoNumero.getText()), campoCidade.getText());
 
-                Medidas medidas = cliente.getMedidas();
+                //Tratamento caso o número de telefone residencial não seja informado
+                if (campoTelefone.getText().length() <= 0) {
+                    campoTelefone.setText("Não informado");
+                }
 
-                // Talvez, nem todos os valores das medidas serão informados
+                Medidas medidas = new Medidas();
+
+                // Nem todos os valores das medidas serão informados
                 if(campoBlazer.getText().length() <= 0) {
                     medidas.setBlazer(0);
                 } else {
@@ -649,25 +645,17 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 } else  {
                     medidas.setComprimentoManga(Integer.parseInt(campoComprimentoManga.getText()));
                 }
-                
-                //Tratamento caso o número de telefone residencial não seja informado
-                if (campoTelefone.getText().length() <= 0) {
-                    campoTelefone.setText("Não informado");
-                }
                 medidas.setObservacao(areaObservacao.getText());
-                
-                cliente.setNome(campoNome.getText());
-                cliente.setTelefone(campoTelefone.getText());
-                cliente.setCelular(campoCel.getText());
-                //tirar o última medição
-                try {
-                    
-                    GerenciadorDePessoas.getInstance().editarCliente(cliente);
 
-                    JOptionPane.showMessageDialog(null, "Cliente editado com sucesso!");
-                    
-                    //O botão Salvar foi selecionado
-                    salvarSelecionado = true; 
+                try {
+                    novoCliente = new Cliente(campoCpf.getText(), campoNome.getText(), endereco, medidas,
+                        campoTelefone.getText(), campoCel.getText());
+
+                    GerenciadorDePessoas.getInstance().cadastrarCliiente(novoCliente);
+
+                    JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso!");
+
+                    salvarSelecionado = true; //O botão Salvar foi selecionado
                     setVisible(false);
 
                 } catch (Exception e) {
@@ -675,7 +663,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 }
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
@@ -684,35 +672,6 @@ public class EditarClienteDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
-            evt.consume();
-        } 
-        if(campo.getText().length()>= maxCaracteres){
-            evt.consume();
-        }
-    }
-    
-    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
-            evt.consume();
-        } 
-        if(campo.getText().length()>= maxCaracteres){
-            evt.consume();
-        }
-    }
-    
-    public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
-        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
-        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
-    }
-    
-    public Cliente getCliente() {
-        return cliente;
-    }
-    
     /**
      * @param args the command line arguments
      */
@@ -773,7 +732,6 @@ public class EditarClienteDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelCpf;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
-    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelObservacao;
     private javax.swing.JLabel labelRua;
     private javax.swing.JLabel labelSapato;
