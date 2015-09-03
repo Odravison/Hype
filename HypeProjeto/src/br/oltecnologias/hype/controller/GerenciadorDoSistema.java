@@ -15,11 +15,20 @@ import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Temporada;
 import br.oltecnologias.hype.model.Usuario;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -49,10 +58,9 @@ public class GerenciadorDoSistema {
     }
 
     /*public double getValorCaixaDiario() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        DadosDoSistemaJpaRepository djp = new DadosDoSistemaJpaRepository(emf);
-    }*/
-
+     EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+     DadosDoSistemaJpaRepository djp = new DadosDoSistemaJpaRepository(emf);
+     }*/
     public double getValorDespesas() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         DespesaJpaRepository ddjp = new DespesaJpaRepository(emf);
@@ -184,6 +192,36 @@ public class GerenciadorDoSistema {
                         && mov.getData().getTimeInMillis() <= dataFinal.getTimeInMillis()) {
                     relatorio += mov.getMovToString() + "\n";
                     //FORMATAR ISSO DEPOIS
+
+                    String diaIni = new SimpleDateFormat("dd").format(dataInicial.getTime());
+                    String mesIni = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
+                    String anoIni = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
+
+                    String diaFinal = new SimpleDateFormat("dd").format(dataInicial.getTime());
+                    String mesFinal = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
+                    String anoFinal = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
+
+                    Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
+                    Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+                    Font courier12 = new Font(Font.FontFamily.COURIER, 12);
+                    Document pdf = new Document();
+                    File diretorio = null;
+
+                    try {
+                        diretorio = new File(Configuracao.getInstance().getDiretorioDeRelatorios());
+                        diretorio.mkdir();
+
+                        PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
+                                + "" + diaIni + "." + mesIni + "." + anoIni + " TO " + diaFinal + "." + mesFinal + "." + anoFinal));
+                        
+                        
+
+                    } catch (DocumentException | IOException de) {
+                        System.err.println(de.getMessage());
+                    } finally{
+                        pdf.close();
+                    }
+
                 }
             }
 
@@ -210,7 +248,7 @@ public class GerenciadorDoSistema {
                 emf.close();
             }
         }
-        
+
         return movimentacao;
     }
 
@@ -235,7 +273,7 @@ public class GerenciadorDoSistema {
 
         try {
 
-           return mjp.findById(id);
+            return mjp.findById(id);
 
         } finally {
             if (emf != null) {
@@ -244,60 +282,56 @@ public class GerenciadorDoSistema {
         }
     }
 
-    public boolean isTemporadaAtivada() throws TemporadaInexistenteException{
-        if (this.temporada != null){
+    public boolean isTemporadaAtivada() throws TemporadaInexistenteException {
+        if (this.temporada != null) {
             return this.temporada.isAtivada();
-        }        
+        }
         throw new TemporadaInexistenteException("A temporada ainda não foi criada");
-        
-        
+
     }
-    
-    public void setTemporada() throws TemporadaExistenteException{
+
+    public void setTemporada() throws TemporadaExistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         TemporadaJpaRepository tjp = new TemporadaJpaRepository(emf);
-        
-        try{
-            if (tjp.getTemporada() == null){
-                if (this.temporada == null){
+
+        try {
+            if (tjp.getTemporada() == null) {
+                if (this.temporada == null) {
                     this.temporada = new Temporada();
                     tjp.create(this.temporada);
                 }
-            } else{
+            } else {
                 this.temporada = tjp.getTemporada();
             }
         } finally {
             emf.close();
         }
-        
-        
+
     }
 
     public int getPercentualDescontoTemporada() throws TemporadaInexistenteException {
-        if (this.temporada != null){
+        if (this.temporada != null) {
             return this.temporada.getPertentualDeDesconto();
-        }        
+        }
         throw new TemporadaInexistenteException("A temporada ainda não foi criada");
-        
+
     }
 
     public void ativarTemporada(int percentualDesconto) throws TemporadaInexistenteException {
-        
-        if (this.temporada != null){
+
+        if (this.temporada != null) {
             this.temporada.ativarTemporada(percentualDesconto);
-        }        
+        }
         throw new TemporadaInexistenteException("A temporada ainda não foi criada");
-        
+
     }
 
     public void desativarTemporada() throws TemporadaInexistenteException {
-        if (this.temporada != null){
+        if (this.temporada != null) {
             this.temporada.desativarTemporada();
-        }        
+        }
         throw new TemporadaInexistenteException("A temporada ainda não foi criada");
-        
-        
-        
+
     }
 
     public void cadastrarEmpresa(Empresa empresa) throws Exception {
@@ -306,7 +340,7 @@ public class GerenciadorDoSistema {
 
         try {
 
-           ejp.create(empresa);
+            ejp.create(empresa);
 
         } finally {
             if (emf != null) {
@@ -321,11 +355,11 @@ public class GerenciadorDoSistema {
 
         try {
 
-           if (ejp.getEmpresaCount() > 1){
-               return false;
-           }
-           
-           return true;
+            if (ejp.getEmpresaCount() > 1) {
+                return false;
+            }
+
+            return true;
 
         } finally {
             if (emf != null) {
@@ -333,28 +367,28 @@ public class GerenciadorDoSistema {
             }
         }
     }
-    
-    public List<Movimentacao> pesquisarMovimentacaoPorOperacao(String operacao){
-        
+
+    public List<Movimentacao> pesquisarMovimentacaoPorOperacao(String operacao) {
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         List<Movimentacao> retorno = new ArrayList<Movimentacao>();
 
         try {
 
-           for (Movimentacao mov: mjp.getAllMovimentacoes()){
-               if (mov.getMovimento().equals(operacao)){
-                   retorno.add(mov);
-               }
-           }
+            for (Movimentacao mov : mjp.getAllMovimentacoes()) {
+                if (mov.getMovimento().equals(operacao)) {
+                    retorno.add(mov);
+                }
+            }
 
         } finally {
             if (emf != null) {
                 emf.close();
             }
         }
-        
+
         return retorno;
-        
+
     }
 }

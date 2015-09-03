@@ -47,6 +47,7 @@ public class Configuracao implements Serializable {
     private String diretorioDeBackup = null;
     
     private int diasDeExtravio = 0;
+    private String diretorioDeRelatorios = null;
 
 
     public Configuracao() {
@@ -56,6 +57,15 @@ public class Configuracao implements Serializable {
         
         return ConfiguracaoHolder.INSTANCE;
     }
+
+    public String getDiretorioDeRelatorios() {
+        return this.diretorioDeRelatorios;
+    }
+
+    public void setDiretorioDeRelatorios(String diretorioDeRelatorios) {
+        this.diretorioDeRelatorios = diretorioDeRelatorios;
+    }
+    
 
     private static class ConfiguracaoHolder {
         private static final Configuracao INSTANCE = new Configuracao();

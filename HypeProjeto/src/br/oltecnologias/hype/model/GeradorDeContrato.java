@@ -90,7 +90,7 @@ public class GeradorDeContrato {
             
             PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao +".pdf"));
             pdf.open();
-            pdf.setPageSize(PageSize.A4);
+            pdf.setPageSize(PageSize.A4);   
             
             System.out.println("Tirar: chagou aqui! 1");
 
