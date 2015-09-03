@@ -2,6 +2,7 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -28,12 +29,17 @@ public class Despesa implements Serializable {
     
     private String emissor;
 
-    public Despesa(String nome, String observacao, Calendar data, double valor, String emissor) {
+    private String favorecido;
+
+
+
+    public Despesa(String nome, String observacao, Calendar data, double valor, String emissor, String favorecido) {
         this.nome = nome;
         this.observacao = observacao;
         this.data = data;
         this.valor = valor;
         this.emissor = emissor;
+        this.favorecido = favorecido;
     }
 
     public Despesa() {
@@ -88,4 +94,15 @@ public class Despesa implements Serializable {
         this.emissor = emissor;
     }
     
+    public String getValorInString(){
+        return new DecimalFormat("#.##").format(this.valor);
+    }
+    
+    public String getFavorecido() {
+        return favorecido;
+    }
+
+    public void setFavorecido(String favorecido) {
+        this.favorecido = favorecido;
+    }
 }

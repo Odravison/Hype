@@ -5,6 +5,9 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.model.Movimentacao;
+import java.text.SimpleDateFormat;
+
 /**
  *
  * @author Cliente
@@ -18,6 +21,12 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         super(parent, modal);
         initComponents();
     }
+    
+    public VerDadosMovimentacaoDialog(java.awt.Frame parent, Movimentacao movimentacao) {
+        super(parent);
+        this.movimentacao = movimentacao;
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,6 +35,15 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
      */
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        painelDados = new javax.swing.JPanel();
+        labelMovimento = new javax.swing.JLabel();
+        labelValor = new javax.swing.JLabel();
+        labelResponsavel = new javax.swing.JLabel();
+        labelData = new javax.swing.JLabel();
+        labelHorario = new javax.swing.JLabel();
+        labelBeneficiario = new javax.swing.JLabel();
+        botaoOk = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -36,15 +54,99 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
             }
         });
 
+        painelDados.setBackground(new java.awt.Color(255, 255, 255));
+        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
+
+        labelMovimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelMovimento.setText("Movimento: "+movimentacao.getMovimento());
+
+        labelValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelValor.setText("Valor: "+movimentacao.getValorInString());
+
+        labelResponsavel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelResponsavel.setText("Responsável: "+movimentacao.getResponsavel().getNome());
+
+        labelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelData.setText("Data: "+movimentacao.getDataInString());
+
+        labelHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelHorario.setText("Horário: "+new SimpleDateFormat("HH:mm").format(movimentacao.getData().getTime())+"Hrs");
+
+        labelBeneficiario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelBeneficiario.setText("Beneficiário: "+movimentacao.getBeneficiario());
+
+        javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
+        painelDados.setLayout(painelDadosLayout);
+        painelDadosLayout.setHorizontalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelBeneficiario, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDadosLayout.createSequentialGroup()
+                                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(101, 101, 101)
+                                .addComponent(labelHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(painelDadosLayout.createSequentialGroup()
+                                .addGap(0, 1, Short.MAX_VALUE)
+                                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(labelResponsavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(painelDadosLayout.createSequentialGroup()
+                                        .addComponent(labelMovimento, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(10, 10, 10))))
+        );
+        painelDadosLayout.setVerticalGroup(
+            painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelMovimento, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(labelResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(labelBeneficiario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        botaoOk.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        botaoOk.setText("OK");
+        botaoOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoOkActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 733, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoOk)
+                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 464, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoOk)
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -57,6 +159,11 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
+
+    private void botaoOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkActionPerformed
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_botaoOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -75,7 +182,15 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         });
     }
 
-
+    private Movimentacao movimentacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoOk;
+    private javax.swing.JLabel labelBeneficiario;
+    private javax.swing.JLabel labelData;
+    private javax.swing.JLabel labelHorario;
+    private javax.swing.JLabel labelMovimento;
+    private javax.swing.JLabel labelResponsavel;
+    private javax.swing.JLabel labelValor;
+    private javax.swing.JPanel painelDados;
     // End of variables declaration//GEN-END:variables
 }

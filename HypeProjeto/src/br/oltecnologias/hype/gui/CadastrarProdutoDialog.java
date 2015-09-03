@@ -412,7 +412,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                                 
                 try {
                     novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(), 
-                            Float.parseFloat(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
+                            Double.parseDouble(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
                             fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
 
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");

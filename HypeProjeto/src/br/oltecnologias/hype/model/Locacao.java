@@ -20,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 
 @Entity
@@ -30,7 +31,7 @@ public class Locacao implements Serializable {
     @Column(name = "id_locacao")
     private long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
     private Cliente cliente;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -62,7 +63,7 @@ public class Locacao implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_locacao")
-    private List<ProdutosLocados> produtosLocados;
+    private List<ProdutoLocado> produtosLocados;
 
     private double valorLocacao;
 
@@ -85,7 +86,7 @@ public class Locacao implements Serializable {
     public Locacao() {
     }
 
-    public Locacao(Cliente cliente, List<ProdutosLocados> produtosLocados, double valorLocacao, Calendar dataLocacao,
+    public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
             Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada) {
         this.cliente = cliente;
         this.produtosLocados = produtosLocados;
@@ -129,11 +130,11 @@ public class Locacao implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<ProdutosLocados> getProdutos() {
+    public List<ProdutoLocado> getProdutos() {
         return this.produtosLocados;
     }
 
-    public void setProdutos(List<ProdutosLocados> produtosLocados) {
+    public void setProdutos(List<ProdutoLocado> produtosLocados) {
         this.produtosLocados = produtosLocados;
     }
 

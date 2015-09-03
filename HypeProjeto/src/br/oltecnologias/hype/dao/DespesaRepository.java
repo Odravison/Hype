@@ -8,6 +8,7 @@ package br.oltecnologias.hype.dao;
 import br.oltecnologias.hype.exception.DespesaExistenteException;
 import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.model.Despesa;
+import java.util.List;
 
 /**
  *
@@ -21,8 +22,10 @@ public interface DespesaRepository {
     
     public boolean existsDespesa(long id);
     
-    public void removerDespesa(Despesa despesa)throws DespesaInexistenteException;
+    public void removerDespesa(long id) throws DespesaInexistenteException;
     
     public void editarDespesa(Despesa despesa) throws DespesaInexistenteException;
+    
+    public List<Despesa> getAllDespesas();
     
 }

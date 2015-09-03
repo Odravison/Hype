@@ -1,6 +1,8 @@
 package br.oltecnologias.hype.controller;
 
 import br.oltecnologias.hype.dao.ClienteJpaRepository;
+import br.oltecnologias.hype.dao.FornecedorJpaRepository;
+import br.oltecnologias.hype.dao.UsuarioJpaRepository;
 import br.oltecnologias.hype.exception.UsuarioExistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
@@ -52,15 +54,8 @@ public class GerenciadorDePessoas {
         ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
 
         try {
-            Cliente alteracao = cjp.findByCpf(cliente.getCpf());
 
-            alteracao.setCpf(cliente.getCpf());
-            alteracao.setEndereco(cliente.getEndereco());
-            alteracao.setMedidas(cliente.getMedidas());
-            alteracao.setTelefone(cliente.getTelefone());
-            alteracao.setCelular(cliente.getCelular());
-
-            cjp.editarCliente(alteracao);
+            cjp.editarCliente(cliente);
 
         } finally {
             emf.close();
@@ -116,117 +111,159 @@ public class GerenciadorDePessoas {
         return aux;
     }
 
-    //////////////////////////////// COMENTADA SÓ PARA TESTE ///////////////////////////
-//    public Usuario cadastrarUsuario(String nome, String nickName, String senha, boolean isAdm) throws UsuarioExistenteException {
-//        for (Usuario u : this.usuarios) {
-//            if (u.getNickName().equals(nickName)) {
-//                throw new UsuarioExistenteException("O NickName informado já está em uso.");
-//            }
-//        }
-//        Usuario usuario = new Usuario(nome, nickName, senha, isAdm);
-//        this.usuarios.add(usuario);
-//        return usuario;
-//    }
-//
-//    public void editarUsuario(String nickAntigo, String nome, String senha, String nickNovo) throws UsuarioExistenteException {
-//        for (Usuario u : this.usuarios) {
-//            if (u.getNickName().equals(nickNovo)) {
-//                throw new UsuarioExistenteException("NickName já está em uso.");
-//            }
-//        }
-//        for (Usuario u : this.usuarios) {
-//            if (u.getNickName().equals(nickAntigo)) {
-//                u.setNickName(nickNovo);
-//                u.setNome(nome);
-//                u.setSenha(senha);
-//            }
-//        }
-//    }
-//
-//    public void removerUsuario(String nickName) throws UsuarioInexistenteException {
-//        for (Usuario u : this.usuarios) {
-//            if (u.getNickName().equals(nickName)) {
-//                this.usuarios.remove(u);
-//                return;
-//            }
-//        }
-//        throw new UsuarioInexistenteException("Administrador não cadastrado.");
-//    }
-//
-//    public Fornecedor cadastrarFornecedor(String cnpj, Endereco endereco, String telefone, String nome) throws FornecedorExistenteException {
-//        for (Fornecedor f : this.fornecedores) {
-//            if (f.getCnpj().equals(cnpj)) {
-//                throw new FornecedorExistenteException("O CNPJ em questão já foi cadastrado.");
-//            }
-//        }
-//        Fornecedor fornecedor = new Fornecedor(cnpj, endereco, telefone, nome);
-//        this.fornecedores.add(fornecedor);
-//        return fornecedor;
-//    }
-//
-//    public void editarFornecedor(String cnpjAntigo, String cnpjNovo, Endereco endereco, String telefone, String nome) throws FornecedorInexistenteException {
-//        for (Fornecedor f : this.fornecedores) {
-//            if (f.getCnpj().equals(cnpjAntigo)) {
-//                f.setCnpj(cnpjNovo);
-//                f.setEndereco(endereco);
-//                f.setNome(nome);
-//                f.setTelefone(telefone);
-//                return;
-//            }
-//        }
-//        throw new FornecedorInexistenteException("Fornecedor em questão não existe");
-//
-//    }
-//
-//    public void removerFornecedor(String cnpj) throws FornecedorInexistenteException {
-//        for (Fornecedor f : this.fornecedores) {
-//            if (f.getCnpj().equals(cnpj)) {
-//                this.fornecedores.remove(f);
-//                return;
-//            }
-//        }
-//        throw new FornecedorInexistenteException("Fornecedor em questão não existe");
-//    }
-//
-//    public List<Fornecedor> pesquisarFornecedorPeloNome(String nome) {
-//        List<Fornecedor> aux = new ArrayList<Fornecedor>();
-//        for (Fornecedor f : this.fornecedores) {
-//            if (f.getNome().contains(nome)) {
-//                aux.add(f);
-//            }
-//        }
-//        return aux;
-//    }
-//
-//    public Fornecedor pesquisarFornecedorPeloCnpj(String cnpj) throws FornecedorInexistenteException {
-//        for (Fornecedor f : this.fornecedores) {
-//            if (f.getCnpj().equals(cnpj)) {
-//                return f;
-//            }
-//        }
-//        throw new FornecedorInexistenteException("Fornecedor não encontrado.");
-//    }
-//    
-//
-//
-//    public boolean validarUsuario(String login, String senha) throws UsuarioInexistenteException {
-//        return pesquisarUsuarioPeloLogin(login).getSenha().equals(senha);
-//    }
-//
-//    public boolean isAdministrador(String login) throws UsuarioInexistenteException {
-//        return this.pesquisarUsuarioPeloLogin(login).isAdministrador();
-//    }
-//
-//    public Usuario pesquisarUsuarioPeloLogin(String login) throws UsuarioInexistenteException {
-//        this.usuarios.add(new Usuario("Luender Lima", "luender", "1234", true));
-//        this.usuarios.add(new Usuario("Odravison Amaral", "odravison", "1234", false));
-//        for (Usuario a : this.usuarios) {
-//            if (a.getNickName().equals(login)) {
-//                return a;
-//            }
-//        }
-//        throw new UsuarioInexistenteException("Usuário não cadastrado no sistema. \n\nInforme os dados novamente.");
-//    }
+    //////////////////////////////// IMPLEMENTADOS ///////////////////////////
+    public Usuario cadastrarUsuario(Usuario usuario) throws UsuarioExistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        
+        try{
+            ujp.create(usuario);
+            
+        } finally {
+            emf.close();
+        }
+        
+        return usuario;
+    }
+
+    public void editarUsuario(Usuario usuario) throws UsuarioInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        
+        try{
+            ujp.editarUsuario(usuario);
+            
+        } finally {
+            emf.close();
+        }
+    }
+
+    public void removerUsuario(String nickName) throws UsuarioInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        
+        try{
+            ujp.removerUsuario(nickName);
+        } finally {
+            emf.close();
+        }
+        
+    }
+
+    public Fornecedor cadastrarFornecedor(Fornecedor fornecedor) throws FornecedorExistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
+        
+        try{
+            
+            fjp.create(fornecedor);
+            
+        } finally {
+            emf.close();
+        }
+        
+        return fornecedor;
+    }
+
+    public void editarFornecedor(Fornecedor fornecedor) throws FornecedorInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
+        
+        try {
+            
+            fjp.editarFornecedor(fornecedor);
+            
+        } finally {
+            emf.close();
+        }
+
+    }
+
+    public void removerFornecedor(String cnpj) throws FornecedorInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
+        
+        try{
+            fjp.removerFornecedor(cnpj);
+        } finally {
+            emf.close();
+        }
+    }
+
+    public List<Fornecedor> pesquisarFornecedorPeloNome(String nome) throws FornecedorInexistenteException {
+        List<Fornecedor> aux = new ArrayList<Fornecedor>();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
+        
+        try{
+            aux = fjp.getAllFornecedores();
+        } finally { 
+            emf.close();
+        }
+        
+        return aux;
+    }
+
+    public Fornecedor pesquisarFornecedorPeloCnpj(String cnpj) throws FornecedorInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
+        Fornecedor forn = null;
+        
+        try{
+            forn = fjp.findById(cnpj);
+        } finally {
+            emf.close();
+        }
+        
+        return forn;
+        
+    }
+    
+    public boolean validarUsuario(String login, String senha) throws UsuarioInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        boolean resposta;
+        
+        try{
+            
+            resposta = ujp.validarUsuario(login, senha);
+            
+        } finally {
+            emf.close();
+        }
+        
+        
+        return resposta;
+    }
+
+    public boolean isAdministrador(String login) throws UsuarioInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        boolean resposta;
+        
+        try{
+            resposta = ujp.isAdministrador(login);
+        } finally {
+            emf.close();
+        }
+        
+        return resposta;
+    }
+
+    public Usuario pesquisarUsuarioPeloLogin(String login) throws UsuarioInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        Usuario u = null;
+        
+        try {
+            u = ujp.findByNickName(login);
+        } finally {
+            emf.close();
+        }
+        
+        return u;
+        
+    }
     public List<Cliente> getClientes() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
@@ -300,10 +337,7 @@ public class GerenciadorDePessoas {
         return listaDeRetorno;
     }
 
-    //PesquisarUltimosLocatarios(String: nome): List<Cliente>
-    //Método para pesquisar os últimos clientes que foram cadastrados
     
-    //PesquisarUltimosClientesCadastrados(String: nome): List<Cliente>
     
     
     //************************************FAZER OS SEGUINTES MÉTODOS**************************************************//

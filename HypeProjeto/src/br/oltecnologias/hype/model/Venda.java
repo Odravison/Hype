@@ -25,7 +25,7 @@ public class Venda implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="fk_venda")
-    private List<ProdutosVendidos> produtosVendidos;
+    private List<ProdutoVendido> produtosVendidos;
     
     private double valor;
     
@@ -54,14 +54,15 @@ public class Venda implements Serializable {
      * @param entrada
      */
     
-    public Venda(List<ProdutosVendidos> produtos, double valor, String formaDePagamento, 
-            Calendar dataVenda, int quantidadeParcelas, double entrada) {
+    public Venda(List<ProdutoVendido> produtos, double valor, String formaDePagamento, 
+            Calendar dataVenda, int quantidadeParcelas, double entrada, int percentualDesconto) {
         this.produtosVendidos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
         this.entrada = entrada;
+        this.percentualDesconto = percentualDesconto;
         if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
         }
@@ -75,11 +76,11 @@ public class Venda implements Serializable {
         this.id = id;
     }
 
-    public List<ProdutosVendidos> getProdutosVendidos() {
+    public List<ProdutoVendido> getProdutosVendidos() {
         return produtosVendidos;
     }
 
-    public void setProdutos(List<ProdutosVendidos> produtosVendidos) {
+    public void setProdutos(List<ProdutoVendido> produtosVendidos) {
         this.produtosVendidos = produtosVendidos;
     }
 

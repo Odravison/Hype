@@ -15,18 +15,18 @@ import javax.persistence.Id;
  */
 
 @Entity
-public class ProdutosVendidos implements Serializable {
+public class ProdutoVendido implements Serializable {
     
     @Id
     private String id;
     
     private int quantidade;
 
-    public ProdutosVendidos() {
+    public ProdutoVendido() {
     
     }
     
-    public ProdutosVendidos(String id, int quantidade){
+    public ProdutoVendido(String id, int quantidade){
         this.id = id;
         this.quantidade = quantidade;
     }

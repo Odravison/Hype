@@ -10,10 +10,12 @@
     <class>br.oltecnologias.hype.model.Fornecedor</class>
     <class>br.oltecnologias.hype.model.Locacao</class>
     <class>br.oltecnologias.hype.model.Medidas</class>
+    <class>br.oltecnologias.hype.model.Movimentacao</class>
     <class>br.oltecnologias.hype.model.Produto</class>
+    <class>br.oltecnologias.hype.model.ProdutoLocado</class>
+    <class>br.oltecnologias.hype.model.ProdutoVendido</class>
     <class>br.oltecnologias.hype.model.Usuario</class>
     <class>br.oltecnologias.hype.model.Venda</class>
-    <class>br.oltecnologias.hype.model.ProdutosDeLocacao</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:file:C:\Projeto\HypeProjeto\HypeProjeto\banco\closetbd; shutdown=true"/>
       <property name="javax.persistence.jdbc.user" value="odravison"/>

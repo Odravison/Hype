@@ -21,6 +21,7 @@ import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Medidas;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import com.itextpdf.text.DocumentException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,14 +57,19 @@ public class Aplicacao {
 
         Cliente cliente = new Cliente("123456789012", "José Luender", endereco, medidas, "3224-2424", "8888-8888");
 
-        HashMap<String, Integer> produtosDeLocacao = new HashMap<String, Integer>();
+        List<ProdutoLocado> produtosDeLocacao = new ArrayList<ProdutoLocado>();
         List<Produto> produtosDeEstoque = new ArrayList<Produto>();
 
         for (int i = 0; i < 10; i++) {
-            produtosDeLocacao.put("AAAAAAA" + i, i + 1);
-
             Produto p = new Produto("AAAAAAA" + i, "Roupa de Varal", 40.00, i, "Envio de Roupas.com", "Branca", 38, true);
             produtosDeEstoque.add(p);
+            if (p.getQuantidade() > 0){
+                
+                produtosDeLocacao.add(new ProdutoLocado(p.getCodigo(), p.getQuantidade()-1));
+                p.removerQuant(1);
+                
+            }
+            
         }
 
         Locacao locacao = new Locacao(cliente, produtosDeLocacao, 400.00, Calendar.getInstance(), Calendar.getInstance(), "À VISTA", 0, 0);
@@ -97,12 +103,12 @@ public class Aplicacao {
             int quantidade = 0; int comNomes = 0;
             for (Cliente c: GerenciadorDePessoas.getInstance().pesquisarClientesPorNome("josé")){
                 quantidade++;
-                if (c.getNome().contains("josé")){
+                if (c.getNome().toUpperCase().contains("JOSÉ")){
                     comNomes++;
                     
                 }
             }
-            System.out.println("Clientes cadastrados: " + quantidade + "Com nome que tenha o que foi pesquisado: " + comNomes);
+            System.out.println("Clientes cadastrados: " + quantidade + " Com nome que tenha o que foi pesquisado: " + comNomes);
             
             GerenciadorDePessoas.getInstance().removerCliente(cliente.getCpf());
             if (GerenciadorDePessoas.getInstance().getClientes().size() == 0){

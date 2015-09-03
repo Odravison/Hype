@@ -57,10 +57,6 @@ public class Usuario implements Serializable {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public boolean isIsAdministrador() {
-        return isAdministrador;
-    }
     
     public String getCategoria() {
         if(isAdministrador) {

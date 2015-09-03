@@ -11,15 +11,12 @@ import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
-import br.oltecnologias.hype.model.ProdutosLocados;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -39,7 +36,7 @@ public class GerenciadorDeLocacao {
     }
 
     // FALTA TESTAR
-    public Locacao realizarLocacao(Cliente cliente, List<ProdutosLocados> produtosLocados, double valor, Calendar dataLocacao,
+    public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
             Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int desconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -60,7 +57,7 @@ public class GerenciadorDeLocacao {
             cjp.editarCliente(clienteQueLocou);
             ljp.create(locacao);
 
-            for (ProdutosLocados p : produtosLocados) {
+            for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
         } finally {
@@ -267,4 +264,20 @@ public class GerenciadorDeLocacao {
         
         return listaOrdenada;
     }
+    
+    public Locacao pesquisarLocacaoPorId(long id) throws LocacaoInexistenteException{
+         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+        Locacao loc = null;
+        
+        try{
+            loc = ljp.findById(id);
+            
+        } finally{
+            emf.close();
+        }
+        
+        return loc;
+    }
+    
 }

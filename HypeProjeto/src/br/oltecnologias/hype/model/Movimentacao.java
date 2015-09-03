@@ -118,5 +118,12 @@ public class Movimentacao implements Serializable {
 
     public void setIdDaOperacao(long idDaOperacao) {
         this.idDaOperacao = idDaOperacao;
-    }    
+    }
+    
+    public String getMovToString(){        
+        String mov = getDataInString() + "     " + getMovimento() + "     " + getResponsavel() + "     " + getValorInString();
+        return mov;
+        
+        
+    }
 }

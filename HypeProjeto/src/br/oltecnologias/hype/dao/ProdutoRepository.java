@@ -26,7 +26,7 @@ public interface ProdutoRepository {
     
     public void editarProduto(Produto p)throws ProdutoInexistenteException;
     
-    public boolean existsCodigo(String codigo);
+    public boolean existsCodigo(String codigo) throws ProdutoInexistenteException;
     
     
     

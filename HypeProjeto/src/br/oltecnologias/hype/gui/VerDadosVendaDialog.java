@@ -45,7 +45,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         labelDesconto = new javax.swing.JLabel();
         labelValorTotal = new javax.swing.JLabel();
         labelData = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botaoOk = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -134,12 +134,12 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jButton1.setText("OK");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoOk.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        botaoOk.setText("OK");
+        botaoOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoOkActionPerformed(evt);
             }
         });
 
@@ -150,7 +150,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
+                    .addComponent(botaoOk)
                     .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
@@ -160,7 +160,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(botaoOk)
                 .addGap(23, 23, 23))
         );
 
@@ -175,10 +175,10 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoOkActionPerformed
         setVisible(false);
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoOkActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,7 +200,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
     private Venda venda;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaProdutosVendidos;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botaoOk;
     private javax.swing.JLabel labelData;
     private javax.swing.JLabel labelDesconto;
     private javax.swing.JLabel labelEntrada;

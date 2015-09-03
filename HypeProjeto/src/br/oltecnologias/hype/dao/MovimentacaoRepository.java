@@ -8,6 +8,7 @@ package br.oltecnologias.hype.dao;
 import br.oltecnologias.hype.exception.MovimentacaoExistenteException;
 import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.model.Movimentacao;
+import java.util.List;
 
 /**
  *
@@ -15,14 +16,18 @@ import br.oltecnologias.hype.model.Movimentacao;
  */
 public interface MovimentacaoRepository {
     
-    public void create(Movimentacao usuario) throws MovimentacaoExistenteException;
+    public void create(Movimentacao movimentacao);
     
     public Movimentacao findById(long id) throws MovimentacaoInexistenteException;
     
-    public boolean existsUsuario(long id);
+    public boolean existsMovimentacao(long id);
     
-    public void removerUsuario(Movimentacao usuario)throws MovimentacaoInexistenteException;
+    public void removerMovimentacao(long id) throws MovimentacaoInexistenteException;
     
-    public void editarUsuario(Movimentacao usuario) throws MovimentacaoInexistenteException;
+    public void editarMovimentacao(Movimentacao movimentacao) throws MovimentacaoInexistenteException;
+    
+    public long getIdDaOperacao(long idMovimentacao) throws MovimentacaoInexistenteException;
+    
+    public List<Movimentacao> getAllMovimentacoes();
     
 }

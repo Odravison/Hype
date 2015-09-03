@@ -8,6 +8,7 @@ package br.oltecnologias.hype.dao;
 import br.oltecnologias.hype.exception.UsuarioExistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Usuario;
+import java.util.List;
 
 /**
  *
@@ -17,12 +18,18 @@ public interface UsuarioRepository {
     
     public void create(Usuario usuario) throws UsuarioExistenteException;
     
-    public Usuario findById(long id) throws UsuarioInexistenteException;
+    public Usuario findByNickName(String nickName) throws UsuarioInexistenteException;
     
-    public boolean existsUsuario(long id);
+    public boolean existsUsuario(String nickName);
     
-    public void removerUsuario(Usuario usuario)throws UsuarioInexistenteException;
+    public void removerUsuario(String nickName)throws UsuarioInexistenteException;
     
     public void editarUsuario(Usuario usuario) throws UsuarioInexistenteException;
+    
+    public List<Usuario> getAllUsuarios();
+    
+    public boolean validarUsuario(String login, String senha) throws UsuarioInexistenteException;
+    
+    public boolean isAdministrador(String login) throws UsuarioInexistenteException;
     
 }
