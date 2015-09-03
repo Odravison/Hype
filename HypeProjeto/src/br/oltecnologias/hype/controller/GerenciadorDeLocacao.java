@@ -51,11 +51,13 @@ public class GerenciadorDeLocacao {
             Cliente clienteQueLocou = cjp.findByCpf(cliente.getCpf());
 
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
-            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao, dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
+            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao, 
+                    dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
 
             clienteQueLocou.adicionarLocacao(locacao);
             cjp.editarCliente(clienteQueLocou);
-            ljp.create(locacao);
+            //Usar linha abaixo se, somente se, o código de cima não persistir a entidade locacao.
+//            ljp.create(locacao);
 
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
@@ -111,8 +113,7 @@ public class GerenciadorDeLocacao {
                             }
 
                             clienteFinalizada = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
-
-                            clienteFinalizada.removerLocacao(locacaoCliente);
+                            locacaoCliente.setAtiva(!emprestou);
                             GerenciadorDePessoas.getInstance().editarCliente(clienteFinalizada);
 
                             //Verificar se a ação de cima vai cascatear para as filhas, caso não, é necessário executar o código abaixo.
