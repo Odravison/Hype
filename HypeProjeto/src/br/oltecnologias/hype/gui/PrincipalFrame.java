@@ -147,6 +147,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSalvarDiretorioContratos = new javax.swing.JButton();
         campoDiretorioDocumentos = new javax.swing.JTextField();
         labelDiretorioDocumentos = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
         botaoPesquisarUsuario = new javax.swing.JButton();
@@ -354,6 +355,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoVerLocacoesCliente.setText("Locações Feitas");
         botaoVerLocacoesCliente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVerLocacoesCliente.setVisible(false);
+        botaoVerLocacoesCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVerLocacoesClienteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelClientesLayout = new javax.swing.GroupLayout(painelClientes);
         painelClientes.setLayout(painelClientesLayout);
@@ -1342,6 +1348,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioDocumentos.setText("Diretório de Documentos");
 
+    jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    jButton2.setText("Alterar");
+    jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
     javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
     painelConfiguracoes.setLayout(painelConfiguracoesLayout);
     painelConfiguracoesLayout.setHorizontalGroup(
@@ -1350,16 +1360,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGap(32, 32, 32)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(labelDiretorioDocumentos)
-                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                    .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoSalvarDiretorioBackup))
                 .addComponent(labelDiretorioBackups)
-                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                    .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoSalvarDiretorioContratos)))
-            .addContainerGap(756, Short.MAX_VALUE))
+                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoSalvarDiretorioContratos))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSalvarDiretorioBackup))))
+            .addContainerGap(685, Short.MAX_VALUE))
     );
     painelConfiguracoesLayout.setVerticalGroup(
         painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1369,14 +1382,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoSalvarDiretorioBackup))
-            .addGap(31, 31, 31)
+                .addComponent(botaoSalvarDiretorioBackup)
+                .addComponent(jButton2))
+            .addGap(30, 30, 30)
             .addComponent(labelDiretorioDocumentos)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoSalvarDiretorioContratos))
-            .addContainerGap(417, Short.MAX_VALUE))
+            .addContainerGap(418, Short.MAX_VALUE))
     );
 
     try {
@@ -2284,6 +2298,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_botaoEditarUsuarioActionPerformed
+
+    private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
+        try {
+            //Abrir pasta do sistema com as locações feitas pelo usuários
+            Runtime.getRuntime().exec("explorer c:\\");
+        } catch (java.io.IOException e) {
+        }
+    }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -2487,6 +2509,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxUsuario;
     private javax.swing.JComboBox comboFiltrarCliente;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelFiltrarClientes;

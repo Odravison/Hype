@@ -20,6 +20,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
 
     /**
      * Creates new form EditarLocacaoDialog
+     * @param despesa - A despesa selecionada na tabela para ser editada
      */
     public EditarDespesaDialog(java.awt.Frame parent, Despesa despesa) {
         super(parent);
@@ -47,6 +48,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         areaObservacao = new javax.swing.JTextArea();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -61,7 +63,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         painelDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
         labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:");
+        labelNome.setText("Nome:*");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -71,7 +73,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         });
 
         labelValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValor.setText("Valor: R$ ");
+        labelValor.setText("Valor:* R$ ");
 
         campoValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoValor.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -81,7 +83,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         });
 
         labelFavorecido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelFavorecido.setText("Favorecido:");
+        labelFavorecido.setText("Favorecido:*");
 
         campoFavorecido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoFavorecido.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -164,14 +166,19 @@ public class EditarDespesaDialog extends java.awt.Dialog {
             }
         });
 
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("* Obrigatório");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelObrigatorio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
@@ -184,9 +191,11 @@ public class EditarDespesaDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
-                    .addComponent(botaoCancelar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoSalvar)
+                        .addComponent(botaoCancelar))
+                    .addComponent(labelObrigatorio))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
 
@@ -206,8 +215,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNomeKeyTyped
 
     private void campoValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoValorKeyTyped
-        if(
-            (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.') ||
+        if((!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.') ||
             campoValor.getText().length() >= maxCaracteresValor ||
             (campoValor.getText().length() == 3 && evt.getKeyChar() != '.')) { //(campoValor.getText().length() > 3 && !campoValor.getText().contains(".")) ||
 
@@ -230,18 +238,25 @@ public class EditarDespesaDialog extends java.awt.Dialog {
             } else if(campoFavorecido.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o favorecido da despesa", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                novaDespesa = GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa(campoNome.getText(), areaObservacao.getText(),
-                    Calendar.getInstance(), Float.parseFloat(campoValor.getText()), campoFavorecido.getText()));
+                despesa.setNome(campoNome.getText());
+                despesa.setObservacao(areaObservacao.getText());
+                despesa.setFavorecido(campoFavorecido.getText());
+                despesa.setValor(Double.parseDouble(campoValor.getText()));
+                despesa.setData(Calendar.getInstance());
+                
+                GerenciadorDoSistema.getInstance().editarDespesa(despesa);
+                
+                movimentacao = GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorOperacao(despesa.getId());
+                movimentacao.setBeneficiario(campoFavorecido.getText());
+                movimentacao.setValor(Double.parseDouble(campoValor.getText()));
 
-            novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Despesa", Float.parseFloat(campoValor.getText()),
-                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado(), campoFavorecido.getText(),
-                novaDespesa.getId()));
+                GerenciadorDoSistema.getInstance().editarMovimentacao(movimentacao);
 
-        JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
 
-        salvarSelecionado = true; //O botão Salvar foi selecionado
-        setVisible(false);
-        }
+                salvarSelecionado = true; //O botão Salvar foi selecionado
+                setVisible(false);
+            }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -252,6 +267,35 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
+        if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
+            evt.consume();
+        } 
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
+    }
+    
+    public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
+        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+            evt.consume();
+        } 
+        if(campo.getText().length()>= maxCaracteres){
+            evt.consume();
+        }
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o ok n�o foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
+    
+    public Movimentacao getNovaMovimentacao() {
+        return movimentacao;
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -270,6 +314,11 @@ public class EditarDespesaDialog extends java.awt.Dialog {
     }
 
     private Despesa despesa;
+    protected boolean salvarSelecionado;
+    protected Movimentacao movimentacao;
+    private String numeros = "0987654321"; // Alguns campos não devem aceitar números
+    private int maxCaracteresNome = 30;
+    private int maxCaracteresValor = 10;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
     private javax.swing.JButton botaoCancelar;
@@ -279,6 +328,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoValor;
     private javax.swing.JLabel labelFavorecido;
     private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelObservacao;
     private javax.swing.JLabel labelValor;
     private javax.swing.JPanel painelDadosGerais;
