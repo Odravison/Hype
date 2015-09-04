@@ -35,8 +35,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         campoNome = new javax.swing.JTextField();
         labelNickName = new javax.swing.JLabel();
         campoNickName = new javax.swing.JTextField();
-        labelSenha = new javax.swing.JLabel();
-        campoSenha = new javax.swing.JPasswordField();
         radioAdm = new javax.swing.JRadioButton();
         radioFuncionario = new javax.swing.JRadioButton();
         labelCategoria = new javax.swing.JLabel();
@@ -64,6 +62,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                 campoNomeKeyTyped(evt);
             }
         });
+        campoNome.setText(usuario.getNome());
 
         labelNickName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNickName.setText("Login:*");
@@ -75,16 +74,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                 campoNickNameKeyTyped(evt);
             }
         });
-
-        labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelSenha.setText("Senha:*");
-
-        campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoSenhaKeyTyped(evt);
-            }
-        });
+        campoNickName.setText(usuario.getNickName());
 
         radioAdm.setBackground(new java.awt.Color(255, 255, 255));
         radioAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -124,10 +114,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(labelSenha)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelDadosGeraisLayout.createSequentialGroup()
                         .addComponent(labelCategoria)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(radioAdm)
@@ -148,14 +134,10 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                     .addComponent(campoNickName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelSenha)
-                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioAdm)
                     .addComponent(radioFuncionario)
                     .addComponent(labelCategoria))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -197,11 +179,11 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoSalvar)
                     .addComponent(botaoCancelar))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         pack();
@@ -225,12 +207,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoNickNameKeyTyped
 
-    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
-        if(new String(campoSenha.getPassword()).length() >= maxCaracteresSenha){
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoSenhaKeyTyped
-
     private void radioAdmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAdmActionPerformed
         radioFuncionario.setSelected(false);
     }//GEN-LAST:event_radioAdmActionPerformed
@@ -249,15 +225,12 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
             // Validar campos para cadastro
             if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(new String(campoSenha.getPassword()).length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(!radioAdm.isSelected() && !radioFuncionario.isSelected()) {
                 JOptionPane.showMessageDialog(null, "Informe a categoria do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
 
                 try {
                     usuario.setNome(campoNome.getText());
-                    usuario.setSenha(new String(campoSenha.getPassword()));
                     usuario.setIsAdministrador(radioAdm.isSelected());
 
                     GerenciadorDePessoas.getInstance().editarUsuario(usuario);
@@ -306,11 +279,9 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoNickName;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelNickName;
     private javax.swing.JLabel labelNome;
-    private javax.swing.JLabel labelSenha;
     private javax.swing.JPanel painelDadosGerais;
     private javax.swing.JRadioButton radioAdm;
     private javax.swing.JRadioButton radioFuncionario;

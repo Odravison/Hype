@@ -347,6 +347,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                         Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
                     
                     JOptionPane.showMessageDialog(null, "Empresa cadastrada com sucesso!");
+                    
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
