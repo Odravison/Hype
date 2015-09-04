@@ -6,9 +6,13 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.exception.ClienteExistenteException;
+import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -40,26 +44,8 @@ public class EditarClienteDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        painelDadosPessoais = new javax.swing.JPanel();
-        labelNome = new javax.swing.JLabel();
-        campoNome = new javax.swing.JTextField();
-        labelCpf = new javax.swing.JLabel();
-        painelEndereco = new javax.swing.JPanel();
-        labelRua = new javax.swing.JLabel();
-        campoRua = new javax.swing.JTextField();
-        labelNumero = new javax.swing.JLabel();
-        labelBairro = new javax.swing.JLabel();
-        campoBairro = new javax.swing.JTextField();
-        labelCidade = new javax.swing.JLabel();
-        campoCidade = new javax.swing.JTextField();
-        labelUf = new javax.swing.JLabel();
-        comboUf = new javax.swing.JComboBox();
-        campoNumero = new javax.swing.JTextField();
-        labelTelResidencial = new javax.swing.JLabel();
-        labelCel = new javax.swing.JLabel();
-        campoCpf = new javax.swing.JFormattedTextField();
-        campoCel = new javax.swing.JFormattedTextField();
-        campoTelefone = new javax.swing.JFormattedTextField();
+        botaoSalvar = new javax.swing.JButton();
+        botaoCancelar = new javax.swing.JButton();
         painelMedidas = new javax.swing.JPanel();
         labelCalca = new javax.swing.JLabel();
         labelColete = new javax.swing.JLabel();
@@ -80,9 +66,27 @@ public class EditarClienteDialog extends java.awt.Dialog {
         campoCamisa = new javax.swing.JTextField();
         campoSapato = new javax.swing.JTextField();
         campoComprimentoManga = new javax.swing.JTextField();
-        botaoSalvar = new javax.swing.JButton();
-        botaoCancelar = new javax.swing.JButton();
-        labelObrigatorio = new javax.swing.JLabel();
+        painelDadosPessoais = new javax.swing.JPanel();
+        labelNome = new javax.swing.JLabel();
+        campoNome = new javax.swing.JTextField();
+        labelCpf = new javax.swing.JLabel();
+        painelEndereco = new javax.swing.JPanel();
+        labelRua = new javax.swing.JLabel();
+        campoRua = new javax.swing.JTextField();
+        labelNumero = new javax.swing.JLabel();
+        labelBairro = new javax.swing.JLabel();
+        campoBairro = new javax.swing.JTextField();
+        labelCidade = new javax.swing.JLabel();
+        campoCidade = new javax.swing.JTextField();
+        labelUf = new javax.swing.JLabel();
+        comboUf = new javax.swing.JComboBox();
+        campoNumero = new javax.swing.JTextField();
+        labelTelResidencial = new javax.swing.JLabel();
+        labelCel = new javax.swing.JLabel();
+        campoCpf = new javax.swing.JFormattedTextField();
+        campoCel = new javax.swing.JFormattedTextField();
+        campoTelefone = new javax.swing.JFormattedTextField();
+        labelObrigatório = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -93,199 +97,25 @@ public class EditarClienteDialog extends java.awt.Dialog {
             }
         });
 
-        painelDadosPessoais.setBackground(new java.awt.Color(255, 255, 255));
-        painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados pessoais"));
-
-        labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNome.setText("Nome:*");
-
-        campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoNomeKeyTyped(evt);
+        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoSalvar.setText(" Salvar ");
+        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarActionPerformed(evt);
             }
         });
 
-        labelCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCpf.setText("CPF:*");
-
-        painelEndereco.setBackground(new java.awt.Color(255, 255, 255));
-        painelEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
-
-        labelRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelRua.setText("Rua:*");
-
-        campoRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoRua.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoRuaKeyTyped(evt);
+        botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoCancelar.setText("Cancelar");
+        botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
             }
         });
-
-        labelNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelNumero.setText("Número:*");
-
-        labelBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelBairro.setText("Bairro:*");
-
-        campoBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoBairro.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoBairroKeyTyped(evt);
-            }
-        });
-
-        labelCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCidade.setText("Cidade:*");
-
-        campoCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoCidadeKeyTyped(evt);
-            }
-        });
-
-        labelUf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelUf.setText("UF:*");
-
-        comboUf.setMaximumRowCount(20);
-        comboUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PB", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
-        comboUf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
-        campoNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNumero.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoNumeroKeyTyped(evt);
-            }
-        });
-
-        javax.swing.GroupLayout painelEnderecoLayout = new javax.swing.GroupLayout(painelEndereco);
-        painelEndereco.setLayout(painelEnderecoLayout);
-        painelEnderecoLayout.setHorizontalGroup(
-            painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelEnderecoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addComponent(labelRua)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoRua, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(labelNumero))
-                    .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addComponent(labelBairro)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(56, 56, 56)
-                        .addComponent(labelCidade)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addComponent(labelUf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16))
-                    .addGroup(painelEnderecoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        painelEnderecoLayout.setVerticalGroup(
-            painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelEnderecoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelRua)
-                    .addComponent(campoRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNumero)
-                    .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelBairro)
-                    .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCidade)
-                    .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelUf)
-                    .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-
-        labelTelResidencial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTelResidencial.setText("Telefone residencial:");
-
-        labelCel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelCel.setText("Celular:*");
-
-        campoCpf.setEditable(false);
-        try {
-            campoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        try {
-            campoCel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoCel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        try {
-            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        campoTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        javax.swing.GroupLayout painelDadosPessoaisLayout = new javax.swing.GroupLayout(painelDadosPessoais);
-        painelDadosPessoais.setLayout(painelDadosPessoaisLayout);
-        painelDadosPessoaisLayout.setHorizontalGroup(
-            painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                        .addComponent(labelNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(62, 62, 62)
-                        .addComponent(labelCpf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(labelTelResidencial)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(57, 57, 57)
-                        .addComponent(labelCel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        painelDadosPessoaisLayout.setVerticalGroup(
-            painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelNome)
-                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCpf)
-                    .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(painelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelTelResidencial)
-                    .addComponent(labelCel)
-                    .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
 
         painelMedidas.setBackground(new java.awt.Color(255, 255, 255));
         painelMedidas.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidas"));
@@ -317,6 +147,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 areaObservacaoKeyTyped(evt);
             }
         });
+        areaObservacao.setText(cliente.getMedidas().getObservacao());
         scPnObservacao.setViewportView(areaObservacao);
 
         labelCamisa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -335,6 +166,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoComprimentoCalcaKeyTyped(evt);
             }
         });
+        campoComprimentoCalca.setText(cliente.getMedidas().getComprimentoCalca()+"");
 
         campoBlazer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoBlazer.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -342,6 +174,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoBlazerKeyTyped(evt);
             }
         });
+        campoBlazer.setText(cliente.getMedidas().getBlazer()+"");
 
         campoCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCalca.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -349,6 +182,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoCalcaKeyTyped(evt);
             }
         });
+        campoCalca.setText(cliente.getMedidas().getCalca()+"");
 
         campoColete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoColete.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -356,6 +190,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoColeteKeyTyped(evt);
             }
         });
+        campoColete.setText(cliente.getMedidas().getColete()+"");
 
         campoCamisa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCamisa.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -363,6 +198,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoCamisaKeyTyped(evt);
             }
         });
+        campoCamisa.setText(cliente.getMedidas().getCamisa()+"");
 
         campoSapato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoSapato.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -370,6 +206,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoSapatoKeyTyped(evt);
             }
         });
+        campoSapato.setText(cliente.getMedidas().getSapato()+"");
 
         campoComprimentoManga.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoComprimentoManga.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -377,6 +214,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 campoComprimentoMangaKeyTyped(evt);
             }
         });
+        campoComprimentoManga.setText(cliente.getMedidas().getComprimentoManga()+"");
 
         javax.swing.GroupLayout painelMedidasLayout = new javax.swing.GroupLayout(painelMedidas);
         painelMedidas.setLayout(painelMedidasLayout);
@@ -463,130 +301,255 @@ public class EditarClienteDialog extends java.awt.Dialog {
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
-        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaoSalvar.setText(" Salvar ");
-        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
+        painelDadosPessoais.setBackground(new java.awt.Color(255, 255, 255));
+        painelDadosPessoais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados pessoais"));
+
+        labelNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelNome.setText("Nome:*");
+
+        campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoNomeKeyTyped(evt);
             }
         });
+        campoNome.setText(cliente.getNome());
 
-        botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaoCancelar.setText("Cancelar");
-        botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
-        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCancelarActionPerformed(evt);
+        labelCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCpf.setText("CPF:*");
+
+        painelEndereco.setBackground(new java.awt.Color(255, 255, 255));
+        painelEndereco.setBorder(javax.swing.BorderFactory.createTitledBorder("Endereço"));
+
+        labelRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelRua.setText("Rua:*");
+
+        campoRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoRua.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoRuaKeyTyped(evt);
             }
         });
+        campoRua.setText(cliente.getEndereco().getRua());
 
-        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        labelObrigatorio.setText("* Obrigatório");
+        labelNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelNumero.setText("Número:*");
+
+        labelBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelBairro.setText("Bairro:*");
+
+        campoBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoBairro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoBairroKeyTyped(evt);
+            }
+        });
+        campoBairro.setText(cliente.getEndereco().getBairro());
+
+        labelCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCidade.setText("Cidade:*");
+
+        campoCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoCidadeKeyTyped(evt);
+            }
+        });
+        campoCidade.setText(cliente.getEndereco().getCidade());
+
+        labelUf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelUf.setText("UF:*");
+
+        comboUf.setMaximumRowCount(20);
+        comboUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PB", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        comboUf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        comboUf.setSelectedItem(cliente.getEndereco().getUf());
+
+        campoNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNumero.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoNumeroKeyTyped(evt);
+            }
+        });
+        campoNumero.setText(cliente.getEndereco().getNumeroCasa()+"");
+
+        javax.swing.GroupLayout painelEnderecoLayout = new javax.swing.GroupLayout(painelEndereco);
+        painelEndereco.setLayout(painelEnderecoLayout);
+        painelEnderecoLayout.setHorizontalGroup(
+            painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelEnderecoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelEnderecoLayout.createSequentialGroup()
+                        .addComponent(labelRua)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoRua, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(labelNumero))
+                    .addGroup(painelEnderecoLayout.createSequentialGroup()
+                        .addComponent(labelBairro)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(labelCidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelEnderecoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addComponent(labelUf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16))
+                    .addGroup(painelEnderecoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        painelEnderecoLayout.setVerticalGroup(
+            painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelEnderecoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelRua)
+                    .addComponent(campoRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelNumero)
+                    .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(painelEnderecoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelBairro)
+                    .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCidade)
+                    .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelUf)
+                    .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        labelTelResidencial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTelResidencial.setText("Telefone residencial:");
+
+        labelCel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCel.setText("Celular:*");
+
+        campoCpf.setEditable(false);
+        try {
+            campoCpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoCpf.setText(cliente.getCpf());
+
+        try {
+            campoCel.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoCel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoCel.setText(cliente.getCelular());
+
+        try {
+            campoTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        campoTelefone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoTelefone.setText(cliente.getTelefone());
+
+        javax.swing.GroupLayout painelDadosPessoaisLayout = new javax.swing.GroupLayout(painelDadosPessoais);
+        painelDadosPessoais.setLayout(painelDadosPessoaisLayout);
+        painelDadosPessoaisLayout.setHorizontalGroup(
+            painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(painelEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                        .addComponent(labelNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(62, 62, 62)
+                        .addComponent(labelCpf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(labelTelResidencial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(labelCel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelDadosPessoaisLayout.setVerticalGroup(
+            painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosPessoaisLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelNome)
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCpf)
+                    .addComponent(campoCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(painelEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(painelDadosPessoaisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelTelResidencial)
+                    .addComponent(labelCel)
+                    .addComponent(campoCel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        labelObrigatório.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatório.setText("* Obrigatório");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(painelMedidas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(painelDadosPessoais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(labelObrigatorio)
-                        .addGap(380, 380, 380)
+                        .addComponent(labelObrigatório)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
-                    .addComponent(painelMedidas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoCancelar)))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(23, Short.MAX_VALUE)
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(painelMedidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar))
-                    .addComponent(labelObrigatorio))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(labelObrigatório))
+                .addGap(36, 36, 36))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Closes the dialog
+     * Fecha o dialog
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
-
-    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
-        validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
-    }//GEN-LAST:event_campoNomeKeyTyped
-
-    private void campoRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoRuaKeyTyped
-        if(campoRua.getText().length()>= maxCaracteresNome){ //O mesmo limite de tamanho para nome do cliente e nome da rua
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoRuaKeyTyped
-
-    private void campoBairroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBairroKeyTyped
-        if(campoBairro.getText().length()>= maxCaracteresBairro){
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoBairroKeyTyped
-
-    private void campoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCidadeKeyTyped
-        validarLetrasETamanho(evt, campoCidade, maxCaracteresBairro); // Mesmo tamanho para nomes de bairros e cidades
-    }//GEN-LAST:event_campoCidadeKeyTyped
-
-    private void campoNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNumeroKeyTyped
-        validarNumerosETamanho(evt, campoNumero, maxCaracteresNumero);
-    }//GEN-LAST:event_campoNumeroKeyTyped
-
-    private void areaObservacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaObservacaoKeyTyped
-        if(areaObservacao.getText().length()>= maxCaracteresObs){
-            evt.consume();
-        }
-    }//GEN-LAST:event_areaObservacaoKeyTyped
-
-    private void campoComprimentoCalcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoComprimentoCalcaKeyTyped
-        validarNumerosETamanho(evt, campoComprimentoCalca, maxCaracteresComprimento); // o comprimento máximo da manga também serve para o da calça
-    }//GEN-LAST:event_campoComprimentoCalcaKeyTyped
-
-    private void campoBlazerKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBlazerKeyTyped
-        validarNumerosETamanho(evt, campoBlazer, maxCaracteresMedidas);
-    }//GEN-LAST:event_campoBlazerKeyTyped
-
-    private void campoCalcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCalcaKeyTyped
-        validarNumerosETamanho(evt, campoCalca, maxCaracteresMedidas);
-    }//GEN-LAST:event_campoCalcaKeyTyped
-
-    private void campoColeteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoColeteKeyTyped
-        validarNumerosETamanho(evt, campoColete, maxCaracteresMedidas);
-    }//GEN-LAST:event_campoColeteKeyTyped
-
-    private void campoCamisaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCamisaKeyTyped
-        validarNumerosETamanho(evt, campoCamisa, maxCaracteresMedidas);
-    }//GEN-LAST:event_campoCamisaKeyTyped
-
-    private void campoSapatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSapatoKeyTyped
-        validarNumerosETamanho(evt, campoSapato, maxCaracteresMedidas);
-    }//GEN-LAST:event_campoSapatoKeyTyped
-
-    private void campoComprimentoMangaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoComprimentoMangaKeyTyped
-        validarNumerosETamanho(evt, campoComprimentoCalca, maxCaracteresComprimento);
-    }//GEN-LAST:event_campoComprimentoMangaKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
@@ -684,6 +647,64 @@ public class EditarClienteDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    private void areaObservacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaObservacaoKeyTyped
+        if(areaObservacao.getText().length()>= maxCaracteresObs){
+            evt.consume();
+        }
+    }//GEN-LAST:event_areaObservacaoKeyTyped
+
+    private void campoComprimentoCalcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoComprimentoCalcaKeyTyped
+        validarNumerosETamanho(evt, campoComprimentoCalca, maxCaracteresComprimento); // o comprimento máximo da manga também serve para o da calça
+    }//GEN-LAST:event_campoComprimentoCalcaKeyTyped
+
+    private void campoBlazerKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBlazerKeyTyped
+        validarNumerosETamanho(evt, campoBlazer, maxCaracteresMedidas);
+    }//GEN-LAST:event_campoBlazerKeyTyped
+
+    private void campoCalcaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCalcaKeyTyped
+        validarNumerosETamanho(evt, campoCalca, maxCaracteresMedidas);
+    }//GEN-LAST:event_campoCalcaKeyTyped
+
+    private void campoColeteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoColeteKeyTyped
+        validarNumerosETamanho(evt, campoColete, maxCaracteresMedidas);
+    }//GEN-LAST:event_campoColeteKeyTyped
+
+    private void campoCamisaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCamisaKeyTyped
+        validarNumerosETamanho(evt, campoCamisa, maxCaracteresMedidas);
+    }//GEN-LAST:event_campoCamisaKeyTyped
+
+    private void campoSapatoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSapatoKeyTyped
+        validarNumerosETamanho(evt, campoSapato, maxCaracteresMedidas);
+    }//GEN-LAST:event_campoSapatoKeyTyped
+
+    private void campoComprimentoMangaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoComprimentoMangaKeyTyped
+        validarNumerosETamanho(evt, campoComprimentoCalca, maxCaracteresComprimento);
+    }//GEN-LAST:event_campoComprimentoMangaKeyTyped
+
+    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
+        validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
+    }//GEN-LAST:event_campoNomeKeyTyped
+
+    private void campoRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoRuaKeyTyped
+        if(campoRua.getText().length()>= maxCaracteresNome){ //O mesmo limite de tamanho para nome do cliente e nome da rua
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoRuaKeyTyped
+
+    private void campoBairroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBairroKeyTyped
+        if(campoBairro.getText().length()>= maxCaracteresBairro){
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoBairroKeyTyped
+
+    private void campoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCidadeKeyTyped
+        validarLetrasETamanho(evt, campoCidade, maxCaracteresBairro); // Mesmo tamanho para nomes de bairros e cidades
+    }//GEN-LAST:event_campoCidadeKeyTyped
+
+    private void campoNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNumeroKeyTyped
+        validarNumerosETamanho(evt, campoNumero, maxCaracteresNumero);
+    }//GEN-LAST:event_campoNumeroKeyTyped
+
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
@@ -773,7 +794,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelCpf;
     private javax.swing.JLabel labelNome;
     private javax.swing.JLabel labelNumero;
-    private javax.swing.JLabel labelObrigatorio;
+    private javax.swing.JLabel labelObrigatório;
     private javax.swing.JLabel labelObservacao;
     private javax.swing.JLabel labelRua;
     private javax.swing.JLabel labelSapato;

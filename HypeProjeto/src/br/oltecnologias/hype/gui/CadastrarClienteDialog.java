@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Cliente
+ * @author Luender Lima
  */
 public class CadastrarClienteDialog extends java.awt.Dialog {
 

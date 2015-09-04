@@ -18,6 +18,7 @@ import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
@@ -148,7 +149,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSalvarDiretorioContratos = new javax.swing.JButton();
         campoDiretorioDocumentos = new javax.swing.JTextField();
         labelDiretorioDocumentos = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        botaoAlterarDiretorioBackup = new javax.swing.JButton();
+        botaoAlterarDiretorioDocumentos = new javax.swing.JButton();
         painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
         botaoPesquisarUsuario = new javax.swing.JButton();
@@ -161,7 +163,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoExcluirUsuario = new javax.swing.JButton();
         botaoEditarUsuario = new javax.swing.JButton();
         botaoRegistrarDespesa = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botaoEditarEmpresa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Closet");
@@ -806,12 +808,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
 
     //Adicionando valores nas linhas
-    for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
+    /*for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
         try {
-            listaLinhasLocacoes.add(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(), GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
-        } catch (LocacaoInexistenteException e) {
-        }
+            listaLinhasLocacoes.add(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+    } catch (LocacaoInexistenteException e) {
     }
+    }*/
     //cria um defaultablemodel com as informações acima
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
@@ -1142,7 +1145,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaMovimentacoes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     tabelaMovimentacoes.getTableHeader().setResizingAllowed(false);
     tabelaMovimentacoes.getTableHeader().setReorderingAllowed(false);
-    String[] nomesColunasTabelaMovimentacoes = {"", "Movimento", "Valor", "Data", "Responsável", "Beneficiário"};
+    String[] nomesColunasTabelaMovimentacoes = { null, "Movimento", "Valor", "Data", "Responsável", "Beneficiário"};
     //Define a fonte do cabeçalho da tabela
     tabelaMovimentacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
     //Altura das linhas
@@ -1183,7 +1186,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de responsável
     tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(340);
     // Redimensionando a largura da coluna de beneficiário
-    tabelaMovimentacoes.getColumnModel().getColumn(5).setPreferredWidth(240);
+    tabelaMovimentacoes.getColumnModel().getColumn(5).setPreferredWidth(246);
     tabelaMovimentacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaMovimentacoesMouseClicked(evt);
@@ -1301,6 +1304,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    campoDiretorioBackup.setEditable(false);
     campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
     campoDiretorioBackup.setText("Caminho do diretório");
@@ -1330,6 +1334,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    campoDiretorioDocumentos.setEditable(false);
     campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoDiretorioDocumentos.setForeground(new java.awt.Color(153, 153, 153));
     campoDiretorioDocumentos.setText("Caminho do diretório");
@@ -1349,9 +1354,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioDocumentos.setText("Diretório de Documentos");
 
-    jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    jButton2.setText("Alterar");
-    jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoAlterarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoAlterarDiretorioBackup.setText("Alterar");
+    botaoAlterarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+    botaoAlterarDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoAlterarDiretorioDocumentos.setText("Alterar");
+    botaoAlterarDiretorioDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
     javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
     painelConfiguracoes.setLayout(painelConfiguracoesLayout);
@@ -1365,12 +1374,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
                         .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(botaoAlterarDiretorioDocumentos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvarDiretorioContratos))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
                         .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jButton2)
+                        .addComponent(botaoAlterarDiretorioBackup)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoSalvarDiretorioBackup))))
             .addContainerGap(685, Short.MAX_VALUE))
@@ -1384,13 +1395,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoSalvarDiretorioBackup)
-                .addComponent(jButton2))
+                .addComponent(botaoAlterarDiretorioBackup))
             .addGap(30, 30, 30)
             .addComponent(labelDiretorioDocumentos)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoSalvarDiretorioContratos))
+                .addComponent(botaoSalvarDiretorioContratos)
+                .addComponent(botaoAlterarDiretorioDocumentos))
             .addContainerGap(418, Short.MAX_VALUE))
     );
 
@@ -1538,9 +1550,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
-    jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    jButton1.setText("Editar Empresa");
-    jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoEditarEmpresa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoEditarEmpresa.setText("Editar Empresa");
+    botaoEditarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoEditarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoEditarEmpresaActionPerformed(evt);
+        }
+    });
 
     javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
     painelAdministrador.setLayout(painelAdministradorLayout);
@@ -1556,7 +1573,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(botaoAtivarTemporada)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton1))
+                    .addComponent(botaoEditarEmpresa))
                 .addGroup(painelAdministradorLayout.createSequentialGroup()
                     .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -1581,7 +1598,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(botaoNovoUsuario)
                 .addComponent(botaoAtivarTemporada)
                 .addComponent(botaoRegistrarDespesa)
-                .addComponent(jButton1))
+                .addComponent(botaoEditarEmpresa))
             .addGap(46, 46, 46)
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1990,7 +2007,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
                 
                 dialog.setLocationRelativeTo(null);
-                //fazer aquela paradinha pra atualizar os dados na tabela
+                if (dialog.alterarDados()) {
+                    atualizarDadosClienteNaTabela(dialog.getCliente(), tabelaClientes.getSelectedRow());                    
+                }
+                dialog.dispose();
                 
             } catch (ClienteInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2248,6 +2268,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 dialog.setLocationRelativeTo(null);
+                
                 //fazer aquela paradinha pra atualizar os dados na tabela
                 
             } catch (ProdutoInexistenteException e) {
@@ -2311,6 +2332,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
         } catch (java.io.IOException e) {
         }
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
+
+    private void botaoEditarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarEmpresaActionPerformed
+        EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, Configuracao.getInstance().getEmpresa());
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoEditarEmpresaActionPerformed
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -2404,6 +2431,38 @@ public class PrincipalFrame extends javax.swing.JFrame {
         modeloTabelaUsuarios.removeRow(indice);
     }
     
+    public void atualizarDadosClienteNaTabela(Cliente cliente, int linha) {
+        //Coluna de índice  1 = nome do cliente
+        modeloTabelaClientes.setValueAt(cliente.getNome(), linha, 1); 
+        //Coluna de índice  2 = contado
+        modeloTabelaClientes.setValueAt(cliente.getCelular(), linha, 2);
+    }
+    
+    public void atualizarDadosProdutoNaTabela(Produto produto, int linha) {
+        //Coluna de índice  
+        modeloTabelaProdutos.setValueAt(produto.getNome(), linha, 1);
+        
+    }
+    
+    public void atualizarDadosFornecedorNaTabela(Fornecedor fornecedor, int linha) {
+        //Coluna de índice  
+        modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), linha, 1);
+        
+    }
+    
+    public void atualizarDadosDespesaNaTabela(Cliente cliente, int linha) {
+        //Coluna de índice  1 = nome do cliente
+        modeloTabelaMovimentacoes.setValueAt(cliente.getNome(), linha, 1);
+        
+    }
+    
+    public void atualizarDadosUsuarioNaTabela(Cliente cliente, int linha) {
+        //Coluna de índice  1 = nome do cliente
+        modeloTabelaUsuarios.setValueAt(cliente.getNome(), linha, 1);
+        
+    }
+    
+    
     /*public void atualizarValorEmCaixa() {
         if(GerenciadorDoSistema.getInstance().getValorCaixaDiario() > 0) {
             labelValorEmCaixa.setForeground(new Color(0, 153, 0));
@@ -2460,9 +2519,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private DefaultTableModel modeloTabelaUsuarios;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane abas;
+    private javax.swing.JButton botaoAlterarDiretorioBackup;
+    private javax.swing.JButton botaoAlterarDiretorioDocumentos;
     private javax.swing.JButton botaoAtivarTemporada;
     private javax.swing.JButton botaoEditarCliente;
     private javax.swing.JButton botaoEditarDespesa;
+    private javax.swing.JButton botaoEditarEmpresa;
     private javax.swing.JButton botaoEditarFornecedor;
     private javax.swing.JButton botaoEditarProduto;
     private javax.swing.JButton botaoEditarUsuario;
@@ -2513,8 +2575,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
     private javax.swing.JComboBox comboBoxUsuario;
     private javax.swing.JComboBox comboFiltrarCliente;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelFiltrarClientes;
