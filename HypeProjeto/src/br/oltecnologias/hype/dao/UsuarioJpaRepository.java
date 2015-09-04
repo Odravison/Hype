@@ -75,14 +75,23 @@ public class UsuarioJpaRepository implements UsuarioRepository{
 
     @Override
     public boolean existsUsuario(String nickName) {
-        Usuario result;
-        
-        try{
-            result = findByNickName(nickName);
-        } catch(UsuarioInexistenteException ex){
+        Object result = null;
+        EntityManager em = null;
+
+        try {
+            em = getEntityManager();
+            Query query = em.createQuery("SELECT 1 FROM Usuario WHERE nickName = ?");
+            query.setParameter(1, nickName);
+            query.setMaxResults(1);
+
+            result = query.getSingleResult();
+        } catch (NoResultException e) {
             result = null;
+        } finally {
+            if (em != null) {
+                em.close();
+            }
         }
-        
 
         return (result != null);
     }

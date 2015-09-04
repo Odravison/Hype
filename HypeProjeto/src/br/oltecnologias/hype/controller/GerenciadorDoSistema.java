@@ -18,6 +18,8 @@ import br.oltecnologias.hype.model.Usuario;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -204,7 +206,9 @@ public class GerenciadorDoSistema {
                     Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
                     Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
                     Font courier12 = new Font(Font.FontFamily.COURIER, 12);
-                    Document pdf = new Document();
+                    
+                    Document pdf = new Document(PageSize.A4, 10, 10, 10, 10);
+                    
                     File diretorio = null;
 
                     try {
@@ -213,6 +217,8 @@ public class GerenciadorDoSistema {
 
                         PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
                                 + "" + diaIni + "." + mesIni + "." + anoIni + " TO " + diaFinal + "." + mesFinal + "." + anoFinal));
+                        
+                        PdfPTable table = new PdfPTable(4);
                         
                         
 
