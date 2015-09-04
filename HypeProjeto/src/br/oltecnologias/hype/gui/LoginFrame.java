@@ -7,6 +7,7 @@ import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Usuario;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -193,20 +194,25 @@ public class LoginFrame extends javax.swing.JFrame {
                         public void run() {
                             try {
                                 GerenciadorDoSistema.getInstance().setUsuarioLogado(
-                                        GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
+                                GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
                             } catch (UsuarioInexistenteException ex) {
                                 Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     };
                     
-                    setVisible(false);
-                    java.awt.EventQueue.invokeLater(new Runnable() {
+                    
+                    /*java.awt.EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                            new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                        }
+                    });*/
+                    Executors.newFixedThreadPool(20).execute(new Runnable() {
                         public void run() {
                             new PrincipalFrame(campoLogin.getText()).setVisible(true);
                         }
                     });
-                    
+                    setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }

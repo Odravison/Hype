@@ -32,6 +32,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        botaoSalvar = new javax.swing.JButton();
         painelDadosGerais = new javax.swing.JPanel();
         painelIdentificacao = new javax.swing.JPanel();
         labelNome = new javax.swing.JLabel();
@@ -52,9 +53,8 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         campoTamanho = new javax.swing.JTextField();
         labelFornecedor = new javax.swing.JLabel();
         comboFornecedor = new javax.swing.JComboBox();
-        botaoSalvar = new javax.swing.JButton();
-        botaoCancelar = new javax.swing.JButton();
         labelObrigatorio = new javax.swing.JLabel();
+        botaoCancelar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -62,6 +62,16 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);
+            }
+        });
+
+        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoSalvar.setText(" Salvar ");
+        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoSalvarActionPerformed(evt);
             }
         });
 
@@ -118,6 +128,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         labelTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelTipo.setText("Finalidade:*");
 
+        campoCodigo.setEditable(false);
         campoCodigo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -133,25 +144,25 @@ public class EditarProdutoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelIdentificacaoLayout.createSequentialGroup()
+                        .addComponent(labelNome)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addComponent(labelCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23))
+                    .addGroup(painelIdentificacaoLayout.createSequentialGroup()
                         .addComponent(labelCor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(80, 80, 80)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelTipo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioVenda))
-                    .addGroup(painelIdentificacaoLayout.createSequentialGroup()
-                        .addComponent(labelNome)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelIdentificacaoLayout.createSequentialGroup()
-                        .addComponent(labelCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(radioAluguel))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addComponent(radioVenda)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioAluguel)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         painelIdentificacaoLayout.setVerticalGroup(
             painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -162,16 +173,15 @@ public class EditarProdutoDialog extends java.awt.Dialog {
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCodigo)
                     .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
-                .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(18, 18, 18)
+                .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelCor)
                     .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(radioVenda)
                         .addComponent(radioAluguel)
-                        .addComponent(labelTipo))
-                    .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelCor)))
-                .addContainerGap(11, Short.MAX_VALUE))
+                        .addComponent(labelTipo)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         painelValores.setBackground(new java.awt.Color(255, 255, 255));
@@ -251,7 +261,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(0);
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         comboFornecedor.addItem("Selecione");
-        /*DESFAZER DEPOIS QUE O MÉTODO GETFORNECEDORES ESTIVER PRONTO
+        /* DESFAZER DEPOIS QUE O MÉTODO GETFORCENEDORES ESTIVER IMPLEMENTADO
         for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
             comboFornecedor.addItem(fornecedor.getNome());
         }
@@ -268,7 +278,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
             .addGroup(painelDadosGeraisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(painelValores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 653, Short.MAX_VALUE)
+                    .addComponent(painelValores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(painelIdentificacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(painelDadosGeraisLayout.createSequentialGroup()
@@ -292,15 +302,24 @@ public class EditarProdutoDialog extends java.awt.Dialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaoSalvar.setText(" Salvar ");
-        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
-            }
-        });
+        campoNome.setText(produto.getNome());
+        campoCodigo.setText(produto.getCodigo());
+        campoCor.setText(produto.getCor());
+        campoTamanho.setText(produto.getTam()+"");
+        campoQuantidade.setText(produto.getQuantidade()+"");
+        campoPreco.setText(produto.getValorInString());
+        campoPreco.setText(campoPreco.getText().replaceAll(",", "."));
+        if(produto.isLocation()) {
+            radioAluguel.setSelected(true);
+            radioVenda.setSelected(false);
+        } else {
+            radioVenda.setSelected(true);
+            radioAluguel.setSelected(false);
+        }
+        comboFornecedor.setSelectedItem(produto.getFornecedor());
+
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("* Obrigatório ");
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
@@ -312,20 +331,17 @@ public class EditarProdutoDialog extends java.awt.Dialog {
             }
         });
 
-        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        labelObrigatorio.setText("* Obrigatório");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(labelObrigatorio)
-                        .addGap(406, 406, 406)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar)))
@@ -333,16 +349,16 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(labelObrigatorio)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoSalvar)
-                        .addComponent(botaoCancelar))
-                    .addComponent(labelObrigatorio))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addComponent(botaoCancelar)
+                        .addComponent(botaoSalvar)))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -356,54 +372,9 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
-        if(campoNome.getText().length() >= maxCaracteresNome) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoNomeKeyTyped
-
-    private void campoCorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCorKeyTyped
-        validarLetrasETamanho(evt, campoCor, maxCaracteresCor);
-    }//GEN-LAST:event_campoCorKeyTyped
-
-    private void radioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioVendaActionPerformed
-        radioAluguel.setSelected(false);
-    }//GEN-LAST:event_radioVendaActionPerformed
-
-    private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
-        radioVenda.setSelected(false);
-    }//GEN-LAST:event_radioAluguelActionPerformed
-
-    private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
-        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoCodigoKeyTyped
-
-    private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
-        if((campoPreco.getText().length() > 3 && !campoPreco.getText().contains(".")) ||
-            (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
-            || campoPreco.getText().length() >= maxCaracteresPreco) {
-
-            evt.consume();
-        }
-        /*
-        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
-            campoPreco.setText(campoPreco.getText()+".");
-        } */
-    }//GEN-LAST:event_campoPrecoKeyTyped
-
-    private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
-        validarNumerosETamanho(evt, campoQuantidade, maxCaracteresQuantidade);
-    }//GEN-LAST:event_campoQuantidadeKeyTyped
-
-    private void campoTamanhoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanhoKeyTyped
-        validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho);
-    }//GEN-LAST:event_campoTamanhoKeyTyped
-
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
-            // Validar campos para cadastro
+            // Validar campos para edição
             if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoCor.getText().length() <= 0) {
@@ -450,6 +421,51 @@ public class EditarProdutoDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
+        if(campoNome.getText().length() >= maxCaracteresNome) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoNomeKeyTyped
+
+    private void campoCorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCorKeyTyped
+        validarLetrasETamanho(evt, campoCor, maxCaracteresCor);
+    }//GEN-LAST:event_campoCorKeyTyped
+
+    private void radioVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioVendaActionPerformed
+        radioAluguel.setSelected(false);
+    }//GEN-LAST:event_radioVendaActionPerformed
+
+    private void radioAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAluguelActionPerformed
+        radioVenda.setSelected(false);
+    }//GEN-LAST:event_radioAluguelActionPerformed
+
+    private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
+        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_campoCodigoKeyTyped
+
+    private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
+        if((campoPreco.getText().length() > 3 && !campoPreco.getText().contains(".")) ||
+            (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
+            || campoPreco.getText().length() >= maxCaracteresPreco) {
+
+            evt.consume();
+        }
+        /*
+        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
+            campoPreco.setText(campoPreco.getText()+".");
+        } */
+    }//GEN-LAST:event_campoPrecoKeyTyped
+
+    private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped
+        validarNumerosETamanho(evt, campoQuantidade, maxCaracteresQuantidade);
+    }//GEN-LAST:event_campoQuantidadeKeyTyped
+
+    private void campoTamanhoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoTamanhoKeyTyped
+        validarNumerosETamanho(evt, campoTamanho, maxCaracteresTamanho);
+    }//GEN-LAST:event_campoTamanhoKeyTyped
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
         setVisible(false);

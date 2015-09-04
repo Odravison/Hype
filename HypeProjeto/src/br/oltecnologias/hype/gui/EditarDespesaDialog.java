@@ -293,7 +293,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
-    public Movimentacao getNovaMovimentacao() {
+    public Movimentacao getMovimentacao() {
         return movimentacao;
     }
     

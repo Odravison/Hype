@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.2" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -32,11 +32,11 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="painelDadosGerais" min="-2" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="painelDadosGerais" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <Component id="labelObrigatorio" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="406" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="botaoSalvar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="botaoCancelar" min="-2" max="-2" attributes="0"/>
@@ -48,23 +48,40 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Component id="painelDadosGerais" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="botaoSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Component id="labelObrigatorio" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace pref="35" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
+    <Component class="javax.swing.JButton" name="botaoSalvar">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="16" style="0"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value=" Salvar "/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Cursor em Forma de M&#xe3;o"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarActionPerformed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoSalvar.setIcon(new ImageIcon(&quot;Imagens\\Salvar.png&quot;));"/>
+      </AuxValues>
+    </Component>
     <Container class="javax.swing.JPanel" name="painelDadosGerais">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -83,7 +100,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="painelValores" alignment="1" pref="653" max="32767" attributes="0"/>
+                      <Component id="painelValores" alignment="1" max="32767" attributes="0"/>
                       <Component id="painelIdentificacao" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -134,30 +151,28 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="labelCor" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="campoCor" min="-2" pref="152" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                              <Component id="labelTipo" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="radioVenda" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
                               <Component id="labelNome" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="campoNome" min="-2" pref="302" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                              <EmptySpace pref="80" max="32767" attributes="0"/>
                               <Component id="labelCodigo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="campoCodigo" min="-2" pref="114" max="-2" attributes="0"/>
+                              <Component id="campoCodigo" min="-2" pref="89" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="radioAluguel" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="labelCor" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="campoCor" min="-2" pref="152" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="labelTipo" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="radioVenda" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="radioAluguel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="28" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -171,19 +186,17 @@
                           <Component id="labelCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="campoCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="campoCor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelCor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
                               <Component id="radioVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="radioAluguel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="labelTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="campoCor" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelCor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
-                      <EmptySpace pref="11" max="32767" attributes="0"/>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -278,6 +291,7 @@
             </Component>
             <Component class="javax.swing.JTextField" name="campoCodigo">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
@@ -422,27 +436,19 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboFornecedor.addItem(&quot;Selecione&quot;);&#xa;/*DESFAZER DEPOIS QUE O M&#xc9;TODO GETFORNECEDORES ESTIVER PRONTO&#xa;for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;    comboFornecedor.addItem(fornecedor.getNome());&#xa;}&#xa;&#xa;comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());&#xa;&#xa;comboFornecedor.setSelectedIndex(0);&#xa;*/"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="campoNome.setText(produto.getNome());&#xa;campoCodigo.setText(produto.getCodigo());&#xa;campoCor.setText(produto.getCor());&#xa;campoTamanho.setText(produto.getTam()+&quot;&quot;);&#xa;campoQuantidade.setText(produto.getQuantidade()+&quot;&quot;);&#xa;campoPreco.setText(produto.getValorInString());&#xa;campoPreco.setText(campoPreco.getText().replaceAll(&quot;,&quot;, &quot;.&quot;));&#xa;if(produto.isLocation()) {&#xa;    radioAluguel.setSelected(true);&#xa;    radioVenda.setSelected(false);&#xa;} else {&#xa;    radioVenda.setSelected(true);&#xa;    radioAluguel.setSelected(false);&#xa;}&#xa;comboFornecedor.setSelectedItem(produto.getFornecedor());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboFornecedor.addItem(&quot;Selecione&quot;);&#xa;/* DESFAZER DEPOIS QUE O M&#xc9;TODO GETFORCENEDORES ESTIVER IMPLEMENTADO&#xa;for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;    comboFornecedor.addItem(fornecedor.getNome());&#xa;}&#xa;&#xa;comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());&#xa;&#xa;comboFornecedor.setSelectedIndex(0);&#xa;*/"/>
           </AuxValues>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="botaoSalvar">
+    <Component class="javax.swing.JLabel" name="labelObrigatorio">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="16" style="0"/>
+          <Font name="Tahoma" size="12" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value=" Salvar "/>
-        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-          <Color id="Cursor em Forma de M&#xe3;o"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="* Obrigat&#xf3;rio "/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarActionPerformed"/>
-      </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoSalvar.setIcon(new ImageIcon(&quot;Imagens\\Salvar.png&quot;));"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="botaoCancelar">
       <Properties>
@@ -460,14 +466,6 @@
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoCancelar.setIcon(new ImageIcon(&quot;Imagens\\Cancelar.png&quot;));"/>
       </AuxValues>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelObrigatorio">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="12" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="* Obrigat&#xf3;rio"/>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>
