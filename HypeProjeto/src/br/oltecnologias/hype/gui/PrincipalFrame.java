@@ -118,7 +118,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         labelFiltrarLocacoes = new javax.swing.JLabel();
         comboBoxOrdenarFornecedores1 = new javax.swing.JComboBox();
         botaoVerContrato = new javax.swing.JButton();
-        botaoExcluirLocacao = new javax.swing.JButton();
         botaoFinalizarLocacao = new javax.swing.JButton();
         botaoGerarReciboLocacao = new javax.swing.JButton();
         botaoVerRecibosLocacao = new javax.swing.JButton();
@@ -864,16 +863,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoVerContrato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoVerContrato.setVisible(false);
 
-    botaoExcluirLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoExcluirLocacao.setText("   Excluir   ");
-    botaoExcluirLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoExcluirLocacao.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoExcluirLocacaoActionPerformed(evt);
-        }
-    });
-    botaoExcluirLocacao.setVisible(false);
-
     botaoFinalizarLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoFinalizarLocacao.setText("Finalizar Locação");
     botaoFinalizarLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -900,7 +889,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGap(18, 18, 18)
                     .addComponent(botaoPesquisarLocacao))
                 .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelLocacoesLayout.createSequentialGroup()
                         .addComponent(labelFiltrarLocacoes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxOrdenarFornecedores1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -911,9 +900,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoVerContrato)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoFinalizarLocacao)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoExcluirLocacao))
+                        .addComponent(botaoFinalizarLocacao))
                     .addComponent(pnRlLocacoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1270, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap(35, Short.MAX_VALUE))
     );
@@ -942,9 +929,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addComponent(botaoGerarReciboLocacao))
                         .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoVerContrato)
-                            .addComponent(botaoExcluirLocacao)
                             .addComponent(botaoFinalizarLocacao)))))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(47, Short.MAX_VALUE))
     );
 
     abas.addTab("  Locações  ", painelLocacoes);
@@ -1796,7 +1782,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoGerarReciboLocacao.setVisible(false);
             botaoVerContrato.setVisible(false);
             botaoFinalizarLocacao.setVisible(false);
-            botaoExcluirLocacao.setVisible(false);
             tabelaLocacoes.clearSelection();
         }
     }//GEN-LAST:event_painelLocacoesMouseClicked
@@ -2083,23 +2068,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoExcluirFornecedorActionPerformed
 
-    private void botaoExcluirLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirLocacaoActionPerformed
-        if(tabelaProdutos.getSelectedRow() >= 0) {
-            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este produto?", "Atenção!", JOptionPane.YES_NO_OPTION);
-            //Sim = 0
-            if(escolha == 0) { 
-                try {
-                    //Pesquisa o cliente selecionado através do seu código (0 = primeira coluna da tabela)
-                    GerenciadorDeProduto.getInstance().removerProduto((String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
-                    removerProdutoDaTabela(tabelaProdutos.getSelectedRow());
-                    JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
-                } catch (ProdutoInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-            } 
-        }
-    }//GEN-LAST:event_botaoExcluirLocacaoActionPerformed
-
     private void botaoExcluirVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirVendaActionPerformed
         if(tabelaProdutos.getSelectedRow() >= 0) {
             int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este produto?", "Atenção!", JOptionPane.YES_NO_OPTION);
@@ -2264,7 +2232,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoGerarReciboLocacao.setVisible(true);
             botaoVerContrato.setVisible(true);
             botaoFinalizarLocacao.setVisible(true);
-            botaoExcluirLocacao.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
             
@@ -2592,7 +2559,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoEditarUsuario;
     private javax.swing.JButton botaoExcluirCliente;
     private javax.swing.JButton botaoExcluirFornecedor;
-    private javax.swing.JButton botaoExcluirLocacao;
     private javax.swing.JButton botaoExcluirMovimentacao;
     private javax.swing.JButton botaoExcluirProduto;
     private javax.swing.JButton botaoExcluirUsuario;

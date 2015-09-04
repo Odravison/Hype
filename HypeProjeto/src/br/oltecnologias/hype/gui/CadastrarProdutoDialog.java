@@ -260,6 +260,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         comboFornecedor.addItem("Selecione");
         /* DESFAZER DEPOIS QUE O MÉTODO GETFORCENEDORES ESTIVER IMPLEMENTADO
+
         for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
             comboFornecedor.addItem(fornecedor.getNome());
         }

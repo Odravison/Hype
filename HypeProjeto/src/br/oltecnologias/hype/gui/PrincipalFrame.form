@@ -911,7 +911,7 @@
                                   <Component id="botaoPesquisarLocacao" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="labelFiltrarLocacoes" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="comboBoxOrdenarFornecedores1" min="-2" max="-2" attributes="0"/>
@@ -923,8 +923,6 @@
                                       <Component id="botaoVerContrato" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="botaoFinalizarLocacao" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="botaoExcluirLocacao" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="pnRlLocacoes" alignment="0" min="-2" pref="1270" max="-2" attributes="0"/>
                               </Group>
@@ -962,13 +960,12 @@
                                       </Group>
                                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                           <Component id="botaoVerContrato" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="botaoExcluirLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                                           <Component id="botaoFinalizarLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="47" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1095,23 +1092,6 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerContrato.setVisible(false);"/>
-                  </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="botaoExcluirLocacao">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="   Excluir   "/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirLocacaoActionPerformed"/>
-                  </Events>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoExcluirLocacao.setVisible(false);"/>
                   </AuxValues>
                 </Component>
                 <Component class="javax.swing.JButton" name="botaoFinalizarLocacao">
