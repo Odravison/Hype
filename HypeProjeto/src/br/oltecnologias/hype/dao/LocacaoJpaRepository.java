@@ -10,6 +10,7 @@ import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * @author Odravison
  */
 public class LocacaoJpaRepository implements LocacaoRepository {
-    
+
     final static private Logger logger = LoggerFactory.getLogger(ClienteJpaRepository.class);
     private EntityManagerFactory emf = null;
 
@@ -37,27 +38,26 @@ public class LocacaoJpaRepository implements LocacaoRepository {
     private EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
-    
+
     @Override
     public void create(Locacao locacao) throws LocacaoExistenteException {
         logger.info("adicionando locação {}", locacao);
-        
+
         EntityManager em = null;
-        
-        try{
+
+        try {
             em = getEntityManager();
-            
-            if (existsLocacao(locacao.getId())){
+
+            if (existsLocacao(locacao.getId())) {
                 throw new LocacaoExistenteException("Locação de já existe");
             }
-            
-            em.getTransaction().begin();            
-            em.persist(locacao);            
+
+            em.getTransaction().begin();
+            em.persist(locacao);
             em.getTransaction().commit();
-            
-            
-        }finally{
-            if (em != null){
+
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }
@@ -65,29 +65,29 @@ public class LocacaoJpaRepository implements LocacaoRepository {
 
     @Override
     public Locacao findById(long id) throws LocacaoInexistenteException {
-        
+
         EntityManager em = null;
-        
-        try{
+
+        try {
             em = getEntityManager();
-            
-            if (!existsLocacao(id)){
+
+            if (!existsLocacao(id)) {
                 throw new LocacaoInexistenteException("Esta locação não existe");
             }
 
-        }finally{
-            if (em != null){
+        } finally {
+            if (em != null) {
                 em.close();
             }
         }
-        
+
         return em.find(Locacao.class, id);
-        
+
     }
 
     @Override
     public boolean existsLocacao(long id) {
-        
+
         Object result = null;
         EntityManager em = null;
 
@@ -117,8 +117,8 @@ public class LocacaoJpaRepository implements LocacaoRepository {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            
-            if (!existsLocacao(locacao.getId())){
+
+            if (!existsLocacao(locacao.getId())) {
                 throw new LocacaoInexistenteException("A locação para edição não existe!");
             }
 
@@ -134,7 +134,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             l.setParcelas(locacao.getParcelas());
             l.setValorDeEntrada(locacao.getValorDeEntrada());
             l.setAtiva(locacao.isAtiva());
-            
+
             em.merge(l);
 
             em.getTransaction().commit();
@@ -150,29 +150,29 @@ public class LocacaoJpaRepository implements LocacaoRepository {
     public void removerLocacao(Locacao locacao) throws LocacaoInexistenteException {
         EntityManager em = null;
         Locacao loca = null;
-        
-        try{
+
+        try {
             em = getEntityManager();
-            
-            if (!existsLocacao(locacao.getId())){
+
+            if (!existsLocacao(locacao.getId())) {
                 throw new LocacaoInexistenteException("Esta locação não existe");
             }
-            
+
             em.getTransaction().begin();
             loca = em.merge(locacao);
             em.remove(loca);
             em.getTransaction().commit();
-            
-        }finally{
-            if (em != null){
+
+        } finally {
+            if (em != null) {
                 em.close();
-            }           
-            
+            }
+
         }
     }
-    
+
     @Override
-    public List<Locacao> getAllLocacao(){
+    public List<Locacao> getAllLocacao() {
         EntityManager em = null;
         List<Locacao> locacoes = new ArrayList<Locacao>();
         try {
@@ -207,18 +207,18 @@ public class LocacaoJpaRepository implements LocacaoRepository {
 
         return locacoes;
     }
-    
+
     @Override
-    public List<Produto> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException{
-        List<Produto> produtos = new ArrayList<Produto>();
+    public List<ProdutoLocado> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException {
+        List<ProdutoLocado> produtos = new ArrayList<ProdutoLocado>();
         EntityManager em = null;
-        
+
         try {
             em = getEntityManager();
-            if (!existsLocacao(idLocacao)){
+            if (!existsLocacao(idLocacao)) {
                 throw new LocacaoInexistenteException("Esta locação não existe, logo, não é possível buscar produtos!");
             }
-            Query q = em.createQuery("FROM Produto WHERE fk_locacao = :parametro", Locacao.class);
+            Query q = em.createQuery("FROM ProdutoLocado WHERE fk_locacao = :parametro", Locacao.class);
             q.setParameter("parametro", idLocacao);
             produtos = q.getResultList();
 
@@ -229,7 +229,30 @@ public class LocacaoJpaRepository implements LocacaoRepository {
         }
 
         return produtos;
-        
+
     }
-    
+
+//    public void createLocacoes(List<Locacao> locacoes) {
+//        EntityManager em = null;
+//
+//        try {
+//            em = getEntityManager();
+//            em.getTransaction().begin();
+//            System.out.println("Eu fui chamado JPA LOCACOES");
+//            for (Locacao l : locacoes) {
+//                l.resetarId();
+//                System.out.println("SOU A LOCACAO L E MEU ID É: " + l.getId());
+//                em.persist(l);
+//                System.out.println("MAS AGORA FUII PERSISTIDO E MEU ID É: " + l.getId());
+//            }
+//            
+//            em.getTransaction().commit();
+//            System.out.println("COMITADO EM LOCACOES");
+//
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }
 }

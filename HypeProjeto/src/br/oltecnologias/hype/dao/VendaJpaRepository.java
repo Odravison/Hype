@@ -7,6 +7,7 @@ package br.oltecnologias.hype.dao;
 
 import br.oltecnologias.hype.exception.VendaInexistenteException;
 import br.oltecnologias.hype.model.Venda;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -125,7 +126,21 @@ public class VendaJpaRepository implements VendaRepository {
 
     @Override
     public List<Venda> getAllVendas() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Venda> Vendas = new ArrayList<Venda>();
+        EntityManager em = null;
+
+        try {
+            em = getEntityManager();
+            Query q = em.createQuery("SELECT c FROM Venda c");
+            Vendas = q.getResultList();
+
+        } finally {
+            if (em != null) {
+                em.close();
+            }
+        }
+
+        return Vendas;
     }
     
 }

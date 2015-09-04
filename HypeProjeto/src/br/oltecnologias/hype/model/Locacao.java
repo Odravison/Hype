@@ -22,6 +22,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 @Entity
 public class Locacao implements Serializable {
@@ -31,7 +32,7 @@ public class Locacao implements Serializable {
     @Column(name = "id_locacao")
     private long id;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
 
 //    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -234,6 +235,10 @@ public class Locacao implements Serializable {
 
     public void setPercentualDesconto(int percentualDesconto) {
         this.percentualDesconto = percentualDesconto;
+    }
+    
+    public void resetarId(){
+        this.id = 0;
     }
     
 }

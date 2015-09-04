@@ -7,6 +7,7 @@ package br.oltecnologias.hype.model;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -186,7 +187,7 @@ public class GeradorDeRecibo {
         return (s);
     }
 
-    public void gerarRecibo(Locacao loc) throws LocacaoInexistenteException {
+    public void gerarRecibo(Locacao loc) throws LocacaoInexistenteException, ProdutoInexistenteException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
@@ -221,7 +222,7 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
+            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome());
 
             diretorio.mkdir();
@@ -287,7 +288,7 @@ public class GeradorDeRecibo {
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
 
-            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeContratos()
+            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome() + "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
@@ -310,13 +311,13 @@ public class GeradorDeRecibo {
 
     }
 
-    public void imprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException {
+    public void imprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
         gerarRecibo(loc);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
         
         
-        String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
+        String diretorio = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome()+ "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf";
         
         
@@ -337,7 +338,7 @@ public class GeradorDeRecibo {
         return descricaoCurta;
     }
 
-    public void gerarPxsRecibos(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException {
+    public void gerarPxsRecibos(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
@@ -374,7 +375,7 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
+            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome() + "\\Contratos");
 
             diretorio.mkdir();
@@ -440,7 +441,7 @@ public class GeradorDeRecibo {
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
             
-            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeContratos()
+            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome() + "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);

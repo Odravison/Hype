@@ -25,13 +25,10 @@ public class GerenciadorDeProduto {
         return singleton;
     }
 
-    public Produto cadastrarProduto(String codigo, String nome, double valor,
-            int quant, String fornecedor, String cor, int tamanho, boolean isLocation) throws ProdutoExistenteException, ProdutoInexistenteException {
+    public Produto cadastrarProduto(Produto produto) throws ProdutoExistenteException, ProdutoInexistenteException {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
-
-        Produto produto = new Produto(codigo, nome, valor, quant, fornecedor, cor, tamanho, isLocation);
 
         try {
             pjp.create(produto);
