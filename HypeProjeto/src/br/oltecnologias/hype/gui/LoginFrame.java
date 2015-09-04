@@ -2,9 +2,13 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
+import br.oltecnologias.hype.model.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -167,19 +171,42 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
+                //Cadastrando nossos usuários para ter acesso ao sistema (retirar depois)
+                GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Luender Lima", "luender", "1234", true));
+                GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Odravison Amaral", "odravison", "1234", false));
+                
                 // Validar usuário no sistema
                 if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
                     //Cadastrando a empresa - Tirar depois 
                     Configuracao.getInstance().setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-9999", 
                         new Endereco("Fulano de Tal", "Centro", "PB", 100, "João Pessoa")));
                     
-                    GerenciadorDoSistema.getInstance().setUsuarioLogado(
-                            GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
+                    //GerenciadorDoSistema.getInstance().setUsuarioLogado(
+                            //GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
                     
-                    new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                    /*new PrincipalFrame(campoLogin.getText()).setVisible(true);
                     //new PrincipalFrame().setVisible(true);
                     setVisible(false);
-                    dispose();
+                    dispose();*/
+                    
+                    new Runnable() {
+                        public void run() {
+                            try {
+                                GerenciadorDoSistema.getInstance().setUsuarioLogado(
+                                        GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
+                            } catch (UsuarioInexistenteException ex) {
+                                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    };
+                    
+                    setVisible(false);
+                    java.awt.EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                            new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                        }
+                    });
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
