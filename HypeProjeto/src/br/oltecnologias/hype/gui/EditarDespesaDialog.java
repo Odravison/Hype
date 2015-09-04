@@ -247,13 +247,17 @@ public class EditarDespesaDialog extends java.awt.Dialog {
                 GerenciadorDoSistema.getInstance().editarDespesa(despesa);
                 
                 //Lista de movimentações
-                GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorOperacao(Long.toString(despesa.getId()));
+                for(Movimentacao movimentacao: GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorOperacao(Long.toString(despesa.getId()))) {
+                    if(movimentacao.getMovimento().toUpperCase().equals("DESPESA")) {
+                        this.movimentacao = movimentacao;
+                    }
+                }
                 movimentacao.setBeneficiario(campoFavorecido.getText());
                 movimentacao.setValor(Double.parseDouble(campoValor.getText()));
 
-                //GerenciadorDoSistema.getInstance().editarMovimentacao(movimentacao);
+                GerenciadorDoSistema.getInstance().editarMovimentacao(movimentacao);
 
-                JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
+                JOptionPane.showMessageDialog(null, "Despesa editada com sucesso!");
 
                 salvarSelecionado = true; //O botão Salvar foi selecionado
                 setVisible(false);

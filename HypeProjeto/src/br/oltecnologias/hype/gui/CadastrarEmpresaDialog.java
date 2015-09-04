@@ -45,7 +45,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         campoTelefone = new javax.swing.JFormattedTextField();
         labelObrigatorio = new javax.swing.JLabel();
         botaoSalvar = new javax.swing.JButton();
-        botaoCancelar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -248,16 +247,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
             }
         });
 
-        botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaoCancelar.setText("Cancelar");
-        botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
-        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoCancelarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -269,9 +258,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelObrigatorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoSalvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar)))
+                        .addComponent(botaoSalvar)))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
@@ -281,9 +268,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 .addComponent(painelDadosPessoais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(botaoSalvar)
-                        .addComponent(botaoCancelar))
+                    .addComponent(botaoSalvar)
                     .addComponent(labelObrigatorio))
                 .addContainerGap(36, Short.MAX_VALUE))
         );
@@ -295,8 +280,8 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
      *Fecha a dialog
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        setVisible(false);
-        dispose();
+        //setVisible(false);
+        //dispose();
     }//GEN-LAST:event_closeDialog
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
@@ -358,11 +343,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
-    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
-        setVisible(false);
-        dispose();
-    }//GEN-LAST:event_botaoCancelarActionPerformed
-
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento estiver na lista 
             evt.consume();
@@ -402,7 +382,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoBairro;
     private javax.swing.JTextField campoCidade;

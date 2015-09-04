@@ -147,11 +147,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSalvarDiretorioBackup = new javax.swing.JButton();
         campoDiretorioBackup = new javax.swing.JTextField();
         labelDiretorioBackups = new javax.swing.JLabel();
-        botaoSalvarDiretorioContratos = new javax.swing.JButton();
+        botaoSalvarDiretorioDocumentos = new javax.swing.JButton();
         campoDiretorioDocumentos = new javax.swing.JTextField();
         labelDiretorioDocumentos = new javax.swing.JLabel();
         botaoAlterarDiretorioBackup = new javax.swing.JButton();
         botaoAlterarDiretorioDocumentos = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        botaoAlterarDiretorioRelatorios = new javax.swing.JButton();
+        botaoSalvarDiretorioRelatorios = new javax.swing.JButton();
+        campoDiretorioRelatorios = new javax.swing.JTextField();
         painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
         botaoPesquisarUsuario = new javax.swing.JButton();
@@ -1311,13 +1315,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioBackups.setText("Diretório de backups");
 
-    botaoSalvarDiretorioContratos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoSalvarDiretorioContratos.setText(" Salvar ");
-    botaoSalvarDiretorioContratos.setToolTipText("Salvar diretório");
-    botaoSalvarDiretorioContratos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoSalvarDiretorioContratos.addActionListener(new java.awt.event.ActionListener() {
+    botaoSalvarDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoSalvarDiretorioDocumentos.setText(" Salvar ");
+    botaoSalvarDiretorioDocumentos.setToolTipText("Salvar diretório");
+    botaoSalvarDiretorioDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioDocumentos.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoSalvarDiretorioContratosActionPerformed(evt);
+            botaoSalvarDiretorioDocumentosActionPerformed(evt);
         }
     });
 
@@ -1344,10 +1348,59 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoAlterarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoAlterarDiretorioBackup.setText("Alterar");
     botaoAlterarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoAlterarDiretorioBackup.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoAlterarDiretorioBackupActionPerformed(evt);
+        }
+    });
 
     botaoAlterarDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoAlterarDiretorioDocumentos.setText("Alterar");
     botaoAlterarDiretorioDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoAlterarDiretorioDocumentos.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoAlterarDiretorioDocumentosActionPerformed(evt);
+        }
+    });
+
+    jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    jLabel1.setText("Diretório de Relatórios");
+
+    botaoAlterarDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoAlterarDiretorioRelatorios.setText("Alterar");
+    botaoAlterarDiretorioRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoAlterarDiretorioRelatorios.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoAlterarDiretorioRelatoriosActionPerformed(evt);
+        }
+    });
+
+    botaoSalvarDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoSalvarDiretorioRelatorios.setText(" Salvar ");
+    botaoSalvarDiretorioRelatorios.setToolTipText("Salvar diretório");
+    botaoSalvarDiretorioRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioRelatorios.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoSalvarDiretorioRelatoriosActionPerformed(evt);
+        }
+    });
+
+    campoDiretorioRelatorios.setEditable(false);
+    campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoDiretorioRelatorios.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioRelatorios.setText("Caminho do diretório");
+    campoDiretorioRelatorios.setToolTipText("Informe o caminho do diretório");
+    campoDiretorioRelatorios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoDiretorioRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoDiretorioRelatoriosMouseClicked(evt);
+        }
+    });
+    campoDiretorioRelatorios.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoDiretorioRelatoriosKeyTyped(evt);
+        }
+    });
 
     javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
     painelConfiguracoes.setLayout(painelConfiguracoesLayout);
@@ -1356,6 +1409,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelConfiguracoesLayout.createSequentialGroup()
             .addGap(32, 32, 32)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jLabel1)
                 .addComponent(labelDiretorioDocumentos)
                 .addComponent(labelDiretorioBackups)
                 .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -1364,14 +1418,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoAlterarDiretorioDocumentos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoSalvarDiretorioContratos))
+                        .addComponent(botaoSalvarDiretorioDocumentos))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
                         .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(botaoAlterarDiretorioBackup)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSalvarDiretorioBackup))))
-            .addContainerGap(685, Short.MAX_VALUE))
+                        .addComponent(botaoSalvarDiretorioBackup)))
+                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(botaoAlterarDiretorioRelatorios)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                    .addComponent(botaoSalvarDiretorioRelatorios)))
+            .addContainerGap(686, Short.MAX_VALUE))
     );
     painelConfiguracoesLayout.setVerticalGroup(
         painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1388,9 +1448,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoSalvarDiretorioContratos)
+                .addComponent(botaoSalvarDiretorioDocumentos)
                 .addComponent(botaoAlterarDiretorioDocumentos))
-            .addContainerGap(418, Short.MAX_VALUE))
+            .addGap(30, 30, 30)
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(botaoSalvarDiretorioRelatorios)
+                .addComponent(botaoAlterarDiretorioRelatorios)
+                .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(340, Short.MAX_VALUE))
     );
 
     try {
@@ -1844,9 +1911,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoDiretorioBackupKeyTyped
 
-    private void botaoSalvarDiretorioContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioContratosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoSalvarDiretorioContratosActionPerformed
+    private void botaoSalvarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioDocumentosActionPerformed
+        if(campoDiretorioDocumentos.getText().length() <= 0) {
+           JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            //Configuracao.getInstance().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
+        }
+    }//GEN-LAST:event_botaoSalvarDiretorioDocumentosActionPerformed
 
     private void campoDiretorioDocumentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioDocumentosMouseClicked
         if(campoDiretorioDocumentos.getText().equals("Caminho do diretório")) {
@@ -1866,6 +1937,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
         if(campoDiretorioDocumentos.getText().length() <= 0) {
             criarTextoEmCampo(campoDiretorioDocumentos, "Caminho do diretório");
+        }
+        if(campoDiretorioRelatorios.getText().length() <= 0) {
+            criarTextoEmCampo(campoDiretorioRelatorios, "Caminho do diretório");
         }
     }//GEN-LAST:event_painelConfiguracoesMouseClicked
 
@@ -2361,6 +2435,38 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoEditarEmpresaActionPerformed
+
+    private void botaoAlterarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioBackupActionPerformed
+        campoDiretorioBackup.setEditable(true);
+    }//GEN-LAST:event_botaoAlterarDiretorioBackupActionPerformed
+
+    private void botaoAlterarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioDocumentosActionPerformed
+        campoDiretorioDocumentos.setEditable(true);
+    }//GEN-LAST:event_botaoAlterarDiretorioDocumentosActionPerformed
+
+    private void botaoAlterarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioRelatoriosActionPerformed
+        campoDiretorioRelatorios.setEditable(true);
+    }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
+
+    private void botaoSalvarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioRelatoriosActionPerformed
+        if(campoDiretorioRelatorios.getText().length() <= 0) {
+           JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de relátorios corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Configuracao.getInstance().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+        }
+    }//GEN-LAST:event_botaoSalvarDiretorioRelatoriosActionPerformed
+
+    private void campoDiretorioRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioRelatoriosMouseClicked
+        if(campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
+            eliminarTextoDeCampo(campoDiretorioRelatorios);
+        }
+    }//GEN-LAST:event_campoDiretorioRelatoriosMouseClicked
+
+    private void campoDiretorioRelatoriosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioRelatoriosKeyTyped
+        if(campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
+            eliminarTextoDeCampo(campoDiretorioRelatorios);
+        }
+    }//GEN-LAST:event_campoDiretorioRelatoriosKeyTyped
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -2550,6 +2656,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane abas;
     private javax.swing.JButton botaoAlterarDiretorioBackup;
     private javax.swing.JButton botaoAlterarDiretorioDocumentos;
+    private javax.swing.JButton botaoAlterarDiretorioRelatorios;
     private javax.swing.JButton botaoAtivarTemporada;
     private javax.swing.JButton botaoEditarCliente;
     private javax.swing.JButton botaoEditarDespesa;
@@ -2583,13 +2690,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoRegistrarDespesa;
     private javax.swing.JLabel botaoSair;
     private javax.swing.JButton botaoSalvarDiretorioBackup;
-    private javax.swing.JButton botaoSalvarDiretorioContratos;
+    private javax.swing.JButton botaoSalvarDiretorioDocumentos;
+    private javax.swing.JButton botaoSalvarDiretorioRelatorios;
     private javax.swing.JButton botaoVerContrato;
     private javax.swing.JButton botaoVerLocacoesCliente;
     private javax.swing.JButton botaoVerRecibosLocacao;
     private javax.swing.JButton botaoVerRecibosVenda;
     private javax.swing.JTextField campoDiretorioBackup;
     private javax.swing.JTextField campoDiretorioDocumentos;
+    private javax.swing.JTextField campoDiretorioRelatorios;
     private javax.swing.JTextField campoPesquisarCliente;
     private javax.swing.JTextField campoPesquisarFornecedor;
     private javax.swing.JTextField campoPesquisarLocacao;
@@ -2603,6 +2712,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboBoxOrdenarProdutos;
     private javax.swing.JComboBox comboBoxUsuario;
     private javax.swing.JComboBox comboFiltrarCliente;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelFiltrarClientes;
