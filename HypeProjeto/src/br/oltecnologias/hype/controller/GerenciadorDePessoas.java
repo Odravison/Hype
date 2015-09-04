@@ -210,13 +210,39 @@ public class GerenciadorDePessoas {
         Fornecedor forn = null;
         
         try{
-            forn = fjp.findById(cnpj);
+            forn = fjp.findByCnpj(cnpj);
         } finally {
             emf.close();
         }
         
         return forn;
         
+    }
+    
+    public List<Fornecedor> getAllFornecedores() throws FornecedorInexistenteException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
+        
+        try{
+            return fjp.getAllFornecedores();
+        } finally{
+            if (emf != null){
+                emf.close();
+            }
+        }
+    }
+    
+    public List<Usuario> getAllUsuarios(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        
+        try{
+            return ujp.getAllUsuarios();
+        } finally{
+            if (emf != null){
+                emf.close();
+            }
+        }
     }
     
     public boolean validarUsuario(String login, String senha) throws UsuarioInexistenteException {

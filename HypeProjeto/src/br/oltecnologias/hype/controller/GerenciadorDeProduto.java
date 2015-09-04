@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -134,9 +135,43 @@ public class GerenciadorDeProduto {
         }
     }
     
+    public List<Produto> getProdutosDeLocacao(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
+        List<Produto> produtosLocaveis = new ArrayList<Produto>();
+       try{
+           
+       
+        for (Produto p: pjp.getAllProdutos()){
+            if (p.isLocation()){
+                produtosLocaveis.add(p);
+            }
+        }
+        return produtosLocaveis;
+       } finally{
+           emf.close();
+       }
+        
+    }
     
-    //************************************FAZER OS SEGUINTES MÉTODOS**************************************************//
-    //getProdutosDeLocacao();//Retorna uma lista com todos os produtos de locação cadastrados
-    //pesquisarProdutosDeLocacaoPeloNome(String nome); //se o nome está contido no nome do produto
+    
+    public List<Produto> getProdutosDeVenda(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
+        List<Produto> produtosLocaveis = new ArrayList<Produto>();
+       try{
+           
+       
+        for (Produto p: pjp.getAllProdutos()){
+            if (!p.isLocation()){
+                produtosLocaveis.add(p);
+            }
+        }
+        return produtosLocaveis;
+       } finally{
+           emf.close();
+       }
+    }
+    
     
 }

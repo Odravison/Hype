@@ -124,7 +124,5 @@ public class Movimentacao implements Serializable {
     public String getMovToString(){        
         String mov = getDataInString() + "     " + getMovimento() + "     " + getResponsavel() + "     " + getValorInString();
         return mov;
-        
-        
     }
 }

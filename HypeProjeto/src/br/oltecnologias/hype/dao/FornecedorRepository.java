@@ -16,16 +16,16 @@ import java.util.List;
  */
 public interface FornecedorRepository {
     
-    public void create(Fornecedor usuario) throws FornecedorExistenteException;
+    public void create(Fornecedor fornecedor) throws FornecedorExistenteException;
     
-    public Fornecedor findById(String id) throws FornecedorInexistenteException;
+    public Fornecedor findByCnpj(String id) throws FornecedorInexistenteException;
     
-    public boolean existsFornecedor(long id);
+    public boolean existsFornecedor(String cnpj);
     
     public void removerFornecedor(String cnpj)throws FornecedorInexistenteException;
     
-    public void editarFornecedor(Fornecedor usuario) throws FornecedorInexistenteException;
+    public void editarFornecedor(Fornecedor fornecedor) throws FornecedorInexistenteException;
     
-    public List<Fornecedor> getAllFornecedores() throws FornecedorInexistenteException;
+    public List<Fornecedor> getAllFornecedores();
     
 }

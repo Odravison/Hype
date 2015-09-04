@@ -12,13 +12,17 @@ import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Empresa;
+import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Temporada;
 import br.oltecnologias.hype.model.Usuario;
+import br.oltecnologias.hype.model.Venda;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
@@ -29,6 +33,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManagerFactory;
@@ -81,18 +88,21 @@ public class GerenciadorDoSistema {
         return despesa;
     }
 
-    public void cadastrarDespesa(Despesa despesa) throws DespesaExistenteException {
+    public Despesa cadastrarDespesa(Despesa despesa) throws DespesaExistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         DespesaJpaRepository ddjp = new DespesaJpaRepository(emf);
         try {
 
             ddjp.create(despesa);
+            return despesa;
 
         } finally {
             if (emf != null) {
                 emf.close();
             }
         }
+        
+        
 
     }
 
@@ -185,50 +195,70 @@ public class GerenciadorDoSistema {
     public void gerarRelatorioDeCaixa(Calendar dataInicial, Calendar dataFinal) throws IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
-        String relatorio = "";
-
+        List<String> relatorio = new ArrayList<String>();
+        relatorio.add("     DATA      ");
+        relatorio.add("   MOVIMENTO   ");
+        relatorio.add("  RESPONSÁVEL  ");
+        relatorio.add("     VALOR     ");
+        String diretorioFinal = null;
         try {
-
             for (Movimentacao mov : mjp.getAllMovimentacoes()) {
                 if (mov.getData().getTimeInMillis() >= dataInicial.getTimeInMillis()
                         && mov.getData().getTimeInMillis() <= dataFinal.getTimeInMillis()) {
-                    relatorio += mov.getMovToString() + "\n";
-                    //FORMATAR ISSO DEPOIS
-
-                    String diaIni = new SimpleDateFormat("dd").format(dataInicial.getTime());
-                    String mesIni = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
-                    String anoIni = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
-
-                    String diaFinal = new SimpleDateFormat("dd").format(dataInicial.getTime());
-                    String mesFinal = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
-                    String anoFinal = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
-
-                    Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
-                    Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-                    Font courier12 = new Font(Font.FontFamily.COURIER, 12);
-                    
-                    Document pdf = new Document(PageSize.A4, 10, 10, 10, 10);
-                    
-                    File diretorio = null;
-
-                    try {
-                        diretorio = new File(Configuracao.getInstance().getDiretorioDeRelatorios());
-                        diretorio.mkdir();
-
-                        PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
-                                + "" + diaIni + "." + mesIni + "." + anoIni + " TO " + diaFinal + "." + mesFinal + "." + anoFinal));
-                        
-                        PdfPTable table = new PdfPTable(4);
-                        
-                        
-
-                    } catch (DocumentException | IOException de) {
-                        System.err.println(de.getMessage());
-                    } finally{
-                        pdf.close();
-                    }
-
+                    relatorio.add(mov.getDataInString());
+                    relatorio.add(mov.getMovimento());
+                    relatorio.add(mov.getResponsavel());
+                    relatorio.add(mov.getValorInString());
                 }
+            }
+        //FORMATAR ISSO DEPOIS
+
+            String diaIni = new SimpleDateFormat("dd").format(dataInicial.getTime());
+            String mesIni = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
+            String anoIni = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
+
+            String diaFinal = new SimpleDateFormat("dd").format(dataInicial.getTime());
+            String mesFinal = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
+            String anoFinal = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
+
+            Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
+            Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+            Font courier12 = new Font(Font.FontFamily.COURIER, 12);
+
+            Document pdf = new Document(PageSize.A4, 10, 10, 10, 10);
+
+            File diretorio = null;
+
+            try {
+                diretorio = new File(Configuracao.getInstance().getDiretorioDeRelatorios());
+                diretorio.mkdir();
+
+                PdfContentByte canvas = new PdfContentByte(PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
+                        + "" + diaIni + "." + mesIni + "." + anoIni + " TO "
+                        + "" + diaFinal + "." + mesFinal + "." + anoFinal)));
+                
+                diretorioFinal = diretorio.toString() + "\\" + "Relatorio_"
+                        + "" + diaIni + "." + mesIni + "." + anoIni + " TO " + diaFinal + "." + mesFinal + "." + anoFinal;
+                
+                
+                
+                
+                PdfPTable table = new PdfPTable(4);
+                
+                for (String s: relatorio){
+                    table.addCell(s);
+                }
+                
+                pdf.add(table);
+                
+                ColumnText columns = new ColumnText(canvas);
+                
+                
+
+            } catch (DocumentException | IOException de) {
+                System.err.println(de.getMessage());
+            } finally {
+                pdf.close();
             }
 
         } finally {
@@ -238,7 +268,8 @@ public class GerenciadorDoSistema {
         }
 
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-        desktop.open(new File("D:\\Sistemas de Informação\\Horário.pdf"));
+
+        desktop.open(new File(diretorioFinal));
     }
 
     public Movimentacao cadastrarMovimentacao(Movimentacao movimentacao) {
@@ -396,5 +427,90 @@ public class GerenciadorDoSistema {
 
         return retorno;
 
+    }
+    
+    public void adicionarMovimentacao(Object obj){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        Movimentacao mov = null;
+        
+        if (obj.getClass().equals(Venda.class)){
+            Venda venda = (Venda) obj;
+            mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),"Cliente", venda.getId());
+        }
+        else if (obj.getClass().equals(Despesa.class)){
+            Despesa despesa = (Despesa) obj;
+            mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), despesa.getEmissor(), despesa.getFavorecido(), despesa.getId());
+        }
+        else if (obj.getClass().equals(Locacao.class)){
+            Locacao locacao = (Locacao) obj;
+            mov = new Movimentacao("Locação", locacao.getValorLocacao()-locacao.getValorDeEntrada()+locacao.getJaPago(), Calendar.getInstance(), 
+                    usuarioLogado.getNickName(), locacao.getCliente().getCelular(), locacao.getId());
+        }
+        
+        try{
+            mjp.create(mov);
+        } finally{
+            if (emf != null){
+                emf.close();
+            }
+        }
+        
+    }
+    
+    public double getValorCaixaDiario(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        double valorTotalEmCaixa = 0;
+        Calendar c = Calendar.getInstance();
+        int diaDeHoje = c.get(Calendar.DAY_OF_MONTH);
+        int mesDeHoje = c.get(Calendar.MONTH);
+        int anoDeHoje = c.get(Calendar.YEAR);
+        
+        try{
+            for (Movimentacao mov: mjp.getAllMovimentacoes()){
+                if (mov.getData().get(Calendar.DAY_OF_MONTH) == diaDeHoje &&
+                    mov.getData().get(Calendar.MONTH) == mesDeHoje &&
+                    mov.getData().get(Calendar.YEAR) == anoDeHoje){
+                    
+                    valorTotalEmCaixa += mov.getValor();
+                    
+                }
+            }
+            
+            return valorTotalEmCaixa;
+            
+        } finally{
+            if (emf != null){
+                emf.close();
+            }
+        }
+        
+    }
+    
+    public void editarMovimentacao(Movimentacao movimentacao) throws MovimentacaoInexistenteException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        
+        try{
+            mjp.editarMovimentacao(movimentacao);
+        } finally {
+            if (emf != null){
+                emf.close();
+            }
+        }
+    }
+    
+    public void editarEmpresa(Empresa empresa) throws Exception{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        EmpresaJpaController ejp = new EmpresaJpaController(emf);
+        
+        try{
+            ejp.edit(empresa);
+        }finally{
+            if (emf != null){
+                emf.close();
+            }
+        }
     }
 }
