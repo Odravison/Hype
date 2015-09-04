@@ -56,6 +56,9 @@ public class GerenciadorDeLocacao {
 
             clienteQueLocou.adicionarLocacao(locacao);
             cjp.editarCliente(clienteQueLocou);
+            
+            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao);
+            
             //Usar linha abaixo se, somente se, o código de cima não persistir a entidade locacao.
 //            ljp.create(locacao);
 
@@ -232,15 +235,12 @@ public class GerenciadorDeLocacao {
     public List<Produto> getProdutosDeLocacao(long id) throws LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-        List<Produto> aux = new ArrayList<Produto>();
 
         try {
-            aux = ljp.getProdutosFromLocacao(id);
+            return ljp.getProdutosFromLocacao(id);
         } finally {
             emf.close();
         }
-
-        return aux;
     }
 
     public List<Locacao> getMostRecentLocation() {

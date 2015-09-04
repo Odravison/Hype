@@ -72,8 +72,8 @@ public class ClienteJpaRepository implements ClienteRepository {
             if (!existsByCpf(cpf)) {
                 throw new ClienteInexistenteException("Cliente com cpf: " + cpf + " não foi cadastrado");
             }
-            Query query = em.createQuery("FROM Cliente WHERE id_cliente = ?", Cliente.class);
-            query.setParameter(1, cpf);
+            Query query = em.createQuery("SELECT c FROM Cliente c WHERE c.cpf = :cpf", Cliente.class);
+            query.setParameter("cpf", cpf);
             query.setMaxResults(1);
 
             result = (Cliente) query.getSingleResult();

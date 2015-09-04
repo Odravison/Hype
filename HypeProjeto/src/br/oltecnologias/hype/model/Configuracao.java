@@ -26,7 +26,7 @@ public class Configuracao implements Serializable {
     @GeneratedValue
     private int id;
 
-    private String nomeDaImpressora;
+    private String nomeDaImpressora = null;
 
     @OneToOne(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     private Empresa empresa = null;
@@ -47,7 +47,10 @@ public class Configuracao implements Serializable {
     private String diretorioDeBackup = null;
     
     private int diasDeExtravio = 0;
+    
     private String diretorioDeRelatorios = null;
+    
+    
 
 
     public Configuracao() {
