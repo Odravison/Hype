@@ -49,7 +49,7 @@ public class GeradorDeContrato {
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
         
-        String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
+        String diretorio = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + locacao.getCliente().getNome()+ "\\Contratos\\" +  "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
         
         
@@ -81,7 +81,7 @@ public class GeradorDeContrato {
         Font courier12 = new Font(Font.FontFamily.COURIER, 12);
 
         try {
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
+            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + locacao.getCliente().getNome() + "\\Contratos");
             
             diretorio.mkdir();

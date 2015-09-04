@@ -222,7 +222,7 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
+            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome());
 
             diretorio.mkdir();
@@ -288,7 +288,7 @@ public class GeradorDeRecibo {
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
 
-            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeContratos()
+            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome() + "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
@@ -317,7 +317,7 @@ public class GeradorDeRecibo {
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
         
         
-        String diretorio = Configuracao.getInstance().getDiretorioDeContratos()
+        String diretorio = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome()+ "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf";
         
         
@@ -375,7 +375,7 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeContratos()
+            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome() + "\\Contratos");
 
             diretorio.mkdir();
@@ -441,7 +441,7 @@ public class GeradorDeRecibo {
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
             
-            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeContratos()
+            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeDocumentos()
                     + "\\" + loc.getCliente().getNome() + "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);

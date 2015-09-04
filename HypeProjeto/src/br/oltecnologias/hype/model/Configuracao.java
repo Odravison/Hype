@@ -42,7 +42,7 @@ public class Configuracao implements Serializable {
             + "Cláusula 5ª. Quando o LOCADOR deixar de comparecer à loja para retirar os produtos, na data e dentro de horário de funcionamento da loja, o mesmo perderá os valores já pagos, bem como, ficará obrigado a pagar o valor restante que eventualmente tenha ficado devendo do total da locação, autorizando a emissão de boleto de cobrança correspondente;\n"
             + "Cláusula 6ª. Nenhuma peça locada será entregue ao CLIENTE sem o devido pagamento. E por estarem de acordo firmam o presente contrato.";
     
-    private String diretorioDeContratos = null;
+    private String diretorioDeDocumentos = null;
     
     private String diretorioDeBackup = null;
     
@@ -119,12 +119,12 @@ public class Configuracao implements Serializable {
         this.contratoPt2 = contratoPt2;
     }
 
-    public String getDiretorioDeContratos() {
-        return diretorioDeContratos;
+    public String getDiretorioDeDocumentos() {
+        return diretorioDeDocumentos;
     }
 
-    public void setDiretorioDeContratos(String diretorioDeContratos) {
-        this.diretorioDeContratos = diretorioDeContratos;
+    public void setDiretorioDeDocumentos(String diretorioDeDocumentos) {
+        this.diretorioDeDocumentos = diretorioDeDocumentos;
     }
 
     public String getDiretorioDeBackup() {
