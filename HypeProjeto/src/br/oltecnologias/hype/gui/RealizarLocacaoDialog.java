@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Executors;
 
 
 import javax.swing.ImageIcon;
@@ -848,7 +849,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             labelValorLocacao.setText("R$ "+decimalFormat.format(valorTotalLocacao));
-            
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -984,18 +984,24 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         concluirSelecionado = false;  //Marcamos que o salvar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
+        return concluirSelecionado;   //Retornamos true, se ele pressionou concluir
     }
     
     public void adicionarProdutoALocacao(Produto produto) {
         ProdutoLocado produtoLocado = getProdutoLocado(produto.getCodigo());
-        //Incrementa o valor da quantidade de produtos que está no map, caso a chave já exista
         if(produtoLocado != null) {
+            System.out.println("ENTROU NO IF DO ADICIONAR PRODUTO A LOCAÇÃO");
             //Atualiza a quantidade do produto na locação
             produtoLocado.setQuantidade(produtoLocado.getQuantidade()+1);
             //Atualiza a linha da tabela (2 = terceira coluna da tabela)
-            modeloTabelaProdutosLocados.setValueAt(produtoLocado.getQuantidade(), tabelaProdutos.getSelectedRow(), 2);
+            for(int i=0; i < modeloTabelaProdutosLocados.getRowCount(); i++) {
+                if(modeloTabelaProdutosLocados.getValueAt(i, 0).equals(produto.getCodigo())) {
+                    System.out.println("MUDANDO A QUANTIDADE DA LINHA "+i+" PARA "+produtoLocado.getQuantidade());
+                    modeloTabelaProdutosLocados.setValueAt(produtoLocado.getQuantidade(), i, 2);
+                }
+            }
         } else {
+            System.out.println("ENTROU NO ELSE DO ADICIONAR PRODUTO A LOCAÇÃO");
             produtoLocado = new ProdutoLocado(produto.getCodigo(), 1);
             produtosLocados.add(produtoLocado);
             //Adiciona os dados do novo produto na tabela
@@ -1009,6 +1015,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public void removerProdutoDaLocacao(int indice, String codigo) {
         ProdutoLocado produtoLocado = getProdutoLocado(codigo);
         if(produtoLocado != null) {
+            System.out.println("ENTROU NO IF DO REMOVER PRODUTO A LOCAÇÃO");
             //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
             int quantidade = produtoLocado.getQuantidade()-1;  
             //Remove o produto selecionada da lista de locação

@@ -420,7 +420,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboFornecedor.addItem(&quot;Selecione&quot;);&#xa;/* DESFAZER DEPOIS QUE O M&#xc9;TODO GETFORCENEDORES ESTIVER IMPLEMENTADO&#xa;for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;    comboFornecedor.addItem(fornecedor.getNome());&#xa;}&#xa;&#xa;comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());&#xa;&#xa;comboFornecedor.setSelectedIndex(0);&#xa;*/"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboFornecedor.addItem(&quot;Selecione&quot;);&#xa;/* DESFAZER DEPOIS QUE O M&#xc9;TODO GETFORCENEDORES ESTIVER IMPLEMENTADO&#xa;&#xa;for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;    comboFornecedor.addItem(fornecedor.getNome());&#xa;}&#xa;&#xa;comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());&#xa;&#xa;comboFornecedor.setSelectedIndex(0);&#xa;*/"/>
           </AuxValues>
         </Component>
       </SubComponents>

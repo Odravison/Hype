@@ -603,9 +603,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     
                     try {
                         
-                        novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, valorTotalVenda
+                        novaVenda = new Venda(produtosVendidos, valorTotalVenda
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                        
+                        GerenciadorDeVenda.getInstance().realizarVenda(novaVenda);
                         
                         novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Venda", valorTotalVenda, 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(), 
@@ -627,9 +629,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 try {
                     formaPagamento = "À Vista";
 
-                    novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(produtosVendidos, valorTotalVenda
+                    novaVenda = new Venda(produtosVendidos, valorTotalVenda
                                 , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-                                    Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                        
+                    GerenciadorDeVenda.getInstance().realizarVenda(novaVenda);
                     
                     novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Venda", valorTotalVenda, 
                                 Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(), 

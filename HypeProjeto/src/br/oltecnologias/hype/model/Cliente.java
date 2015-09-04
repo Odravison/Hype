@@ -38,7 +38,7 @@ public class Cliente implements Serializable {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "ultima_medicao")
-    private Calendar ultimaMedicao;
+    private Calendar dataCadastro;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="fk_endereco")
@@ -69,7 +69,7 @@ public class Cliente implements Serializable {
         this.celular = celular;
         this.telefone = telefone;
         this.locacoes = new ArrayList<Locacao>();
-        this.ultimaMedicao = Calendar.getInstance();
+        this.dataCadastro = Calendar.getInstance();
 
     }
 
@@ -114,16 +114,16 @@ public class Cliente implements Serializable {
         this.nome = nome;
     }
 
-    public Calendar getUltimaMedicao() {
-        return this.ultimaMedicao;
+    public Calendar getDataCadastro() {
+        return this.dataCadastro;
     }
 
-    public void setUltimaMedicao(Calendar ultimaMedicao) {
-        this.ultimaMedicao = ultimaMedicao;
+    public void setDataCadastro(Calendar dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
     
-    public String getUltimaMedicaoInString() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(ultimaMedicao.getTime());
+    public String getDataCadastroInString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(dataCadastro.getTime());
     }
 
     public Endereco getEndereco() {

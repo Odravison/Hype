@@ -171,7 +171,7 @@ public class ClienteJpaRepository implements ClienteRepository {
             c.setMedidas(cliente.getMedidas());
             c.setNome(cliente.getNome());
             c.setTelefone(cliente.getTelefone());
-            c.setUltimaMedicao(cliente.getUltimaMedicao());
+            c.setDataCadastro(cliente.getDataCadastro());
             c.setLocacoes(cliente.getLocacoes());
             
             em.merge(c);
