@@ -9,6 +9,7 @@ import br.oltecnologias.hype.exception.LocacaoExistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ public interface LocacaoRepository {
     
     public List<Locacao> getLocacaoByCliente(String idCliente);
     
-    public List<Produto> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException;
+    public List<ProdutoLocado> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException;
+    
+    public void createLocacoes(List<Locacao> locacoes);
     
 }

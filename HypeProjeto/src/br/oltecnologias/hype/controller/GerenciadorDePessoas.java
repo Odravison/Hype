@@ -86,7 +86,15 @@ public class GerenciadorDePessoas {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
         try {
+            List<Locacao> locacoes = new ArrayList<Locacao>();
+
+            locacoes = cjp.findByCpf(cpf).getLocacoes();
+            System.out.println("DENTRO DO GERENCIADO FOI CRIADO A LISTA VAZIA");
             cjp.removerCliente(cpf);
+            System.out.println("O CLIENTE FOI REMOVIDO, DENTRO DE GERENCIADOR, PX PASSO É PERSISTIR AS LOCACOES");
+            GerenciadorDeLocacao.getInstance().criarLocacoes(locacoes);
+            System.out.println("AS LOCACOES FORAM PERSISTIDAS.");
+
         } finally {
             emf.close();
         }
@@ -115,24 +123,24 @@ public class GerenciadorDePessoas {
     public Usuario cadastrarUsuario(Usuario usuario) throws UsuarioExistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
-        
-        try{
+
+        try {
             ujp.create(usuario);
-            
+
         } finally {
             emf.close();
         }
-        
+
         return usuario;
     }
 
     public void editarUsuario(Usuario usuario) throws UsuarioInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
-        
-        try{
+
+        try {
             ujp.editarUsuario(usuario);
-            
+
         } finally {
             emf.close();
         }
@@ -141,38 +149,38 @@ public class GerenciadorDePessoas {
     public void removerUsuario(String nickName) throws UsuarioInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
-        
-        try{
+
+        try {
             ujp.removerUsuario(nickName);
         } finally {
             emf.close();
         }
-        
+
     }
 
     public Fornecedor cadastrarFornecedor(Fornecedor fornecedor) throws FornecedorExistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
-        
-        try{
-            
+
+        try {
+
             fjp.create(fornecedor);
-            
+
         } finally {
             emf.close();
         }
-        
+
         return fornecedor;
     }
 
     public void editarFornecedor(Fornecedor fornecedor) throws FornecedorInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
-        
+
         try {
-            
+
             fjp.editarFornecedor(fornecedor);
-            
+
         } finally {
             emf.close();
         }
@@ -182,8 +190,8 @@ public class GerenciadorDePessoas {
     public void removerFornecedor(String cnpj) throws FornecedorInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
-        
-        try{
+
+        try {
             fjp.removerFornecedor(cnpj);
         } finally {
             emf.close();
@@ -194,13 +202,13 @@ public class GerenciadorDePessoas {
         List<Fornecedor> aux = new ArrayList<Fornecedor>();
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
-        
-        try{
+
+        try {
             aux = fjp.getAllFornecedores();
-        } finally { 
+        } finally {
             emf.close();
         }
-        
+
         return aux;
     }
 
@@ -208,57 +216,56 @@ public class GerenciadorDePessoas {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
         Fornecedor forn = null;
-        
-        try{
+
+        try {
             forn = fjp.findByCnpj(cnpj);
         } finally {
             emf.close();
         }
-        
+
         return forn;
-        
+
     }
-    
-    public List<Fornecedor> getAllFornecedores() throws FornecedorInexistenteException{
+
+    public List<Fornecedor> getFornecedores() throws FornecedorInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
-        
-        try{
+
+        try {
             return fjp.getAllFornecedores();
-        } finally{
-            if (emf != null){
+        } finally {
+            if (emf != null) {
                 emf.close();
             }
         }
     }
-    
-    public List<Usuario> getAllUsuarios(){
+
+    public List<Usuario> getUsuarios() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
-        
-        try{
+
+        try {
             return ujp.getAllUsuarios();
-        } finally{
-            if (emf != null){
+        } finally {
+            if (emf != null) {
                 emf.close();
             }
         }
     }
-    
+
     public boolean validarUsuario(String login, String senha) throws UsuarioInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
         boolean resposta;
-        
-        try{
-            
+
+        try {
+
             resposta = ujp.validarUsuario(login, senha);
-            
+
         } finally {
             emf.close();
         }
-        
-        
+
         return resposta;
     }
 
@@ -266,13 +273,13 @@ public class GerenciadorDePessoas {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
         boolean resposta;
-        
-        try{
+
+        try {
             resposta = ujp.isAdministrador(login);
         } finally {
             emf.close();
         }
-        
+
         return resposta;
     }
 
@@ -280,16 +287,17 @@ public class GerenciadorDePessoas {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
         Usuario u = null;
-        
+
         try {
             u = ujp.findByNickName(login);
         } finally {
             emf.close();
         }
-        
+
         return u;
-        
+
     }
+
     public List<Cliente> getClientes() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
@@ -317,29 +325,12 @@ public class GerenciadorDePessoas {
         }
     }
 
-//    public List<Fornecedor> getFornecedores() {
-//        return fornecedores;
-//    }
-//
-//    public void setFornecedores(List<Fornecedor> fornecedores) {
-//        this.fornecedores = fornecedores;
-//    }
-//
-//    public List<Usuario> getUsuarios() {
-//        return usuarios;
-//    }
-//
-//    public void setUsuarios(List<Usuario> usuarios) {
-//        this.usuarios = usuarios;
-//    }
-    
-    
     //Método para pesquisar os clientes que fizeram locações as mais recentes
     // Retorno: uma lista de clientes ordenada pela data (mais recente para a menos recente) da sua última locação
-    public List<Cliente> getMostRecentLocationsByClientes() {
+    public List<Cliente> getLocacoesMaisRecentsPorCliente() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
-        
+
         List<Cliente> listaDeRetorno = new ArrayList<Cliente>();
         List<Locacao> listaOrdenadaDeLocacao = new ArrayList<Locacao>();
         List<Cliente> listaDeCliente = new ArrayList<Cliente>();
@@ -355,24 +346,11 @@ public class GerenciadorDePessoas {
                         listaDeRetorno.add(c);
                     }
                 }
+
             }
+            return listaDeRetorno;
         } finally {
             emf.close();
         }
-
-        return listaDeRetorno;
     }
-
-    
-    
-    
-    //************************************FAZER OS SEGUINTES MÉTODOS**************************************************//
-    //pesquisarUsuarioPeloLogin(String login);
-    //pesquisarFornecedorPeloCnpj(String cnpj);
-    //isAdministrador(String login); //True, caso o usuário seja um adm, false, caso contrário
-    //getUsuarios(); //Retorna uma lista com todos os usuários cadastrados
-    //getFornecedores(); //Retorna uma lista com todos os fornecedores cadastrados
-    //cadastrarFornecedor(Fornecedor fornecedor);
-    //cadastrarUsuario(Usuario usuario);
-    
 }

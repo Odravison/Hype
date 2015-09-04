@@ -95,7 +95,7 @@ public class GerenciadorDeLocacao {
 
         List<Locacao> locacoes = new ArrayList<Locacao>();
         List<Locacao> locacoesDoCliente = new ArrayList<Locacao>();
-        List<Produto> produtosDaLocacao = new ArrayList<Produto>();
+        List<ProdutoLocado> produtosDaLocacao = new ArrayList<ProdutoLocado>();
 
         Cliente clienteFinalizada = null;
 
@@ -111,8 +111,8 @@ public class GerenciadorDeLocacao {
                         if (locacaoGer.getId() == idLoc
                                 && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                             emprestou = true;
-                            for (Produto p : produtosDaLocacao) {
-                                GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigo()).addQuant(p.getQuantidade());
+                            for (ProdutoLocado p : produtosDaLocacao) {
+                                GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getId()).addQuant(p.getQuantidade());
                             }
 
                             clienteFinalizada = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
@@ -216,14 +216,14 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public String getProdutosDeLocacaoInString(long idLocacao) throws LocacaoInexistenteException {
+    public String getProdutosDeLocacaoInString(long idLocacao) throws LocacaoInexistenteException, ProdutoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
         String produtosLocados = "";
 
         try {
-            for (Produto produto : ljp.getProdutosFromLocacao(idLocacao)) {
-                produtosLocados += produto.getNome() + ", ";
+            for (ProdutoLocado produto : ljp.getProdutosFromLocacao(idLocacao)) {
+                produtosLocados += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(produto.getId()).getNome() + ", ";
             }
         } finally {
             emf.close();
@@ -232,12 +232,17 @@ public class GerenciadorDeLocacao {
         return produtosLocados;
     }
 
-    public List<Produto> getProdutosDeLocacao(long id) throws LocacaoInexistenteException {
+    public List<Produto> getProdutosDeLocacao(long id) throws LocacaoInexistenteException, ProdutoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 
         try {
-            return ljp.getProdutosFromLocacao(id);
+            List<ProdutoLocado> produtosLocado = ljp.getProdutosFromLocacao(id);
+            List<Produto> retorno = new ArrayList<Produto>();
+            for (ProdutoLocado p: produtosLocado){
+                retorno.add(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getId()));
+            }
+            return retorno;
         } finally {
             emf.close();
         }
@@ -279,6 +284,22 @@ public class GerenciadorDeLocacao {
         }
         
         return loc;
+    }
+    
+    public void criarLocacoes(List<Locacao> locacoes){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+        
+        try{
+            
+            ljp.createLocacoes(locacoes);
+            
+            
+        } finally {
+            if (emf != null){
+                emf.close();
+            }
+        }
     }
     
 }

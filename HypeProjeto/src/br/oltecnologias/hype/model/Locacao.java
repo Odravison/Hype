@@ -236,4 +236,8 @@ public class Locacao implements Serializable {
         this.percentualDesconto = percentualDesconto;
     }
     
+    public void resetarId(){
+        this.id = 0;
+    }
+    
 }
