@@ -34,6 +34,6 @@ public interface LocacaoRepository {
     
     public List<ProdutoLocado> getProdutosFromLocacao(long idLocacao) throws LocacaoInexistenteException;
     
-    public void createLocacoes(List<Locacao> locacoes);
+//    public void createLocacoes(List<Locacao> locacoes);
     
 }

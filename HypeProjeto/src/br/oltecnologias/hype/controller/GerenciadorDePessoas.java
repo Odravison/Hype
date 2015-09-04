@@ -91,9 +91,9 @@ public class GerenciadorDePessoas {
             locacoes = cjp.findByCpf(cpf).getLocacoes();
             System.out.println("DENTRO DO GERENCIADO FOI CRIADO A LISTA VAZIA");
             cjp.removerCliente(cpf);
-            System.out.println("O CLIENTE FOI REMOVIDO, DENTRO DE GERENCIADOR, PX PASSO É PERSISTIR AS LOCACOES");
-            GerenciadorDeLocacao.getInstance().criarLocacoes(locacoes);
-            System.out.println("AS LOCACOES FORAM PERSISTIDAS.");
+//            System.out.println("O CLIENTE FOI REMOVIDO, DENTRO DE GERENCIADOR, PX PASSO É PERSISTIR AS LOCACOES");
+//            GerenciadorDeLocacao.getInstance().criarLocacoes(locacoes);
+//            System.out.println("AS LOCACOES FORAM PERSISTIDAS.");
 
         } finally {
             emf.close();

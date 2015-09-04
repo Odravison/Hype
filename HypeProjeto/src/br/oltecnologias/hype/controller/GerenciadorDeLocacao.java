@@ -286,20 +286,20 @@ public class GerenciadorDeLocacao {
         return loc;
     }
     
-    public void criarLocacoes(List<Locacao> locacoes){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-        
-        try{
-            
-            ljp.createLocacoes(locacoes);
-            
-            
-        } finally {
-            if (emf != null){
-                emf.close();
-            }
-        }
-    }
+//    public void criarLocacoes(List<Locacao> locacoes){
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+//        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+//        
+//        try{
+//            
+//            ljp.createLocacoes(locacoes);
+//            
+//            
+//        } finally {
+//            if (emf != null){
+//                emf.close();
+//            }
+//        }
+//    }
     
 }

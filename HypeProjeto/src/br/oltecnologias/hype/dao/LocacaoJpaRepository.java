@@ -232,27 +232,27 @@ public class LocacaoJpaRepository implements LocacaoRepository {
 
     }
 
-    public void createLocacoes(List<Locacao> locacoes) {
-        EntityManager em = null;
-
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            System.out.println("Eu fui chamado JPA LOCACOES");
-            for (Locacao l : locacoes) {
-                l.resetarId();
-                System.out.println("SOU A LOCACAO L E MEU ID É: " + l.getId());
-                em.persist(l);
-                System.out.println("MAS AGORA FUII PERSISTIDO E MEU ID É: " + l.getId());
-            }
-            
-            em.getTransaction().commit();
-            System.out.println("COMITADO EM LOCACOES");
-
-        } finally {
-            if (em != null) {
-                em.close();
-            }
-        }
-    }
+//    public void createLocacoes(List<Locacao> locacoes) {
+//        EntityManager em = null;
+//
+//        try {
+//            em = getEntityManager();
+//            em.getTransaction().begin();
+//            System.out.println("Eu fui chamado JPA LOCACOES");
+//            for (Locacao l : locacoes) {
+//                l.resetarId();
+//                System.out.println("SOU A LOCACAO L E MEU ID É: " + l.getId());
+//                em.persist(l);
+//                System.out.println("MAS AGORA FUII PERSISTIDO E MEU ID É: " + l.getId());
+//            }
+//            
+//            em.getTransaction().commit();
+//            System.out.println("COMITADO EM LOCACOES");
+//
+//        } finally {
+//            if (em != null) {
+//                em.close();
+//            }
+//        }
+//    }
 }
