@@ -544,7 +544,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             //Limpar o model dos produtos antes de acrescentar os objetos da pesquisa
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(campoPesquisar.getText())) {
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
         }

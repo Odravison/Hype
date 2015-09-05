@@ -167,7 +167,7 @@ public class GerenciadorDeProduto {
         }
     }
 
-    public List<Produto> pesquisarProdutoDeLocacaoPeloNome(String nome) {
+    public List<Produto> pesquisarProdutosDeLocacaoPeloNome(String nome) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
         List<Produto> retorno = new ArrayList<Produto>();
@@ -191,7 +191,7 @@ public class GerenciadorDeProduto {
         }
     }
 
-    public List<Produto> pesquisarProdutoDeVendaPeloNome(String nome) {
+    public List<Produto> pesquisarProdutosDeVendaPeloNome(String nome) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
         List<Produto> produtosDeVenda = new ArrayList<Produto>();

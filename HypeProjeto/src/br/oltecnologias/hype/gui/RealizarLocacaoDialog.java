@@ -807,7 +807,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
         } else {
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(campoPesquisar.getText())) {
+            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
         }
