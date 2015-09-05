@@ -223,6 +223,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 }
             } else if (sliderTemporada.getValue() > 60) {
                 GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDesconto.getText()));
+                
                 JOptionPane.showMessageDialog(null, "Temporada ativada com "+campoPercentualDesconto.getText()+"% de desconto", 
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 

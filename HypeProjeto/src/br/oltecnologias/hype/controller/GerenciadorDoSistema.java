@@ -9,6 +9,7 @@ import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.exception.TemporadaExistenteException;
 import br.oltecnologias.hype.exception.TemporadaInexistenteException;
+import br.oltecnologias.hype.exception.TipoInexistenteDeMovimentacao;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Empresa;
@@ -230,6 +231,7 @@ public class GerenciadorDoSistema {
             File diretorio = null;
 
             try {
+                pdf.open();
                 diretorio = new File(Configuracao.getInstance().getDiretorioDeRelatorios());
                 diretorio.mkdir();
 
@@ -429,14 +431,15 @@ public class GerenciadorDoSistema {
 
     }
     
-    public Movimentacao adicionarMovimentacao(Object obj, String tipo){
+    public Movimentacao adicionarMovimentacao(Object obj, String tipo) throws TipoInexistenteDeMovimentacao{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
-        Movimentacao mov = null;
+        Movimentacao mov;
         
         if (tipo.toUpperCase().equals("VENDA")){
             Venda venda = (Venda) obj;
-            mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),"Cliente", venda.getId());
+            mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
+                    Configuracao.getInstance().getEmpresa().getNome(), venda.getId());
         }
         else if (tipo.toUpperCase().equals("DESPESA")){
             Despesa despesa = (Despesa) obj;
@@ -445,7 +448,10 @@ public class GerenciadorDoSistema {
         else if (tipo.toUpperCase().equals("LOCAÇÃO")){
             Locacao locacao = (Locacao) obj;
             mov = new Movimentacao("Locação", locacao.getValorLocacao()-locacao.getValorDeEntrada()+locacao.getJaPago(), Calendar.getInstance(), 
-                    usuarioLogado.getNickName(), locacao.getCliente().getCelular(), locacao.getId());
+                    usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId());
+        }
+        else{
+            throw new TipoInexistenteDeMovimentacao("Este tipo de movimentação não existe.");
         }
         
         try{

@@ -27,6 +27,7 @@ import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
 import br.oltecnologias.hype.model.ProdutoVendido;
+import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Venda;
 import com.itextpdf.text.DocumentException;
 import java.awt.BorderLayout;
@@ -145,6 +146,12 @@ public class Aplicacao {
                 conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
                 List<Venda> movimentacoes = new ArrayList<Venda>();
                 List<ProdutoVendido> lista = new ArrayList<ProdutoVendido>();
+                
+                Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
+                Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
+                Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
+                Configuracao.getInstance().setEmpresa(empresa);
+                GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
                 
                 
                 for (int i = 0; i < 10; i++){

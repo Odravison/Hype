@@ -7,6 +7,7 @@ import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoExistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
+import br.oltecnologias.hype.exception.TipoInexistenteDeMovimentacao;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
@@ -37,7 +38,7 @@ public class GerenciadorDeLocacao {
 
     // FALTA TESTAR
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 

@@ -103,7 +103,7 @@ public class UsuarioJpaRepository implements UsuarioRepository{
             em = getEntityManager();
             em.getTransaction().begin();
 
-            Usuario u = findByNickName(nickName);
+            Usuario u = em.getReference(Usuario.class, nickName);
             
             em.remove(u);
             
