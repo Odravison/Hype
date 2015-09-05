@@ -131,44 +131,84 @@ public class GerenciadorDeProduto {
             emf.close();
         }
     }
-    
-    public List<Produto> getProdutosDeLocacao(){
+
+    public List<Produto> getProdutosDeLocacao() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
         List<Produto> produtosLocaveis = new ArrayList<Produto>();
-       try{
-           
-       
-        for (Produto p: pjp.getAllProdutos()){
-            if (p.isLocation()){
-                produtosLocaveis.add(p);
+        try {
+
+            for (Produto p : pjp.getAllProdutos()) {
+                if (p.isLocation()) {
+                    produtosLocaveis.add(p);
+                }
             }
+            return produtosLocaveis;
+        } finally {
+            emf.close();
         }
-        return produtosLocaveis;
-       } finally{
-           emf.close();
-       }
-        
+
     }
-    
-    
-    public List<Produto> getProdutosDeVenda(){
+
+    public List<Produto> getProdutosDeVenda() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
-        List<Produto> produtosLocaveis = new ArrayList<Produto>();
-       try{
-           
-       
-        for (Produto p: pjp.getAllProdutos()){
-            if (!p.isLocation()){
-                produtosLocaveis.add(p);
+        List<Produto> produtosDeVenda = new ArrayList<Produto>();
+        try {
+
+            for (Produto p : pjp.getAllProdutos()) {
+                if (!p.isLocation()) {
+                    produtosDeVenda.add(p);
+                }
+            }
+            return produtosDeVenda;
+        } finally {
+            emf.close();
+        }
+    }
+
+    public List<Produto> pesquisarProdutoDeLocacaoPeloNome(String nome) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
+        List<Produto> retorno = new ArrayList<Produto>();
+
+        try {
+
+            for (Produto p : pjp.getAllProdutos()) {
+                if (p.isLocation()) {
+                    if (p.getNome().contains(nome)) {
+                        retorno.add(p);
+                    }
+                }
+            }
+
+            return retorno;
+
+        } finally {
+            if (emf != null) {
+                emf.close();
             }
         }
-        return produtosLocaveis;
-       } finally{
-           emf.close();
-       }
     }
-    
-    
+
+    public List<Produto> pesquisarProdutoDeVendaPeloNome(String nome) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
+        List<Produto> produtosDeVenda = new ArrayList<Produto>();
+        try {
+
+            for (Produto p : pjp.getAllProdutos()) {
+                if (!p.isLocation()) {
+                    if (p.getNome().contains(nome)){
+                        produtosDeVenda.add(p);
+                    }
+                    
+                }
+            }
+            return produtosDeVenda;
+        } finally {
+            emf.close();
+        }
+    }
+
 }

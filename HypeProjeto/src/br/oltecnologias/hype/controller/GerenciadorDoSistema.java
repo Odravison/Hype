@@ -429,20 +429,20 @@ public class GerenciadorDoSistema {
 
     }
     
-    public void adicionarMovimentacao(Object obj){
+    public Movimentacao adicionarMovimentacao(Object obj, String tipo){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         Movimentacao mov = null;
         
-        if (obj.getClass().equals(Venda.class)){
+        if (tipo.toUpperCase().equals("VENDA")){
             Venda venda = (Venda) obj;
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),"Cliente", venda.getId());
         }
-        else if (obj.getClass().equals(Despesa.class)){
+        else if (tipo.toUpperCase().equals("DESPESA")){
             Despesa despesa = (Despesa) obj;
             mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), despesa.getEmissor(), despesa.getFavorecido(), despesa.getId());
         }
-        else if (obj.getClass().equals(Locacao.class)){
+        else if (tipo.toUpperCase().equals("LOCAÇÃO")){
             Locacao locacao = (Locacao) obj;
             mov = new Movimentacao("Locação", locacao.getValorLocacao()-locacao.getValorDeEntrada()+locacao.getJaPago(), Calendar.getInstance(), 
                     usuarioLogado.getNickName(), locacao.getCliente().getCelular(), locacao.getId());
@@ -450,6 +450,7 @@ public class GerenciadorDoSistema {
         
         try{
             mjp.create(mov);
+            return mov;
         } finally{
             if (emf != null){
                 emf.close();

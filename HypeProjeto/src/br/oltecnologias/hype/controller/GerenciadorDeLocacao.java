@@ -57,7 +57,7 @@ public class GerenciadorDeLocacao {
             clienteQueLocou.adicionarLocacao(locacao);
             cjp.editarCliente(clienteQueLocou);
             
-            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao);
+            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao, "locação");
             
             //Usar linha abaixo se, somente se, o código de cima não persistir a entidade locacao.
 //            ljp.create(locacao);
