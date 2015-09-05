@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.2" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -76,6 +76,9 @@
           </Border>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="campoNome.setText(fornecedor.getNome());&#xa;campoCnpj.setText(fornecedor.getCnpj());&#xa;campoRua.setText(fornecedor.getEndereco().getRua());&#xa;campoBairro.setText(fornecedor.getEndereco().getBairro());&#xa;campoCidade.setText(fornecedor.getEndereco().getCidade());&#xa;campoNumero.setText(fornecedor.getEndereco().getNumeroCasa()+&quot;&quot;);&#xa;campoTelefone.setText(fornecedor.getTelefone());&#xa;comboUf.setSelectedItem(fornecedor.getEndereco().getUf());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">

@@ -1,11 +1,17 @@
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.exception.ClienteExistenteException;
+import br.oltecnologias.hype.exception.ClienteInexistenteException;
+import br.oltecnologias.hype.exception.LocacaoInexistenteException;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
+import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Usuario;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -30,6 +36,14 @@ public class LoginFrame extends javax.swing.JFrame {
             CadastrarEmpresaDialog dialog = new CadastrarEmpresaDialog(null);
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
+        }
+        for(Locacao l: GerenciadorDeLocacao.getInstance().getLocacoes()) {
+            try {
+                System.out.println("ID DA LOCAÇÃO: "+l.getId());
+                GerenciadorDeLocacao.getInstance().finalizarLocacao(l.getId(), GerenciadorDePessoas.getInstance().pesquisarCliente(l.getCliente().getCpf()));
+            } catch (Exception ex) {
+                System.out.println("DEU PAU NA HORA DE FINALIZAR A LOCAÇÃO!");
+            } 
         }
     }
 
@@ -172,15 +186,12 @@ public class LoginFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                //Cadastrando nossos usuários para ter acesso ao sistema (retirar depois)
-                GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Luender Lima", "luender", "1234", true));
-                GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Odravison Amaral", "odravison", "1234", false));
                 
                 // Validar usuário no sistema
                 if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
                     //Cadastrando a empresa - Tirar depois 
-                    Configuracao.getInstance().setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-9999", 
-                        new Endereco("Fulano de Tal", "Centro", "PB", 100, "João Pessoa")));
+                    //Configuracao.getInstance().setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-9999", 
+                       // new Endereco("Fulano de Tal", "Centro", "PB", 100, "João Pessoa")));
                     
                     //GerenciadorDoSistema.getInstance().setUsuarioLogado(
                             //GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));

@@ -78,7 +78,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
 
         radioAdm.setBackground(new java.awt.Color(255, 255, 255));
         radioAdm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        radioAdm.setSelected(true);
         radioAdm.setText("Administrador");
         radioAdm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +138,14 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                     .addComponent(labelCategoria))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        if(usuario.isAdministrador()) {
+            radioAdm.setSelected(true);
+            radioFuncionario.setSelected(false);
+        } else {
+            radioFuncionario.setSelected(true);
+            radioAdm.setSelected(false);
+        }
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
@@ -235,7 +242,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
 
                     GerenciadorDePessoas.getInstance().editarUsuario(usuario);
 
-                    JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+                    JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
 
                     salvarSelecionado = true;
                     setVisible(false);

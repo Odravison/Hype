@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.2" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.DialogFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="ff" green="ff" id="white" palette="1" red="ff" type="palette"/>
@@ -76,6 +76,9 @@
           </Border>
         </Property>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Empresa empresa = Configuracao.getInstance().getEmpresa();&#xa;campoNome.setText(empresa.getNome());&#xa;campoCnpj.setText(empresa.getCnpj());&#xa;campoTelefone.setText(empresa.getTelefone());&#xa;campoRua.setText(empresa.getEndereco().getRua());&#xa;campoBairro.setText(empresa.getEndereco().getBairro());&#xa;campoCidade.setText(empresa.getEndereco().getCidade());&#xa;campoNumero.setText(empresa.getEndereco().getNumeroCasa()+&quot;&quot;);&#xa;comboUf.setSelectedItem(empresa.getEndereco().getUf());"/>
+      </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
@@ -90,7 +93,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labelNome2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="campoNome2" min="-2" pref="317" max="-2" attributes="0"/>
+                          <Component id="campoNome" min="-2" pref="317" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="labelCNPJ2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -113,7 +116,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelNome2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="campoNome2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="campoNome" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelCNPJ2" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="campoCnpj" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -138,14 +141,14 @@
             <Property name="text" type="java.lang.String" value="Nome:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="campoNome2">
+        <Component class="javax.swing.JTextField" name="campoNome">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNome2KeyTyped"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNomeKeyTyped"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelCNPJ2">
@@ -177,18 +180,18 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labelRua2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="campoRua2" min="-2" pref="302" max="-2" attributes="0"/>
+                              <Component id="campoRua" min="-2" pref="302" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
                               <Component id="labelNumero2" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="labelBairro2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="campoBairro2" min="-2" pref="129" max="-2" attributes="0"/>
+                              <Component id="campoBairro" min="-2" pref="129" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                               <Component id="labelCidade2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="campoCidade2" min="-2" pref="136" max="-2" attributes="0"/>
+                              <Component id="campoCidade" min="-2" pref="136" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -196,12 +199,12 @@
                               <EmptySpace pref="52" max="32767" attributes="0"/>
                               <Component id="labelUf2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="comboUf2" min="-2" max="-2" attributes="0"/>
+                              <Component id="comboUf" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="campoNumero2" min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="campoNumero" min="-2" pref="49" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -214,18 +217,18 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelRua2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoRua2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoRua" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelNumero2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoNumero2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoNumero" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelBairro2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoBairro2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoBairro" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelCidade2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="campoCidade2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="campoCidade" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="labelUf2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="comboUf2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="comboUf" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -241,14 +244,14 @@
                 <Property name="text" type="java.lang.String" value="Rua:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campoRua2">
+            <Component class="javax.swing.JTextField" name="campoRua">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoRua2KeyTyped"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoRuaKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelNumero2">
@@ -267,14 +270,14 @@
                 <Property name="text" type="java.lang.String" value="Bairro:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campoBairro2">
+            <Component class="javax.swing.JTextField" name="campoBairro">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoBairro2KeyTyped"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoBairroKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelCidade2">
@@ -285,14 +288,14 @@
                 <Property name="text" type="java.lang.String" value="Cidade:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campoCidade2">
+            <Component class="javax.swing.JTextField" name="campoCidade">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoCidade2KeyTyped"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoCidadeKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="labelUf2">
@@ -303,7 +306,7 @@
                 <Property name="text" type="java.lang.String" value="UF:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="comboUf2">
+            <Component class="javax.swing.JComboBox" name="comboUf">
               <Properties>
                 <Property name="maximumRowCount" type="int" value="20"/>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -342,14 +345,14 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="campoNumero2">
+            <Component class="javax.swing.JTextField" name="campoNumero">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNumero2KeyTyped"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNumeroKeyTyped"/>
               </Events>
             </Component>
           </SubComponents>

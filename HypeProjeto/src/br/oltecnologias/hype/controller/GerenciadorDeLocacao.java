@@ -88,7 +88,7 @@ public class GerenciadorDeLocacao {
         return locacoesRetorno;
     }
 
-    public void finalizarLocacao(int idLoc, Cliente cliente)
+    public void finalizarLocacao(long idLoc, Cliente cliente)
             throws ProdutoInexistenteException, LocacaoInexistenteException, ClienteInexistenteException, ClienteExistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);

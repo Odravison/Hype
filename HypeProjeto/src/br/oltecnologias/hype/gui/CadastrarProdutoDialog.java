@@ -7,6 +7,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
@@ -259,16 +260,16 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(0);
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         comboFornecedor.addItem("Selecione");
-        /* DESFAZER DEPOIS QUE O MÉTODO GETFORCENEDORES ESTIVER IMPLEMENTADO
-
-        for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
-            comboFornecedor.addItem(fornecedor.getNome());
+        try {
+            for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
+                comboFornecedor.addItem(fornecedor.getNome());
+            }
+        } catch(FornecedorInexistenteException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-
         comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());
 
         comboFornecedor.setSelectedIndex(0);
-        */
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
@@ -416,9 +417,11 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 }
                                 
                 try {
-                    novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(campoCodigo.getText(), campoNome.getText(), 
+                    novoProduto = new Produto(campoCodigo.getText(), campoNome.getText(), 
                             Double.parseDouble(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
                             fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
+                    
+                    GerenciadorDeProduto.getInstance().cadastrarProduto(novoProduto);
 
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
 

@@ -140,7 +140,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         List<Object[]> listaLinhasProdutos = new ArrayList<>();
 
         //Adicionando valores nas linhas
-        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
             listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
         }
         //cria um defaultablemodel com as informações acima

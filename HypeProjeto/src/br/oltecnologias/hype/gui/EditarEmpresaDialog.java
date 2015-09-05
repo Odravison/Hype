@@ -5,6 +5,8 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
 import javax.swing.ImageIcon;
@@ -35,19 +37,19 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
 
         painelDadosPessoais2 = new javax.swing.JPanel();
         labelNome2 = new javax.swing.JLabel();
-        campoNome2 = new javax.swing.JTextField();
+        campoNome = new javax.swing.JTextField();
         labelCNPJ2 = new javax.swing.JLabel();
         painelEndereco2 = new javax.swing.JPanel();
         labelRua2 = new javax.swing.JLabel();
-        campoRua2 = new javax.swing.JTextField();
+        campoRua = new javax.swing.JTextField();
         labelNumero2 = new javax.swing.JLabel();
         labelBairro2 = new javax.swing.JLabel();
-        campoBairro2 = new javax.swing.JTextField();
+        campoBairro = new javax.swing.JTextField();
         labelCidade2 = new javax.swing.JLabel();
-        campoCidade2 = new javax.swing.JTextField();
+        campoCidade = new javax.swing.JTextField();
         labelUf2 = new javax.swing.JLabel();
-        comboUf2 = new javax.swing.JComboBox();
-        campoNumero2 = new javax.swing.JTextField();
+        comboUf = new javax.swing.JComboBox();
+        campoNumero = new javax.swing.JTextField();
         labelTelefone = new javax.swing.JLabel();
         campoCnpj = new javax.swing.JFormattedTextField();
         campoTelefone = new javax.swing.JFormattedTextField();
@@ -70,10 +72,10 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         labelNome2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNome2.setText("Nome:");
 
-        campoNome2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNome2.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoNome2KeyTyped(evt);
+                campoNomeKeyTyped(evt);
             }
         });
 
@@ -86,10 +88,10 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         labelRua2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelRua2.setText("Rua:");
 
-        campoRua2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoRua2.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoRua.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoRua2KeyTyped(evt);
+                campoRuaKeyTyped(evt);
             }
         });
 
@@ -99,34 +101,34 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         labelBairro2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelBairro2.setText("Bairro:");
 
-        campoBairro2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoBairro2.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoBairro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoBairro2KeyTyped(evt);
+                campoBairroKeyTyped(evt);
             }
         });
 
         labelCidade2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCidade2.setText("Cidade:");
 
-        campoCidade2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoCidade2.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoCidade.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoCidade2KeyTyped(evt);
+                campoCidadeKeyTyped(evt);
             }
         });
 
         labelUf2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelUf2.setText("UF:");
 
-        comboUf2.setMaximumRowCount(20);
-        comboUf2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PB", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
-        comboUf2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        comboUf.setMaximumRowCount(20);
+        comboUf.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "PB", "AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO" }));
+        comboUf.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        campoNumero2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoNumero2.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNumero.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoNumero2KeyTyped(evt);
+                campoNumeroKeyTyped(evt);
             }
         });
 
@@ -140,27 +142,27 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                     .addGroup(painelEndereco2Layout.createSequentialGroup()
                         .addComponent(labelRua2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoRua2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoRua, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
                         .addComponent(labelNumero2))
                     .addGroup(painelEndereco2Layout.createSequentialGroup()
                         .addComponent(labelBairro2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoBairro2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(56, 56, 56)
                         .addComponent(labelCidade2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoCidade2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(painelEndereco2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelEndereco2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                         .addComponent(labelUf2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboUf2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(16, 16, 16))
                     .addGroup(painelEndereco2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         painelEndereco2Layout.setVerticalGroup(
@@ -169,17 +171,17 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelEndereco2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelRua2)
-                    .addComponent(campoRua2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelNumero2)
-                    .addComponent(campoNumero2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelEndereco2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelBairro2)
-                    .addComponent(campoBairro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCidade2)
-                    .addComponent(campoCidade2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelUf2)
-                    .addComponent(comboUf2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboUf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -213,7 +215,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                     .addGroup(painelDadosPessoais2Layout.createSequentialGroup()
                         .addComponent(labelNome2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNome2, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelCNPJ2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -231,7 +233,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelDadosPessoais2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNome2)
-                    .addComponent(campoNome2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelCNPJ2)
                     .addComponent(campoCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
@@ -296,6 +298,16 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
+        Empresa empresa = Configuracao.getInstance().getEmpresa();
+        campoNome.setText(empresa.getNome());
+        campoCnpj.setText(empresa.getCnpj());
+        campoTelefone.setText(empresa.getTelefone());
+        campoRua.setText(empresa.getEndereco().getRua());
+        campoBairro.setText(empresa.getEndereco().getBairro());
+        campoCidade.setText(empresa.getEndereco().getCidade());
+        campoNumero.setText(empresa.getEndereco().getNumeroCasa()+"");
+        comboUf.setSelectedItem(empresa.getEndereco().getUf());
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -307,29 +319,29 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void campoNome2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNome2KeyTyped
+    private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
         validarLetrasETamanho(evt, campoNome, maxCaracteresNome);
-    }//GEN-LAST:event_campoNome2KeyTyped
+    }//GEN-LAST:event_campoNomeKeyTyped
 
-    private void campoRua2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoRua2KeyTyped
+    private void campoRuaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoRuaKeyTyped
         if(campoRua.getText().length()>= maxCaracteresNome){
             evt.consume();
         }
-    }//GEN-LAST:event_campoRua2KeyTyped
+    }//GEN-LAST:event_campoRuaKeyTyped
 
-    private void campoBairro2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBairro2KeyTyped
+    private void campoBairroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoBairroKeyTyped
         if(campoBairro.getText().length()>= maxCaracteresBairro){
             evt.consume();
         }
-    }//GEN-LAST:event_campoBairro2KeyTyped
+    }//GEN-LAST:event_campoBairroKeyTyped
 
-    private void campoCidade2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCidade2KeyTyped
+    private void campoCidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCidadeKeyTyped
         validarLetrasETamanho(evt, campoCidade, maxCaracteresBairro); // Mesmo tamanho para nomes de bairros e cidades
-    }//GEN-LAST:event_campoCidade2KeyTyped
+    }//GEN-LAST:event_campoCidadeKeyTyped
 
-    private void campoNumero2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNumero2KeyTyped
+    private void campoNumeroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNumeroKeyTyped
         validarNumerosETamanho(evt, campoNumero, maxCaracteresNumero);
-    }//GEN-LAST:event_campoNumero2KeyTyped
+    }//GEN-LAST:event_campoNumeroKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
@@ -357,10 +369,11 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                     endereco.setBairro(campoBairro.getText());
                     endereco.setUf(comboUf.getSelectedItem().toString());
                     
+                    empresa.setCnpj(campoCnpj.getText());
                     empresa.setNome(campoNome.getText());
                     empresa.setTelefone(campoTelefone.getText());
                     
-                    //GerenciadorDoSistema.getInstance().editarEmpresa(empresa);
+                    GerenciadorDoSistema.getInstance().editarEmpresa(empresa);
 
                     JOptionPane.showMessageDialog(null, "Empresa editada com sucesso!");
 
@@ -395,6 +408,9 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
         }
     }
     
+    public Empresa getEmpresa() {
+        return empresa;
+    }
 
     private Empresa empresa;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
@@ -405,53 +421,23 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoBairro;
-    private javax.swing.JTextField campoBairro1;
-    private javax.swing.JTextField campoBairro2;
     private javax.swing.JTextField campoCidade;
-    private javax.swing.JTextField campoCidade1;
-    private javax.swing.JTextField campoCidade2;
     private javax.swing.JFormattedTextField campoCnpj;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoNome1;
-    private javax.swing.JTextField campoNome2;
     private javax.swing.JTextField campoNumero;
-    private javax.swing.JTextField campoNumero1;
-    private javax.swing.JTextField campoNumero2;
     private javax.swing.JTextField campoRua;
-    private javax.swing.JTextField campoRua1;
-    private javax.swing.JTextField campoRua2;
     private javax.swing.JFormattedTextField campoTelefone;
     private javax.swing.JComboBox comboUf;
-    private javax.swing.JComboBox comboUf1;
-    private javax.swing.JComboBox comboUf2;
-    private javax.swing.JLabel labelBairro;
-    private javax.swing.JLabel labelBairro1;
     private javax.swing.JLabel labelBairro2;
-    private javax.swing.JLabel labelCNPJ;
-    private javax.swing.JLabel labelCNPJ1;
     private javax.swing.JLabel labelCNPJ2;
-    private javax.swing.JLabel labelCidade;
-    private javax.swing.JLabel labelCidade1;
     private javax.swing.JLabel labelCidade2;
-    private javax.swing.JLabel labelNome;
-    private javax.swing.JLabel labelNome1;
     private javax.swing.JLabel labelNome2;
-    private javax.swing.JLabel labelNumero;
-    private javax.swing.JLabel labelNumero1;
     private javax.swing.JLabel labelNumero2;
     private javax.swing.JLabel labelObrigatorio;
-    private javax.swing.JLabel labelRua;
-    private javax.swing.JLabel labelRua1;
     private javax.swing.JLabel labelRua2;
     private javax.swing.JLabel labelTelefone;
-    private javax.swing.JLabel labelUf;
-    private javax.swing.JLabel labelUf1;
     private javax.swing.JLabel labelUf2;
-    private javax.swing.JPanel painelDadosPessoais;
-    private javax.swing.JPanel painelDadosPessoais1;
     private javax.swing.JPanel painelDadosPessoais2;
-    private javax.swing.JPanel painelEndereco;
-    private javax.swing.JPanel painelEndereco1;
     private javax.swing.JPanel painelEndereco2;
     // End of variables declaration//GEN-END:variables
 }

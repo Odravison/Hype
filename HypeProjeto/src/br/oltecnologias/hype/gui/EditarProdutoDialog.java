@@ -7,6 +7,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import javax.swing.ImageIcon;
@@ -261,15 +262,17 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         comboFornecedor.setMaximumRowCount(0);
         comboFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         comboFornecedor.addItem("Selecione");
-        /* DESFAZER DEPOIS QUE O MÉTODO GETFORCENEDORES ESTIVER IMPLEMENTADO
-        for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
-            comboFornecedor.addItem(fornecedor.getNome());
+        try {
+            for(Fornecedor fornecedor: GerenciadorDePessoas.getInstance().getFornecedores()) {
+                comboFornecedor.addItem(fornecedor.getNome());
+            }
+        } catch(FornecedorInexistenteException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
 
         comboFornecedor.setMaximumRowCount(comboFornecedor.getItemCount());
 
-        comboFornecedor.setSelectedIndex(0);
-        */
+        comboFornecedor.setSelectedItem(produto.getFornecedor());
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
