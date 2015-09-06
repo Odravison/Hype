@@ -2172,7 +2172,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             if(escolha == 0) { 
                 try {
                    //Remove o usuário selecionado através do seu login
-                    GerenciadorDePessoas.getInstance().removerUsuario((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
+                    GerenciadorDePessoas.getInstance().removerUsuario(GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
                     removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
                 } catch (UsuarioInexistenteException e) {
