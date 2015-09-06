@@ -220,6 +220,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             } else if(campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) { 
                 JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if (sliderTemporada.getValue() > 60) {
+                System.out.println("ANTES DO SET TEMPORADA");
                 GerenciadorDoSistema.getInstance().setTemporada();
                 System.out.println("PASSOU DO SET TEMPORADA");
                 GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDesconto.getText()));

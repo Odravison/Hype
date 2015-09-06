@@ -1110,12 +1110,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(campoPesquisarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarFornecedor1))
             .addGap(38, 38, 38)
-            .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(labelFiltrarVenda)
-                .addComponent(comboBoxOrdenarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVerRecibosVenda)
-                    .addComponent(botaoGerarReciboVenda)))
+                    .addComponent(botaoGerarReciboVenda))
+                .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFiltrarVenda)
+                    .addComponent(comboBoxOrdenarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(19, 19, 19)
             .addComponent(pnRlVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(73, 73, 73))
@@ -2171,7 +2172,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             if(escolha == 0) { 
                 try {
                    //Remove o usuário selecionado através do seu login
-                    GerenciadorDePessoas.getInstance().removerUsuario((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
+                    GerenciadorDePessoas.getInstance().removerUsuario(GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
                     removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
                 } catch (UsuarioInexistenteException e) {
