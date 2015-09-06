@@ -2171,8 +2171,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Sim = 0
             if(escolha == 0) { 
                 try {
+                    Usuario usuario = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
                    //Remove o usuário selecionado através do seu login
-                    GerenciadorDePessoas.getInstance().removerUsuario(GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
+                    GerenciadorDePessoas.getInstance().removerUsuario(usuario);
                     removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
                 } catch (UsuarioInexistenteException e) {
