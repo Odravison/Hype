@@ -149,13 +149,13 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
             
             dataInicial.setTime(dateDataInicial.getDate());
             dataFinal.setTime(dateDataFinal.getDate());
-            
+
             GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
             
             setVisible(false);
             dispose();
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Informe as datas corretamente para a geração do relatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ocorreu algum problema na geração do relatório", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoGerarActionPerformed
 

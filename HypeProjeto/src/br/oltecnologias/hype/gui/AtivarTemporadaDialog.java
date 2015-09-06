@@ -217,19 +217,24 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         try {
             if(campoPercentualDesconto.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o percentual de desconto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoPercentualDesconto.getText().length() > 0) { 
-                if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
-                    JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
+            } else if(campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) { 
+                JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if (sliderTemporada.getValue() > 60) {
+                GerenciadorDoSistema.getInstance().setTemporada();
+                System.out.println("PASSOU DO SET TEMPORADA");
                 GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDesconto.getText()));
-                
                 JOptionPane.showMessageDialog(null, "Temporada ativada com "+campoPercentualDesconto.getText()+"% de desconto", 
                         "Aviso", JOptionPane.WARNING_MESSAGE);
                 
             } else {
-                GerenciadorDoSistema.getInstance().desativarTemporada();
-                JOptionPane.showMessageDialog(null, "Temporada de descontos desativada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                try {
+                    GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada();
+                    GerenciadorDoSistema.getInstance().desativarTemporada();
+                    JOptionPane.showMessageDialog(null, "Temporada de descontos desativada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } catch(TemporadaInexistenteException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                } 
+                
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
