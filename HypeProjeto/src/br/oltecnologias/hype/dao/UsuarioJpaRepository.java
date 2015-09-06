@@ -105,6 +105,8 @@ public class UsuarioJpaRepository implements UsuarioRepository{
 
             Usuario u = em.getReference(Usuario.class, nickName);
             
+            em.merge(u);
+            
             em.remove(u);
             
             em.getTransaction().commit();
