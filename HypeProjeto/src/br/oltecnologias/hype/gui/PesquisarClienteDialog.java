@@ -222,10 +222,16 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
             JDialog dialog = pane.createDialog("Aviso");
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
-            //JOptionPane.showMessageDialog(null, "É preciso informar um nome para a pesquisa de clientes", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoCliente.getText())) {
-                adicionarNovoClienteNaTabela(cliente);
+            modeloTabelaClientes.setRowCount(0);
+            if(campoCliente.getText().toUpperCase().equals("TODOS")) {
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome()});
+                }
+            } else {
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoCliente.getText())) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome()});
+                }
             }
         }
     }//GEN-LAST:event_botaoPesquisarActionPerformed
@@ -245,28 +251,6 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     public String getCpfLocador() {
         //O CPF do cliente está na primeira coluna da tabela
         return (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0);
-    }
-    
-    public void adicionarNovoClienteNaTabela(Cliente cliente) {
-        //Adiciona os dados do novo cliente na tabela
-        modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome()});
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                PesquisarClienteDialog dialog = new PesquisarClienteDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     protected boolean okSelecionado;

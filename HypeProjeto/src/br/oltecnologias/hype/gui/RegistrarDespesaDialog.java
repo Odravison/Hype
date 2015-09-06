@@ -212,19 +212,12 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Informe o favorecido da despesa", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 
-                //Tirar depois
-                Despesa despesa = new Despesa(campoNome.getText(), areaObservacao.getText(), 
+                novaDespesa = GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa(campoNome.getText(), areaObservacao.getText(), 
                         Calendar.getInstance(), Double.parseDouble(campoValor.getText()), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
-                        campoFavorecido.getText());
+                        campoFavorecido.getText()));
                 
-                GerenciadorDoSistema.getInstance().cadastrarDespesa(despesa);
-                
-                //Tirar depois
-                novaDespesa = despesa;
                         
-                novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Despesa", Double.parseDouble(campoValor.getText()),
-                        Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
-                        campoFavorecido.getText(), novaDespesa.getId()));
+                novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaDespesa, "DESPESA");
                 
                 JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
                 

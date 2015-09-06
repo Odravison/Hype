@@ -15,6 +15,7 @@ import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
+import java.awt.Dialog;
 import java.awt.Frame;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -36,6 +38,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         super(owner);
         initComponents();
         produtosVendidos = new ArrayList<ProdutoVendido>();
+        produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeVenda();
+        decimalFormat = new DecimalFormat("#.##");
     }
 
     /**
@@ -498,7 +502,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(labelValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
@@ -584,67 +588,47 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
                     JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } else if(radioCartao.isSelected() || radioPromissoria.isSelected()) { 
-                if(campoEntrada.getText().length() <= 0) {
-                    JOptionPane.showMessageDialog(null, "Informe o valor de entrada da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-                } else if(campoParcelas.getText().length() <= 0) {
-                    JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                    if (campoPercentualDesconto.getText().length() <= 0) {
-                        campoPercentualDesconto.setText("0");
-                    }
-                    
-                    if (radioCartao.isSelected()) {
-                        formaPagamento = "Cartão";
-                    } else {
-                        formaPagamento = "Promissória";
-                    }
-                    
-                    try {
-                        
-                        novaVenda = new Venda(produtosVendidos, valorTotalVenda
-                                , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
-                        
-                        GerenciadorDeVenda.getInstance().realizarVenda(novaVenda);
-                        
-                        novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Venda", valorTotalVenda, 
-                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(), 
-                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId()));
-                        
-                        JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
-                                                
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-                        
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                    
-                }
+            } else if ((radioCartao.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 
-                try {
+                //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
+                if (campoPercentualDesconto.getText().length() <= 0) {
+                    campoPercentualDesconto.setText("0");
+                }
+                //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
+                if (campoEntrada.getText().length() <= 0) {
+                    campoEntrada.setText("0");
+                }
+                //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
+                if (campoParcelas.getText().length() <= 0) {
+                    campoParcelas.setText("0");
+                }
+                
+                if (radioCartao.isSelected()) {
+                    formaPagamento = "Cartão";
+                } else if (radioPromissoria.isSelected()) {
+                    formaPagamento = "Promissória";
+                } else {
                     formaPagamento = "À Vista";
+                    campoEntrada.setText("0");
+                    campoParcelas.setText("0");
+                }
 
-                    novaVenda = new Venda(produtosVendidos, valorTotalVenda
-                                , formaPagamento, Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()), 
-                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
-                        
-                    GerenciadorDeVenda.getInstance().realizarVenda(novaVenda);
-                    
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(new Movimentacao("Venda", valorTotalVenda, 
-                                Calendar.getInstance(), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(), 
-                                                Configuracao.getInstance().getEmpresa().getNome(), novaVenda.getId()));
+                try {
+                    GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalVenda, formaPagamento,
+                            Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
+                            Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
+
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaVenda, "VENDA");
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
+                    //O botão concluir foi selecionado
                     concluirSelecionado = true;
                     //Fecha janela
                     setVisible(false);
-                    
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
@@ -758,40 +742,59 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     
     public void adicionarProdutoAVenda(Produto produto) {
         ProdutoVendido produtoVendido = getProdutoVendido(produto.getCodigo());
-        //Incrementa o valor da quantidade de produtos que está no map, caso a chave já exista
         if(produtoVendido != null) {
-            //Atualiza a quantidade do produto na venda
-            produtoVendido.setQuantidade(produtoVendido.getQuantidade()+1);
-            //Atualiza a linha da tabela (2 = terceira coluna da tabela)
-            modeloTabelaProdutosVendidos.setValueAt(produtoVendido.getQuantidade(), tabelaProdutos.getSelectedRow(), 2);
-        } else {
-            produtoVendido = new ProdutoVendido(produto.getCodigo(), 1);
-            produtosVendidos.add(produtoVendido);
-            //Adiciona os dados do novo produto na tabela
-            modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produtoVendido.getQuantidade()});
-        }
+            if(getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
+                //Atualiza a quantidade do produto na locação
+                produtoVendido.setQuantidade(produtoVendido.getQuantidade()+1);
+                //Atualiza a linha da tabela (2 = terceira coluna da tabela)
+                for(int i=0; i < modeloTabelaProdutosVendidos.getRowCount(); i++) {
+                    if(modeloTabelaProdutosVendidos.getValueAt(i, 0).equals(produto.getCodigo())) {
+                        modeloTabelaProdutosVendidos.setValueAt(produtoVendido.getQuantidade(), i, 2);
+                        //Atualiza a quantidade de produtos em estoque
+                        removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
 
-        //Atualiza o valor total da venda
-        valorTotalVenda += produto.getValor();
+                        //Atualiza o valor total da Venda
+                        valorTotalVenda += produto.getValor();
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Este produto não pode ser vendido! \n\nQuantidade de produtos insuficiente no estoque", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            ProdutoVendido novoProdutoVendido = new ProdutoVendido(produto.getCodigo(), 1);
+            produtosVendidos.add(novoProdutoVendido);
+            //Adiciona os dados do novo produto na tabela
+            modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), novoProdutoVendido.getQuantidade()});
+            //Atualiza a quantidade de produtos em estoque
+            removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
+
+            //Atualiza o valor total da locação
+            valorTotalVenda += produto.getValor();
+        }
+        
     }
     
-    public void removerProdutoDaVenda(int indice, String codigo) {
-        ProdutoVendido produtoLocado = getProdutoVendido(codigo);
-        if(produtoLocado != null) {
+    public void removerProdutoDaVenda(int linhaSelecionada, String codigo) {
+        ProdutoVendido produtoVendido = getProdutoVendido(codigo);
+        if(produtoVendido != null) {
             //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
-            int quantidade = produtoLocado.getQuantidade()-1;  
+            int quantidade = produtoVendido.getQuantidade()-1;  
             //Remove o produto selecionada da lista de locação
-            if(quantidade == 0) {
-                modeloTabelaProdutosVendidos.removeRow(indice);
+            if(quantidade <= 0) {
+                modeloTabelaProdutosVendidos.removeRow(linhaSelecionada);
+                //Remove o produto da lista de produtos vendidos
+                produtosVendidos.remove(produtoVendido);
             } else {
                 //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
-                modeloTabelaProdutosVendidos.setValueAt(Integer.toString(quantidade), indice, 2);
+                modeloTabelaProdutosVendidos.setValueAt(quantidade+"", linhaSelecionada, 2);
             }
+            //Atualiza a quantidade do produto no estoque
+            adicionarProdutoAoEstoque(codigo);
             //Atualiza a quantidade no produto referente
-            produtoLocado.setQuantidade(quantidade);
+            produtoVendido.setQuantidade(quantidade);
             
             try {
-                //Atualiza o valor total da locação
+                //Atualiza o valor total da venda
                 valorTotalVenda -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -802,9 +805,49 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         
     }
     
+    public void removerProdutoDoEstoque(int linhaSelecionada, String codigo) {
+        int quantProdutoEmEstoque = ((Integer) modeloTabelaProdutos.getValueAt(linhaSelecionada, 2))-1;
+        modeloTabelaProdutos.setValueAt(quantProdutoEmEstoque, linhaSelecionada, 2);
+        //Atualiza a quantidade do produto na lista de produtos em estoque
+        getProdutoEmEstoque(codigo).setQuantidade(quantProdutoEmEstoque);
+    }
+    
+    public void adicionarProdutoAoEstoque(String codigo) {
+        boolean atualizou = false;
+        
+        Produto produtoEmEstoque = getProdutoEmEstoque(codigo);
+        
+        //Atualiza a quantidade em estoque do produto
+        produtoEmEstoque.setQuantidade(produtoEmEstoque.getQuantidade()+1);
+        
+        for (int i = 0; i < modeloTabelaProdutos.getRowCount(); i++) {
+            if (modeloTabelaProdutos.getValueAt(i, 0).equals(codigo)) {
+                //Atualiza a linha da tabela (2 = coluna de quantidade da tabela)
+                modeloTabelaProdutos.setValueAt(produtoEmEstoque.getQuantidade(), i, 2);
+                atualizou = true;
+                break;
+            }
+        }
+        
+        if(!atualizou) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar a quantidade em estoque do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+    
+    public Produto getProdutoEmEstoque(String codigo) {
+        for(Produto produto: this.produtosEmEstoque) {
+            if(produto.getCodigo().equals(codigo)) {
+                return produto;
+            }
+        }
+        return null;
+    }
+    
     public ProdutoVendido getProdutoVendido(String codigo) {
         for(ProdutoVendido produto: this.produtosVendidos) {
-            return produto;
+            if(produto.getId().equals(codigo)) {
+                return produto;
+            }
         }
         return null;
     }
@@ -827,6 +870,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private DefaultListModel modeloProdutosVendidos;
     private DefaultListModel modeloProdutos;
     private List<ProdutoVendido> produtosVendidos;
+    private List<Produto> produtosEmEstoque;
     protected boolean concluirSelecionado;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;

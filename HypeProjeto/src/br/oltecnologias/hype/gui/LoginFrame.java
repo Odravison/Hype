@@ -37,14 +37,14 @@ public class LoginFrame extends javax.swing.JFrame {
             dialog.setLocationRelativeTo(null);
             dialog.setVisible(true);
         }
-        for(Locacao l: GerenciadorDeLocacao.getInstance().getLocacoes()) {
-            try {
-                System.out.println("ID DA LOCAÇÃO: "+l.getId());
-                GerenciadorDeLocacao.getInstance().finalizarLocacao(l.getId(), GerenciadorDePessoas.getInstance().pesquisarCliente(l.getCliente().getCpf()));
-            } catch (Exception ex) {
-                System.out.println("DEU PAU NA HORA DE FINALIZAR A LOCAÇÃO!");
-            } 
-        }
+        /*if(Configuracao.getInstance().getDiretorioDeBackup() == null || Configuracao.getInstance().getDiretorioDeDocumentos() == null
+                || Configuracao.getInstance().getDiretorioDeRelatorios() == null) {
+            
+            CadastrarDiretoriosDialog dialogDiretorios = new CadastrarDiretoriosDialog(null);
+            dialogDiretorios.setLocationRelativeTo(null);
+            dialogDiretorios.setAlwaysOnTop(true);
+            dialogDiretorios.setVisible(true);
+        }*/
     }
 
     @SuppressWarnings("unchecked")
@@ -189,17 +189,6 @@ public class LoginFrame extends javax.swing.JFrame {
                 
                 // Validar usuário no sistema
                 if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
-                    //Cadastrando a empresa - Tirar depois 
-                    //Configuracao.getInstance().setEmpresa(new Empresa("99.999.999/9999-99", "Terni Velucci", "(83) 3229-9999", 
-                       // new Endereco("Fulano de Tal", "Centro", "PB", 100, "João Pessoa")));
-                    
-                    //GerenciadorDoSistema.getInstance().setUsuarioLogado(
-                            //GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
-                    
-                    /*new PrincipalFrame(campoLogin.getText()).setVisible(true);
-                    //new PrincipalFrame().setVisible(true);
-                    setVisible(false);
-                    dispose();*/
                     
                     new Runnable() {
                         public void run() {
@@ -218,7 +207,7 @@ public class LoginFrame extends javax.swing.JFrame {
                             new PrincipalFrame(campoLogin.getText()).setVisible(true);
                         }
                     });*/
-                    Executors.newFixedThreadPool(20).execute(new Runnable() {
+                    Executors.newFixedThreadPool(10).execute(new Runnable() {
                         public void run() {
                             new PrincipalFrame(campoLogin.getText()).setVisible(true);
                         }
