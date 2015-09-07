@@ -20,25 +20,35 @@ public class Temporada implements Serializable {
     private int pertentualDeDesconto;
     
     @Id
-    private Long Id;
+    private long id;
     
-
     public Temporada() {
     }
     
+    public static Temporada getInstance() {
+        return TemporadaHolder.INSTANCE;
+    }
 
-    public boolean isAtivada() {
-        return this.isAtivada;
+    public void ativarTemporada(int percentualDesconto) {
+        this.pertentualDeDesconto = percentualDesconto;
+        this.isAtivada = true;
     }
 
     public void desativarTemporada() {
         this.isAtivada = false;
-        this.pertentualDeDesconto = 0;
+    }
+    
+    private static class TemporadaHolder {
+
+        private static final Temporada INSTANCE = new Temporada();
     }
 
-    public void ativarTemporada(int percentualDesconto) {
-        this.isAtivada = true;
-        this.pertentualDeDesconto = percentualDesconto;
+    public boolean isIsAtivada() {
+        return isAtivada;
+    }
+
+    public void setIsAtivada(boolean isAtivada) {
+        this.isAtivada = isAtivada;
     }
 
     public int getPertentualDeDesconto() {
@@ -49,24 +59,13 @@ public class Temporada implements Serializable {
         this.pertentualDeDesconto = pertentualDeDesconto;
     }
 
-    public Long getId() {
-        return Id;
+    public long getId() {
+        return id;
     }
 
-    public void setId(Long Id) {
-        this.Id = Id;
+    public void setId(long id) {
+        this.id = id;
     }
-
-    public void setIsAtivada(boolean isAtivada) {
-        this.isAtivada = isAtivada;
-    }
-
-   
-    
-    
-    
-    
-    
     
     
 }

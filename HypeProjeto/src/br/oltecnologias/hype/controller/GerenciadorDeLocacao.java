@@ -38,25 +38,21 @@ public class GerenciadorDeLocacao {
 
     // FALTA TESTAR
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-
-        EntityManagerFactory emfCliente = Persistence.createEntityManagerFactory("closetpu");
-        ClienteJpaRepository cjp = new ClienteJpaRepository(emfCliente);
 
         Locacao locacao = null;
 
         try {
-            List<Locacao> locacoes = ljp.getAllLocacao();
-            Cliente clienteQueLocou = cjp.findByCpf(cliente.getCpf());
-
+            
+            Cliente clienteQueLocou = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
-            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao, 
+            locacao = new Locacao(clienteQueLocou, produtosLocados, valorFinal, dataLocacao, 
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
 
             clienteQueLocou.adicionarLocacao(locacao);
-            cjp.editarCliente(clienteQueLocou);
+            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
             
             GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao, "locação");
             
@@ -66,6 +62,7 @@ public class GerenciadorDeLocacao {
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
+            
         } finally {
             emf.close();
         }
