@@ -394,8 +394,8 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
             // Validar campos para cadastro
             if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoCodigo.getText().length() < maxCaracteresCodigo) {
-                JOptionPane.showMessageDialog(null, "Informe o código do produto com 8 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoCodigo.getText().length() < 4) {
+                JOptionPane.showMessageDialog(null, "Informe o código do produto com, no mínimo, 4 caracteres", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoCor.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a cor do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoQuantidade.getText().length() <= 0) {

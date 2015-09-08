@@ -20,6 +20,7 @@ import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.exception.VendaInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
+import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
@@ -1017,10 +1018,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Lista que terá as linhas da tabela
     List<Object[]> listaLinhasVendas = new ArrayList<>();
-
-    //Adicionando valores nas linhas
-    for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {
-        listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
+    try {
+        //Adicionando valores nas linhas
+        for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {
+            listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), "R$ "+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
+        }
+    } catch(Exception e) {
+        e.getMessage();
     }
     //cria um defaultablemodel com as informações acima
     modeloTabelaVendas = new DefaultTableModel(
@@ -1319,7 +1323,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoDiretorioBackup.setEditable(false);
     campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
-    campoDiretorioBackup.setText("Caminho do diretório");
     campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
     campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1350,7 +1353,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoDiretorioDocumentos.setEditable(false);
     campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoDiretorioDocumentos.setForeground(new java.awt.Color(153, 153, 153));
-    campoDiretorioDocumentos.setText("Caminho do diretório");
     campoDiretorioDocumentos.setToolTipText("Informe o caminho do diretório");
     campoDiretorioDocumentos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1411,7 +1413,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoDiretorioRelatorios.setEditable(false);
     campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoDiretorioRelatorios.setForeground(new java.awt.Color(153, 153, 153));
-    campoDiretorioRelatorios.setText("Caminho do diretório");
     campoDiretorioRelatorios.setToolTipText("Informe o caminho do diretório");
     campoDiretorioRelatorios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -2000,12 +2001,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarClienteActionPerformed
 
     private void comboFiltrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarClienteActionPerformed
+        modeloTabelaClientes.setRowCount(0);
         switch (comboFiltrarCliente.getSelectedItem().toString()) {
             case "Todos":
                 GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarCliente.getText());
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome()});
+                }
                 break;
 
             case "Últimos locatários":
+                
+                
+                    
                     // Método para pesquisar os clientes que fizeram locações mais recentemente
                 //GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarCliente.getText());
                 break;
@@ -2171,9 +2179,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Sim = 0
             if(escolha == 0) { 
                 try {
-                    Usuario usuario = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
+                    //Usuario usuario = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
                    //Remove o usuário selecionado através do seu login
-                    GerenciadorDePessoas.getInstance().removerUsuario(usuario);
+                    GerenciadorDePessoas.getInstance().removerUsuario((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
                     removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
                 } catch (UsuarioInexistenteException e) {
@@ -2458,7 +2466,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
 
     private void botaoEditarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarEmpresaActionPerformed
-        EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, Configuracao.getInstance().getEmpresa());
+        Empresa empresa = Configuracao.getInstance().getEmpresa();
+        EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, empresa);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoEditarEmpresaActionPerformed
@@ -2517,7 +2526,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoGerarReciboVendaActionPerformed
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
-        JOptionPane.showMessageDialog(null, "É preciso selecionar um clia locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaLocacoes.getSelectedRow() >= 0) {
+            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
+            //Sim = 0
+            if(escolha == 0) { 
+                try {
+                    Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0));
+                    //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
+                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong((String) modeloTabelaFornecedores.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)), cliente);
+                    
+                    JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } 
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_botaoFinalizarLocacaoActionPerformed
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
