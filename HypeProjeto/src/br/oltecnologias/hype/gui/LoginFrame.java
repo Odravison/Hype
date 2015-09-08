@@ -7,6 +7,7 @@ import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.UsuarioExistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
@@ -180,6 +181,11 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
+        try {
+            GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Odravison", "odravison", "1234", true));
+        } catch (UsuarioExistenteException ex) {
+            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(campoLogin.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o login do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoSenha.getPassword().length <= 0) {

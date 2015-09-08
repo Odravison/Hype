@@ -22,7 +22,7 @@ public interface UsuarioRepository {
     
     public boolean existsUsuario(String nickName);
     
-    public void removerUsuario(String nickName)throws UsuarioInexistenteException;
+    public void removerUsuario(Usuario u)throws UsuarioInexistenteException;
     
     public void editarUsuario(Usuario usuario) throws UsuarioInexistenteException;
     

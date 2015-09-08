@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import static sun.nio.ch.IOUtil.load;
 
 /**
  *
@@ -97,17 +98,20 @@ public class UsuarioJpaRepository implements UsuarioRepository{
     }
 
     @Override
-    public void removerUsuario(String nickName) throws UsuarioInexistenteException {
+    public void removerUsuario(Usuario u) throws UsuarioInexistenteException {
         EntityManager em = null;
         try {
             em = getEntityManager();
+            
+            if (existsUsuario(u.getNickName())){
+                throw new UsuarioInexistenteException("Este usuário para delete não existe!");
+            }
             em.getTransaction().begin();
-
-            Usuario u = em.getReference(Usuario.class, nickName);
             
-            em.merge(u);
             
-            em.remove(u);
+            Object usuario = em.merge(u);
+            
+            em.remove(usuario);
             
             em.getTransaction().commit();
 
