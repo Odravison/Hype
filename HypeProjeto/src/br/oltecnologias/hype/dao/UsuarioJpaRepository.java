@@ -98,18 +98,18 @@ public class UsuarioJpaRepository implements UsuarioRepository{
     }
 
     @Override
-    public void removerUsuario(Usuario u) throws UsuarioInexistenteException {
+    public void removerUsuario(String nickName) throws UsuarioInexistenteException {
         EntityManager em = null;
         try {
             em = getEntityManager();
             
-            if (existsUsuario(u.getNickName())){
+            if (!existsUsuario(nickName)){
                 throw new UsuarioInexistenteException("Este usuário para delete não existe!");
             }
             em.getTransaction().begin();
             
             
-            Object usuario = em.merge(u);
+            Usuario usuario = em.getReference(Usuario.class, nickName);
             
             em.remove(usuario);
             

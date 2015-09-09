@@ -146,12 +146,12 @@ public class GerenciadorDePessoas {
         }
     }
 
-    public void removerUsuario(Usuario u) throws UsuarioInexistenteException {
+    public void removerUsuario(String nickName) throws UsuarioInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
 
         try {
-            ujp.removerUsuario(u);
+            ujp.removerUsuario(nickName);
         } finally {
             emf.close();
         }

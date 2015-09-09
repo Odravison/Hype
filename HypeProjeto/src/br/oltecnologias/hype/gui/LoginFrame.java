@@ -181,11 +181,11 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        try {
-            GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Odravison", "odravison", "1234", true));
-        } catch (UsuarioExistenteException ex) {
-            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            GerenciadorDePessoas.getInstance().cadastrarUsuario(new Usuario("Odravison", "odravison", "1234", true));
+//        } catch (UsuarioExistenteException ex) {
+//            Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         if(campoLogin.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o login do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoSenha.getPassword().length <= 0) {
