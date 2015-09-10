@@ -38,34 +38,47 @@ public class GerenciadorDeLocacao {
 
     // FALTA TESTAR
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException, LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 
         Locacao locacao = null;
+        
+        System.out.println("===========>>>>>>>>>>>>>>> ENTROU NO MÉTODO.");
 
         try {
+            System.out.println("===========>>>>>>>>>>>>>>> ENTROU NO TRY");
             
             Cliente clienteQueLocou = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
             locacao = new Locacao(clienteQueLocou, produtosLocados, valorFinal, dataLocacao, 
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
-
-            clienteQueLocou.adicionarLocacao(locacao);
-            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
             
-            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao, "locação");
+            System.out.println("===========>>>>>>>>>>>>>>> CRIOU A LOCACAO");
+
+//            clienteQueLocou.adicionarLocacao(locacao);
+            System.out.println("===========>>>>>>>>>>>>>>> SETOU A LOCACAO DENTRO DA CLIENTE");
+//            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
+            System.out.println("===========>>>>>>>>>>>>>>> EDITOU(SALVOU) O CLIENTE, DEVE TER PERSISTIDO LOCACAO");
+            
+//            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao, "locação");
+            System.out.println("===========>>>>>>>>>>>>>>> ADICIONOU A MOVIMENTACAO");
             
             //Usar linha abaixo se, somente se, o código de cima não persistir a entidade locacao.
-//            ljp.create(locacao);
+            System.out.println("=============>>>>>>>>>>>> CRIOUA LOCAÇÃO EM VEZ DE EDITAR CLIENTE");
+            ljp.create(locacao);
 
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
+            System.out.println("===========>>>>>>>>>>>>>>> REMOVEU A QUANTIDADE DOS PRODUTOS");
+            
             
         } finally {
             emf.close();
         }
+        
+        System.out.println("===========>>>>>>>>>>>>>>>  A locação persistida tem id de número: " + locacao.getId());
 
         return locacao;
     }

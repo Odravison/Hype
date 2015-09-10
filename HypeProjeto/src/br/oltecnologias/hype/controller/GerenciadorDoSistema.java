@@ -22,6 +22,7 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPTable;
@@ -195,60 +196,75 @@ public class GerenciadorDoSistema {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         List<String> relatorio = new ArrayList<String>();
-        relatorio.add("     DATA      ");
+        relatorio.add("      DATA     ");
         relatorio.add("   MOVIMENTO   ");
         relatorio.add("  RESPONSÁVEL  ");
         relatorio.add("     VALOR     ");
         String diretorioFinal = null;
+
+        String diaIni = new SimpleDateFormat("dd").format(dataInicial.getTime());
+        String mesIni = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
+        String anoIni = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
+
+        String diaFinal = new SimpleDateFormat("dd").format(dataInicial.getTime());
+        String mesFinal = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
+        String anoFinal = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
+
         try {
             for (Movimentacao mov : mjp.getAllMovimentacoes()) {
-                if (mov.getData().getTimeInMillis() >= dataInicial.getTimeInMillis()
-                        && mov.getData().getTimeInMillis() <= dataFinal.getTimeInMillis()) {
+                System.out.println("===>> " + mov.getData().getTime().before(dataInicial.getTime()));
+
+                System.out.println("essa é a data que veio: " + dataInicial.getTimeInMillis());
+                System.out.println("essa é a data do objeto: " + mov.getData().getTimeInMillis());
+
+                if ( mov.getData().get(Calendar.DAY_OF_YEAR) >= dataInicial.get(Calendar.DAY_OF_YEAR)
+                        && mov.getData().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR) ) {
+
                     relatorio.add(mov.getDataInString());
                     relatorio.add(mov.getMovimento());
                     relatorio.add(mov.getResponsavel());
                     relatorio.add(mov.getValorInString());
+
                 }
             }
+
             //FORMATAR ISSO DEPOIS
-
-            String diaIni = new SimpleDateFormat("dd").format(dataInicial.getTime());
-            String mesIni = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
-            String anoIni = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
-
-            String diaFinal = new SimpleDateFormat("dd").format(dataInicial.getTime());
-            String mesFinal = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
-            String anoFinal = new SimpleDateFormat("yyyy").format(dataInicial.getTime());
-
             Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
             Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
             Font courier12 = new Font(Font.FontFamily.COURIER, 12);
 
-            Document pdf = new Document(PageSize.A4, 10, 10, 10, 10);
+            Document pdf;
+            pdf = new Document();
 
             File diretorio = null;
 
             try {
-                pdf.open();
+
                 diretorio = new File(Configuracao.getInstance().getDiretorioDeRelatorios());
                 diretorio.mkdir();
 
-                PdfContentByte canvas = new PdfContentByte(PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
+                PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
                         + "" + diaIni + "." + mesIni + "." + anoIni + " TO "
-                        + "" + diaFinal + "." + mesFinal + "." + anoFinal)));
+                        + "" + diaFinal + "." + mesFinal + "." + anoFinal + ".pdf"));
 
                 diretorioFinal = diretorio.toString() + "\\" + "Relatorio_"
-                        + "" + diaIni + "." + mesIni + "." + anoIni + " TO " + diaFinal + "." + mesFinal + "." + anoFinal;
+                        + "" + diaIni + "." + mesIni + "." + anoIni + " TO " + diaFinal + "." + mesFinal + "." + anoFinal + ".pdf";
+
+                pdf.open();
+                pdf.setPageSize(PageSize.A4);
 
                 PdfPTable table = new PdfPTable(4);
 
                 for (String s : relatorio) {
                     table.addCell(s);
                 }
+                Paragraph tituloRelatorio = new Paragraph("RELÁTÓRIO DE " + diaIni + "/" + mesIni + " a "
+                        + diaFinal + "/" + mesFinal, timesNewRoman14);
+                tituloRelatorio.setAlignment(Paragraph.ALIGN_CENTER);
+                tituloRelatorio.setSpacingAfter(10);
 
+                pdf.add(tituloRelatorio);
                 pdf.add(table);
-
-                ColumnText columns = new ColumnText(canvas);
 
             } catch (DocumentException | IOException de) {
                 System.err.println(de.getMessage());
@@ -362,12 +378,12 @@ public class GerenciadorDoSistema {
 
                 throw new TemporadaInexistenteException("A temporada ainda não foi criada 3");
             }
-            
+
             this.temporada.ativarTemporada(percentualDesconto);
             tjp.edit(temporada);
-            
+
         } finally {
-            if (emf != null){
+            if (emf != null) {
                 emf.close();
             }
         }
@@ -473,6 +489,7 @@ public class GerenciadorDoSistema {
 
         try {
             mjp.create(mov);
+            System.out.println("=========>>>>>>>>>>>> MOV TEM ID DE: " + mov.getId());
             return mov;
         } finally {
             if (emf != null) {
