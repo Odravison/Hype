@@ -1329,6 +1329,9 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Ver Recibos"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoVerRecibosVendaActionPerformed"/>
@@ -1343,6 +1346,9 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Gerar Recibo"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoGerarReciboVendaActionPerformed"/>
@@ -1644,11 +1650,11 @@
                                   <Component id="campoDiretorioRelatorios" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="botaoAlterarDiretorioRelatorios" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="7" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="botaoSalvarDiretorioRelatorios" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="686" max="32767" attributes="0"/>
+                          <EmptySpace pref="687" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

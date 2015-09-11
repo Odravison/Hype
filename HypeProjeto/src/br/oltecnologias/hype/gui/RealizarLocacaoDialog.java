@@ -11,6 +11,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Locacao;
@@ -664,11 +665,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Selecione os produtos para a locação");
                 dialog.setVisible(true);
                 
-            } else if(campoPercentualDesconto.getText().length() > 0) { 
-                if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
-                    pane.setMessage("O percentual de desconto não pode estar acima de 100%");
-                    dialog.setVisible(true);
-                }
+            } else if(campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) { 
+                pane.setMessage("O percentual de desconto não pode estar acima de 100%");
+                dialog.setVisible(true);
             } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
                 pane.setMessage("Informe a forma de pagamento da locação");
                 dialog.setVisible(true);
@@ -844,7 +843,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
         validarNumerosETamanho(evt, campoPercentualDesconto, maxCaracteresDesconto);
-        
+        if(campoPercentualDesconto.getText().length() > 0) {
+            try {
+                labelValorLocacao.setText("R$ "+decimalFormat.format(valorTotalLocacao -
+                        (valorTotalLocacao*(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()/100))));
+            } catch (TemporadaInexistenteException e) {
+                //Se a temporada não existir não precisa fazer nenhum cálculo
+            }
+        }
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
