@@ -1064,6 +1064,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     botaoVerRecibosVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoVerRecibosVenda.setText("Ver Recibos");
+    botaoVerRecibosVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoVerRecibosVenda.setVisible(false);
     botaoVerRecibosVenda.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1073,6 +1074,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     botaoGerarReciboVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoGerarReciboVenda.setText("Gerar Recibo");
+    botaoGerarReciboVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoGerarReciboVenda.setVisible(false);
     botaoGerarReciboVenda.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1454,9 +1456,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(botaoAlterarDiretorioRelatorios)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(botaoSalvarDiretorioRelatorios)))
-            .addContainerGap(686, Short.MAX_VALUE))
+            .addContainerGap(687, Short.MAX_VALUE))
     );
     painelConfiguracoesLayout.setVerticalGroup(
         painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1766,7 +1768,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarCliente, "Pesquisar Cliente");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaClientes.getSelectedRow() >= 0) {
+        if(tabelaClientes.getSelectedRow() >= 0 || (botaoEditarCliente.isVisible() || botaoExcluirCliente.isVisible() || 
+                botaoVerLocacoesCliente.isVisible())) {
             botaoEditarCliente.setVisible(false);
             botaoExcluirCliente.setVisible(false);
             botaoVerLocacoesCliente.setVisible(false);
@@ -1800,7 +1803,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarProduto, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaProdutos.getSelectedRow() >= 0) {
+        if(tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())) {
             botaoEditarProduto.setVisible(false);
             botaoExcluirProduto.setVisible(false);
             tabelaProdutos.clearSelection();
@@ -1833,7 +1836,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarFornecedor, "Pesquisar Fornecedor");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaFornecedores.getSelectedRow() >= 0) {
+        if(tabelaFornecedores.getSelectedRow() >= 0 || (botaoEditarFornecedor.isVisible() || botaoExcluirFornecedor.isVisible())) {
             botaoEditarFornecedor.setVisible(false);
             botaoExcluirFornecedor.setVisible(false);
             tabelaFornecedores.clearSelection();
@@ -1868,7 +1871,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarLocacao, "Pesquisar Locação");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaLocacoes.getSelectedRow() >= 0) {
+        if(tabelaLocacoes.getSelectedRow() >= 0 || (botaoVerRecibosLocacao.isVisible() || botaoGerarReciboLocacao.isVisible() ||
+                botaoVerContrato.isVisible() || botaoFinalizarLocacao.isVisible())) {
             botaoVerRecibosLocacao.setVisible(false);
             botaoGerarReciboLocacao.setVisible(false);
             botaoVerContrato.setVisible(false);
@@ -1905,7 +1909,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarVenda, "Pesquisar Venda");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaVendas.getSelectedRow() >= 0) {
+        if(tabelaVendas.getSelectedRow() >= 0 || (botaoGerarReciboVenda.isVisible() || botaoVerRecibosVenda.isVisible())) {
             botaoGerarReciboVenda.setVisible(false);
             botaoVerRecibosVenda.setVisible(false);
             tabelaVendas.clearSelection();
@@ -1984,7 +1988,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarUsuario, "Pesquisar Usuário");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaUsuarios.getSelectedRow() >= 0) {
+        if(tabelaUsuarios.getSelectedRow() >= 0 || (botaoEditarUsuario.isVisible() || botaoExcluirUsuario.isVisible())) {
             botaoEditarUsuario.setVisible(false);
             botaoExcluirUsuario.setVisible(false);
             tabelaUsuarios.clearSelection();
@@ -2085,7 +2089,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void painelCaixaERelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelCaixaERelatoriosMouseClicked
         botaoExcluirDespesa.setVisible(false);
         botaoEditarDespesa.setVisible(false);
-        if(tabelaMovimentacoes.getSelectedRow() >= 0) {
+        if(tabelaMovimentacoes.getSelectedRow() >= 0 || tabelaMovimentacoes.isVisible()) {
             tabelaMovimentacoes.clearSelection();
         }
     }//GEN-LAST:event_painelCaixaERelatoriosMouseClicked
@@ -2456,12 +2460,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarUsuarioActionPerformed
 
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
-        try {
-            //Abrir pasta do sistema com as locações feitas pelo usuários
-            Runtime.getRuntime().exec(Configuracao.getInstance().getDiretorioDeDocumentos()+
-                        "\\Locações"+"\\"+modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 1));
-        } catch (java.io.IOException e) {
-            JOptionPane.showMessageDialog(null, "Ocorreu algum erro na busca pela pasta de locações do cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaClientes.getSelectedRow() >= 0) {
+            
+            Executors.newFixedThreadPool(10).execute(new Runnable() {
+                public void run() {
+                    try {
+                        //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
+                        VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
+                                (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+
+                    } catch (ClienteInexistenteException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
 
