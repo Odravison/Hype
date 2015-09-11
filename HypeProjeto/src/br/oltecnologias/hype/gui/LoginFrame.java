@@ -196,18 +196,13 @@ public class LoginFrame extends javax.swing.JFrame {
                 // Validar usuário no sistema
                 if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
                     
-                    new Runnable() {
-                        public void run() {
-                            try {
-                                GerenciadorDoSistema.getInstance().setUsuarioLogado(
-                                GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText()));
-                            } catch (UsuarioInexistenteException ex) {
-                                Logger.getLogger(LoginFrame.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                        }
-                    };
-                    
-                    
+                    try {
+                        Usuario usuarioLogado = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText());
+                        GerenciadorDoSistema.getInstance().setUsuarioLogado(usuarioLogado);
+                    } catch (UsuarioInexistenteException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+
                     /*java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             new PrincipalFrame(campoLogin.getText()).setVisible(true);

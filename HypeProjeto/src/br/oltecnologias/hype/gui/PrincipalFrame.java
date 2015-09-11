@@ -2179,19 +2179,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirUsuarioActionPerformed
         if(tabelaUsuarios.getSelectedRow() >= 0) {
-            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
-            //Sim = 0
-            if(escolha == 0) { 
-                try {
-                    //Usuario usuario = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
-                   //Remove o usuário selecionado através do seu login
-                    GerenciadorDePessoas.getInstance().removerUsuario((String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1));
-                    removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
-                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
-                } catch (UsuarioInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-            } 
+            String login = (String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
+            if (login.equals(GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName())) {
+                JOptionPane.showMessageDialog(null, "Você não pode excluir seu próprio usuário do sistema", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                //Sim = 0
+                if(escolha == 0) { 
+                    try {
+                        //Remove o usuário selecionado através do seu login
+                        GerenciadorDePessoas.getInstance().removerUsuario(login);
+                        removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
+                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                    } catch (UsuarioInexistenteException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                } 
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
