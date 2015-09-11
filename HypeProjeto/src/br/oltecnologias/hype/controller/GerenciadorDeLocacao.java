@@ -43,27 +43,27 @@ public class GerenciadorDeLocacao {
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 
         Locacao locacao = null;
-        
+
         System.out.println("===========>>>>>>>>>>>>>>> ENTROU NO MÉTODO.");
 
         try {
             System.out.println("===========>>>>>>>>>>>>>>> ENTROU NO TRY");
-            
+
             Cliente clienteQueLocou = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
-            locacao = new Locacao(clienteQueLocou, produtosLocados, valorFinal, dataLocacao, 
+            locacao = new Locacao(clienteQueLocou, produtosLocados, valorFinal, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
-            
+
             System.out.println("===========>>>>>>>>>>>>>>> CRIOU A LOCACAO");
 
 //            clienteQueLocou.adicionarLocacao(locacao);
             System.out.println("===========>>>>>>>>>>>>>>> SETOU A LOCACAO DENTRO DA CLIENTE");
 //            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
             System.out.println("===========>>>>>>>>>>>>>>> EDITOU(SALVOU) O CLIENTE, DEVE TER PERSISTIDO LOCACAO");
-            
+
 //            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao, "locação");
             System.out.println("===========>>>>>>>>>>>>>>> ADICIONOU A MOVIMENTACAO");
-            
+
             //Usar linha abaixo se, somente se, o código de cima não persistir a entidade locacao.
             System.out.println("=============>>>>>>>>>>>> CRIOUA LOCAÇÃO EM VEZ DE EDITAR CLIENTE");
             ljp.create(locacao);
@@ -72,12 +72,11 @@ public class GerenciadorDeLocacao {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
             System.out.println("===========>>>>>>>>>>>>>>> REMOVEU A QUANTIDADE DOS PRODUTOS");
-            
-            
+
         } finally {
             emf.close();
         }
-        
+
         System.out.println("===========>>>>>>>>>>>>>>>  A locação persistida tem id de número: " + locacao.getId());
 
         return locacao;
@@ -250,7 +249,7 @@ public class GerenciadorDeLocacao {
         try {
             List<ProdutoLocado> produtosLocado = ljp.getProdutosFromLocacao(id);
             List<Produto> retorno = new ArrayList<Produto>();
-            for (ProdutoLocado p: produtosLocado){
+            for (ProdutoLocado p : produtosLocado) {
                 retorno.add(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getId()));
             }
             return retorno;
@@ -278,25 +277,25 @@ public class GerenciadorDeLocacao {
         } finally {
             emf.close();
         }
-        
+
         return listaOrdenada;
     }
-    
-    public Locacao pesquisarLocacaoPorId(long id) throws LocacaoInexistenteException{
-         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+
+    public Locacao pesquisarLocacaoPorId(long id) throws LocacaoInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
         Locacao loc = null;
-        
-        try{
+
+        try {
             loc = ljp.findById(id);
-            
-        } finally{
+
+        } finally {
             emf.close();
         }
-        
+
         return loc;
     }
-    
+
 //    public void criarLocacoes(List<Locacao> locacoes){
 //        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
 //        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -312,5 +311,22 @@ public class GerenciadorDeLocacao {
 //            }
 //        }
 //    }
-    
+    public List<Locacao> pesquisarLocacoesDeCliente(String cpfCliente) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+        List<Locacao> locacoesDoCliente = new ArrayList<Locacao>();
+
+        try {
+            for (Locacao l : ljp.getAllLocacao()) {
+                if (l.getCliente().getCpf().equals(cpfCliente)) {
+                    locacoesDoCliente.add(l);
+                }
+            }
+            return locacoesDoCliente;
+
+        } finally {
+            emf.close();
+        }
+
+    }
 }
