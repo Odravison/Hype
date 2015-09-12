@@ -14,7 +14,6 @@ import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
-import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.exception.VendaInexistenteException;
@@ -28,13 +27,14 @@ import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Color;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -1999,40 +1999,130 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoPesquisarCliente.getText().equals("Pesquisar Cliente") || campoPesquisarCliente.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            // atualizar o model da lista de clientes
+            
+            try {
+                // Atualiza o model da lista de clientes
+                modeloTabelaClientes.setRowCount(0);
+                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                df.setLenient(false); // O date format não vai aceitar datas inválidas
+                Calendar dataPesquisada = Calendar.getInstance(); 
+                // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção
+                dataPesquisada.setTime(df.parse(campoPesquisarCliente.getText()));
+                pesquisarClientesPorDataEFiltro(dataPesquisada); 
+             
+            } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
+                pesquisarClientesPorNomeEFiltro(campoPesquisarCliente.getText());
+            }
+                
             GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarCliente.getText());
         }
     }//GEN-LAST:event_botaoPesquisarClienteActionPerformed
 
     private void comboFiltrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarClienteActionPerformed
+        //Fazer a pesquisa sem levar o campo de pesquisa em consideração
+        if(campoPesquisarCliente.getText().equals("Pesquisar Cliente") || campoPesquisarCliente.getText().length() <= 0) {
+            pesquisarClientesPorFiltro();
+        } else {
+            pesquisarClientesPorNomeEFiltro(campoPesquisarCliente.getText());
+        }
+
+    }//GEN-LAST:event_comboFiltrarClienteActionPerformed
+
+    public void pesquisarClientesPorNomeEFiltro(String nome) {
         modeloTabelaClientes.setRowCount(0);
         switch (comboFiltrarCliente.getSelectedItem().toString()) {
+            
             case "Todos":
-                GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarCliente.getText());
-                for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
-                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome()});
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(nome)) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
                 }
+                
                 break;
-
+            /*
             case "Últimos locatários":
-                
-                
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarUltimosLocatariosPorNome(nome)) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
                     
-                    // Método para pesquisar os clientes que fizeram locações mais recentemente
-                //GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarCliente.getText());
                 break;
 
             case "Últimos cadastros":
-                    //Método para pesquisar os clientes que foram cadastrados mais recentemente
-                //GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarCliente.getText());
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarUltimosClientesCadastradosPorNome(nome)) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
+                    
+                break;
+            */
+            default:
+                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                break;
+            
+        }
+    }
+            
+    public void pesquisarClientesPorDataEFiltro(Calendar dataPesquisada) {
+        modeloTabelaClientes.setRowCount(0);
+        switch (comboFiltrarCliente.getSelectedItem().toString()) {
+            /*
+            case "Todos":
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorDataDeCadastro(dataPesquisada)) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
+                
+                break;
+
+            case "Últimos locatários":
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesPorDataDeLocacao(dataPesquisada)) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
+                    
+                break;
+
+            case "Últimos cadastros":
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarClientesCadastradosPorData(dataPesquisada)) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
+                    
                 break;
 
             default:
                 JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
                 break;
+            */
         }
-    }//GEN-LAST:event_comboFiltrarClienteActionPerformed
+    }
+    
+    public void pesquisarClientesPorFiltro() {
+        modeloTabelaClientes.setRowCount(0);
+        switch (comboFiltrarCliente.getSelectedItem().toString()) {
+            case "Todos":
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
 
+                break;
+
+            case "Últimos locatários":
+                for (Cliente cliente : GerenciadorDePessoas.getInstance().getLocacoesMaisRecentsPorCliente()) {
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                }
+
+                break;
+
+            /*
+             case "Últimos cadastros":
+             for (Cliente cliente : GerenciadorDePessoas.getInstance().pesquisarUltimosClientesCadastrados()) {
+             modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+             }
+                    
+             break;
+             */
+            default:
+                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                break;
+        }
+    }
+            
     private void botaoAtivarTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtivarTemporadaActionPerformed
         AtivarTemporadaDialog dialog = new AtivarTemporadaDialog(new java.awt.Frame(), true);
         dialog.setLocationRelativeTo(null);
