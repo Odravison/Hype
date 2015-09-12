@@ -44,34 +44,22 @@ public class GerenciadorDeLocacao {
 
         Locacao locacao = null;
 
-        System.out.println("===========>>>>>>>>>>>>>>> ENTROU NO MÉTODO.");
-
         try {
-            System.out.println("===========>>>>>>>>>>>>>>> ENTROU NO TRY");
 
             Cliente clienteQueLocou = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
             locacao = new Locacao(clienteQueLocou, produtosLocados, valorFinal, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
 
-            System.out.println("===========>>>>>>>>>>>>>>> CRIOU A LOCACAO");
-
-//            clienteQueLocou.adicionarLocacao(locacao);
-            System.out.println("===========>>>>>>>>>>>>>>> SETOU A LOCACAO DENTRO DA CLIENTE");
-//            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
-            System.out.println("===========>>>>>>>>>>>>>>> EDITOU(SALVOU) O CLIENTE, DEVE TER PERSISTIDO LOCACAO");
-
-//            GerenciadorDoSistema.getInstance().adicionarMovimentacao(locacao, "locação");
-            System.out.println("===========>>>>>>>>>>>>>>> ADICIONOU A MOVIMENTACAO");
-
-            //Usar linha abaixo se, somente se, o código de cima não persistir a entidade locacao.
-            System.out.println("=============>>>>>>>>>>>> CRIOUA LOCAÇÃO EM VEZ DE EDITAR CLIENTE");
+            
             ljp.create(locacao);
+            
+            clienteQueLocou.adicionarLocacao(locacao);
+            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
 
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
-            System.out.println("===========>>>>>>>>>>>>>>> REMOVEU A QUANTIDADE DOS PRODUTOS");
 
         } finally {
             emf.close();
