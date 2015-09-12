@@ -16,6 +16,8 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Medidas;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -343,12 +345,95 @@ public class GerenciadorDePessoas {
             for (Cliente c : listaDeCliente) {
                 for (Locacao l : listaOrdenadaDeLocacao) {
                     if (c.getCpf().equals(l.getCliente().getCpf())) {
-                        listaDeRetorno.add(c);
+                        if (!listaDeRetorno.contains(c)){
+                            listaDeRetorno.add(c);
+                        }
                     }
                 }
 
             }
             return listaDeRetorno;
+        } finally {
+            emf.close();
+        }
+    }
+    
+    public List<Cliente> pesquisarClientesPorDataDeCadastro(Calendar data){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
+
+        List<Cliente> listaDeRetorno = new ArrayList<Cliente>();
+        
+        try{
+            for (Cliente c: cjp.getAllClientes()){
+                if (c.getDataCadastro().get(Calendar.DAY_OF_YEAR) == data.get(Calendar.DAY_OF_YEAR)){
+                    listaDeRetorno.add(c);
+                }
+            }
+            return listaDeRetorno;
+        } finally {
+            emf.close();
+        }
+        
+    }
+    
+    public List<Cliente> pesquisarClientesPorDataDeLocacao(Calendar dataPesquisada){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
+
+        List<Cliente> listaDeRetorno = new ArrayList<Cliente>();
+        for (Locacao l: GerenciadorDeLocacao.getInstance().getLocacoes()){
+            if (l.getDataLocacao().get(Calendar.DAY_OF_YEAR) == 
+                    dataPesquisada.get(Calendar.DAY_OF_YEAR)){
+                listaDeRetorno.add(l.getCliente());
+            }
+        }
+        return listaDeRetorno;
+    }
+    
+    public List<Cliente> pesquisarUltimosLocatariosPorNome(String nome){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
+
+        List<Cliente> listaDeRetorno = new ArrayList<Cliente>();
+        List<Locacao> listaOrdenadaDeLocacao = new ArrayList<Locacao>();
+        List<Cliente> listaDeCliente = new ArrayList<Cliente>();
+
+        try {
+            listaDeRetorno = new ArrayList<Cliente>();
+            listaOrdenadaDeLocacao = GerenciadorDeLocacao.getInstance().getMostRecentLocation();
+            listaDeCliente = cjp.getAllClientes();
+
+                for (Locacao l : listaOrdenadaDeLocacao) {
+                    if (l.getCliente().getNome().toUpperCase().contains(nome.toUpperCase())) {
+                        if (!listaDeRetorno.contains(l.getCliente())){
+                            listaDeRetorno.add(l.getCliente());
+                        }
+                    }
+                }
+            return listaDeRetorno;
+        } finally {
+            emf.close();
+        }
+    }
+    
+    public List<Cliente> pesquisarUltimosClientesCadastrados(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ClienteJpaRepository cjp = new ClienteJpaRepository(emf);
+
+        List<Cliente> listaDeRetorno = new ArrayList<Cliente>();
+        
+        try{
+            listaDeRetorno = cjp.getAllClientes();
+
+            Collections.sort(listaDeRetorno, (Object o1, Object o2) -> {
+                Cliente l1 = (Cliente) o1;
+                Cliente l2 = (Cliente) o2;
+                return l1.getDataCadastro().getTimeInMillis() <= l2.getDataCadastro().getTimeInMillis() ? +1
+                        : (l1.getDataCadastro().getTimeInMillis() >= l2.getDataCadastro().getTimeInMillis() ? -1 : 0);
+            });
+            return listaDeRetorno;
+            
         } finally {
             emf.close();
         }

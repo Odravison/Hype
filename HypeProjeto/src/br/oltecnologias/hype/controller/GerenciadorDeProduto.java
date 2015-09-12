@@ -7,7 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
+import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.ProdutoLocado;
+import br.oltecnologias.hype.model.ProdutoVendido;
+import br.oltecnologias.hype.model.Venda;
+import java.util.Calendar;
+import java.util.Collections;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -199,16 +204,130 @@ public class GerenciadorDeProduto {
 
             for (Produto p : pjp.getAllProdutos()) {
                 if (!p.isLocation()) {
-                    if (p.getNome().contains(nome)){
+                    if (p.getNome().contains(nome)) {
                         produtosDeVenda.add(p);
                     }
-                    
+
                 }
             }
             return produtosDeVenda;
         } finally {
             emf.close();
         }
+    }
+
+    public List<Produto> pesquisarUltimosProdutosLocadosPorNome(String nome) throws ProdutoInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
+
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+        try {
+
+            for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+                for (ProdutoLocado pl : l.getProdutos()) {
+                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pl.getId());
+                    if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                        if (!listaDeRetorno.contains(produto)) {
+                            listaDeRetorno.add(produto);
+                        }
+                    }
+                }
+            }
+            return listaDeRetorno;
+
+        } finally {
+            emf.close();
+        }
+    }
+
+    public List<Produto> pesquisarUltimosProdutosVendidosPorNome(String nome) throws ProdutoInexistenteException {
+
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+            for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
+                for (ProdutoVendido pv : v.getProdutosVendidos()) {
+                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getId());
+                    if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                        if (!listaDeRetorno.contains(produto)) {
+                            listaDeRetorno.add(produto);
+                        }
+                    }
+                }
+            }
+            return listaDeRetorno;
+    }
+
+    public List<Produto> pesquisarUltimosProdutosLocadosPorData(Calendar data)
+            throws ProdutoInexistenteException {
+
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+            for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+                if ((l.getDataLocacao().get(Calendar.DAY_OF_YEAR) == data.get(Calendar.DAY_OF_YEAR))
+                        && (l.getDataLocacao().get(Calendar.YEAR) == data.get(Calendar.YEAR))) {
+                    for (ProdutoLocado pl : l.getProdutos()) {
+                        Produto produto = GerenciadorDeProduto.getInstance()
+                                .pesquisarProdutoPeloCodigo(pl.getId());
+                        if (!listaDeRetorno.contains(produto)) {
+                            listaDeRetorno.add(produto);
+                        }
+                    }
+                }
+            }
+            return listaDeRetorno;
+    }
+
+    public List<Produto> pesquisarUltimosProdutosVendidosPorData(Calendar data)
+            throws ProdutoInexistenteException {
+
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+        for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
+            if ((v.getDataVenda().get(Calendar.DAY_OF_YEAR) == data.get(Calendar.DAY_OF_YEAR))
+                    && (v.getDataVenda().get(Calendar.YEAR) == data.get(Calendar.YEAR))) {
+                for (ProdutoVendido pv : v.getProdutosVendidos()) {
+                    Produto produto = GerenciadorDeProduto.getInstance()
+                            .pesquisarProdutoPeloCodigo(pv.getId());
+                    if (!listaDeRetorno.contains(produto)) {
+                        listaDeRetorno.add(produto);
+                    }
+                }
+            }
+        }
+        return listaDeRetorno;
+    }
+
+    public List<Produto> pesquisarUltimosProdutosLocados()
+            throws ProdutoInexistenteException {
+
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+        for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+                for (ProdutoLocado pl : l.getProdutos()) {
+                    Produto produto = GerenciadorDeProduto.getInstance()
+                            .pesquisarProdutoPeloCodigo(pl.getId());
+                        listaDeRetorno.add(produto);
+                }
+        }
+        return listaDeRetorno;
+
+    }
+    
+    public List<Produto> pesquisarUltimosProdutosVendidos()
+            throws ProdutoInexistenteException {
+
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+        for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
+                for (ProdutoVendido pl : v.getProdutosVendidos()) {
+                    Produto produto = GerenciadorDeProduto.getInstance()
+                            .pesquisarProdutoPeloCodigo(pl.getId());
+                        listaDeRetorno.add(produto);
+                }
+        }
+        return listaDeRetorno;
+
     }
 
 }
