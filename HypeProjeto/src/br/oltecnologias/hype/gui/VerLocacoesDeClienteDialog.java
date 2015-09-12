@@ -16,15 +16,13 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Cliente
+ * @author Luender Lima
  */
 public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
 
-    /**
-     * Creates new form VerLocacoesDeClienteDialog
-     */
     public VerLocacoesDeClienteDialog(java.awt.Frame parent, Cliente cliente) {
         super(parent);
+        this.cliente = cliente;
         initComponents();
     }
 
@@ -54,7 +52,8 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitas.setBackground(new java.awt.Color(255, 255, 255));
         painelLocacoesFeitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações Feitas"));
 
-        scPnLocacoes.setViewportView(tabelaLocacoes);
+        scPnLocacoes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //Define a fonte do cabeçalho da tabela fornecedores
@@ -66,7 +65,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
         //Adicionando valores nas linhas
-        for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
+        for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(cliente.getCpf())) {
             try {
                 listaLinhasLocacoes.add(new Object[]{locacao.getDataLocacaoInString(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), Long.toString(locacao.getId())});
@@ -78,7 +77,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -92,11 +91,14 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     // Redimensionando a largura da coluna de data
     tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1062);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1068);
     // Redimensionando a largura da coluna de valor total
     tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
+    tabelaLocacoes.getTableHeader().setResizingAllowed(false);
+    tabelaLocacoes.getTableHeader().setReorderingAllowed(false);
+    scPnLocacoes.setViewportView(tabelaLocacoes);
 
     javax.swing.GroupLayout painelLocacoesFeitasLayout = new javax.swing.GroupLayout(painelLocacoesFeitas);
     painelLocacoesFeitas.setLayout(painelLocacoesFeitasLayout);
@@ -111,7 +113,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
             .addContainerGap())
     );
 
@@ -138,11 +140,11 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addGap(23, 23, 23)
+            .addContainerGap()
             .addComponent(painelLocacoesFeitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(botaoOk)
-            .addGap(23, 23, 23))
+            .addContainerGap(28, Short.MAX_VALUE))
     );
 
     pack();
@@ -159,6 +161,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoOkActionPerformed
 
+    private Cliente cliente;
     private DefaultTableModel modeloTabelaLocacoes;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoOk;
