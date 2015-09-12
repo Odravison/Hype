@@ -85,6 +85,8 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
         labelObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelObservacao.setText("Observação:");
 
+        scPnObservacao.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         areaObservacao.setColumns(20);
         areaObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         areaObservacao.setRows(5);

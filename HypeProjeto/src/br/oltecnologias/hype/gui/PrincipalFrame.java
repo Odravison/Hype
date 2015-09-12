@@ -46,11 +46,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PrincipalFrame extends javax.swing.JFrame {
 
-    private String loginUsuario;
-
-    /**
-     * Cria um novo form PrincipalFrame
-     */
     public PrincipalFrame(String login) {
         loginUsuario = login;
         initComponents();
@@ -96,6 +91,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         comboFiltrarProdutos = new javax.swing.JComboBox();
         botaoEditarProduto = new javax.swing.JButton();
         botaoExcluirProduto = new javax.swing.JButton();
+        radioPesquisarProdutoCodigo = new javax.swing.JRadioButton();
+        radioPesquisarProdutoNome = new javax.swing.JRadioButton();
         painelFornecedores = new javax.swing.JPanel();
         botaoNovoFornecedor = new javax.swing.JButton();
         botaoPesquisarFornecedor = new javax.swing.JButton();
@@ -546,6 +543,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    radioPesquisarProdutoCodigo.setBackground(new java.awt.Color(255, 255, 255));
+    radioPesquisarProdutoCodigo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    radioPesquisarProdutoCodigo.setText("Código");
+    radioPesquisarProdutoCodigo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+    radioPesquisarProdutoCodigo.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            radioPesquisarProdutoCodigoActionPerformed(evt);
+        }
+    });
+
+    radioPesquisarProdutoNome.setBackground(new java.awt.Color(255, 255, 255));
+    radioPesquisarProdutoNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    radioPesquisarProdutoNome.setText("Nome");
+    radioPesquisarProdutoNome.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            radioPesquisarProdutoNomeActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
     painelProdutos.setLayout(painelProdutosLayout);
     painelProdutosLayout.setHorizontalGroup(
@@ -554,10 +570,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGap(32, 32, 32)
             .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(botaoNovoProduto)
-                .addGroup(painelProdutosLayout.createSequentialGroup()
-                    .addComponent(campoPesquisarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoPesquisarProduto))
                 .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelProdutosLayout.createSequentialGroup()
                         .addComponent(labelFiltrarProdutos)
@@ -567,7 +579,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(botaoEditarProduto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoExcluirProduto))
-                    .addComponent(pnRlProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnRlProduto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelProdutosLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelProdutosLayout.createSequentialGroup()
+                            .addComponent(radioPesquisarProdutoCodigo)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(radioPesquisarProdutoNome))
+                        .addComponent(botaoPesquisarProduto))))
             .addContainerGap(129, Short.MAX_VALUE))
     );
     painelProdutosLayout.setVerticalGroup(
@@ -579,7 +600,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarProduto))
-            .addGap(40, 40, 40)
+            .addGap(10, 10, 10)
+            .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(radioPesquisarProdutoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(radioPesquisarProdutoNome))
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(painelProdutosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(labelFiltrarProdutos)
                 .addComponent(comboFiltrarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -614,6 +639,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoPesquisarFornecedor.setText("Pesquisar");
     botaoPesquisarFornecedor.setToolTipText("Pesquisar fornecedores cadastrados");
     botaoPesquisarFornecedor.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoPesquisarFornecedor.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoPesquisarFornecedorActionPerformed(evt);
+        }
+    });
 
     campoPesquisarFornecedores.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarFornecedores.setForeground(new java.awt.Color(153, 153, 153));
@@ -695,6 +725,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboFiltrarFornecedores.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
     comboFiltrarFornecedores.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarFornecedores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    comboFiltrarFornecedores.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            comboFiltrarFornecedoresActionPerformed(evt);
+        }
+    });
 
     botaoEditarFornecedor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoEditarFornecedor.setText("   Editar   ");
@@ -785,6 +820,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoPesquisarLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoPesquisarLocacao.setText("Pesquisar");
     botaoPesquisarLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoPesquisarLocacao.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoPesquisarLocacaoActionPerformed(evt);
+        }
+    });
 
     campoPesquisarLocacoes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarLocacoes.setForeground(new java.awt.Color(153, 153, 153));
@@ -870,6 +910,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Mais Recentes", "Mais Antigas", "Atrasadas", "Extraviadas" }));
     comboFiltrarLocacoes.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    comboFiltrarLocacoes.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            comboFiltrarLocacoesActionPerformed(evt);
+        }
+    });
 
     botaoVerContrato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoVerContrato.setText("Ver Contrato");
@@ -989,6 +1034,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoPesquisarFornecedor1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoPesquisarFornecedor1.setText("Pesquisar");
     botaoPesquisarFornecedor1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoPesquisarFornecedor1.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoPesquisarFornecedor1ActionPerformed(evt);
+        }
+    });
 
     campoPesquisarVendas.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarVendas.setForeground(new java.awt.Color(153, 153, 153));
@@ -1010,6 +1060,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboFiltrarVendas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Últimas vendas", "Valor" }));
     comboFiltrarVendas.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    comboFiltrarVendas.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            comboFiltrarVendasActionPerformed(evt);
+        }
+    });
 
     pnRlVendas.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1230,6 +1285,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboBoxOrdenarCaixaEMovimentacao.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Vendas", "Locações", "Despesas", "Mais Recentes", "Mias Antigas", "Pendências" }));
     comboBoxOrdenarCaixaEMovimentacao.setToolTipText("Selecionar tipo de filtro");
     comboBoxOrdenarCaixaEMovimentacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    comboBoxOrdenarCaixaEMovimentacao.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            comboBoxOrdenarCaixaEMovimentacaoActionPerformed(evt);
+        }
+    });
 
     botaoExcluirDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoExcluirDespesa.setText("Excluir Despesa   ");
@@ -1307,7 +1367,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(comboBoxOrdenarCaixaEMovimentacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(18, 18, 18)
             .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(56, Short.MAX_VALUE))
+            .addContainerGap(54, Short.MAX_VALUE))
     );
 
     atualizarValorEmCaixa();
@@ -1494,7 +1554,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(botaoSalvarDiretorioRelatorios)
                 .addComponent(botaoAlterarDiretorioRelatorios)
                 .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(296, Short.MAX_VALUE))
+            .addContainerGap(294, Short.MAX_VALUE))
     );
 
     try {
@@ -1528,6 +1588,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoPesquisarUsuario.setText("Pesquisar");
     botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoPesquisarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoPesquisarUsuarioActionPerformed(evt);
+        }
+    });
 
     campoPesquisarUsuarios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarUsuarios.setForeground(new java.awt.Color(153, 153, 153));
@@ -1602,6 +1667,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboFiltrarUsuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Últimos cadastros" }));
     comboFiltrarUsuarios.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    comboFiltrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            comboFiltrarUsuariosActionPerformed(evt);
+        }
+    });
 
     botaoAtivarTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoAtivarTemporada.setText("Temporada de Desconto");
@@ -1731,10 +1801,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     painelGeralLayout.setVerticalGroup(
         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelGeralLayout.createSequentialGroup()
-            .addContainerGap()
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
-            .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(0, 0, 0))
     );
 
@@ -1742,11 +1812,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGroup(layout.createSequentialGroup()
+            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
     );
 
     pack();
@@ -2009,22 +2081,26 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            
             try {
-                // Atualiza o model da lista de clientes
-                modeloTabelaClientes.setRowCount(0);
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                df.setLenient(false); // O date format não vai aceitar datas inválidas
-                Calendar dataPesquisada = Calendar.getInstance(); 
-                // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção
-                dataPesquisada.setTime(df.parse(campoPesquisarClientes.getText()));
-                pesquisarClientesPorDataEFiltro(dataPesquisada); 
-             
-            } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
-                pesquisarClientesPorNomeEFiltro(campoPesquisarClientes.getText());
-            }
+                String textoPesquisado = campoPesquisarClientes.getText();
                 
-            GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(campoPesquisarClientes.getText());
+                //Verifica se o que foi digitado para a pesquisa é um CPF
+                if(textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.') 
+                        && textoPesquisado.charAt(11) == '-') {
+                    
+                    // Atualiza o model da lista de clientes
+                    modeloTabelaClientes.setRowCount(0);
+                    Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente(textoPesquisado);
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                    comboFiltrarClientes.setSelectedIndex(0);
+                    
+                } else {
+                    pesquisarClientesPorNomeEFiltro(textoPesquisado);
+                } 
+
+            } catch (ClienteInexistenteException e) { 
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_botaoPesquisarClienteActionPerformed
 
@@ -2033,9 +2109,27 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             pesquisarClientesPorFiltro();
         } else {
-            pesquisarClientesPorNomeEFiltro(campoPesquisarClientes.getText());
-        }
+            try {
+                String textoPesquisado = campoPesquisarClientes.getText();
+                
+                //Verifica se o que foi digitado para a pesquisa é um CPF
+                if((textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.') && textoPesquisado.charAt(11) == '-'
+                        && textoPesquisado.length() == 14) {
+                    
+                    // Atualiza o model da lista de clientes
+                    modeloTabelaClientes.setRowCount(0);
+                    Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente(textoPesquisado);
+                    modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
+                    comboFiltrarClientes.setSelectedIndex(0);
+                    
+                } else {
+                    pesquisarClientesPorNomeEFiltro(textoPesquisado);
+                } 
 
+            } catch (ClienteInexistenteException e) { 
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_comboFiltrarClientesActionPerformed
 
     public void pesquisarClientesPorNomeEFiltro(String nome) {
@@ -2070,6 +2164,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }
             
+    //EXCLUIR MÉTODO
     public void pesquisarClientesPorDataEFiltro(Calendar dataPesquisada) {
         modeloTabelaClientes.setRowCount(0);
         switch (comboFiltrarClientes.getSelectedItem().toString()) {
@@ -2512,6 +2607,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 Executors.newFixedThreadPool(10).execute(new Runnable() {
                     public void run() {
                         try {
+                            System.out.println("ID DA DESPESA: "+((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1)));
                             //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
                             EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
                                     Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
@@ -2697,8 +2793,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             pesquisarProdutosPorNomeEFiltro(campoPesquisarProdutos.getText());
         }
     }//GEN-LAST:event_comboFiltrarProdutosActionPerformed
-    
-    public void pesquisarProdutosPorNomeEFiltro(String nome) {
+
+        public void pesquisarProdutosPorNomeEFiltro(String nome) {
         modeloTabelaProdutos.setRowCount(0);
         switch (comboFiltrarProdutos.getSelectedItem().toString()) {
             /*
@@ -2872,6 +2968,54 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 break;
         }
     }
+    
+    private void botaoPesquisarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarFornecedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPesquisarFornecedorActionPerformed
+
+    private void comboFiltrarFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarFornecedoresActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboFiltrarFornecedoresActionPerformed
+
+    private void botaoPesquisarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarLocacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPesquisarLocacaoActionPerformed
+
+    private void comboFiltrarLocacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarLocacoesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboFiltrarLocacoesActionPerformed
+
+    private void botaoPesquisarFornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarFornecedor1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPesquisarFornecedor1ActionPerformed
+
+    private void comboFiltrarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarVendasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboFiltrarVendasActionPerformed
+
+    private void comboBoxOrdenarCaixaEMovimentacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboBoxOrdenarCaixaEMovimentacaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboBoxOrdenarCaixaEMovimentacaoActionPerformed
+
+    private void botaoPesquisarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPesquisarUsuarioActionPerformed
+
+    private void comboFiltrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarUsuariosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboFiltrarUsuariosActionPerformed
+
+    private void radioPesquisarProdutoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPesquisarProdutoCodigoActionPerformed
+        radioPesquisarProdutoCodigo.setSelected(true);
+        radioPesquisarProdutoNome.setSelected(false);
+    }//GEN-LAST:event_radioPesquisarProdutoCodigoActionPerformed
+
+    private void radioPesquisarProdutoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPesquisarProdutoNomeActionPerformed
+        radioPesquisarProdutoNome.setSelected(true);
+        radioPesquisarProdutoCodigo.setSelected(false);
+    }//GEN-LAST:event_radioPesquisarProdutoNomeActionPerformed
+    
+    
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -3053,7 +3197,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
     }
     
-    
+    private String loginUsuario;
     private DefaultTableModel modeloTabelaClientes;
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaFornecedores;
@@ -3151,6 +3295,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane pnRlProduto;
     private javax.swing.JScrollPane pnRlUsuario;
     private javax.swing.JScrollPane pnRlVendas;
+    private javax.swing.JRadioButton radioPesquisarProdutoCodigo;
+    private javax.swing.JRadioButton radioPesquisarProdutoNome;
     private javax.swing.JTable tabelaClientes;
     private javax.swing.JTable tabelaFornecedores;
     private javax.swing.JTable tabelaLocacoes;
