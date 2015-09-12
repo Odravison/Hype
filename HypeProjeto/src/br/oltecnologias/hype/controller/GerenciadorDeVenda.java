@@ -8,6 +8,7 @@ import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -82,6 +83,29 @@ public class GerenciadorDeVenda {
         } finally {
             emf.close();
         }
+    }
+    
+    public List<Venda> getMostRecentsSales() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        VendaJpaRepository vjp = new VendaJpaRepository(emf);
+
+        List<Venda> listaOrdenada = new ArrayList<Venda>();
+
+        try {
+            listaOrdenada = vjp.getAllVendas();
+
+            Collections.sort(listaOrdenada, (Object o1, Object o2) -> {
+                Venda l1 = (Venda) o1;
+                Venda l2 = (Venda) o2;
+                return l1.getDataVenda().getTimeInMillis() <= l2.getDataVenda().getTimeInMillis() ? +1
+                        : (l1.getDataVenda().getTimeInMillis() >= l2.getDataVenda().getTimeInMillis() ? -1 : 0);
+            });
+
+        } finally {
+            emf.close();
+        }
+
+        return listaOrdenada;
     }
 
 }

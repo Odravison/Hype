@@ -217,8 +217,13 @@ public class GerenciadorDoSistema {
                 System.out.println("essa é a data que veio: " + dataInicial.getTimeInMillis());
                 System.out.println("essa é a data do objeto: " + mov.getData().getTimeInMillis());
 
-                if ( mov.getData().get(Calendar.DAY_OF_YEAR) >= dataInicial.get(Calendar.DAY_OF_YEAR)
-                        && mov.getData().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR) ) {
+                if ( (mov.getData().get(Calendar.DAY_OF_YEAR) >= dataInicial.get(Calendar.DAY_OF_YEAR) && 
+                        mov.getData().get(Calendar.YEAR) >= dataInicial.get(Calendar.YEAR))
+                        
+                        && 
+                        
+                        (mov.getData().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR) &&
+                        mov.getData().get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR)) ) {
 
                     relatorio.add(mov.getDataInString());
                     relatorio.add(mov.getMovimento());

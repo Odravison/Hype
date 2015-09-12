@@ -13,6 +13,7 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
+import br.oltecnologias.hype.model.Venda;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -258,8 +259,8 @@ public class GerenciadorDeLocacao {
             Collections.sort(listaOrdenada, (Object o1, Object o2) -> {
                 Locacao l1 = (Locacao) o1;
                 Locacao l2 = (Locacao) o2;
-                return l1.getDataLocacao().getTimeInMillis() < l2.getDataLocacao().getTimeInMillis() ? +1
-                        : (l1.getDataLocacao().getTimeInMillis() > l2.getDataLocacao().getTimeInMillis() ? -1 : 0);
+                return l1.getDataLocacao().getTimeInMillis() <= l2.getDataLocacao().getTimeInMillis() ? +1
+                        : (l1.getDataLocacao().getTimeInMillis() >= l2.getDataLocacao().getTimeInMillis() ? -1 : 0);
             });
 
         } finally {
