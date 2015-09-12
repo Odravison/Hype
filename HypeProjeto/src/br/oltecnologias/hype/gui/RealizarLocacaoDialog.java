@@ -232,6 +232,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         scPnProdutos.setPreferredSize(new java.awt.Dimension(478, 402));
 
         tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
         tabelaProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -843,13 +851,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
         validarNumerosETamanho(evt, campoPercentualDesconto, maxCaracteresDesconto);
-        if(campoPercentualDesconto.getText().length() > 0) {
-            try {
-                labelValorLocacao.setText("R$ "+decimalFormat.format(valorTotalLocacao -
-                        (valorTotalLocacao*(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()/100))));
-            } catch (TemporadaInexistenteException e) {
-                //Se a temporada não existir não precisa fazer nenhum cálculo
-            }
+        try {
+            System.out.println(", VALOR LOCAÇÃO: "+valorTotalLocacao+"(CAMPOPERCENTUALKEYTYPED) PERCENTUAL DE DESCONTO DA TEMPORADA: "+
+                    GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()+", DESCONTO: "+
+                    ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100));
+                    
+            labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
+                    - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
+        } catch (TemporadaInexistenteException e) {
+            System.out.println("ERRO: "+e.getMessage());
+            //Se a temporada não existir não precisa fazer nenhum cálculo
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
