@@ -216,7 +216,7 @@ public class GerenciadorDeProduto {
         }
     }
 
-    public List<Produto> pesquisarUltimosProdutosLocadosPorNome(String nome) throws ProdutoInexistenteException {
+    public List<Produto> LocadosPorNome(String nome) throws ProdutoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
 

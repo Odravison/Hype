@@ -60,7 +60,7 @@ public class GerenciadorDeLocacao {
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
-
+            
         } finally {
             emf.close();
         }

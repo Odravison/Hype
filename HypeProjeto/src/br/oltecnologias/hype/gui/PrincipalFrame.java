@@ -798,12 +798,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(campoPesquisarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarFornecedor))
             .addGap(39, 39, 39)
-            .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoEditarFornecedor)
-                .addComponent(botaoExcluirFornecedor)
+            .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFiltrarFornecedores)
-                    .addComponent(comboFiltrarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(comboFiltrarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoEditarFornecedor)
+                    .addComponent(botaoExcluirFornecedor)))
             .addGap(18, 18, 18)
             .addComponent(pnRlFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(73, 73, 73))
@@ -1790,12 +1791,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarUsuario))
             .addGap(39, 39, 39)
-            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoEditarUsuario)
-                .addComponent(botaoExcluirUsuario)
+            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFiltrarUsuarios)
-                    .addComponent(comboFiltrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(comboFiltrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botaoEditarUsuario)
+                    .addComponent(botaoExcluirUsuario)))
             .addGap(18, 18, 18)
             .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap())
@@ -1825,7 +1827,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     painelGeralLayout.setVerticalGroup(
         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelGeralLayout.createSequentialGroup()
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addContainerGap(59, Short.MAX_VALUE)
             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2190,12 +2192,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             case "Últimos locatários":
                 clientes = GerenciadorDePessoas.getInstance().getLocacoesMaisRecentsPorCliente();
                 break;
-
-            /*
-             case "Últimos cadastros":
-                clientes = GerenciadorDePessoas.getInstance().pesquisarUltimosClientesCadastrados();
-                break;
-             */
+            
             default:
                 JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
                 break;
@@ -2804,12 +2801,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 break;
             
             case "Últimos locados":
-                /*try {
+                /*
+                try {
                     produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocadosPorNome(nome);
                 } catch (ProdutoInexistenteException e) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }*/
-
+                }
+                */
                 break;
             
             case "Últimos vendidos":
@@ -2865,11 +2863,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 }
 
                 break;
-            /*
-            case "Últimos cadastros":
-                produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosCadastrados();
-                break;
-             */ 
+                
             default:
                 JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
                 break;
@@ -2990,11 +2984,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 dataPesquisada.setTime(df.parse(campoPesquisarVendas.getText()));
                 // Limpa o model da lista de movimentacoes
                 modeloTabelaVendas.setRowCount(0);
-                /*
+                
                 for (Venda venda : GerenciadorDeVenda.getInstance().pesquisarVendasPorData(dataPesquisada)) {
                     modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
                 } 
-                */
+                
             } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
                 JOptionPane.showMessageDialog(null, "Informe uma data válida para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -3014,17 +3008,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 break;
 
             case "Vendas":
-                //movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesDeVenda();
+                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("VENDA");
 
                 break;
  
             case "Locações":
-                //movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesDeLocacao();
+                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("LOCAÇÃO");
 
                 break;
             
             case "Despesas":
-                //movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesDeeDespesa();
+                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("DESPESA");
                
                 break;
                 
@@ -3046,10 +3040,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoPesquisarUsuarios.getText().equals("Pesquisar Usuário") || campoPesquisarUsuarios.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuarios", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            /*
-            for(Usuario usuario: GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloNome(campoPesquisarUsuarios.getText())) {
-                modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
-            }*/
+            //adicionarUsuariosNaTabela(GerenciadorDePessoas.getInstance().pesquisarUsuariosPeloNome(campoPesquisarUsuarios.getText()));
         }
     }//GEN-LAST:event_botaoPesquisarUsuarioActionPerformed
 
@@ -3064,37 +3055,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_radioPesquisarProdutoNomeActionPerformed
 
     private void comboFiltrarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarVendasActionPerformed
-        List<Venda> vendas = null;
-        // Atualiza o model da lista de locações
-        modeloTabelaVendas.setRowCount(0);
-        switch (comboFiltrarVendas.getSelectedItem().toString()) {
-
-            case "Todas":
-            vendas = GerenciadorDeVenda.getInstance().getVendas();
-
-            break;
-
-            case "Mais Recentes":
-            vendas = GerenciadorDeVenda.getInstance().getMostRecentsSales();
-
-            break;
-
-            case "Mais Antigas":
-            //vendas = GerenciadorDeVenda.getInstance().pesquisarVendasMaisAntigas();
-
-            break;
-
-            case "Mais Caras":
-            //vendas = GerenciadorDeVenda.getInstance().pesquisarVendasMaisCaras();
-
-            break;
-
-            default:
-            JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-            break;
-        }
-        if(vendas != null) {
-            adicionarVendasNaTabela(vendas);
+        if(comboFiltrarVendas.getSelectedItem().toString().toUpperCase().equals("TODOS")) {
+            // Limpa a tabela de vendas
+            modeloTabelaVendas.setRowCount(0);
+            adicionarVendasNaTabela(GerenciadorDeVenda.getInstance().getVendas());
         }
     }//GEN-LAST:event_comboFiltrarVendasActionPerformed
 
@@ -3105,7 +3069,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             try {
                 adicionarFornecedoresNaTabela(GerenciadorDePessoas.getInstance().getFornecedores());
             } catch (FornecedorInexistenteException ex) {
-                Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Não foi possível fazer a pesquisa de fornecedores.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_comboFiltrarFornecedoresActionPerformed

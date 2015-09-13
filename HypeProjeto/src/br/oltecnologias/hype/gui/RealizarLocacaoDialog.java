@@ -98,6 +98,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campoParcelas = new javax.swing.JTextField();
         radioCredito = new javax.swing.JRadioButton();
         radioDebito = new javax.swing.JRadioButton();
+        labelValorParcelas = new javax.swing.JLabel();
 
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -510,6 +511,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setText("Qtd. Parcelas:*");
 
         campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoParcelas.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoParcelasKeyTyped(evt);
+            }
+        });
 
         radioCredito.setBackground(new java.awt.Color(255, 255, 255));
         radioCredito.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -583,6 +589,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        labelValorParcelas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorParcelas.setForeground(new java.awt.Color(0, 0, 153));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -597,7 +606,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(10, 10, 10)
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -640,7 +651,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(labelDesconto)
                         .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelSimboloPorcentagem)
-                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
 
@@ -661,10 +673,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        
-        try {
-            String formaPagamento = "";
-            
+        try {          
             if(labelNomeCliente.getText().length() <= 0) {
                 pane.setMessage("Selecione o cliente que irá realizar a locação");
                 dialog.setVisible(true);
@@ -689,6 +698,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setVisible(true);
 
             } else {
+                String formaPagamento = "";
                 
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoPercentualDesconto.getText().length() <= 0) {
@@ -704,7 +714,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
                 
                 if (radioCartao.isSelected()) {
-                    formaPagamento = "Cartão";
+                    formaPagamento = "Cartão"; //ACRESCENTAR SE É NO CARTÃO OU NO DÉBITO?
                 } else if (radioPromissoria.isSelected()) {
                     formaPagamento = "Promissória";
                 } else {
@@ -720,11 +730,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dataFinal.setTime(dateDataFinalContrato.getDate());
 
                 try {
+                    System.out.println("CPF locador: "+locador.getCpf()+", Nome locador: "+locador.getNome()+", Form pag: "+formaPagamento+
+                            ", PARCELAS: "+campoParcelas.getText()+", DESCONTO: "+campoPercentualDesconto.getText()+
+                            ", QUANT PROD LOCADOS: "+produtosLocados.size()+", VALOR TOTAL: "+valorTotalLocacao+
+                            ", DATA INICIAL: "+dataInicial.getTime().toString()+", DATA FINAL: "+dataFinal.getTime().toString());
+                    
                     novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, dataInicial,
                             dataFinal, formaPagamento, Integer.parseInt(campoParcelas.getText()),
                             Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
 
-                    //mudar o método
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
                     
                     JOptionPane pane = new JOptionPane();
@@ -740,8 +754,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     setVisible(false);
 
                 } catch (Exception e) {
-                    pane.setMessage(e.getMessage());
-                    dialog.setVisible(true);
+                    JOptionPane paneError = new JOptionPane();
+                    paneError.setMessage(e.getMessage());
+                    paneError.setMessageType(JOptionPane.ERROR_MESSAGE);
+                    Dialog dialogMessageError = pane.createDialog("Erro");
+                    dialogMessageError.setAlwaysOnTop(true);
+                    dialogMessageError.setVisible(true);
                 }
                                         
             }
@@ -915,6 +933,22 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioCredito.setSelected(false);
         desabilitarCampos();
     }//GEN-LAST:event_radioDebitoActionPerformed
+
+    private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
+        if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcela) {
+            evt.consume();
+        } else {
+            try {
+                double valorParcelado = valorTotalLocacao/Integer.parseInt(campoParcelas.getText());
+                System.out.println("VALOR PARCELADO: "+valorParcelado);
+                String valorParcela = decimalFormat.format(valorParcelado);
+                labelValorParcelas.setText(" - "+campoParcelas.getText()+" x R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(campoParcelas.getText())));
+            } catch(Exception e) {
+                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação.");
+                dialog.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_campoParcelasKeyTyped
    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -929,10 +963,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
     
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
-            evt.consume();
-        }
-        if(campo.getText().length()>= maxCaracteres){
+        if(!numeros.contains(evt.getKeyChar()+"") || campo.getText().length()>= maxCaracteres){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
         }
     }
@@ -1096,6 +1127,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
+    private int maxCaracteresParcela = 2;
     private Cliente locador;
     private ArrayList<ProdutoLocado> produtosLocados;
     private List<Produto> produtosEmEstoque;
@@ -1131,6 +1163,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelParcelas;
     private javax.swing.JLabel labelSimboloPorcentagem;
     private javax.swing.JLabel labelValorLocacao;
+    private javax.swing.JLabel labelValorParcelas;
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JPanel painelContrato;
     private javax.swing.JPanel painelFormaPagamento;
