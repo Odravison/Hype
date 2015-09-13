@@ -102,7 +102,7 @@ public class Locacao implements Serializable {
             this.jaPago = valorLocacao;
         }
         this.parcelas = parcelas;
-        if (formaDePagamento.equals("A VISTA")) {
+        if (formaDePagamento.equals("À VISTA")) {
             this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
         }
         this.ativa = true;

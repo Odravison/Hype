@@ -62,31 +62,29 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="botaoConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Component id="painelSelecionar" min="-2" pref="270" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="painelProdutos" min="-2" pref="209" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="painelFormaPagamento" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="campoPercentualDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelSimboloPorcentagem" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <Component id="painelSelecionar" min="-2" pref="270" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="painelProdutos" min="-2" pref="209" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="painelFormaPagamento" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
-                              <Component id="labelValorVenda" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="botaoConcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="campoPercentualDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelDesconto" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelSimboloPorcentagem" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="labelValorTotal" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
+                          <Component id="labelValorVenda" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
