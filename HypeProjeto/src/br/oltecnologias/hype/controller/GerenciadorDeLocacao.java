@@ -57,11 +57,11 @@ public class GerenciadorDeLocacao {
             
             clienteQueLocou.adicionarLocacao(locacao);
             GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
-
+            
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
             }
-
+            
         } finally {
             emf.close();
         }
