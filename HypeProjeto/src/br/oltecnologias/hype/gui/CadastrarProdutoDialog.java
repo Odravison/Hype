@@ -447,7 +447,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoQuantidadeKeyTyped
 
     private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
-        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
+        if(campoCodigo.getText().length() > maxCaracteresCodigo) {
             evt.consume();
         }
     }//GEN-LAST:event_campoCodigoKeyTyped
@@ -514,7 +514,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     private int maxCaracteresNome = 40;
     private int maxCaracteresCor = 25;
     private int maxCaracteresPreco = 10;
-    private int maxCaracteresCodigo = 8;
+    private int maxCaracteresCodigo = 10;
     private int maxCaracteresQuantidade = 4;
     private int maxCaracteresTamanho = 2;
     protected boolean salvarSelecionado;

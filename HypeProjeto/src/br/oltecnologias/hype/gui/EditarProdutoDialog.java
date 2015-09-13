@@ -175,13 +175,14 @@ public class EditarProdutoDialog extends java.awt.Dialog {
                     .addComponent(labelCodigo)
                     .addComponent(campoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelCor)
+                .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(radioVenda)
                         .addComponent(radioAluguel)
-                        .addComponent(labelTipo)))
+                        .addComponent(labelTipo))
+                    .addGroup(painelIdentificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(campoCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelCor)))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -456,10 +457,6 @@ public class EditarProdutoDialog extends java.awt.Dialog {
 
             evt.consume();
         }
-        /*
-        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
-            campoPreco.setText(campoPreco.getText()+".");
-        } */
     }//GEN-LAST:event_campoPrecoKeyTyped
 
     private void campoQuantidadeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoQuantidadeKeyTyped

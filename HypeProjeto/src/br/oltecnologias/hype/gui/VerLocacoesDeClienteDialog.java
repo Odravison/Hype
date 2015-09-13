@@ -91,7 +91,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     // Redimensionando a largura da coluna de data
     tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1068);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1060);
     // Redimensionando a largura da coluna de valor total
     tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna id da locação
@@ -106,7 +106,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1282, Short.MAX_VALUE)
+            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1286, Short.MAX_VALUE)
             .addContainerGap())
     );
     painelLocacoesFeitasLayout.setVerticalGroup(
@@ -144,7 +144,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
             .addComponent(painelLocacoesFeitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(botaoOk)
-            .addContainerGap(28, Short.MAX_VALUE))
+            .addContainerGap(53, Short.MAX_VALUE))
     );
 
     pack();

@@ -225,7 +225,7 @@
                               </Group>
                               <Component id="pnRlCliente" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="509" max="32767" attributes="0"/>
+                          <EmptySpace pref="499" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -312,12 +312,11 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="3"/>
+                    <Property name="maximumRowCount" type="int" value="2"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="3">
+                      <StringArray count="2">
                         <StringItem index="0" value="Todos"/>
                         <StringItem index="1" value="&#xda;ltimos locat&#xe1;rios"/>
-                        <StringItem index="2" value="&#xda;ltimos cadastros"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -339,7 +338,7 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[796, 359]"/>
+                      <Dimension value="[806, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -350,6 +349,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaClientes">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -365,7 +365,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaClientesMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;Contato&quot;, &quot;Cadastrado em&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(380);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de data de cadastro&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(120);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;Contato&quot;, &quot;Cadastrado em&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(380);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de data de cadastro&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(130);&#xa; &#xa;tabelaClientes.getRowSorter().toggleSortOrder(3);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -584,6 +584,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaProdutos">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -599,7 +600,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaProdutosMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaProdutos.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o do Produto&quot;, &quot;Valor&quot;, &quot;Quantidade&quot;, &quot;Finalidade&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa; &#xa;//Adicionando valores nas linhas&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {&#xa;    listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), &quot;R$ &quot;+produto.getValorInString(),&#xa;                produto.getQuantidade(), produto.getFinalidade()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(130);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(710);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de quantidade em estoque&#xa;tabelaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(4).setPreferredWidth(110);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaProdutos.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o do Produto&quot;, &quot;Valor&quot;, &quot;Quantidade&quot;, &quot;Finalidade&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa; &#xa;//Adicionando valores nas linhas&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {&#xa;    listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), &quot;R$ &quot;+produto.getValorInString(),&#xa;                produto.getQuantidade(), produto.getFinalidade()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(130);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(710);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de quantidade em estoque&#xa;tabelaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(4).setPreferredWidth(110);&#xa;  &#xa;tabelaProdutos.getRowSorter().toggleSortOrder(1);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -617,15 +618,14 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="6"/>
+                    <Property name="maximumRowCount" type="int" value="5"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="6">
+                      <StringArray count="5">
                         <StringItem index="0" value="Todos"/>
                         <StringItem index="1" value="Produtos de loca&#xe7;&#xe3;o"/>
                         <StringItem index="2" value="Produtos de venda"/>
                         <StringItem index="3" value="&#xda;ltimos locados"/>
                         <StringItem index="4" value="&#xda;ltimos vendidos"/>
-                        <StringItem index="5" value="&#xda;ltimos cadastros"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -696,6 +696,7 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
                     </Property>
+                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" value="Nome"/>
                   </Properties>
                   <Events>
@@ -736,8 +737,8 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarFornecedor" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
                                       <Component id="labelFiltrarFornecedores" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="comboFiltrarFornecedores" min="-2" max="-2" attributes="0"/>
@@ -746,10 +747,10 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="botaoExcluirFornecedor" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="pnRlFornecedores" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pnRlFornecedores" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="175" max="32767" attributes="0"/>
+                          <EmptySpace pref="169" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -764,12 +765,10 @@
                               <Component id="botaoPesquisarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="botaoEditarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="botaoExcluirFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="botaoEditarFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoExcluirFornecedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
                                   <Component id="labelFiltrarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="comboFiltrarFornecedores" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -838,7 +837,7 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[1130, 359]"/>
+                      <Dimension value="[1136, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -849,6 +848,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaFornecedores">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaFornecedores.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -861,40 +861,11 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaFornecedoresMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaFornecedores.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaFornecedores.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaFornecedores = {&quot;CNPJ&quot;, &quot;Fornecedor&quot;, &quot;Endere&#xe7;o&quot;, &quot;Contato&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasFornecedores = new ArrayList&lt;&gt;();&#xa;&#xa;try{&#xa;    //Adicionando valores nas linhas&#xa;    for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;        listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEnderecoInString(), fornecedor.getTelefone()});&#xa;    }&#xa;} catch(FornecedorInexistenteException e) {&#xa;    JOptionPane.showMessageDialog(null, e.getMessage(), &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaFornecedores = new DefaultTableModel(&#xa;                    listaLinhasFornecedores.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaFornecedores){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaFornecedores.setModel(modeloTabelaFornecedores);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(430);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaFornecedores.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;&#xa;tabelaFornecedores.setRowHeight(25); // Altura das linhas&#xa;&#xa;String[] nomesColunasTabelaFornecedores = {&quot;CNPJ&quot;, &quot;Fornecedor&quot;, &quot;Endere&#xe7;o&quot;, &quot;Contato&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasFornecedores = new ArrayList&lt;&gt;();&#xa;&#xa;try{&#xa;    //Adicionando valores nas linhas&#xa;    for (Fornecedor fornecedor : GerenciadorDePessoas.getInstance().getFornecedores()) {&#xa;        listaLinhasFornecedores.add(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEnderecoInString(), fornecedor.getTelefone()});&#xa;    }&#xa;} catch(FornecedorInexistenteException e) {&#xa;    JOptionPane.showMessageDialog(null, e.getMessage(), &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaFornecedores = new DefaultTableModel(&#xa;                    listaLinhasFornecedores.toArray(new Object[listaLinhasFornecedores.size()][]), nomesColunasTabelaFornecedores){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaFornecedores.setModel(modeloTabelaFornecedores);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaFornecedores.getColumnModel().getColumn(0).setPreferredWidth(180);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaFornecedores.getColumnModel().getColumn(1).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(2).setPreferredWidth(430);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaFornecedores.getColumnModel().getColumn(3).setPreferredWidth(180);&#xa;  &#xa;tabelaFornecedores.getRowSorter().toggleSortOrder(1);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="labelFiltrarFornecedores">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Filtrar por:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="comboFiltrarFornecedores">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="maximumRowCount" type="int" value="3"/>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="2">
-                        <StringItem index="0" value="Todos"/>
-                        <StringItem index="1" value="&#xda;ltimos cadastros"/>
-                      </StringArray>
-                    </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFiltrarFornecedoresActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JButton" name="botaoEditarFornecedor">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -928,6 +899,34 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoExcluirFornecedor.setVisible(false);"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="comboFiltrarFornecedores">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="maximumRowCount" type="int" value="1"/>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="Todos"/>
+                      </StringArray>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFiltrarFornecedoresActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="labelFiltrarFornecedores">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Filtrar por:"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
@@ -977,10 +976,10 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="botaoFinalizarLocacao" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="pnRlLocacoes" alignment="0" min="-2" pref="1270" max="-2" attributes="0"/>
+                                  <Component id="pnRlLocacoes" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="35" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1079,7 +1078,7 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[1066, 359]"/>
+                      <Dimension value="[1286, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -1090,6 +1089,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaLocacoes">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -1102,7 +1102,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaLocacoesMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;CPF Cliente&quot;, &quot;Cliente&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;Vencimento&quot;, &quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {&#xa;    try {   &#xa;        listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), &#xa;                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), &quot;R$ &quot;+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});&#xa;    } catch (Exception e) { &#xa;        JOptionPane.showMessageDialog(null, &quot;Ocorreu um erro na hora de buscar os dados da loca&#xe7;&#xe3;o&quot;, &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;    }&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de CPF do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(120); &#xa;// Redimensionando a largura da coluna de nome do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(280); &#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(660); &#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110); &#xa;// Redimensionando a largura da coluna de data do vencimento&#xa;tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna id da loca&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(0);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;CPF Cliente&quot;, &quot;Cliente&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;Vencimento&quot;, &quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {&#xa;    try {   &#xa;        listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), &#xa;                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), &quot;R$ &quot;+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});&#xa;    } catch (Exception e) { &#xa;        JOptionPane.showMessageDialog(null, &quot;Ocorreu um erro na hora de buscar os dados da loca&#xe7;&#xe3;o&quot;, &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;    }&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de CPF do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(120); &#xa;// Redimensionando a largura da coluna de nome do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(280); &#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(660); &#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110); &#xa;// Redimensionando a largura da coluna de data do vencimento&#xa;tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna id da loca&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(0);&#xa; &#xa;tabelaLocacoes.getRowSorter().toggleSortOrder(4);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -1120,14 +1120,12 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="5"/>
+                    <Property name="maximumRowCount" type="int" value="3"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="5">
+                      <StringArray count="3">
                         <StringItem index="0" value="Todas"/>
-                        <StringItem index="1" value="Mais Recentes"/>
-                        <StringItem index="2" value="Mais Antigas"/>
-                        <StringItem index="3" value="Atrasadas"/>
-                        <StringItem index="4" value="Extraviadas"/>
+                        <StringItem index="1" value="Atrasadas"/>
+                        <StringItem index="2" value="Extraviadas"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1233,7 +1231,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarVendas" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="botaoPesquisarFornecedor1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoPesquisarVendas" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
@@ -1248,7 +1246,7 @@
                                   <Component id="pnRlVendas" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="569" max="32767" attributes="0"/>
+                          <EmptySpace pref="549" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1260,7 +1258,7 @@
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="campoPesquisarVendas" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botaoPesquisarFornecedor1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoPesquisarVendas" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -1296,7 +1294,7 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoNovaVendaActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="botaoPesquisarFornecedor1">
+                <Component class="javax.swing.JButton" name="botaoPesquisarVendas">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
@@ -1307,7 +1305,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoPesquisarFornecedor1ActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoPesquisarVendasActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="campoPesquisarVendas">
@@ -1333,12 +1331,10 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="3"/>
+                    <Property name="maximumRowCount" type="int" value="1"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="3">
+                      <StringArray count="1">
                         <StringItem index="0" value="Todas"/>
-                        <StringItem index="1" value="&#xda;ltimas vendas"/>
-                        <StringItem index="2" value="Valor"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1357,7 +1353,7 @@
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[736, 359]"/>
+                      <Dimension value="[756, 359]"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -1368,6 +1364,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaVendas">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaVendas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -1380,7 +1377,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaVendasMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaVendas = {&quot;Data da Venda&quot;, &quot;Produtos Vendidos&quot;, &quot;Valor Total&quot;, &quot;Forma de pagamento&quot;, &quot;&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaVendas.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaVendas.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasVendas = new ArrayList&lt;&gt;();&#xa;try { &#xa;//Adicionando valores nas linhas&#xa;for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {&#xa;    listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), &quot;R$ &quot;+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});&#xa;}&#xa;} catch(Exception e) {&#xa;    e.getMessage();&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaVendas = new DefaultTableModel(&#xa;                    listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaVendas.setModel(modeloTabelaVendas);&#xa;&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de &#xfa;ltima loca&#xe7;&#xe3;o&#xa;tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(160);&#xa;// Redimensionando a largura da coluna id da venda&#xa;tabelaVendas.getColumnModel().getColumn(4).setPreferredWidth(0);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaVendas = {&quot;Data da Venda&quot;, &quot;Produtos Vendidos&quot;, &quot;Valor Total&quot;, &quot;Forma de pagamento&quot;, &quot;&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaVendas.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaVendas.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasVendas = new ArrayList&lt;&gt;();&#xa;try { &#xa;//Adicionando valores nas linhas&#xa;for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {&#xa;    listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), &quot;R$ &quot;+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});&#xa;}&#xa;} catch(Exception e) {&#xa;    e.getMessage();&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaVendas = new DefaultTableModel(&#xa;                    listaLinhasVendas.toArray(new Object[listaLinhasVendas.size()][]), nomesColunasTabelaVendas){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaVendas.setModel(modeloTabelaVendas);&#xa;&#xa;// Redimensionando a largura da coluna data da venda&#xa;tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(120);&#xa;// Redimensionando a largura da coluna de produtos vendidos&#xa;tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);&#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de forma de pagamento&#xa;tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(170);&#xa;// Redimensionando a largura da coluna id da venda&#xa;tabelaVendas.getColumnModel().getColumn(4).setPreferredWidth(0);&#xa;&#xa;tabelaVendas.getRowSorter().toggleSortOrder(0);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -1460,7 +1457,7 @@
                                       <Group type="102" attributes="0">
                                           <Component id="labelFiltrarMovimentacao" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="comboBoxOrdenarCaixaEMovimentacao" min="-2" max="-2" attributes="0"/>
+                                          <Component id="comboFiltrarMovimentacoes" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                           <Component id="botaoEditarDespesa" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
@@ -1511,7 +1508,7 @@
                               </Group>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="labelFiltrarMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="comboBoxOrdenarCaixaEMovimentacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboFiltrarMovimentacoes" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1562,6 +1559,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaMovimentacoes">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaMovimentacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -1574,7 +1572,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaMovimentacoesMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaMovimentacoes = { &quot;Movimento&quot;, &quot;Valor&quot;, &quot;Data&quot;, &quot;Respons&#xe1;vel&quot;, &quot;Benefici&#xe1;rio&quot;, &quot;&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaMovimentacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaMovimentacoes.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasMovimentacoes = new ArrayList&lt;&gt;();&#xa;&#xa;//Adicionando valores nas linhas&#xa;for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {&#xa;    listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), &quot;R$ &quot;+movimentacao.getValorInString(), &#xa;            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});&#xa;}&#xa;&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaMovimentacoes = new DefaultTableModel(&#xa;                    listaLinhasMovimentacoes.toArray(new Object[listaLinhasMovimentacoes.size()][]), nomesColunasTabelaMovimentacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);&#xa;&#xa;// Redimensionando a largura da coluna de movimento&#xa;tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de valor&#xa;tabelaMovimentacoes.getColumnModel().getColumn(1).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de data&#xa;tabelaMovimentacoes.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de respons&#xe1;vel&#xa;tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de benefici&#xe1;rio&#xa;tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(246);&#xa;// Redimensionando a largura da coluna de id&#xa;tabelaMovimentacoes.getColumnModel().getColumn(5).setPreferredWidth(0);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaMovimentacoes = { &quot;Movimento&quot;, &quot;Valor&quot;, &quot;Data&quot;, &quot;Respons&#xe1;vel&quot;, &quot;Benefici&#xe1;rio&quot;, &quot;&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela&#xa;tabelaMovimentacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura das linhas&#xa;tabelaMovimentacoes.setRowHeight(25);  &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasMovimentacoes = new ArrayList&lt;&gt;();&#xa;&#xa;//Adicionando valores nas linhas&#xa;for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {&#xa;    listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), &quot;R$ &quot;+movimentacao.getValorInString(), &#xa;            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});&#xa;}&#xa;&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaMovimentacoes = new DefaultTableModel(&#xa;                    listaLinhasMovimentacoes.toArray(new Object[listaLinhasMovimentacoes.size()][]), nomesColunasTabelaMovimentacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);&#xa;&#xa;// Redimensionando a largura da coluna de movimento&#xa;tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de valor&#xa;tabelaMovimentacoes.getColumnModel().getColumn(1).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de data&#xa;tabelaMovimentacoes.getColumnModel().getColumn(2).setPreferredWidth(110);&#xa;// Redimensionando a largura da coluna de respons&#xe1;vel&#xa;tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(340);&#xa;// Redimensionando a largura da coluna de benefici&#xe1;rio&#xa;tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(240);&#xa;// Redimensionando a largura da coluna de id&#xa;tabelaMovimentacoes.getColumnModel().getColumn(5).setPreferredWidth(0);&#xa; &#xa;tabelaMovimentacoes.getRowSorter().toggleSortOrder(2);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -1595,21 +1593,19 @@
                     <Property name="text" type="java.lang.String" value="Valor em Caixa:"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="comboBoxOrdenarCaixaEMovimentacao">
+                <Component class="javax.swing.JComboBox" name="comboFiltrarMovimentacoes">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="7"/>
+                    <Property name="maximumRowCount" type="int" value="5"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="7">
+                      <StringArray count="5">
                         <StringItem index="0" value="Todas"/>
                         <StringItem index="1" value="Vendas"/>
                         <StringItem index="2" value="Loca&#xe7;&#xf5;es"/>
                         <StringItem index="3" value="Despesas"/>
-                        <StringItem index="4" value="Mais Recentes"/>
-                        <StringItem index="5" value="Mias Antigas"/>
-                        <StringItem index="6" value="Pend&#xea;ncias"/>
+                        <StringItem index="4" value="Pend&#xea;ncias"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
@@ -1618,7 +1614,7 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboBoxOrdenarCaixaEMovimentacaoActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFiltrarMovimentacoesActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="botaoExcluirDespesa">
@@ -1987,9 +1983,9 @@
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="botaoPesquisarUsuario" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="labelFiltrarUsuario" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="labelFiltrarUsuarios" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="comboFiltrarUsuarios" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -1997,7 +1993,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="botaoExcluirUsuario" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="pnRlUsuario" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="pnRlUsuario" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="709" max="32767" attributes="0"/>
@@ -2020,13 +2016,11 @@
                               <Component id="botaoPesquisarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="botaoEditarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="botaoExcluirUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="labelFiltrarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="botaoEditarUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoExcluirUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="comboFiltrarUsuarios" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -2104,6 +2098,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="tabelaUsuarios">
                       <Properties>
+                        <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor" postCode="tabelaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);">
                           <Font name="Tahoma" size="14" style="0"/>
                         </Property>
@@ -2119,39 +2114,11 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaUsuariosMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaUsuarios = {&quot;Nome do Usu&#xe1;rio&quot;, &quot;NickName&quot;, &quot;Categoria&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela usu&#xe1;rios&#xa;tabelaUsuarios.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Definindo o tamanho da linha&#xa;tabelaUsuarios.setRowHeight(25); &#xa;&#xa;//Linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasUsuarios = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {&#xa;    listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaUsuarios = new DefaultTableModel(&#xa;                    listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaUsuarios.setModel(modeloTabelaUsuarios);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);&#xa;// Redimensionando a largura da coluna de nickName&#xa;tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(170);&#xa;// Redimensionando a largura da coluna de categoria&#xa;tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaUsuarios = {&quot;Nome do Usu&#xe1;rio&quot;, &quot;NickName&quot;, &quot;Categoria&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela usu&#xe1;rios&#xa;tabelaUsuarios.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Definindo o tamanho da linha&#xa;tabelaUsuarios.setRowHeight(25); &#xa;&#xa;//Linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasUsuarios = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {&#xa;    listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaUsuarios = new DefaultTableModel(&#xa;                    listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaUsuarios.setModel(modeloTabelaUsuarios);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);&#xa;// Redimensionando a largura da coluna de nickName&#xa;tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(170);&#xa;// Redimensionando a largura da coluna de categoria&#xa;tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);&#xa;&#xa;tabelaUsuarios.getRowSorter().toggleSortOrder(0);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="labelFiltrarUsuario">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Filtrar por:"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JComboBox" name="comboFiltrarUsuarios">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="2">
-                        <StringItem index="0" value="Todos"/>
-                        <StringItem index="1" value="&#xda;ltimos cadastros"/>
-                      </StringArray>
-                    </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFiltrarUsuariosActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JButton" name="botaoAtivarTemporada">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -2227,6 +2194,34 @@
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoEditarEmpresaActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JComboBox" name="comboFiltrarUsuarios">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="maximumRowCount" type="int" value="1"/>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="1">
+                        <StringItem index="0" value="Todos"/>
+                      </StringArray>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="comboFiltrarUsuariosActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="labelFiltrarUsuarios">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Filtrar por:"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>
