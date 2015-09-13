@@ -77,7 +77,7 @@ public class DespesaJpaRepository implements DespesaRepository{
 
         try {
             em = getEntityManager();
-            Query query = em.createQuery("SELECT 1 FROM Usuario WHERE id = ?");
+            Query query = em.createQuery("SELECT 1 FROM Despesa WHERE id = ?");
             query.setParameter(1, id);
             query.setMaxResults(1);
 

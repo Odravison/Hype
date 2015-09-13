@@ -438,4 +438,24 @@ public class GerenciadorDePessoas {
             emf.close();
         }
     }
+    
+    public List<Usuario> pesquisarUsuarioPorNome(String nome){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        List<Usuario> listaDeRetorno = new ArrayList<Usuario>();
+        
+        try{
+            
+            for (Usuario u: ujp.getAllUsuarios()){
+                if (u.getNome().toUpperCase().equals(nome.toUpperCase())){
+                    listaDeRetorno.add(u);
+                }
+            }
+            
+            return listaDeRetorno;
+            
+        } finally {
+            emf.close();
+        }
+    }
 }

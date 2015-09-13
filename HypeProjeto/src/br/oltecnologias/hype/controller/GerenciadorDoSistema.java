@@ -201,6 +201,15 @@ public class GerenciadorDoSistema {
         relatorio.add("  RESPONSÁVEL  ");
         relatorio.add("     VALOR     ");
         String diretorioFinal = null;
+        
+        int quantVenda = 0;
+        double totalVenda = 0.00;
+        
+        int quantLocacao = 0;
+        double totalLocacao = 0.00;
+        
+        int quantDespesa = 0;
+        double totalDespesa = 0.00;
 
         String diaIni = new SimpleDateFormat("dd").format(dataInicial.getTime());
         String mesIni = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(dataInicial.getTime());
@@ -228,7 +237,20 @@ public class GerenciadorDoSistema {
                     relatorio.add(mov.getDataInString());
                     relatorio.add(mov.getMovimento());
                     relatorio.add(mov.getResponsavel());
-                    relatorio.add(mov.getValorInString());
+                    relatorio.add("R$ "+mov.getValorInString());
+                    
+                    if (mov.getMovimento().toUpperCase().equals("VENDA")){
+                        quantVenda++;
+                        totalVenda += mov.getValor();
+                        
+                    } else if (mov.getMovimento().toUpperCase().equals("LOCAÇÃO")){
+                        quantLocacao++;
+                        totalLocacao += mov.getValor();
+                        
+                    } else if (mov.getMovimento().toUpperCase().equals("DESPESA")){
+                        quantDespesa++;
+                        totalDespesa += mov.getValor();
+                    }
 
                 }
             }
@@ -267,9 +289,17 @@ public class GerenciadorDoSistema {
                         + diaFinal + "/" + mesFinal, timesNewRoman14);
                 tituloRelatorio.setAlignment(Paragraph.ALIGN_CENTER);
                 tituloRelatorio.setSpacingAfter(10);
+                
+                Paragraph resumoRelatorio = new Paragraph("Resumo do relatório: \n"
+                        + "Quantidade de vendas: " + quantVenda + " Total de venda: R$ " + totalVenda + "\n"
+                        + "Quantidade de Locações: " + quantLocacao + " Total de locações: R$ " + totalLocacao + "\n"
+                        + "Quantidade de Despesas: " + quantDespesa + " Total de despesas: R$ " + totalDespesa + "\n"
+                        + "Valor em caixa neste período: " + (totalVenda+totalLocacao+totalDespesa),timesNewRoman12);
+                resumoRelatorio.setAlignment(Paragraph.ALIGN_LEFT);
 
                 pdf.add(tituloRelatorio);
                 pdf.add(table);
+                pdf.add(resumoRelatorio);
 
             } catch (DocumentException | IOException de) {
                 System.err.println(de.getMessage());
@@ -557,6 +587,26 @@ public class GerenciadorDoSistema {
             if (emf != null) {
                 emf.close();
             }
+        }
+    }
+    
+    public List<Movimentacao> pesquisarMovimentacoesEspecificas(String tipoMov){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        List<Movimentacao> listaDeRetorno = new ArrayList<Movimentacao>();
+        
+        try{
+            
+            for (Movimentacao m: mjp.getAllMovimentacoes()){
+                if (m.getMovimento().toUpperCase().equals(tipoMov.toUpperCase())){
+                    listaDeRetorno.add(m);
+                }
+            }
+            
+            return listaDeRetorno;
+            
+        } finally {
+            emf.close();
         }
     }
 }
