@@ -7,6 +7,7 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
@@ -18,7 +19,10 @@ import javax.persistence.Id;
 public class ProdutoVendido implements Serializable {
     
     @Id
+    @GeneratedValue
     private String id;
+    
+    private String codigoProduto;
     
     private int quantidade;
 
@@ -46,8 +50,14 @@ public class ProdutoVendido implements Serializable {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
-    
-    
+
+    public String getCodigoProduto() {
+        return codigoProduto;
+    }
+
+    public void setCodigoProduto(String codigoProduto) {
+        this.codigoProduto = codigoProduto;
+    }
     
     
 }

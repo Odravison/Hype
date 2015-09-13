@@ -20,6 +20,8 @@ public class ProdutoLocado implements Serializable {
     @Id
     private String id;
     
+    private String codigoProduto;
+    
     private int quantidade;
 
     public ProdutoLocado(String id, int quantidade) {
@@ -46,6 +48,14 @@ public class ProdutoLocado implements Serializable {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public String getCodigoProduto() {
+        return codigoProduto;
+    }
+
+    public void setCodigoProduto(String codigoProduto) {
+        this.codigoProduto = codigoProduto;
     }
     
 }
