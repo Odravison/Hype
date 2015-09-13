@@ -107,5 +107,28 @@ public class GerenciadorDeVenda {
 
         return listaOrdenada;
     }
+    
+    public List<Venda> pesquisarVendasPorData(Calendar dataPesquisada){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        VendaJpaRepository vjp = new VendaJpaRepository(emf);
+        
+        List<Venda> listaDeRetorno = new ArrayList<Venda>();
+        
+        try{
+            for (Venda v: vjp.getAllVendas()){
+                if (v.getDataVenda().get(Calendar.DAY_OF_YEAR) == dataPesquisada.get(Calendar.DAY_OF_YEAR)
+                        && v.getDataVenda().get(Calendar.YEAR) == dataPesquisada.get(Calendar.YEAR)){
+                    listaDeRetorno.add(v);
+                }
+            }
+            
+            return listaDeRetorno;
+            
+        } finally {
+            emf.close();
+        }
+    }
+    
+    
 
 }

@@ -141,42 +141,42 @@ public class Aplicacao {
 //
 //        }
 
-//                Configuracao conf = Configuracao.getInstance();
-//                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
-//                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
-//                List<Venda> movimentacoes = new ArrayList<Venda>();
-//                List<ProdutoVendido> lista = new ArrayList<ProdutoVendido>();
-//                
-//                Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
-//                Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
-//                Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
-//                Configuracao.getInstance().setEmpresa(empresa);
-//                GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
-//                
-//                
-//                
-//                Calendar dataInicial = Calendar.getInstance();
-//                
-//                for (int i = 0; i < 10; i++){
-//                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
-//                }
-//                for (Venda m: movimentacoes){
-//                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
-//                }
-//                
-//                Calendar dataFinal = Calendar.getInstance();
-//                
-//                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
-//                
-//                System.out.println("RODOU");
+                Configuracao conf = Configuracao.getInstance();
+                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
+                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
+                List<Venda> movimentacoes = new ArrayList<Venda>();
+                List<ProdutoVendido> lista = new ArrayList<ProdutoVendido>();
+                
+                Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
+                Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
+                Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
+                Configuracao.getInstance().setEmpresa(empresa);
+                GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
+                
+                
+                
+                Calendar dataInicial = Calendar.getInstance();
+                
+                for (int i = 0; i < 10; i++){
+                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
+                }
+                for (Venda m: movimentacoes){
+                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
+                }
+                
+                Calendar dataFinal = Calendar.getInstance();
+                
+                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
+                
+                System.out.println("RODOU");
         
-        for (Locacao l: GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes()){
-            System.out.println(l.getId());
-            System.out.println("O cliente tem locações de quantidade: " 
-                    + GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes().size());
-            
-            
-        }
+//        for (Locacao l: GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes()){
+//            System.out.println(l.getId());
+//            System.out.println("O cliente tem locações de quantidade: " 
+//                    + GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes().size());
+//            
+//            
+//        }
                 
                 
     }
