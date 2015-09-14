@@ -925,7 +925,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     
     public ProdutoVendido getProdutoVendido(String codigo) {
         for(ProdutoVendido produto: this.produtosVendidos) {
-            if(produto.getId().equals(codigo)) {
+            if(produto.getCodigoProduto().equals(codigo)) {
                 return produto;
             }
         }

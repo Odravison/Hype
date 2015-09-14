@@ -1129,7 +1129,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     
     public ProdutoLocado getProdutoLocado(String codigo) {
         for(ProdutoLocado produto: this.produtosLocados) {
-            if(produto.getId().equals(codigo)) {
+            if(produto.getCodigoProduto().equals(codigo)) {
                 return produto;
             }
         }
