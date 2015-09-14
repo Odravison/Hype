@@ -122,7 +122,7 @@ public class ProdutoJpaRepository implements ProdutoRepository {
             }
 
             p = em.getReference(Produto.class, produto.getCodigo());
-            p.setCor(produto.getCodigo());
+            p.setCor(produto.getCor());
             p.setFornecedor(produto.getFornecedor());
             p.setIsLocation(produto.isLocation());
             p.setNome(produto.getNome());

@@ -200,6 +200,7 @@ public class GerenciadorDoSistema {
         relatorio.add("   MOVIMENTO   ");
         relatorio.add("  RESPONSÁVEL  ");
         relatorio.add("     VALOR     ");
+        relatorio.add("   PAGAMENTO   ");
         String diretorioFinal = null;
         
         int quantVenda = 0;
@@ -238,6 +239,7 @@ public class GerenciadorDoSistema {
                     relatorio.add(mov.getMovimento());
                     relatorio.add(mov.getResponsavel());
                     relatorio.add("R$ "+mov.getValorInString());
+                    relatorio.add(mov.getFormaDePagamento());
                     
                     if (mov.getMovimento().toUpperCase().equals("VENDA")){
                         quantVenda++;
@@ -280,7 +282,7 @@ public class GerenciadorDoSistema {
                 pdf.open();
                 pdf.setPageSize(PageSize.A4);
 
-                PdfPTable table = new PdfPTable(4);
+                PdfPTable table = new PdfPTable(5);
 
                 for (String s : relatorio) {
                     table.addCell(s);
@@ -294,7 +296,7 @@ public class GerenciadorDoSistema {
                         + "Quantidade de vendas: " + quantVenda + " Total de venda: R$ " + totalVenda + "\n"
                         + "Quantidade de Locações: " + quantLocacao + " Total de locações: R$ " + totalLocacao + "\n"
                         + "Quantidade de Despesas: " + quantDespesa + " Total de despesas: R$ " + totalDespesa + "\n"
-                        + "Valor em caixa neste período: " + (totalVenda+totalLocacao+totalDespesa),timesNewRoman12);
+                        + "Valor em caixa neste período: " + (totalVenda+totalLocacao-totalDespesa),timesNewRoman12);
                 resumoRelatorio.setAlignment(Paragraph.ALIGN_LEFT);
 
                 pdf.add(tituloRelatorio);
@@ -510,21 +512,21 @@ public class GerenciadorDoSistema {
         if (tipo.toUpperCase().equals("VENDA")) {
             Venda venda = (Venda) obj;
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
-                    Configuracao.getInstance().getEmpresa().getNome(), venda.getId());
+                    Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("DESPESA")) {
             Despesa despesa = (Despesa) obj;
-            mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), despesa.getEmissor(), despesa.getFavorecido(), despesa.getId());
+            mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), despesa.getEmissor(), despesa.getFavorecido(), despesa.getId(),
+                    despesa.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
             Locacao locacao = (Locacao) obj;
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
-                    usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId());
+                    usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
         } else {
             throw new TipoInexistenteDeMovimentacao("Este tipo de movimentação não existe.");
         }
 
         try {
             mjp.create(mov);
-            System.out.println("=========>>>>>>>>>>>> MOV TEM ID DE: " + mov.getId());
             return mov;
         } finally {
             if (emf != null) {
@@ -608,5 +610,18 @@ public class GerenciadorDoSistema {
         } finally {
             emf.close();
         }
+    }
+    
+    public List<Movimentacao> pesquisarMovimentacoesPendentes(){
+        List<Movimentacao> listaDeRetorno = new ArrayList<Movimentacao>();
+        
+        for (Movimentacao m: this.getMovimentacoes()){
+            if (m.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO") ||
+                    m.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO") ||
+                    m.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")){
+                listaDeRetorno.add(m);
+            }
+        }
+        return listaDeRetorno;
     }
 }

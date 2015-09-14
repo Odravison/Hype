@@ -30,6 +30,8 @@ public class Despesa implements Serializable {
     private String emissor;
 
     private String favorecido;
+    
+    private String formaDePagamento;
 
 
 
@@ -105,4 +107,14 @@ public class Despesa implements Serializable {
     public void setFavorecido(String favorecido) {
         this.favorecido = favorecido;
     }
+
+    public String getFormaDePagamento() {
+        return formaDePagamento;
+    }
+
+    public void setFormaDePagamento(String formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
+    }
+    
+    
 }

@@ -20,7 +20,7 @@ public class ProdutoVendido implements Serializable {
     
     @Id
     @GeneratedValue
-    private String id;
+    private long id;
     
     private String codigoProduto;
     
@@ -30,16 +30,16 @@ public class ProdutoVendido implements Serializable {
     
     }
     
-    public ProdutoVendido(String id, int quantidade){
-        this.id = id;
+    public ProdutoVendido(String codigoProduto, int quantidade){
+        this.codigoProduto = codigoProduto;
         this.quantidade = quantidade;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

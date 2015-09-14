@@ -226,7 +226,7 @@ public class GerenciadorDeProduto {
 
             for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
                 for (ProdutoLocado pl : l.getProdutos()) {
-                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pl.getId());
+                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
                     if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
                         if (!listaDeRetorno.contains(produto)) {
                             listaDeRetorno.add(produto);
@@ -247,7 +247,7 @@ public class GerenciadorDeProduto {
 
             for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
                 for (ProdutoVendido pv : v.getProdutosVendidos()) {
-                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getId());
+                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
                     if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
                         if (!listaDeRetorno.contains(produto)) {
                             listaDeRetorno.add(produto);
@@ -268,7 +268,7 @@ public class GerenciadorDeProduto {
                         && (l.getDataLocacao().get(Calendar.YEAR) == data.get(Calendar.YEAR))) {
                     for (ProdutoLocado pl : l.getProdutos()) {
                         Produto produto = GerenciadorDeProduto.getInstance()
-                                .pesquisarProdutoPeloCodigo(pl.getId());
+                                .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
                         if (!listaDeRetorno.contains(produto)) {
                             listaDeRetorno.add(produto);
                         }
@@ -288,7 +288,7 @@ public class GerenciadorDeProduto {
                     && (v.getDataVenda().get(Calendar.YEAR) == data.get(Calendar.YEAR))) {
                 for (ProdutoVendido pv : v.getProdutosVendidos()) {
                     Produto produto = GerenciadorDeProduto.getInstance()
-                            .pesquisarProdutoPeloCodigo(pv.getId());
+                            .pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
                     if (!listaDeRetorno.contains(produto)) {
                         listaDeRetorno.add(produto);
                     }
@@ -306,7 +306,7 @@ public class GerenciadorDeProduto {
         for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
                 for (ProdutoLocado pl : l.getProdutos()) {
                     Produto produto = GerenciadorDeProduto.getInstance()
-                            .pesquisarProdutoPeloCodigo(pl.getId());
+                            .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
                         listaDeRetorno.add(produto);
                 }
         }
@@ -322,12 +322,27 @@ public class GerenciadorDeProduto {
         for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
                 for (ProdutoVendido pl : v.getProdutosVendidos()) {
                     Produto produto = GerenciadorDeProduto.getInstance()
-                            .pesquisarProdutoPeloCodigo(pl.getId());
+                            .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
                         listaDeRetorno.add(produto);
                 }
         }
         return listaDeRetorno;
 
+    }
+    
+    public List<Produto> pesquisarUltimosProdutosLocadosPorNome(String nome) throws ProdutoInexistenteException{
+        List<Produto> listaDeRetorno = new ArrayList<Produto>();
+
+            for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+                    for (ProdutoLocado pl : l.getProdutos()) {
+                        Produto produto = GerenciadorDeProduto.getInstance()
+                                .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
+                        if (!listaDeRetorno.contains(produto) && produto.getNome().toUpperCase().equals(nome.toUpperCase())) {
+                            listaDeRetorno.add(produto);
+                        }
+                    }
+            }
+            return listaDeRetorno;
     }
 
 }
