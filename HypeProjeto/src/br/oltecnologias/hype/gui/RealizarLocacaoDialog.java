@@ -21,6 +21,8 @@ import br.oltecnologias.hype.model.ProdutoLocado;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -613,9 +615,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(10, 10, 10)
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -882,7 +884,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
-        if(evt.getClickCount() == 2){            
+        if(evt.getClickCount() == 2) {            
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
@@ -954,11 +956,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto.substring(0, valorCampoDesconto.length()-1)));
                     }
                 } else {
-                    //if(valorCampoDesconto.length() > 0) {
-                        calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto+evt.getKeyChar()));
-                    //} else {
-                      //  calcularValorTotalLocacaoComDesconto(Integer.parseInt(evt.getKeyChar()+""));
-                    //}
+                    calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto+evt.getKeyChar()));
+   
                 }
             } catch(Exception e) {
                 pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
@@ -978,14 +977,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         labelValorParcelas.setText("");
                     } else { 
                         //Faz o cálculo sem contas com o último número, pois este será apagado
-                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))));
+                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(calcularValorTotalParcelasLocacao(Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                        
+                        //decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
                     }
                 } else {
-                    //if(valorCampoParcelas.length() > 0) {
-                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas+evt.getKeyChar())));
-                    //} else {
-                      //  labelValorParcelas.setText(" = "+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(evt.getKeyChar()+"")));
-                    //}
+                    labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+new BigDecimal(calcularValorTotalParcelasLocacao(Integer.parseInt(valorCampoParcelas+evt.getKeyChar()))
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                            
+                       //decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas+evt.getKeyChar()));
                 }
             } catch(Exception e) {
                 pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
@@ -994,6 +995,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoParcelasKeyPressed
    
+    public double calcularValorTotalParcelasLocacao(int quantidadeParcelas) {
+        double valorParcelas = 0;
+        try {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+                valorParcelas = (valorTotalLocacao
+                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)) / quantidadeParcelas;
+            }
+        } catch(TemporadaInexistenteException e) {
+            valorParcelas = valorTotalLocacao / quantidadeParcelas;
+            
+        }
+        return valorParcelas;
+    }
+    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -1067,7 +1082,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setVisible(true);
             }
         } else {
-            ProdutoLocado novoProdutoLocado = new ProdutoLocado(produto.getCodigo(), 1);
+            ProdutoLocado novoProdutoLocado = new ProdutoLocado(produto.getCodigo(), 1); //trocar para receber quant, código
             produtosLocados.add(novoProdutoLocado);
             //Adiciona os dados do novo produto na tabela
             modeloTabelaProdutosLocados.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), novoProdutoLocado.getQuantidade()});
@@ -1163,11 +1178,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public void calcularValorTotalLocacao() {
         try {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
-                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
+                labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao
+                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                
+                
+                //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
+                       // - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
             }
         } catch (TemporadaInexistenteException e) {
-            labelValorLocacao.setText("R$ " + valorTotalLocacao);
+            System.out.println("(CALCULARVALTOTLOCACAO) ERRO: "+e.getMessage()+
+                    "valor R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            
+            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            //labelValorLocacao.setText("R$ " + valorTotalLocacao);
         }
     }
     
@@ -1177,13 +1201,23 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 double valorTotalComDescontoTemporada = valorTotalLocacao
                         - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100);
                 
-                labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalComDescontoTemporada 
-                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)));
+                labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalComDescontoTemporada 
+                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                
+                
+                //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalComDescontoTemporada 
+                  //      - ((valorTotalComDescontoTemporada * valorDesconto)/100)));
             } 
         } catch (TemporadaInexistenteException e) {
+            System.out.println("(CALCULARVALTOTLOCACAO) ERRO: "+e.getMessage()+
+                    "valor R$ " + new BigDecimal(new BigDecimal(valorTotalLocacao
+                - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
             //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
-            labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
-                - ((valorTotalLocacao * valorDesconto) / 100)));
+            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao
+                - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            
+            //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
+              //  - ((valorTotalLocacao * valorDesconto) / 100)));
         }
     }
     

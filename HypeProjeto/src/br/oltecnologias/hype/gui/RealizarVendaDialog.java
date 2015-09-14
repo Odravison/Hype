@@ -17,6 +17,7 @@ import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Dialog;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -466,7 +467,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelSimboloPorcentagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelSimboloPorcentagem.setText("%");
 
-        labelValorParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelValorParcelas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelValorParcelas.setForeground(new java.awt.Color(0, 0, 102));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -507,17 +508,18 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(painelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(labelValorParcelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelDesconto)
-                        .addComponent(labelSimboloPorcentagem)
-                        .addComponent(labelValorTotal))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoConcluir)
                         .addComponent(botaoCancelar))
-                    .addComponent(labelValorVenda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelValorVenda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelDesconto)
+                            .addComponent(labelSimboloPorcentagem)
+                            .addComponent(labelValorTotal))))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -655,7 +657,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
-        validarNumerosETamanho(evt, campoPercentualDesconto, maxCaracteresDesconto);
+        if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto 
+                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100) {
+            evt.consume();
+        } 
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
@@ -710,15 +715,62 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_tabelaProdutosVendidosMouseClicked
 
     private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
-        
+        if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcelas
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > 12) {
+            evt.consume();
+        } 
     }//GEN-LAST:event_campoParcelasKeyTyped
 
     private void campoParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyPressed
-        
+        if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
+                && Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) <= 12) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            try {
+                String valorCampoParcelas = campoParcelas.getText();
+                //Se o usuário estiver apagando o conteúdo do campo
+                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) { 
+                    if(valorCampoParcelas.length() <= 1) {
+                        labelValorParcelas.setText("");
+                    } else { 
+                        //Faz o cálculo sem contas com o último número, pois este será apagado
+                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))));
+                    }
+                } else {
+                    //if(valorCampoParcelas.length() > 0) {
+                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas+evt.getKeyChar())));
+                    //} else {
+                      //  labelValorParcelas.setText(" = "+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(evt.getKeyChar()+"")));
+                    //}
+                }
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }  
+        }
     }//GEN-LAST:event_campoParcelasKeyPressed
 
     private void campoPercentualDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyPressed
-        
+        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() < maxCaracteresDesconto
+                && Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            try {
+                String valorCampoDesconto = campoPercentualDesconto.getText();
+                //Se o usuário estiver apagando o conteúdo do campo
+                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) { 
+                    if(valorCampoDesconto.length() <= 1) {
+                        calcularValorTotalVenda(); 
+                    } else { 
+                        //Faz o cálculo sem contas com o último número, pois este será apagado
+                        calcularValorTotalVendaComDesconto(Integer.parseInt(valorCampoDesconto.substring(0, valorCampoDesconto.length()-1)));
+                    }
+                } else {
+                    //if(valorCampoDesconto.length() > 0) {
+                        calcularValorTotalVendaComDesconto(Integer.parseInt(valorCampoDesconto+evt.getKeyChar()));
+                    //} else {
+                      //  calcularValorTotalVendaComDesconto(Integer.parseInt(evt.getKeyChar()+""));
+                    //}
+                }
+            } catch(Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }  
+        }
     }//GEN-LAST:event_campoPercentualDescontoKeyPressed
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
@@ -880,6 +932,33 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         return null;
     }
     
+    public void calcularValorTotalVenda() {
+        try {
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+                labelValorVenda.setText("R$ " + decimalFormat.format(valorTotalVenda
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
+            }
+        } catch (TemporadaInexistenteException e) {
+            labelValorVenda.setText("R$ " + valorTotalVenda);
+        }
+    }
+    
+    public void calcularValorTotalVendaComDesconto(int valorDesconto) {
+        try {
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+                double valorTotalComDescontoTemporada = valorTotalVenda
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100);
+                
+                labelValorVenda.setText("R$ " + decimalFormat.format(valorTotalComDescontoTemporada 
+                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)));
+            } 
+        } catch (TemporadaInexistenteException e) {
+            //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
+            labelValorVenda.setText("R$ " + decimalFormat.format(valorTotalVenda
+                - ((valorTotalVenda * valorDesconto) / 100)));
+        }
+    }
+    
     public boolean alterarDados() {        
         concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
@@ -902,6 +981,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     protected boolean concluirSelecionado;
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
+    private int maxCaracteresParcelas = 2;
     protected Venda novaVenda;
     private double valorTotalVenda;
     protected Movimentacao novaMovimentacao;
