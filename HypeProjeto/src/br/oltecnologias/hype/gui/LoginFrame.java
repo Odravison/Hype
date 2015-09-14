@@ -33,12 +33,13 @@ public class LoginFrame extends javax.swing.JFrame {
         ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Mini logo hype!.png");
         setIconImage(imagemTituloJanela.getImage());
         labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
-        if(!GerenciadorDoSistema.getInstance().isEmpresaCadastrada()) {
-            CadastrarEmpresaDialog dialog = new CadastrarEmpresaDialog(null);
-            dialog.setLocationRelativeTo(null);
-            dialog.setVisible(true);
+        /*if(!GerenciadorDoSistema.getInstance().isEmpresaCadastrada()) {
+            CadastrarEmpresaDialog dialogEmpresa = new CadastrarEmpresaDialog(null);
+            dialogEmpresa.setLocationRelativeTo(null);
+            dialogEmpresa.setAlwaysOnTop(true);
+            dialogEmpresa.setVisible(true);
         }
-        /*if(Configuracao.getInstance().getDiretorioDeBackup() == null || Configuracao.getInstance().getDiretorioDeDocumentos() == null
+        if(Configuracao.getInstance().getDiretorioDeBackup() == null || Configuracao.getInstance().getDiretorioDeDocumentos() == null
                 || Configuracao.getInstance().getDiretorioDeRelatorios() == null) {
             
             CadastrarDiretoriosDialog dialogDiretorios = new CadastrarDiretoriosDialog(null);

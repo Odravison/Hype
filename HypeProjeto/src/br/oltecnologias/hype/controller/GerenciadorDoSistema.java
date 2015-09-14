@@ -467,11 +467,11 @@ public class GerenciadorDoSistema {
 
         try {
 
-            if (ejp.getEmpresaCount() > 1) {
-                return false;
+            if (ejp.getEmpresaCount() > 0) {
+                return true;
             }
 
-            return true;
+            return false;
 
         } finally {
             if (emf != null) {
