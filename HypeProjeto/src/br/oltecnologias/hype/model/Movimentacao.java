@@ -37,6 +37,8 @@ public class Movimentacao implements Serializable {
     
     private double valor;
     
+    private String formaDePagamento;
+    
     
     @Temporal(TemporalType.DATE)
     private Calendar data;
@@ -45,13 +47,14 @@ public class Movimentacao implements Serializable {
     
     private String beneficiario;
 
-    public Movimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario, long idDaOperacao) {
+    public Movimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario, long idDaOperacao, String formaDePagamento) {
         this.movimento = movimento;
         this.valor = valor;
         this.data = data;
         this.responsavel = responsavel;
         this.beneficiario = beneficiario;
         this.idDaOperacao = idDaOperacao;
+        this.formaDePagamento = formaDePagamento;
     }
     
     public Movimentacao() {
@@ -125,4 +128,13 @@ public class Movimentacao implements Serializable {
         String mov = getDataInString() + "     " + getMovimento() + "     " + getResponsavel() + "     " + getValorInString();
         return mov;
     }
+
+    public String getFormaDePagamento() {
+        return formaDePagamento;
+    }
+
+    public void setFormaDePagamento(String formaDePagamento) {
+        this.formaDePagamento = formaDePagamento;
+    }
+    
 }
