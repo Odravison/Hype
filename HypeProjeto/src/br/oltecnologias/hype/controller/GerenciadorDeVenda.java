@@ -3,7 +3,6 @@ package br.oltecnologias.hype.controller;
 import br.oltecnologias.hype.dao.VendaJpaRepository;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.VendaInexistenteException;
-import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import java.util.ArrayList;
@@ -76,7 +75,7 @@ public class GerenciadorDeVenda {
             
             Venda venda = vjp.findById(idVenda);
             for (ProdutoVendido p: venda.getProdutosVendidos()){
-                retorno += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getId()).getDescricao();
+                retorno += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).getDescricao();
             
             }
             return retorno;

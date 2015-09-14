@@ -47,19 +47,18 @@ public class GerenciadorDeLocacao {
 
         try {
 
-            Cliente clienteQueLocou = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
-            locacao = new Locacao(clienteQueLocou, produtosLocados, valorFinal, dataLocacao,
+            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
 
             
             ljp.create(locacao);
             
-            clienteQueLocou.adicionarLocacao(locacao);
-            GerenciadorDePessoas.getInstance().editarCliente(clienteQueLocou);
-            
+            cliente.adicionarLocacao(locacao);
+            GerenciadorDePessoas.getInstance().editarCliente(cliente);
+
             for (ProdutoLocado p : produtosLocados) {
-                GerenciadorDeProduto.getInstance().removerQuantidade(p.getId(), p.getQuantidade());
+                GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
             
         } finally {
@@ -111,7 +110,7 @@ public class GerenciadorDeLocacao {
                                 && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                             emprestou = true;
                             for (ProdutoLocado p : produtosDaLocacao) {
-                                GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getId()).addQuant(p.getQuantidade());
+                                GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).addQuant(p.getQuantidade());
                             }
 
                             clienteFinalizada = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
@@ -222,7 +221,7 @@ public class GerenciadorDeLocacao {
 
         try {
             for (ProdutoLocado produto : ljp.getProdutosFromLocacao(idLocacao)) {
-                produtosLocados += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(produto.getId()).getNome() + ", ";
+                produtosLocados += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(produto.getCodigoProduto()).getNome() + ", ";
             }
         } finally {
             emf.close();
@@ -239,7 +238,7 @@ public class GerenciadorDeLocacao {
             List<ProdutoLocado> produtosLocado = ljp.getProdutosFromLocacao(id);
             List<Produto> retorno = new ArrayList<Produto>();
             for (ProdutoLocado p : produtosLocado) {
-                retorno.add(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getId()));
+                retorno.add(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()));
             }
             return retorno;
         } finally {
