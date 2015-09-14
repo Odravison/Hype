@@ -52,6 +52,8 @@ public class VerDadosDespesaDialog extends java.awt.Dialog {
         labelObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelObservacao.setText("Observação:");
 
+        scPnObservacao.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         areaObservacao.setEditable(false);
         areaObservacao.setColumns(20);
         areaObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -70,16 +72,15 @@ public class VerDadosDespesaDialog extends java.awt.Dialog {
                         .addComponent(labelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 496, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(78, Short.MAX_VALUE))
                     .addGroup(painelDadosGeraisLayout.createSequentialGroup()
-                        .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(painelDadosGeraisLayout.createSequentialGroup()
-                                .addComponent(labelObservacao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scPnObservacao))
-                            .addGroup(painelDadosGeraisLayout.createSequentialGroup()
-                                .addComponent(labelValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(labelFavorecido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(26, 26, 26))))
+                        .addComponent(labelValor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(labelFavorecido, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosGeraisLayout.createSequentialGroup()
+                        .addComponent(labelObservacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scPnObservacao)
+                        .addContainerGap())))
         );
         painelDadosGeraisLayout.setVerticalGroup(
             painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

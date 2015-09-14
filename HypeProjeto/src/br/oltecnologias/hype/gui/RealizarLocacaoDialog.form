@@ -46,10 +46,10 @@
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Component id="labelValorTotal" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="labelValorLocacao" min="-2" pref="140" max="-2" attributes="0"/>
+                      <Component id="labelValorLocacao" min="-2" pref="94" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="labelValorParcelas" min="-2" pref="138" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="labelValorParcelas" min="-2" pref="108" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       <Component id="labelDesconto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="campoPercentualDesconto" min="-2" pref="43" max="-2" attributes="0"/>
@@ -570,6 +570,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPercentualDescontoKeyPressed"/>
         <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPercentualDescontoKeyTyped"/>
       </Events>
     </Component>
@@ -755,6 +756,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoParcelasKeyPressed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoParcelasKeyTyped"/>
           </Events>
         </Component>
@@ -807,7 +809,7 @@
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="99" green="0" red="0" type="rgb"/>
+          <Color blue="66" green="0" red="0" type="rgb"/>
         </Property>
       </Properties>
     </Component>

@@ -2450,7 +2450,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoEditarDespesa.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
-            
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
                     //Passa, como parâmetro, a movimentacao pesquisada pelo id
