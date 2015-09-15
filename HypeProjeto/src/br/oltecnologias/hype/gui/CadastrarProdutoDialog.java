@@ -447,7 +447,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoQuantidadeKeyTyped
 
     private void campoCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoCodigoKeyTyped
-        if(campoCodigo.getText().length() > maxCaracteresCodigo) {
+        if(campoCodigo.getText().length() >= maxCaracteresCodigo) {
             evt.consume();
         }
     }//GEN-LAST:event_campoCodigoKeyTyped

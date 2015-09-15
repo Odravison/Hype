@@ -632,12 +632,16 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     campoEntrada.setText("0");
                     campoParcelas.setText("0");
                 }
-
+                System.out.println("QUANT PRODUTOS VENDIDOS: "+produtosVendidos.size()+", valor: "+valorTotalVenda+
+                        ", forma pag: "+formaPagamento+", parcelas: "+campoParcelas.getText()+", entrada: "+
+                        campoEntrada.getText()+", desconto: "+campoPercentualDesconto.getText());
                 try {
                     GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalVenda, formaPagamento,
                             Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
 
+                    System.out.println("PASSOU DO REALIZAR VENDA");
+                    
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaVenda, "VENDA");
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
@@ -648,6 +652,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     setVisible(false);
 
                 } catch (Exception e) {
+                    System.out.println("DEU PAU! ERRO: "+e.getMessage());
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -761,11 +766,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         calcularValorTotalVendaComDesconto(Integer.parseInt(valorCampoDesconto.substring(0, valorCampoDesconto.length()-1)));
                     }
                 } else {
-                    //if(valorCampoDesconto.length() > 0) {
                         calcularValorTotalVendaComDesconto(Integer.parseInt(valorCampoDesconto+evt.getKeyChar()));
-                    //} else {
-                      //  calcularValorTotalVendaComDesconto(Integer.parseInt(evt.getKeyChar()+""));
-                    //}
                 }
             } catch(Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda.", "Aviso", JOptionPane.WARNING_MESSAGE);

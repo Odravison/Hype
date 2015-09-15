@@ -106,7 +106,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1286, Short.MAX_VALUE)
+            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1297, Short.MAX_VALUE)
             .addContainerGap())
     );
     painelLocacoesFeitasLayout.setVerticalGroup(
@@ -131,7 +131,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addGap(23, 23, 23)
+            .addContainerGap()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                 .addComponent(botaoOk)
                 .addComponent(painelLocacoesFeitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))

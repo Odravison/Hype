@@ -9,6 +9,7 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -309,21 +310,57 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNumeroKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        JOptionPane pane = new JOptionPane();
         try {
             if(campoNome.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o nome do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe o nome do estabelecimento comercial");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else if(campoCnpj.getText().charAt(16) == ' ') {//O último caractere do número de CNPJ não pode ser vazio
-                JOptionPane.showMessageDialog(null, "Informe o CNPJ da empresa", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe o CNPJ da empresa");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else if(campoRua.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe a rua do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe a rua do estabelecimento comercial");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else if(campoCidade.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe a cidade do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe a cidade do estabelecimento comercial");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else if(campoBairro.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o bairro do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe o bairro do estabelecimento comercial");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else if(campoNumero.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o número do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe o número do estabelecimento comercial");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else if(campoTelefone.getText().charAt(13) == ' ') { //O último caractere do número de telefone não pode ser vazio
-                JOptionPane.showMessageDialog(null, "Informe o número de telefone do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage("Informe o número de telefone do estabelecimento comercial");
+                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+                
             } else {
 
                 try {
@@ -331,15 +368,29 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                         campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
                         Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
                     
-                    JOptionPane.showMessageDialog(null, "Empresa cadastrada com sucesso!");
+                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    pane.setMessage("Empresa cadastrada com sucesso!");
+                    JDialog messageDialog = pane.createDialog("Aviso");
+                    messageDialog.setAlwaysOnTop(true);
+                    messageDialog.setVisible(true);
                     
-
+                    salvarSelecionado = true; //O botão Salvar foi selecionado
+                    setVisible(false);
+                    
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                    pane.setMessage(e.getMessage());
+                    JDialog messageDialog = pane.createDialog("Erro");
+                    messageDialog.setAlwaysOnTop(true);
+                    messageDialog.setVisible(true);
                 }
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            pane.setMessage(e.getMessage());
+            JDialog messageDialog = pane.createDialog("Erro");
+            messageDialog.setAlwaysOnTop(true);
+            messageDialog.setVisible(true);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
@@ -358,6 +409,13 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         } if(campo.getText().length()>= maxCaracteres){ 
             evt.consume(); 
         }
+    }
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     /**
@@ -381,6 +439,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     private int maxCaracteresNome = 35;
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
+    protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoBairro;

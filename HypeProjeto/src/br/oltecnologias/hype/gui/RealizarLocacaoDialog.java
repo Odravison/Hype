@@ -53,9 +53,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         produtosLocados = new ArrayList<ProdutoLocado>();
         pane = new JOptionPane();
         dialog = null;
-        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-        dialog = pane.createDialog("Aviso");
-        dialog.setAlwaysOnTop(true);
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
         decimalFormat = new DecimalFormat("#.##");
     }
@@ -615,10 +612,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(10, 10, 10)
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -685,26 +682,44 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         try {          
             if(labelNomeCliente.getText().length() <= 0) {
                 pane.setMessage("Selecione o cliente que irá realizar a locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
                 
-            } else if(produtosLocados.size() <= 0) {
+            } else if(produtosLocados.size() <= 0) {                
                 pane.setMessage("Selecione os produtos para a locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
                 
             } else if(campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) { 
                 pane.setMessage("O percentual de desconto não pode estar acima de 100%");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
+                
             } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
                 pane.setMessage("Informe a forma de pagamento da locação");
-                dialog.setVisible(true);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                Dialog dialogMessage = pane.createDialog("Aviso");
+                dialogMessage.setAlwaysOnTop(true);
+                dialogMessage.setVisible(true);
                 
             } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
                 pane.setMessage("Informe a forma de pagamento da locação");
-                dialog.setVisible(true);
-                    
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                Dialog dialogMessage = pane.createDialog("Aviso");
+                dialogMessage.setAlwaysOnTop(true);
+                dialogMessage.setVisible(true);
             } else if ((radioCartao.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
                 pane.setMessage("Informe a quantidade de parcelas da locação");
-                dialog.setVisible(true);
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                Dialog dialogMessage = pane.createDialog("Aviso");
+                dialogMessage.setAlwaysOnTop(true);
+                dialogMessage.setVisible(true);
 
             } else {
                 String formaPagamento = "";
@@ -742,15 +757,18 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     System.out.println("CPF locador: "+locador.getCpf()+", Nome locador: "+locador.getNome()+", Form pag: "+formaPagamento+
                             ", PARCELAS: "+campoParcelas.getText()+", DESCONTO: "+campoPercentualDesconto.getText()+
                             ", QUANT PROD LOCADOS: "+produtosLocados.size()+", VALOR TOTAL: "+valorTotalLocacao+
-                            ", DATA INICIAL: "+dataInicial.getTime().toString()+", DATA FINAL: "+dataFinal.getTime().toString());
+                            ", DATA INICIAL: "+dataInicial.getTime().toString()+", DATA FINAL: "+dataFinal.getTime().toString()+
+                            ", Entrada: "+campoEntrada.getText());
                     
                     novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, dataInicial,
                             dataFinal, formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                            Float.parseFloat(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
-
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
+                            Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                     
-                    JOptionPane pane = new JOptionPane();
+                    System.out.println("PASSOU DO REALIZAR LOCACAO");
+                    
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
+                    System.out.println("PASSOU DO ADICIONAR MOVIMENTACAO");
+                    
                     pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                     Dialog dialogMessage = pane.createDialog("Mensagem");
@@ -763,9 +781,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     setVisible(false);
 
                 } catch (Exception e) {
-                    JOptionPane paneError = new JOptionPane();
-                    paneError.setMessage(e.getMessage());
-                    paneError.setMessageType(JOptionPane.ERROR_MESSAGE);
+                    System.out.println("DEU PAU! erro: "+e.getMessage());
+                    pane.setMessage(e.getMessage());
+                    pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                     Dialog dialogMessageError = pane.createDialog("Erro");
                     dialogMessageError.setAlwaysOnTop(true);
                     dialogMessageError.setVisible(true);
@@ -774,28 +792,30 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         } catch(Exception e) {
             pane.setMessage("Informe corretamente todos os dados necessários");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
         
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void botaoSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarClienteActionPerformed
-        PesquisarClienteDialog dialog = new PesquisarClienteDialog(null);
-        dialog.setLocationRelativeTo(null);
-        if (dialog.alterarDados()) {
-            labelNomeCliente.setText(dialog.getNomeClienteSelecionado());
+        PesquisarClienteDialog dialogPesquisarCliente = new PesquisarClienteDialog(null);
+        dialogPesquisarCliente.setLocationRelativeTo(null);
+        if (dialogPesquisarCliente.alterarDados()) {
+            labelNomeCliente.setText(dialogPesquisarCliente.getNomeClienteSelecionado());
             try {
-                locador = GerenciadorDePessoas.getInstance().pesquisarCliente(dialog.getCpfLocador());
+                locador = GerenciadorDePessoas.getInstance().pesquisarCliente(dialogPesquisarCliente.getCpfLocador());
             } catch (ClienteInexistenteException e) {
-                JOptionPane pane = new JOptionPane();
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                JDialog messageDialog = pane.createDialog("Aviso");
-                messageDialog.setAlwaysOnTop(true);
-                messageDialog.setVisible(true);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
             }
         }
-        dialog.dispose();
+        dialogPesquisarCliente.dispose();
     }//GEN-LAST:event_botaoSelecionarClienteActionPerformed
 
     private void campoPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarKeyTyped
@@ -818,12 +838,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         if(campoPesquisar.getText().length() <= 0) {
-            JOptionPane pane = new JOptionPane();
             pane.setMessage("É preciso informar o nome ou o código do produto para a pesquisa");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-            JDialog messageDialog = pane.createDialog("Aviso");
-            messageDialog.setAlwaysOnTop(true);
-            messageDialog.setVisible(true);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
         } else {
             for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
@@ -834,7 +853,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private void botaoSelecionarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarProdutosActionPerformed
         if(tabelaProdutos.getSelectedRow() < 0) {
             pane.setMessage("Selecione um produto na lista para poder adicioná-lo aos produtos locados");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
+            
         } else {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
@@ -843,6 +866,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 calcularValorTotalLocacao();
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             } 
         }
@@ -851,6 +877,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
         if(tabelaProdutosLocados.getSelectedRow() < 0) {
             pane.setMessage("Selecione um produto para remoção");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
@@ -961,6 +990,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
             } catch(Exception e) {
                 pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }  
         }
@@ -990,6 +1022,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
             } catch(Exception e) {
                 pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }  
         }
@@ -1079,6 +1114,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
             } else {
                 pane.setMessage("Este produto não pode ser locado! \n\nQuantidade de produtos insuficiente no estoque");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
         } else {
@@ -1122,6 +1160,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         } else {
             pane.setMessage("O produto não foi encontrado");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
         
@@ -1162,6 +1203,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         
         if(!atualizou) {
             pane.setMessage("Não foi possível atualizar a quantidade em estoque do produto");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
     }

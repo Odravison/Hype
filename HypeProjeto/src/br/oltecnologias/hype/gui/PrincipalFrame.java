@@ -1642,7 +1642,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
     tabelaUsuarios.getTableHeader().setResizingAllowed(false);
     tabelaUsuarios.getTableHeader().setReorderingAllowed(false);
-    String[] nomesColunasTabelaUsuarios = {"Nome do Usuário", "NickName", "Categoria"};
+    String[] nomesColunasTabelaUsuarios = {"Nome do Usuário", "Login", "Categoria"};
     //Define a fonte do cabeçalho da tabela usuários
     tabelaUsuarios.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
     //Definindo o tamanho da linha
@@ -2533,7 +2533,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
                     try {
-                        //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
+                        //Pesquisa o produto selecionado através do seucódigo
                         EditarProdutoDialog dialog = new EditarProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                                 (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
 
@@ -2577,6 +2577,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
         if(tabelaMovimentacoes.getSelectedRow() >= 0) {
             if(((String )modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+                System.out.println("QUANTIDADE DE COLUNAS TABELA MOVIMENTACOES: "+tabelaMovimentacoes.getColumnCount());
+                System.out.println("ID MOVIMENTAÇÃO: "+(String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1));
                 Executors.newFixedThreadPool(10).execute(new Runnable() {
                     public void run() {
                         try {

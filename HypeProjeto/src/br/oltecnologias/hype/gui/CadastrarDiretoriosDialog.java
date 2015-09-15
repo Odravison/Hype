@@ -5,6 +5,7 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Configuracao;
 import javax.swing.ImageIcon;
 
@@ -219,36 +220,56 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         boolean cadastrou = false;
         JOptionPane pane = new JOptionPane();
-        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-        JDialog messageDialog = pane.createDialog("Aviso");
-        messageDialog.setAlwaysOnTop(true);
+        JDialog messageDialog;
         
         if(campoDiretorioBackup.getText().length() <= 0) {
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de backup");
+            messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
-            JOptionPane.showMessageDialog(null, "Informe o diretório de backup", "Aviso", JOptionPane.WARNING_MESSAGE);
+            
         } else if(campoDiretorioDocumentos.getText().length() <= 0) {
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de documentos");
+            messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
+            
         } else if(campoDiretorioRelatorios.getText().length() <= 0) {
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de relatórios");
+            messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
+            
         } else {
             Configuracao.getInstance().setDiretorioDeBackup(campoDiretorioBackup.getText());
             Configuracao.getInstance().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
             Configuracao.getInstance().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
             
+            
+            pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
             pane.setMessage("Diretórios cadastrados com sucesso!");
+            messageDialog = pane.createDialog("Aviso");
+            messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
-            cadastrou = true;
+            salvarSelecionado = true; //O botão Salvar foi selecionado
             setVisible(false);
-            dispose();
         }
+        /*
         if(!cadastrou) {
             setVisible(true);
-        }
+        }*/
     }//GEN-LAST:event_botaoSalvarActionPerformed
+    
+    public boolean alterarDados() {        
+        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
+        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
+        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
+        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+    }
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -262,6 +283,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
 
+    protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoDiretorioBackup;
