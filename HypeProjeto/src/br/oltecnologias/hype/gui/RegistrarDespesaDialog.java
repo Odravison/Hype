@@ -217,7 +217,6 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
                 novaDespesa = GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa(campoNome.getText(), areaObservacao.getText(), 
                         Calendar.getInstance(), Double.parseDouble(campoValor.getText()), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
                         campoFavorecido.getText()));
-                
                         
                 novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaDespesa, "DESPESA");
                 

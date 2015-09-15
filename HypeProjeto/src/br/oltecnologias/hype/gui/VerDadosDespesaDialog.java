@@ -31,6 +31,7 @@ public class VerDadosDespesaDialog extends java.awt.Dialog {
         areaObservacao = new javax.swing.JTextArea();
         botaoOk = new javax.swing.JButton();
 
+        setBackground(java.awt.Color.white);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

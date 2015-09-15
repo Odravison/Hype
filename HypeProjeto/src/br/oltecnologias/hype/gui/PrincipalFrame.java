@@ -2529,7 +2529,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarProdutoActionPerformed
         if(tabelaProdutos.getSelectedRow() >= 0) {
-            
+            System.out.println("LINHA SELECIONADA TABELA PRODUTO: "+tabelaProdutos.getSelectedRow());
+            System.out.println("CÓDIGO DO PRODUTO: "+(String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
                     try {
@@ -2577,14 +2578,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
         if(tabelaMovimentacoes.getSelectedRow() >= 0) {
             if(((String )modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-                System.out.println("QUANTIDADE DE COLUNAS TABELA MOVIMENTACOES: "+tabelaMovimentacoes.getColumnCount());
-                System.out.println("ID MOVIMENTAÇÃO: "+(String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1));
                 Executors.newFixedThreadPool(10).execute(new Runnable() {
                     public void run() {
                         try {
                             //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
                             EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                                    Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
+                                    Long.parseLong(modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1).toString())));
 
                             dialog.setLocationRelativeTo(null);
                             if (dialog.alterarDados()) {
@@ -2657,7 +2656,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
 
     private void botaoEditarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarEmpresaActionPerformed
-        Empresa empresa = Configuracao.getInstance().getEmpresa();
+        Empresa empresa = Configuracao.getInstance().getEmpresa(); //pegar do gerenciador do sistema
         EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, empresa);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
@@ -3131,7 +3130,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getId()});
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {

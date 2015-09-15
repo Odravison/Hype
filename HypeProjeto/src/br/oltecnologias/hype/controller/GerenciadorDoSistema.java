@@ -453,7 +453,7 @@ public class GerenciadorDoSistema {
         try {
 
             ejp.create(empresa);
-
+            
         } finally {
             if (emf != null) {
                 emf.close();
@@ -508,17 +508,26 @@ public class GerenciadorDoSistema {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         Movimentacao mov;
-
+        System.out.println("CHEGOU NO ADICIONARMOVIMENTACAO");
         if (tipo.toUpperCase().equals("VENDA")) {
+            System.out.println("VAI TRANSFORMAR O OBJECT EM VENDA");
             Venda venda = (Venda) obj;
+            System.out.println("VENDA\nVALOR: "+venda.getValor()+", DATA: "+venda.getDataVenda()+", EMPRESA: "+
+                   Configuracao.getInstance().getEmpresa().getNome() +" ID: "+venda.getId()+", FORMAPAG: "+venda.getFormaDePagamento());
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
                     Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("DESPESA")) {
+            System.out.println("VAI TRANSFORMAR O OBJECT EM DESPESA");
             Despesa despesa = (Despesa) obj;
             mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), despesa.getEmissor(), despesa.getFavorecido(), despesa.getId(),
                     despesa.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
+            System.out.println("VAI TRANSFORMAR O OBJECT EM LOCAÇÃO");
             Locacao locacao = (Locacao) obj;
+            System.out.println("LOCAÇÃO\nVALOR: "+(locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago())+
+                    ", EMPRESA: "+Configuracao.getInstance().getEmpresa().getNome()+
+                   Configuracao.getInstance().getEmpresa().getNome() +" ID: "+locacao.getId()+", FORMAPAG: "+locacao.getFormaDePagamento());
+            
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
                     usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
         } else {

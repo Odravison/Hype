@@ -765,6 +765,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                     
                     System.out.println("PASSOU DO REALIZAR LOCACAO");
+                    System.out.println("A NOVA LOCAÇÃO É NULA? "+novaLocacao==null);
                     
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
                     System.out.println("PASSOU DO ADICIONAR MOVIMENTACAO");
