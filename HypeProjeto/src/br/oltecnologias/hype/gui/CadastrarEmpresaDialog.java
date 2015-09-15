@@ -310,10 +310,10 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
-            if(campoCnpj.getText().charAt(16) == ' ') {//O último caractere do número de CNPJ não pode ser vazio
-                JOptionPane.showMessageDialog(null, "Informe o CNPJ da empresa", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }else if(campoNome.getText().length() <= 0) {
+            if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoCnpj.getText().charAt(16) == ' ') {//O último caractere do número de CNPJ não pode ser vazio
+                JOptionPane.showMessageDialog(null, "Informe o CNPJ da empresa", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoRua.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a rua do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoCidade.getText().length() <= 0) {
@@ -322,7 +322,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Informe o bairro do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoNumero.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o número do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoTelefone.getText().charAt(14) == ' ') { //O último caractere do número de telefone não pode ser vazio
+            } else if(campoTelefone.getText().charAt(13) == ' ') { //O último caractere do número de telefone não pode ser vazio
                 JOptionPane.showMessageDialog(null, "Informe o número de telefone do estabelecimento comercial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
 
@@ -339,7 +339,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 }
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
