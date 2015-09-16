@@ -704,22 +704,22 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
                 pane.setMessage("Informe a forma de pagamento da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                Dialog dialogMessage = pane.createDialog("Aviso");
-                dialogMessage.setAlwaysOnTop(true);
-                dialogMessage.setVisible(true);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
                 
             } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
                 pane.setMessage("Informe a forma de pagamento da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                Dialog dialogMessage = pane.createDialog("Aviso");
-                dialogMessage.setAlwaysOnTop(true);
-                dialogMessage.setVisible(true);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
             } else if ((radioCartao.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
                 pane.setMessage("Informe a quantidade de parcelas da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                Dialog dialogMessage = pane.createDialog("Aviso");
-                dialogMessage.setAlwaysOnTop(true);
-                dialogMessage.setVisible(true);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
             } else {
                 String formaPagamento = "";
@@ -784,9 +784,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     
                     pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                    Dialog dialogMessage = pane.createDialog("Mensagem");
-                    dialogMessage.setAlwaysOnTop(true);
-                    dialogMessage.setVisible(true);
+                    dialog = pane.createDialog("Mensagem");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
 
                     //O botão concluir foi selecionado
                     concluirSelecionado = true;
@@ -797,9 +797,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     System.out.println("DEU PAU! erro: "+e.getMessage());
                     pane.setMessage(e.getMessage());
                     pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                    Dialog dialogMessageError = pane.createDialog("Erro");
-                    dialogMessageError.setAlwaysOnTop(true);
-                    dialogMessageError.setVisible(true);
+                    dialog = pane.createDialog("Erro");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
                 }
                                         
             }
@@ -934,6 +934,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 calcularValorTotalLocacao();
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
         }
@@ -1169,6 +1172,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 valorTotalLocacao -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
         } else {

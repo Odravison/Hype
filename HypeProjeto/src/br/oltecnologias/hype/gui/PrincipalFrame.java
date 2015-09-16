@@ -378,17 +378,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(campoPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(botaoPesquisarCliente))
-                    .addGroup(painelClientesLayout.createSequentialGroup()
-                        .addComponent(labelFiltrarClientes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboFiltrarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(275, 275, 275)
-                        .addComponent(botaoVerLocacoesCliente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoEditarCliente)
-                        .addGap(4, 4, 4)
-                        .addComponent(botaoExcluirCliente))
-                    .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelClientesLayout.createSequentialGroup()
+                            .addComponent(labelFiltrarClientes)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(comboFiltrarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(botaoVerLocacoesCliente)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(botaoEditarCliente)
+                            .addGap(4, 4, 4)
+                            .addComponent(botaoExcluirCliente))
+                        .addComponent(pnRlCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(499, Short.MAX_VALUE))
         );
         painelClientesLayout.setVerticalGroup(
@@ -400,16 +401,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(botaoPesquisarCliente))
-                .addGap(37, 37, 37)
-                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(36, 36, 36)
+                .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelFiltrarClientes)
+                    .addComponent(comboFiltrarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoEditarCliente)
                         .addComponent(botaoExcluirCliente)
-                        .addComponent(botaoVerLocacoesCliente))
-                    .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(labelFiltrarClientes)
-                        .addComponent(comboFiltrarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(20, 20, 20)
+                        .addComponent(botaoVerLocacoesCliente)))
+                .addGap(21, 21, 21)
                 .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1084,7 +1084,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     pnRlVendas.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlVendas.setPreferredSize(new java.awt.Dimension(756, 359));
+    pnRlVendas.setPreferredSize(new java.awt.Dimension(1286, 359));
 
     tabelaVendas.setAutoCreateRowSorter(true);
     tabelaVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1127,7 +1127,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna data da venda
     tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(120);
     // Redimensionando a largura da coluna de produtos vendidos
-    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(350);
+    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(880);
     // Redimensionando a largura da coluna de valor total
     tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna de forma de pagamento
@@ -1188,7 +1188,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoVerRecibosVenda))
                     .addComponent(pnRlVendas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(549, Short.MAX_VALUE))
+            .addContainerGap(19, Short.MAX_VALUE))
     );
     painelVendasLayout.setVerticalGroup(
         painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
