@@ -50,7 +50,7 @@ public class GerenciadorDeLocacao {
             double valorFinal = valor - ((percentualDesconto / 100) * valor);
             locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
-
+            locacao.setAtiva(true);
             
             ljp.create(locacao);
             

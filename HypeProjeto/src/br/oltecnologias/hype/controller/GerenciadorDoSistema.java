@@ -202,13 +202,13 @@ public class GerenciadorDoSistema {
         relatorio.add("     VALOR     ");
         relatorio.add("   PAGAMENTO   ");
         String diretorioFinal = null;
-        
+
         int quantVenda = 0;
         double totalVenda = 0.00;
-        
+
         int quantLocacao = 0;
         double totalLocacao = 0.00;
-        
+
         int quantDespesa = 0;
         double totalDespesa = 0.00;
 
@@ -227,29 +227,27 @@ public class GerenciadorDoSistema {
                 System.out.println("essa é a data que veio: " + dataInicial.getTimeInMillis());
                 System.out.println("essa é a data do objeto: " + mov.getData().getTimeInMillis());
 
-                if ( (mov.getData().get(Calendar.DAY_OF_YEAR) >= dataInicial.get(Calendar.DAY_OF_YEAR) && 
-                        mov.getData().get(Calendar.YEAR) >= dataInicial.get(Calendar.YEAR))
-                        
-                        && 
-                        
-                        (mov.getData().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR) &&
-                        mov.getData().get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR)) ) {
+                if ((mov.getData().get(Calendar.DAY_OF_YEAR) >= dataInicial.get(Calendar.DAY_OF_YEAR)
+                        && mov.getData().get(Calendar.YEAR) >= dataInicial.get(Calendar.YEAR))
+
+                        && (mov.getData().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR)
+                        && mov.getData().get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR))) {
 
                     relatorio.add(mov.getDataInString());
                     relatorio.add(mov.getMovimento());
                     relatorio.add(mov.getResponsavel());
-                    relatorio.add("R$ "+mov.getValorInString());
+                    relatorio.add("R$ " + mov.getValorInString());
                     relatorio.add(mov.getFormaDePagamento());
-                    
-                    if (mov.getMovimento().toUpperCase().equals("VENDA")){
+
+                    if (mov.getMovimento().toUpperCase().equals("VENDA")) {
                         quantVenda++;
                         totalVenda += mov.getValor();
-                        
-                    } else if (mov.getMovimento().toUpperCase().equals("LOCAÇÃO")){
+
+                    } else if (mov.getMovimento().toUpperCase().equals("LOCAÇÃO")) {
                         quantLocacao++;
                         totalLocacao += mov.getValor();
-                        
-                    } else if (mov.getMovimento().toUpperCase().equals("DESPESA")){
+
+                    } else if (mov.getMovimento().toUpperCase().equals("DESPESA")) {
                         quantDespesa++;
                         totalDespesa += mov.getValor();
                     }
@@ -291,12 +289,12 @@ public class GerenciadorDoSistema {
                         + diaFinal + "/" + mesFinal, timesNewRoman14);
                 tituloRelatorio.setAlignment(Paragraph.ALIGN_CENTER);
                 tituloRelatorio.setSpacingAfter(10);
-                
+
                 Paragraph resumoRelatorio = new Paragraph("Resumo do relatório: \n"
                         + "Quantidade de vendas: " + quantVenda + " Total de venda: R$ " + totalVenda + "\n"
                         + "Quantidade de Locações: " + quantLocacao + " Total de locações: R$ " + totalLocacao + "\n"
                         + "Quantidade de Despesas: " + quantDespesa + " Total de despesas: R$ " + totalDespesa + "\n"
-                        + "Valor em caixa neste período: " + (totalVenda+totalLocacao-totalDespesa),timesNewRoman12);
+                        + "Valor em caixa neste período: " + (totalVenda + totalLocacao - totalDespesa), timesNewRoman12);
                 resumoRelatorio.setAlignment(Paragraph.ALIGN_LEFT);
 
                 pdf.add(tituloRelatorio);
@@ -454,7 +452,7 @@ public class GerenciadorDoSistema {
         try {
 
             ejp.create(empresa);
-            
+
         } finally {
             if (emf != null) {
                 emf.close();
@@ -513,8 +511,8 @@ public class GerenciadorDoSistema {
         if (tipo.toUpperCase().equals("VENDA")) {
             System.out.println("VAI TRANSFORMAR O OBJECT EM VENDA");
             Venda venda = (Venda) obj;
-            System.out.println("VENDA\nVALOR: "+venda.getValor()+", DATA: "+venda.getDataVenda()+", EMPRESA: "+
-                   Configuracao.getInstance().getEmpresa().getNome() +" ID: "+venda.getId()+", FORMAPAG: "+venda.getFormaDePagamento());
+            System.out.println("VENDA\nVALOR: " + venda.getValor() + ", DATA: " + venda.getDataVenda() + ", EMPRESA: "
+                    + Configuracao.getInstance().getEmpresa().getNome() + " ID: " + venda.getId() + ", FORMAPAG: " + venda.getFormaDePagamento());
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
                     Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("DESPESA")) {
@@ -525,10 +523,10 @@ public class GerenciadorDoSistema {
         } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
             System.out.println("VAI TRANSFORMAR O OBJECT EM LOCAÇÃO");
             Locacao locacao = (Locacao) obj;
-            System.out.println("LOCAÇÃO\nVALOR: "+(locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago())+
-                    ", EMPRESA: "+Configuracao.getInstance().getEmpresa().getNome()+
-                   Configuracao.getInstance().getEmpresa().getNome() +" ID: "+locacao.getId()+", FORMAPAG: "+locacao.getFormaDePagamento());
-            
+            System.out.println("LOCAÇÃO\nVALOR: " + (locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago())
+                    + ", EMPRESA: " + Configuracao.getInstance().getEmpresa().getNome()
+                    + Configuracao.getInstance().getEmpresa().getNome() + " ID: " + locacao.getId() + ", FORMAPAG: " + locacao.getFormaDePagamento());
+
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
                     usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
         } else {
@@ -601,37 +599,93 @@ public class GerenciadorDoSistema {
             }
         }
     }
-    
-    public List<Movimentacao> pesquisarMovimentacoesEspecificas(String tipoMov){
+
+    public List<Movimentacao> pesquisarMovimentacoesEspecificas(String tipoMov) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         List<Movimentacao> listaDeRetorno = new ArrayList<Movimentacao>();
-        
-        try{
-            
-            for (Movimentacao m: mjp.getAllMovimentacoes()){
-                if (m.getMovimento().toUpperCase().equals(tipoMov.toUpperCase())){
+
+        try {
+
+            for (Movimentacao m : mjp.getAllMovimentacoes()) {
+                if (m.getMovimento().toUpperCase().equals(tipoMov.toUpperCase())) {
                     listaDeRetorno.add(m);
                 }
             }
-            
+
             return listaDeRetorno;
-            
+
         } finally {
             emf.close();
         }
     }
-    
-    public List<Movimentacao> pesquisarMovimentacoesPendentes(){
+
+    public List<Movimentacao> pesquisarMovimentacoesPendentes() {
         List<Movimentacao> listaDeRetorno = new ArrayList<Movimentacao>();
-        
-        for (Movimentacao m: this.getMovimentacoes()){
-            if (m.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO") ||
-                    m.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO") ||
-                    m.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")){
+
+        for (Movimentacao m : this.getMovimentacoes()) {
+            if (m.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
+                    || m.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")
+                    || m.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
                 listaDeRetorno.add(m);
             }
         }
         return listaDeRetorno;
     }
+
+    public Movimentacao adicionarMovimentacaoDeLocacao(Locacao locacao) throws TipoInexistenteDeMovimentacao {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        Movimentacao mov;
+
+        
+
+        try {
+            mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
+                usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
+            mjp.create(mov);
+            return mov;
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+        }
+
+    }
+    
+    public Movimentacao adicionarMovimentacaoDeVenda(Venda venda) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        Movimentacao mov;
+        
+        try {
+            mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
+                    Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
+            mjp.create(mov);
+            return mov;
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+        }
+    }
+    
+    public Movimentacao adicionarMovimentacaoDeDespesa(Despesa despesa) throws TipoInexistenteDeMovimentacao {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
+        Movimentacao mov;
+        
+        try {
+            mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), 
+                    despesa.getEmissor(), despesa.getFavorecido(), despesa.getId(), despesa.getFormaDePagamento());
+            mjp.create(mov);
+            return mov;
+        } finally {
+            if (emf != null) {
+                emf.close();
+            }
+        }
+    }
+    
+    
 }
