@@ -767,7 +767,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     System.out.println("PASSOU DO REALIZAR LOCACAO");
                     System.out.println("A NOVA LOCAÇÃO É NULA? "+novaLocacao==null);
                     
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
+                    //novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
+                    novaMovimentacao = new Movimentacao("Locação", valorTotalLocacao, Calendar.getInstance(),
+                    GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName(), Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId(), formaPagamento);
+                    System.out.println("CRIOU A MOVIMENTACAO. É NULA? "+novaMovimentacao == null);
+                    GerenciadorDoSistema.getInstance().cadastrarMovimentacao(novaMovimentacao);
                     System.out.println("PASSOU DO ADICIONAR MOVIMENTACAO");
                     
                     pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");

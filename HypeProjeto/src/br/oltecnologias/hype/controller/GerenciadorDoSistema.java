@@ -321,9 +321,10 @@ public class GerenciadorDoSistema {
     }
 
     public Movimentacao cadastrarMovimentacao(Movimentacao movimentacao) {
+        System.out.println("CHEGOU NO ADICIONARMOVIMENTACAO");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
-
+        
         try {
 
             mjp.create(movimentacao);

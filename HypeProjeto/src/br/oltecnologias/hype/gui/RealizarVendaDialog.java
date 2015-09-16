@@ -642,7 +642,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
                     System.out.println("PASSOU DO REALIZAR VENDA");
                     System.out.println("A NOVA VENDA É NULA? "+novaVenda==null);
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaVenda, "VENDA");
+                    //novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaVenda, "VENDA");
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(novaMovimentacao);
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
