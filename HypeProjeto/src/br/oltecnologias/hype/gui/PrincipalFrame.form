@@ -242,13 +242,15 @@
                               <Component id="botaoPesquisarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelFiltrarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="comboFiltrarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                                   <Component id="botaoEditarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="botaoExcluirCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="botaoVerLocacoesCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="labelFiltrarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboFiltrarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -1698,6 +1700,14 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="labelNomeImpressora" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="campoNomeImpressora" min="-2" pref="454" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="botaoAlterarNomeImpressora" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="botaoSalvarNomeImpressora" min="-2" max="-2" attributes="0"/>
+                              </Group>
                               <Component id="labelDiretorioRelatorios" min="-2" max="-2" attributes="0"/>
                               <Component id="labelDiretorioDocumentos" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="labelDiretorioBackups" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -1756,7 +1766,15 @@
                               <Component id="botaoAlterarDiretorioRelatorios" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="campoDiretorioRelatorios" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="294" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="labelNomeImpressora" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="botaoSalvarNomeImpressora" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoAlterarNomeImpressora" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="campoNomeImpressora" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="216" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1938,6 +1956,65 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JTextField" name="campoNomeImpressora">
+                  <Properties>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="2"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="99" green="99" red="99" type="rgb"/>
+                    </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Informe o caminho do diret&#xf3;rio"/>
+                    <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="cc" green="cc" red="cc" type="rgb"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoNomeImpressoraMouseClicked"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNomeImpressoraKeyTyped"/>
+                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());"/>
+                  </AuxValues>
+                </Component>
+                <Component class="javax.swing.JLabel" name="labelNomeImpressora">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Nome da impressora"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoAlterarNomeImpressora">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Alterar"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoAlterarNomeImpressoraActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoSalvarNomeImpressora">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value=" Salvar "/>
+                    <Property name="toolTipText" type="java.lang.String" value="Salvar diret&#xf3;rio"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarNomeImpressoraActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

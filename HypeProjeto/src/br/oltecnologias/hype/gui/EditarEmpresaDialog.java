@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Cliente
+ * @author Luender Luender
  */
 public class EditarEmpresaDialog extends java.awt.Dialog {
 

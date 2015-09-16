@@ -1241,20 +1241,19 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public void calcularValorTotalLocacao() {
         try {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao
+                valorTotalLocacao = new BigDecimal(valorTotalLocacao
                         - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                
+                labelValorLocacao.setText("R$ " + valorTotalLocacao);
                 
                 
                 //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
                        // - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
             }
         } catch (TemporadaInexistenteException e) {
-            System.out.println("(CALCULARVALTOTLOCACAO) ERRO: "+e.getMessage()+
-                    "valor R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-            
-            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-            //labelValorLocacao.setText("R$ " + valorTotalLocacao);
+            valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorLocacao.setText("R$ " + valorTotalLocacao);
         }
     }
     
@@ -1263,9 +1262,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
                 double valorTotalComDescontoTemporada = valorTotalLocacao
                         - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100);
-                
-                labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalComDescontoTemporada 
-                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                valorTotalLocacao = new BigDecimal(valorTotalComDescontoTemporada 
+                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                labelValorLocacao.setText("R$ " + valorTotalLocacao);
                 
                 
                 //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalComDescontoTemporada 
@@ -1276,8 +1275,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     "valor R$ " + new BigDecimal(new BigDecimal(valorTotalLocacao
                 - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
             //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
-            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao
-                - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            valorTotalLocacao = new BigDecimal(valorTotalLocacao
+                - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorLocacao.setText("R$ " + valorTotalLocacao);
             
             //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
               //  - ((valorTotalLocacao * valorDesconto) / 100)));

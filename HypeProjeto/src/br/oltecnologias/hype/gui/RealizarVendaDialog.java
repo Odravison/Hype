@@ -18,6 +18,8 @@ import br.oltecnologias.hype.model.Venda;
 import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -744,11 +746,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         labelValorParcelas.setText("");
                     } else { 
                         //Faz o cálculo sem contas com o último número, pois este será apagado
-                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))));
+                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(calcularValorTotalParcelasLocacao(
+                                Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
+                                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                                //decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))));
                     }
                 } else {
                     //if(valorCampoParcelas.length() > 0) {
-                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas+evt.getKeyChar())));
+                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+new BigDecimal(calcularValorTotalParcelasLocacao(Integer.parseInt(valorCampoParcelas+evt.getKeyChar()))
+                                ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
                     //} else {
                       //  labelValorParcelas.setText(" = "+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(evt.getKeyChar()+"")));
                     //}
@@ -781,6 +787,20 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyPressed
 
+    public double calcularValorTotalParcelasLocacao(int quantidadeParcelas) {
+        double valorParcelas = 0;
+        try {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+                valorParcelas = (valorTotalVenda
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)) / quantidadeParcelas;
+            }
+        } catch(TemporadaInexistenteException e) {
+            valorParcelas = valorTotalVenda / quantidadeParcelas;
+            
+        }
+        return valorParcelas;
+    }
+    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -943,10 +963,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     public void calcularValorTotalVenda() {
         try {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                labelValorVenda.setText("R$ " + decimalFormat.format(valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
+                valorTotalVenda = new BigDecimal(valorTotalVenda
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)
+                                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                
+                labelValorVenda.setText("R$ " + valorTotalVenda);
             }
         } catch (TemporadaInexistenteException e) {
+            valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorVenda.setText("R$ " + valorTotalVenda);
         }
     }
@@ -957,13 +981,16 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 double valorTotalComDescontoTemporada = valorTotalVenda
                         - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100);
                 
-                labelValorVenda.setText("R$ " + decimalFormat.format(valorTotalComDescontoTemporada 
-                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)));
+                valorTotalVenda = new BigDecimal(valorTotalComDescontoTemporada 
+                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                
+                labelValorVenda.setText("R$ " + valorTotalVenda);
             } 
         } catch (TemporadaInexistenteException e) {
             //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
-            labelValorVenda.setText("R$ " + decimalFormat.format(valorTotalVenda
-                - ((valorTotalVenda * valorDesconto) / 100)));
+            valorTotalVenda = new BigDecimal(valorTotalVenda
+                - ((valorTotalVenda * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorVenda.setText("R$ " + valorTotalVenda);
         }
     }
     
