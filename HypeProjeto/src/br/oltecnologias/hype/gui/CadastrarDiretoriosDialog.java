@@ -246,12 +246,14 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             messageDialog.setVisible(true);
             
         } else {
+            Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
             
-            Configuracao.getInstance().setDiretorioDeBackup(campoDiretorioBackup.getText());
-            Configuracao.getInstance().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
-            Configuracao.getInstance().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+            configuracao.setDiretorioDeBackup(campoDiretorioBackup.getText());
+            configuracao.setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
+            configuracao.setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+            
             try {
-                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(Configuracao.getInstance());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
                 
                 pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                 pane.setMessage("Diretórios cadastrados com sucesso!");
@@ -275,13 +277,6 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             setVisible(true);
         }*/
     }//GEN-LAST:event_botaoSalvarActionPerformed
-    
-    public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
-        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
-        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
-    }
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");

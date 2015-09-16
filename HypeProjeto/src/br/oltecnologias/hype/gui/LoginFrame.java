@@ -35,7 +35,7 @@ public class LoginFrame extends javax.swing.JFrame {
         labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
         
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
-        /*if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
+        if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
                 || configuracao.getDiretorioDeRelatorios() == null) {
             
             CadastrarDiretoriosDialog dialogDiretorios = new CadastrarDiretoriosDialog(null);
@@ -49,7 +49,7 @@ public class LoginFrame extends javax.swing.JFrame {
             dialogEmpresa.setLocationRelativeTo(null);
             dialogEmpresa.setAlwaysOnTop(true);
             dialogEmpresa.setVisible(true);
-        }*/
+        }
     }
 
     @SuppressWarnings("unchecked")

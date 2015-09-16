@@ -368,12 +368,13 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                     //GerenciadorDoSistema.getInstance().cadastrarEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
                       //  campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
                       //  Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
+                    Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
                     
-                    Configuracao.getInstance().setEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
+                    configuracao.setEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
                         campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
                         Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
                     
-                    GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(Configuracao.getInstance());
+                    GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
                     
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                     pane.setMessage("Empresa cadastrada com sucesso!");
@@ -416,13 +417,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         } if(campo.getText().length()>= maxCaracteres){ 
             evt.consume(); 
         }
-    }
-    
-    public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salavar não foi selecionado
-        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
-        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     /**
