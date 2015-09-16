@@ -5,6 +5,7 @@ import br.oltecnologias.hype.dao.DespesaJpaRepository;
 import br.oltecnologias.hype.dao.EmpresaJpaController;
 import br.oltecnologias.hype.dao.MovimentacaoJpaRepository;
 import br.oltecnologias.hype.dao.TemporadaJpaController;
+import br.oltecnologias.hype.dao.UsuarioJpaRepository;
 import br.oltecnologias.hype.exception.DespesaExistenteException;
 import br.oltecnologias.hype.exception.DespesaInexistenteException;
 import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
@@ -725,7 +726,21 @@ public class GerenciadorDoSistema {
         
     }
     
-    
+    public Usuario pesquisarUsuarioPeloNome(String nome){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        Usuario user = null;
+        try{
+            for (Usuario u: ujp.getAllUsuarios()){
+                if (u.getNome().toUpperCase().equals(nome.toUpperCase())){
+                    user = u;
+                }
+            }
+            return user;
+        } finally {
+            emf.close();
+        }
+    }
     
     
 }
