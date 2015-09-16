@@ -33,19 +33,22 @@ public class LoginFrame extends javax.swing.JFrame {
         ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Mini logo hype!.png");
         setIconImage(imagemTituloJanela.getImage());
         labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
-        if(!GerenciadorDoSistema.getInstance().isEmpresaCadastrada()) {
-            CadastrarEmpresaDialog dialogEmpresa = new CadastrarEmpresaDialog(null);
-            dialogEmpresa.setLocationRelativeTo(null);
-            dialogEmpresa.setAlwaysOnTop(true);
-            dialogEmpresa.setVisible(true);
-        }/*
-        if(Configuracao.getInstance().getDiretorioDeBackup() == null || Configuracao.getInstance().getDiretorioDeDocumentos() == null
-                || Configuracao.getInstance().getDiretorioDeRelatorios() == null) {
+        
+        Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+        /*if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
+                || configuracao.getDiretorioDeRelatorios() == null) {
             
             CadastrarDiretoriosDialog dialogDiretorios = new CadastrarDiretoriosDialog(null);
             dialogDiretorios.setLocationRelativeTo(null);
             dialogDiretorios.setAlwaysOnTop(true);
             dialogDiretorios.setVisible(true);
+        }
+        //if(!GerenciadorDoSistema.getInstance().isEmpresaCadastrada()) {
+        if(configuracao.getEmpresa() == null) {
+            CadastrarEmpresaDialog dialogEmpresa = new CadastrarEmpresaDialog(null);
+            dialogEmpresa.setLocationRelativeTo(null);
+            dialogEmpresa.setAlwaysOnTop(true);
+            dialogEmpresa.setVisible(true);
         }*/
     }
 

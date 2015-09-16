@@ -765,14 +765,22 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
                     
                     System.out.println("PASSOU DO REALIZAR LOCACAO");
+                    
                     System.out.println("A NOVA LOCAÇÃO É NULA? "+novaLocacao==null);
                     
-                    //novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaLocacao, "LOCAÇÃO");
-                    novaMovimentacao = new Movimentacao("Locação", valorTotalLocacao, Calendar.getInstance(),
+                    for(ProdutoLocado p:produtosLocados) {
+                        System.out.println("PRODUTO LOCADO: "+p.getCodigoProduto()+", QUANT: "+p.getQuantidade());
+                    }
+                    System.out.println("EMPRESA: ");
+                    System.out.println(Configuracao.getInstance().getEmpresa().getNome());
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
+                    /*novaMovimentacao = new Movimentacao("Locação", valorTotalLocacao, Calendar.getInstance(),
                     GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName(), Configuracao.getInstance().getEmpresa().getNome(), novaLocacao.getId(), formaPagamento);
                     System.out.println("CRIOU A MOVIMENTACAO. É NULA? "+novaMovimentacao == null);
                     GerenciadorDoSistema.getInstance().cadastrarMovimentacao(novaMovimentacao);
                     System.out.println("PASSOU DO ADICIONAR MOVIMENTACAO");
+                    */
+                    System.out.println("A NOVA MOVIMENTAÇÃO É NULA? "+novaMovimentacao==null);
                     
                     pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);

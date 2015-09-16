@@ -10,6 +10,8 @@ import br.oltecnologias.hype.model.Configuracao;
 import javax.swing.ImageIcon;
 
 import br.oltecnologias.hype.model.Configuracao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -222,21 +224,21 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         JOptionPane pane = new JOptionPane();
         JDialog messageDialog;
         
-        if(campoDiretorioBackup.getText().length() <= 0) {
+        if(campoDiretorioBackup.getText().length() <= 0 || campoDiretorioBackup.getText().equals("Caminho do diretório")) {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de backup");
             messageDialog = pane.createDialog("Aviso");
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
-        } else if(campoDiretorioDocumentos.getText().length() <= 0) {
+        } else if(campoDiretorioDocumentos.getText().length() <= 0 || campoDiretorioDocumentos.getText().equals("Caminho do diretório")) {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de documentos");
             messageDialog = pane.createDialog("Aviso");
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
-        } else if(campoDiretorioRelatorios.getText().length() <= 0) {
+        } else if(campoDiretorioRelatorios.getText().length() <= 0 || campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de relatórios");
             messageDialog = pane.createDialog("Aviso");
@@ -244,19 +246,29 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             messageDialog.setVisible(true);
             
         } else {
+            
             Configuracao.getInstance().setDiretorioDeBackup(campoDiretorioBackup.getText());
             Configuracao.getInstance().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
             Configuracao.getInstance().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+            try {
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(Configuracao.getInstance());
+                
+                pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                pane.setMessage("Diretórios cadastrados com sucesso!");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+
+                salvarSelecionado = true; //O botão Salvar foi selecionado
+                setVisible(false);
+            } catch (Exception e) {
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                pane.setMessage(e.getMessage());
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setAlwaysOnTop(true);
+                messageDialog.setVisible(true);
+            }
             
-            
-            pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-            pane.setMessage("Diretórios cadastrados com sucesso!");
-            messageDialog = pane.createDialog("Aviso");
-            messageDialog.setAlwaysOnTop(true);
-            messageDialog.setVisible(true);
-            
-            salvarSelecionado = true; //O botão Salvar foi selecionado
-            setVisible(false);
         }
         /*
         if(!cadastrou) {

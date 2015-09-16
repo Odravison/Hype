@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
 import javax.swing.ImageIcon;
@@ -364,9 +365,15 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
             } else {
 
                 try {
-                    GerenciadorDoSistema.getInstance().cadastrarEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
+                    //GerenciadorDoSistema.getInstance().cadastrarEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
+                      //  campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
+                      //  Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
+                    
+                    Configuracao.getInstance().setEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
                         campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
                         Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
+                    
+                    GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(Configuracao.getInstance());
                     
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                     pane.setMessage("Empresa cadastrada com sucesso!");

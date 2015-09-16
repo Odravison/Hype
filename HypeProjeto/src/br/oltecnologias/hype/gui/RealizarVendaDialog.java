@@ -636,14 +636,20 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         ", forma pag: "+formaPagamento+", parcelas: "+campoParcelas.getText()+", entrada: "+
                         campoEntrada.getText()+", desconto: "+campoPercentualDesconto.getText());
                 try {
+                    for(ProdutoVendido p:produtosVendidos) {
+                        System.out.println("PRODUTO LOCADO: "+p.getCodigoProduto()+", QUANT: "+p.getQuantidade());
+                    }
+                    
                     GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalVenda, formaPagamento,
                             Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
 
                     System.out.println("PASSOU DO REALIZAR VENDA");
                     System.out.println("A NOVA VENDA É NULA? "+novaVenda==null);
-                    //novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaVenda, "VENDA");
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(novaMovimentacao);
+                    System.out.println("EMPRESA: ");
+                    System.out.println(Configuracao.getInstance().getEmpresa().getNome());
+                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
+                    //novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(novaMovimentacao);
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 

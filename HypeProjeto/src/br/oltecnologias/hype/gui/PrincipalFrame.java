@@ -2801,13 +2801,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 break;
             
             case "Últimos locados":
-                /*
+                
                 try {
                     produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocadosPorNome(nome);
                 } catch (ProdutoInexistenteException e) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-                */
+                
                 break;
             
             case "Últimos vendidos":
@@ -3023,7 +3023,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 break;
                 
             case "Pendências":
-                //movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesPendentes();
+                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesPendentes();
                
                 break;
 
@@ -3040,7 +3040,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoPesquisarUsuarios.getText().equals("Pesquisar Usuário") || campoPesquisarUsuarios.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuarios", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            //adicionarUsuariosNaTabela(GerenciadorDePessoas.getInstance().pesquisarUsuariosPeloNome(campoPesquisarUsuarios.getText()));
+            adicionarUsuariosNaTabela(GerenciadorDePessoas.getInstance().pesquisarUsuarioPorNome(campoPesquisarUsuarios.getText()));
         }
     }//GEN-LAST:event_botaoPesquisarUsuarioActionPerformed
 

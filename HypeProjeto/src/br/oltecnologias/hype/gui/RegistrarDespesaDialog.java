@@ -218,7 +218,7 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
                         Calendar.getInstance(), Double.parseDouble(campoValor.getText()), GerenciadorDoSistema.getInstance().getUsuarioLogado().getNome(),
                         campoFavorecido.getText()));
                         
-                novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacao(novaDespesa, "DESPESA");
+                novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeDespesa(novaDespesa);
                 
                 JOptionPane.showMessageDialog(null, "Despesa registrada com sucesso!");
                 
