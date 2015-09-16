@@ -1,5 +1,6 @@
 package br.oltecnologias.hype.controller;
 
+import br.oltecnologias.hype.dao.ConfiguracaoJpaController;
 import br.oltecnologias.hype.dao.DespesaJpaRepository;
 import br.oltecnologias.hype.dao.EmpresaJpaController;
 import br.oltecnologias.hype.dao.MovimentacaoJpaRepository;
@@ -686,6 +687,46 @@ public class GerenciadorDoSistema {
             }
         }
     }
+    
+    public Configuracao getConfiguracao(){
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ConfiguracaoJpaController cjp = new ConfiguracaoJpaController(emf);
+        
+        try{
+            
+            if (cjp.getConfiguracaoCount() == 0){
+                return Configuracao.getInstance();
+            } else {
+                Configuracao conf = cjp.findConfiguracao(1);
+                return conf;
+            }
+            
+        } finally {
+            emf.close();
+        }
+        
+        
+    }
+    
+    public void salvarEstadoDeConfiguracao(Configuracao configuracao) throws Exception{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ConfiguracaoJpaController cjp = new ConfiguracaoJpaController(emf);
+        
+        try{
+            
+            if (cjp.getConfiguracaoCount() == 0){
+                cjp.create(configuracao);
+            } else {
+                cjp.edit(configuracao);
+            }
+            
+        } finally {
+            emf.close();
+        }
+        
+    }
+    
+    
     
     
 }
