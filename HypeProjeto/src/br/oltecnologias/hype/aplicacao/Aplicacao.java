@@ -141,7 +141,7 @@ public class Aplicacao {
 //
 //        }
 
-                Configuracao conf = Configuracao.getInstance();
+                Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
                 conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
                 conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
                 List<Venda> movimentacoes = new ArrayList<Venda>();
@@ -150,7 +150,8 @@ public class Aplicacao {
                 Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
                 Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
                 Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
-                Configuracao.getInstance().setEmpresa(empresa);
+                conf.setEmpresa(empresa);
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(conf);
                 GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
                 
                 
