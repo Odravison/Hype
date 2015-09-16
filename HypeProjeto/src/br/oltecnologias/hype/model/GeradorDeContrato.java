@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.model;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -30,6 +31,7 @@ public class GeradorDeContrato {
 
     private static GeradorDeContrato singleton;
     private List<Produto> produtos;
+    Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
 
     public static GeradorDeContrato getInstance() {
         if (singleton == null) {
@@ -45,16 +47,17 @@ public class GeradorDeContrato {
     
     public void imprimirContrato(Locacao locacao) throws IOException, Exception{
         
+        
         gerarContrato(locacao);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
         
-        String diretorio = Configuracao.getInstance().getDiretorioDeDocumentos()
+        String diretorio = conf.getDiretorioDeDocumentos()
                     + "\\" + locacao.getCliente().getNome()+ "\\Contratos\\" +  "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
         
         
         FileInputStream fis = new FileInputStream(diretorio);
-        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao +".pdf", Configuracao.getInstance().getNomeDaImpressora());
+        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao +".pdf", conf.getNomeDaImpressora());
 
         printPDFFile.print();
         
@@ -81,7 +84,7 @@ public class GeradorDeContrato {
         Font courier12 = new Font(Font.FontFamily.COURIER, 12);
 
         try {
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
+            diretorio = new File(conf.getDiretorioDeDocumentos()
                     + "\\" + locacao.getCliente().getNome() + "\\Contratos");
             
             diretorio.mkdir();
@@ -101,7 +104,13 @@ public class GeradorDeContrato {
             System.out.println("Tirar: chagou aqui! 3");
 
             Paragraph textoContrato;
-            textoContrato = new Paragraph(Configuracao.getInstance().getContratoPt1().concat(Configuracao.getInstance().getContratoPt2()), timesNewRoman12);
+            textoContrato = new Paragraph(conf.getContratoPt1()
+                    .concat(conf.getContratoPt2()
+                            .concat(conf.getContratoPt3()
+                                    .concat(conf.getContratoPt4()
+                                            .concat(conf.getContratoPt5()
+                                                    .concat(conf.getContratoPt6()
+                                                            .concat(conf.getContratoPt7())))))), timesNewRoman12);
             textoContrato.setAlignment(Paragraph.ALIGN_JUSTIFIED);
             textoContrato.setPaddingTop(2);
             
