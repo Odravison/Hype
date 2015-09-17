@@ -1,6 +1,10 @@
 package br.oltecnologias.hype.model;
 
+import br.oltecnologias.hype.exception.LocacaoInexistenteException;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import com.itextpdf.text.DocumentException;
+import java.awt.print.PrinterException;
+import java.io.FileNotFoundException;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -57,11 +61,8 @@ public class Locacao implements Serializable {
 //    @CollectionTable(name="produtos", joinColumns=@JoinColumn(name="id_locacao"))
 //    @Column(name="produtos")
 //    @MapKeyJoinColumn(name="codigo", referencedColumnName="quantidade")
-    
 //    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
 //    @MapKeyJoinColumn(name = "codigo")
-    
-    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_locacao")
     private List<ProdutoLocado> produtosLocados;
@@ -83,11 +84,11 @@ public class Locacao implements Serializable {
     private int parcelas;
 
     private boolean ativa;
-    
+
     private int percentualDesconto;
-    
+
     private String caminhoUltimoContrato = "";
-    
+
     public Locacao() {
     }
 
@@ -117,6 +118,20 @@ public class Locacao implements Serializable {
 
     public void imprimirContrato() throws DocumentException, IOException, Exception {
         GeradorDeContrato.getInstance().gerarEImprimirContrato(this);
+    }
+
+    public void gerarRecibo() throws LocacaoInexistenteException, ProdutoInexistenteException {
+        GeradorDeRecibo.getInstance().gerarRecibo(this);
+    }
+
+    public void imprimirRecibo() throws IOException, FileNotFoundException,
+            PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
+        GeradorDeRecibo.getInstance().gerarEImprimirRecibo(this);
+    }
+
+    public void gerarEImprimirPxRecibo(double valorDessePagamento) 
+            throws LocacaoInexistenteException, ProdutoInexistenteException {
+        GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(this, valorDessePagamento);
     }
 
     public long getId() {
@@ -222,15 +237,15 @@ public class Locacao implements Serializable {
     public void setAtiva(boolean ativa) {
         this.ativa = ativa;
     }
-    
+
     public String getDataLocacaoInString() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataLocacao.getTime());
     }
-    
+
     public String getEntradaInString() {
         return new DecimalFormat("#.##").format(this.valorDeEntrada);
     }
-    
+
     public int getPercentualDesconto() {
         return percentualDesconto;
     }
@@ -238,8 +253,8 @@ public class Locacao implements Serializable {
     public void setPercentualDesconto(int percentualDesconto) {
         this.percentualDesconto = percentualDesconto;
     }
-    
-    public void resetarId(){
+
+    public void resetarId() {
         this.id = 0;
     }
 
@@ -250,5 +265,5 @@ public class Locacao implements Serializable {
     public void setCaminhoUltimoContrato(String caminhoUltimoContrato) {
         this.caminhoUltimoContrato = caminhoUltimoContrato;
     }
-    
+
 }

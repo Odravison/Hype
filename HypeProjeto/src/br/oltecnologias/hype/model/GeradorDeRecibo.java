@@ -295,8 +295,6 @@ public class GeradorDeRecibo {
             PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
                     Configuracao.getInstance().getNomeDaImpressora());
 
-            printPDFFile.print();
-
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
             
@@ -311,7 +309,7 @@ public class GeradorDeRecibo {
 
     }
 
-    public void imprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarEImprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
         gerarRecibo(loc);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
@@ -338,7 +336,7 @@ public class GeradorDeRecibo {
         return descricaoCurta;
     }
 
-    public void gerarPxsRecibos(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarEImprimirPxRecibo(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
