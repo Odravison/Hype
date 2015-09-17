@@ -4,6 +4,7 @@ import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
+import br.oltecnologias.hype.exception.ContratoNaoGeradoException;
 import br.oltecnologias.hype.exception.LocacaoExistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
@@ -305,17 +306,20 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public void abrirContratoDeLocacao(long idLocacao) throws LocacaoInexistenteException, IOException {
+    public void verUltimoContratoGerado(long idLocacao) throws LocacaoInexistenteException, IOException, ContratoNaoGeradoException {
 
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
 
-        File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                + "\\" + locacao.getCliente().getNome() + "\\Contratos");
+        if (locacao.getCaminhoUltimoContrato().equals("")) {
+            throw new ContratoNaoGeradoException("O contrato para locação ainda não foi gerado");
+        } else {
+            File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                    + "\\" + locacao.getCliente().getNome() + "\\Contratos\\" + locacao.getCaminhoUltimoContrato());
 
-        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
 
-        desktop.open(diretorio);
-        
-        
+            desktop.open(diretorio);
+        }
+
     }
 }

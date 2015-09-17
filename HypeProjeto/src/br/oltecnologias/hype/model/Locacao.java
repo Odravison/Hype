@@ -86,6 +86,8 @@ public class Locacao implements Serializable {
     
     private int percentualDesconto;
     
+    private String caminhoUltimoContrato = "";
+    
     public Locacao() {
     }
 
@@ -239,6 +241,14 @@ public class Locacao implements Serializable {
     
     public void resetarId(){
         this.id = 0;
+    }
+
+    public String getCaminhoUltimoContrato() {
+        return caminhoUltimoContrato;
+    }
+
+    public void setCaminhoUltimoContrato(String caminhoUltimoContrato) {
+        this.caminhoUltimoContrato = caminhoUltimoContrato;
     }
     
 }

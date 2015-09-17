@@ -95,6 +95,8 @@ public class GeradorDeContrato {
             pdf.setPageSize(PageSize.A4);
 
             String diretorioFinal = diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf";
+            
+            locacao.setCaminhoUltimoContrato("DL_" + diaContrato + "__H_" + horaGeracao + ".pdf");
 
             System.out.println("Tirar: chagou aqui! 1");
 
