@@ -2787,8 +2787,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
         try {
-            GeradorDeRecibo.getInstance().gerarRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                    Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))));
+            GerarReciboDialog dialog = new GerarReciboDialog(null);
+            dialog.setLocationRelativeTo(null);
+            if (dialog.alterarDados()) {
+                GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                    Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
+            }
+            dialog.dispose();
+            
+            
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
