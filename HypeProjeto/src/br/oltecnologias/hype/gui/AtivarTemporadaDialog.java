@@ -28,14 +28,21 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
     private void initComponents() {
 
         painelDados = new javax.swing.JPanel();
-        labelPercentualDesconto = new javax.swing.JLabel();
-        campoPercentualDesconto = new javax.swing.JTextField();
+        labelPercentualDescontoLocacao = new javax.swing.JLabel();
+        campoPercentualDescontoLocacao = new javax.swing.JTextField();
         labelSimboloPorcento = new javax.swing.JLabel();
-        labelTemporada = new javax.swing.JLabel();
-        painelCor = new javax.swing.JPanel();
-        sliderTemporada = new javax.swing.JSlider();
+        labelTemporadaLocacao = new javax.swing.JLabel();
+        painelCorLocacao = new javax.swing.JPanel();
+        sliderTemporadaLocacao = new javax.swing.JSlider();
         botaoSalvar = new javax.swing.JButton();
         botaoCancelar = new javax.swing.JButton();
+        painelDados1 = new javax.swing.JPanel();
+        labelPercentualDescontoVenda = new javax.swing.JLabel();
+        campoPercentualDescontoVenda = new javax.swing.JTextField();
+        labelSimboloPorcento1 = new javax.swing.JLabel();
+        labelTemporadaVenda = new javax.swing.JLabel();
+        painelCorVenda = new javax.swing.JPanel();
+        sliderTemporadaVenda = new javax.swing.JSlider();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -46,46 +53,46 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         });
 
         painelDados.setBackground(new java.awt.Color(255, 255, 255));
-        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da Temporada"));
+        painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Temporada de Desconto de Locações"));
 
-        labelPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelPercentualDesconto.setText("Percentual de desconto da temporada:*");
+        labelPercentualDescontoLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelPercentualDescontoLocacao.setText("Percentual de desconto para produtos de locação: ");
 
-        campoPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoPercentualDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoPercentualDescontoLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPercentualDescontoLocacao.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPercentualDescontoKeyTyped(evt);
+                campoPercentualDescontoLocacaoKeyTyped(evt);
             }
         });
 
         labelSimboloPorcento.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelSimboloPorcento.setText("%");
 
-        labelTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTemporada.setText("Temporada Desativada:");
+        labelTemporadaLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTemporadaLocacao.setText("Temporada Desativada:");
 
-        painelCor.setBackground(new java.awt.Color(204, 0, 0));
-        painelCor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
+        painelCorLocacao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        javax.swing.GroupLayout painelCorLayout = new javax.swing.GroupLayout(painelCor);
-        painelCor.setLayout(painelCorLayout);
-        painelCorLayout.setHorizontalGroup(
-            painelCorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout painelCorLocacaoLayout = new javax.swing.GroupLayout(painelCorLocacao);
+        painelCorLocacao.setLayout(painelCorLocacaoLayout);
+        painelCorLocacaoLayout.setHorizontalGroup(
+            painelCorLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 54, Short.MAX_VALUE)
         );
-        painelCorLayout.setVerticalGroup(
-            painelCorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        painelCorLocacaoLayout.setVerticalGroup(
+            painelCorLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 28, Short.MAX_VALUE)
         );
 
-        sliderTemporada.setBackground(new java.awt.Color(255, 255, 255));
-        sliderTemporada.setPaintTrack(false);
-        sliderTemporada.setSnapToTicks(true);
-        sliderTemporada.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        sliderTemporada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        sliderTemporada.addChangeListener(new javax.swing.event.ChangeListener() {
+        sliderTemporadaLocacao.setBackground(new java.awt.Color(255, 255, 255));
+        sliderTemporadaLocacao.setPaintTrack(false);
+        sliderTemporadaLocacao.setSnapToTicks(true);
+        sliderTemporadaLocacao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        sliderTemporadaLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sliderTemporadaLocacao.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                sliderTemporadaStateChanged(evt);
+                sliderTemporadaLocacaoStateChanged(evt);
             }
         });
 
@@ -97,50 +104,50 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 .addGap(25, 25, 25)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addComponent(labelPercentualDesconto)
+                        .addComponent(labelPercentualDescontoLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(campoPercentualDescontoLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloPorcento)
-                        .addContainerGap(114, Short.MAX_VALUE))
+                        .addContainerGap(32, Short.MAX_VALUE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addComponent(labelTemporada)
+                        .addComponent(labelTemporadaLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(painelCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(painelCorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(sliderTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                        .addComponent(sliderTemporadaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(sliderTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sliderTemporadaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelPercentualDesconto)
-                            .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelPercentualDescontoLocacao)
+                            .addComponent(campoPercentualDescontoLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(labelSimboloPorcento))
                         .addGap(16, 16, 16)
                         .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelTemporada)
-                            .addComponent(painelCor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(labelTemporadaLocacao)
+                            .addComponent(painelCorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
         try {
             if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                campoPercentualDesconto.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
-                campoPercentualDesconto.setEditable(false);
-                painelCor.setBackground(new java.awt.Color(0, 153, 51));
-                sliderTemporada.setValue(100);
-                labelTemporada.setText("Temporada Ativada:");
+                campoPercentualDescontoLocacao.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
+                campoPercentualDescontoLocacao.setEditable(false);
+                painelCorLocacao.setBackground(new java.awt.Color(0, 153, 51));
+                sliderTemporadaLocacao.setValue(100);
+                labelTemporadaLocacao.setText("Temporada Ativada:");
             }
         } catch(TemporadaInexistenteException e) {
-            sliderTemporada.setValue(0);
-            labelTemporada.setText("Temporada Desativada:");
-            painelCor.setBackground(new java.awt.Color(204, 0, 0));
+            sliderTemporadaLocacao.setValue(0);
+            labelTemporadaLocacao.setText("Temporada Desativada:");
+            painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
         }
 
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -163,6 +170,101 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             }
         });
 
+        painelDados1.setBackground(new java.awt.Color(255, 255, 255));
+        painelDados1.setBorder(javax.swing.BorderFactory.createTitledBorder("Temporada de Desconto de Locações"));
+
+        labelPercentualDescontoVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelPercentualDescontoVenda.setText("Percentual de desconto para produtos de venda:");
+
+        campoPercentualDescontoVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPercentualDescontoVenda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoPercentualDescontoVendaKeyTyped(evt);
+            }
+        });
+
+        labelSimboloPorcento1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelSimboloPorcento1.setText("%");
+
+        labelTemporadaVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTemporadaVenda.setText("Temporada Desativada:");
+
+        painelCorVenda.setBackground(new java.awt.Color(204, 0, 0));
+        painelCorVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout painelCorVendaLayout = new javax.swing.GroupLayout(painelCorVenda);
+        painelCorVenda.setLayout(painelCorVendaLayout);
+        painelCorVendaLayout.setHorizontalGroup(
+            painelCorVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 54, Short.MAX_VALUE)
+        );
+        painelCorVendaLayout.setVerticalGroup(
+            painelCorVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 28, Short.MAX_VALUE)
+        );
+
+        sliderTemporadaVenda.setBackground(new java.awt.Color(255, 255, 255));
+        sliderTemporadaVenda.setPaintTrack(false);
+        sliderTemporadaVenda.setSnapToTicks(true);
+        sliderTemporadaVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        sliderTemporadaVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sliderTemporadaVenda.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderTemporadaVendaStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout painelDados1Layout = new javax.swing.GroupLayout(painelDados1);
+        painelDados1.setLayout(painelDados1Layout);
+        painelDados1Layout.setHorizontalGroup(
+            painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDados1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDados1Layout.createSequentialGroup()
+                        .addComponent(labelPercentualDescontoVenda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoPercentualDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelSimboloPorcento1))
+                    .addGroup(painelDados1Layout.createSequentialGroup()
+                        .addComponent(labelTemporadaVenda)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(painelCorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(51, 51, 51)
+                        .addComponent(sliderTemporadaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(44, Short.MAX_VALUE))
+        );
+        painelDados1Layout.setVerticalGroup(
+            painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDados1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPercentualDescontoVenda)
+                    .addComponent(campoPercentualDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSimboloPorcento1))
+                .addGap(16, 16, 16)
+                .addGroup(painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelTemporadaVenda)
+                    .addComponent(painelCorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sliderTemporadaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        try {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+                campoPercentualDescontoLocacao.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
+                campoPercentualDescontoLocacao.setEditable(false);
+                painelCorLocacao.setBackground(new java.awt.Color(0, 153, 51));
+                sliderTemporadaLocacao.setValue(100);
+                labelTemporadaLocacao.setText("Temporada Ativada:");
+            }
+        } catch(TemporadaInexistenteException e) {
+            sliderTemporadaLocacao.setValue(0);
+            labelTemporadaLocacao.setText("Temporada Desativada:");
+            painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -174,6 +276,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
+                    .addComponent(painelDados1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
@@ -182,6 +285,8 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(painelDados1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoSalvar)
@@ -197,44 +302,65 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void sliderTemporadaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTemporadaStateChanged
-        if(sliderTemporada.getValue() > 60) {
-            sliderTemporada.setBackground(new java.awt.Color(0, 153, 51));
-            labelTemporada.setText("Temporada Ativada: ");
-            painelCor.setBackground(new java.awt.Color(0, 153, 51));
-            sliderTemporada.setValue(100);
+    private void sliderTemporadaLocacaoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTemporadaLocacaoStateChanged
+        if(sliderTemporadaLocacao.getValue() > 60) {
+            sliderTemporadaLocacao.setBackground(new java.awt.Color(0, 153, 51));
+            labelTemporadaLocacao.setText("Temporada Ativada: ");
+            painelCorLocacao.setBackground(new java.awt.Color(0, 153, 51));
+            sliderTemporadaLocacao.setValue(100);
             
         } else {
-            labelTemporada.setText("Temporada desativada: ");
-            sliderTemporada.setBackground(new java.awt.Color(204, 0, 0));
-            painelCor.setBackground(new java.awt.Color(204, 0, 0));
-            sliderTemporada.setValue(0);
-            campoPercentualDesconto.setEditable(true);
+            labelTemporadaLocacao.setText("Temporada desativada: ");
+            sliderTemporadaLocacao.setBackground(new java.awt.Color(204, 0, 0));
+            painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
+            sliderTemporadaLocacao.setValue(0);
+            campoPercentualDescontoLocacao.setEditable(true);
         }
-    }//GEN-LAST:event_sliderTemporadaStateChanged
+    }//GEN-LAST:event_sliderTemporadaLocacaoStateChanged
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         try {
-            if(campoPercentualDesconto.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o percentual de desconto", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) { 
+            if(campoPercentualDescontoLocacao.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o percentual de desconto para os produtos de locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoPercentualDescontoVenda.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe o percentual de desconto para os produtos de venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(campoPercentualDescontoLocacao.getText().length() > 0 && Integer.parseInt(campoPercentualDescontoLocacao.getText()) > 100) { 
                 JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (sliderTemporada.getValue() > 60) {
-                GerenciadorDoSistema.getInstance().setTemporada();
-                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDesconto.getText()));
-                JOptionPane.showMessageDialog(null, "Temporada ativada com "+campoPercentualDesconto.getText()+"% de desconto");
+            } else if(campoPercentualDescontoVenda.getText().length() > 0 && Integer.parseInt(campoPercentualDescontoVenda.getText()) > 100) { 
+                JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+            
+            if(sliderTemporadaLocacao.getValue() > 60) {
+                GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de locação
+                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoLocacao.getText()));
+                JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de locação com "+campoPercentualDescontoLocacao.getText()+"% de desconto");
                 
                 setVisible(false);
             } else {
                 try {
                     GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada();
-                    GerenciadorDoSistema.getInstance().desativarTemporada();
-                    JOptionPane.showMessageDialog(null, "Temporada de descontos desativada");
+                    GerenciadorDoSistema.getInstance().desativarTemporada(); //de locação
+                    JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de locação desativada");
                     setVisible(false);
                 } catch(TemporadaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 } 
+            } 
+            if(sliderTemporadaVenda.getValue() > 60) {
+                GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de venda
+                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoLocacao.getText()));
+                JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de venda com "+campoPercentualDescontoLocacao.getText()+"% de desconto");
                 
+                setVisible(false);
+            } else {
+                try {
+                    GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada();
+                    GerenciadorDoSistema.getInstance().desativarTemporada(); //de venda
+                    JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de venda desativada");
+                    setVisible(false);
+                } catch(TemporadaInexistenteException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                } 
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
@@ -246,18 +372,35 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
-        validarNumerosETamanho(evt, campoPercentualDesconto, maxCaracteresPercentual);
-        
-    }//GEN-LAST:event_campoPercentualDescontoKeyTyped
+    private void campoPercentualDescontoLocacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoLocacaoKeyTyped
+        validarNumerosETamanho(evt, campoPercentualDescontoLocacao, maxCaracteresPercentual);
+    }//GEN-LAST:event_campoPercentualDescontoLocacaoKeyTyped
+
+    private void campoPercentualDescontoVendaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoVendaKeyTyped
+        validarNumerosETamanho(evt, campoPercentualDescontoVenda, maxCaracteresPercentual);
+    }//GEN-LAST:event_campoPercentualDescontoVendaKeyTyped
+
+    private void sliderTemporadaVendaStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderTemporadaVendaStateChanged
+        if(sliderTemporadaVenda.getValue() > 60) {
+            sliderTemporadaVenda.setBackground(new java.awt.Color(0, 153, 51));
+            labelTemporadaVenda.setText("Temporada Ativada: ");
+            painelCorVenda.setBackground(new java.awt.Color(0, 153, 51));
+            sliderTemporadaVenda.setValue(100);
+            
+        } else {
+            labelTemporadaVenda.setText("Temporada desativada: ");
+            sliderTemporadaVenda.setBackground(new java.awt.Color(204, 0, 0));
+            painelCorVenda.setBackground(new java.awt.Color(204, 0, 0));
+            sliderTemporadaVenda.setValue(0);
+            campoPercentualDescontoVenda.setEditable(true);
+        }
+    }//GEN-LAST:event_sliderTemporadaVendaStateChanged
 
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+        if(!numeros.contains(evt.getKeyChar()+"") || campo.getText().length()>= maxCaracteres
+                || Integer.parseInt(campo.getText()+evt.getKeyChar()) > 100){// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
         } 
-        if(campo.getText().length()>= maxCaracteres){
-            evt.consume();
-        }
     }
     
     /**
@@ -282,12 +425,19 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoSalvar;
-    private javax.swing.JTextField campoPercentualDesconto;
-    private javax.swing.JLabel labelPercentualDesconto;
+    private javax.swing.JTextField campoPercentualDescontoLocacao;
+    private javax.swing.JTextField campoPercentualDescontoVenda;
+    private javax.swing.JLabel labelPercentualDescontoLocacao;
+    private javax.swing.JLabel labelPercentualDescontoVenda;
     private javax.swing.JLabel labelSimboloPorcento;
-    private javax.swing.JLabel labelTemporada;
-    private javax.swing.JPanel painelCor;
+    private javax.swing.JLabel labelSimboloPorcento1;
+    private javax.swing.JLabel labelTemporadaLocacao;
+    private javax.swing.JLabel labelTemporadaVenda;
+    private javax.swing.JPanel painelCorLocacao;
+    private javax.swing.JPanel painelCorVenda;
     private javax.swing.JPanel painelDados;
-    private javax.swing.JSlider sliderTemporada;
+    private javax.swing.JPanel painelDados1;
+    private javax.swing.JSlider sliderTemporadaLocacao;
+    private javax.swing.JSlider sliderTemporadaVenda;
     // End of variables declaration//GEN-END:variables
 }

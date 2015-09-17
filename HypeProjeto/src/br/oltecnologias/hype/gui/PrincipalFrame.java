@@ -136,6 +136,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoExcluirDespesa = new javax.swing.JButton();
         labelValorEmCaixa = new javax.swing.JLabel();
         botaoEditarDespesa = new javax.swing.JButton();
+        botaoRegistrarDespesa = new javax.swing.JButton();
         painelConfiguracoes = new javax.swing.JPanel();
         botaoSalvarDiretorioBackup = new javax.swing.JButton();
         campoDiretorioBackup = new javax.swing.JTextField();
@@ -162,7 +163,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoAtivarTemporada = new javax.swing.JButton();
         botaoExcluirUsuario = new javax.swing.JButton();
         botaoEditarUsuario = new javax.swing.JButton();
-        botaoRegistrarDespesa = new javax.swing.JButton();
         botaoEditarEmpresa = new javax.swing.JButton();
         comboFiltrarUsuarios = new javax.swing.JComboBox();
         labelFiltrarUsuarios = new javax.swing.JLabel();
@@ -1338,6 +1338,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
     botaoEditarDespesa.setVisible(false);
 
+    botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoRegistrarDespesa.setText("Registrar Despesa");
+    botaoRegistrarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoRegistrarDespesa.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoRegistrarDespesaActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout painelCaixaERelatoriosLayout = new javax.swing.GroupLayout(painelCaixaERelatorios);
     painelCaixaERelatorios.setLayout(painelCaixaERelatoriosLayout);
     painelCaixaERelatoriosLayout.setHorizontalGroup(
@@ -1361,6 +1370,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(botaoGerarRelatorio)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(botaoFecharCaixa)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoRegistrarDespesa)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelValorCaixa)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1375,7 +1386,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGap(23, 23, 23)
                     .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoGerarRelatorio)
-                        .addComponent(botaoFecharCaixa)))
+                        .addComponent(botaoFecharCaixa)
+                        .addComponent(botaoRegistrarDespesa)))
                 .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
                     .addGap(37, 37, 37)
                     .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1769,15 +1781,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
     botaoEditarUsuario.setVisible(false);
 
-    botaoRegistrarDespesa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoRegistrarDespesa.setText("Registrar Despesa");
-    botaoRegistrarDespesa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoRegistrarDespesa.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoRegistrarDespesaActionPerformed(evt);
-        }
-    });
-
     botaoEditarEmpresa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoEditarEmpresa.setText("Editar Empresa");
     botaoEditarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1811,11 +1814,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(painelAdministradorLayout.createSequentialGroup()
                     .addComponent(botaoNovoUsuario)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoRegistrarDespesa)
+                    .addComponent(botaoEditarEmpresa)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoAtivarTemporada)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoEditarEmpresa))
+                    .addComponent(botaoAtivarTemporada))
                 .addGroup(painelAdministradorLayout.createSequentialGroup()
                     .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -1839,7 +1840,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(botaoNovoUsuario)
                 .addComponent(botaoAtivarTemporada)
-                .addComponent(botaoRegistrarDespesa)
                 .addComponent(botaoEditarEmpresa))
             .addGap(46, 46, 46)
             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2582,16 +2582,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tabelaLocacoesMouseClicked
 
-    private void botaoRegistrarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarDespesaActionPerformed
-        RegistrarDespesaDialog dialog = new RegistrarDespesaDialog(null);
-        dialog.setLocationRelativeTo(null);
-        if (dialog.alterarDados()) {
-            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-        }
-        dialog.dispose();
-        atualizarValorEmCaixa();
-    }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
-
     private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
         new LoginFrame().setVisible(true);
         setVisible(false);
@@ -3187,6 +3177,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoSalvarNomeImpressoraActionPerformed
 
+    private void botaoRegistrarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRegistrarDespesaActionPerformed
+        RegistrarDespesaDialog dialog = new RegistrarDespesaDialog(null);
+        dialog.setLocationRelativeTo(null);
+        if (dialog.alterarDados()) {
+            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+        }
+        dialog.dispose();
+        atualizarValorEmCaixa();
+    }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -3361,9 +3361,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         try {
             //Adiciona os dados das locação na tabela
             for(Locacao locacao: locacoes) {
-                modeloTabelaLocacoes.addRow(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                    "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+                    "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);

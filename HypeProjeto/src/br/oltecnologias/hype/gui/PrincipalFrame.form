@@ -1475,6 +1475,8 @@
                                   <Component id="botaoGerarRelatorio" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="botaoFecharCaixa" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="botaoRegistrarDespesa" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="labelValorCaixa" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
@@ -1494,6 +1496,7 @@
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="botaoGerarRelatorio" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="botaoFecharCaixa" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="botaoRegistrarDespesa" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -1667,6 +1670,20 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoEditarDespesa.setVisible(false);"/>
                   </AuxValues>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoRegistrarDespesa">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Registrar Despesa"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRegistrarDespesaActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -2051,11 +2068,9 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="botaoNovoUsuario" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="botaoRegistrarDespesa" min="-2" max="-2" attributes="0"/>
+                                  <Component id="botaoEditarEmpresa" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="botaoAtivarTemporada" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="botaoEditarEmpresa" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarUsuarios" min="-2" pref="454" max="-2" attributes="0"/>
@@ -2086,7 +2101,6 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="botaoNovoUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoAtivarTemporada" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botaoRegistrarDespesa" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoEditarEmpresa" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
@@ -2247,20 +2261,6 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="botaoEditarUsuario.setVisible(false);"/>
                   </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="botaoRegistrarDespesa">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Registrar Despesa"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoRegistrarDespesaActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="botaoEditarEmpresa">
                   <Properties>
