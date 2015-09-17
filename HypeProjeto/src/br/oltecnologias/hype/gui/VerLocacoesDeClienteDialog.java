@@ -91,11 +91,12 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     // Redimensionando a largura da coluna de data
     tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1060);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1077);
     // Redimensionando a largura da coluna de valor total
     tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
+    tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     tabelaLocacoes.getTableHeader().setResizingAllowed(false);
     tabelaLocacoes.getTableHeader().setReorderingAllowed(false);
     scPnLocacoes.setViewportView(tabelaLocacoes);

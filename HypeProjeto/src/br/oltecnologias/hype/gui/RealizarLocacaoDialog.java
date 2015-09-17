@@ -453,6 +453,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 campoPercentualDescontoKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campoPercentualDescontoKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoPercentualDescontoKeyTyped(evt);
             }
@@ -515,9 +518,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
         campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoParcelas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                campoParcelasKeyPressed(evt);
-            }
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 campoParcelasKeyReleased(evt);
             }
@@ -971,63 +971,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoParcelasKeyTyped
 
     private void campoPercentualDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyPressed
-        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() < maxCaracteresDesconto
-                && Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            try {
-                String valorCampoDesconto = campoPercentualDesconto.getText();
-                //Se o usuário estiver apagando o conteúdo do campo
-                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) { 
-                    if(valorCampoDesconto.length() <= 1) {
-                        calcularValorTotalLocacao(); 
-                    } else { 
-                        //Faz o cálculo sem contas com o último número, pois este será apagado
-                        calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto.substring(0, valorCampoDesconto.length()-1)));
-                    }
-                } else {
-                    calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto+evt.getKeyChar()));
-   
-                }
-            } catch(Exception e) {
-                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }  
-        }
+        
     }//GEN-LAST:event_campoPercentualDescontoKeyPressed
-
-    private void campoParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyPressed
-        if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
-                && Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) <= 12) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-            try {
-                String valorCampoParcelas = campoParcelas.getText();
-                //Se o usuário estiver apagando o conteúdo do campo
-                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) { 
-                    if(valorCampoParcelas.length() <= 1) {
-                        labelValorParcelas.setText("");
-                    } else { 
-                        //Faz o cálculo sem contas com o último número, pois este será apagado
-                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                        
-                        //decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
-                    }
-                } else {
-                    labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt((valorCampoParcelas+evt.getKeyChar()))
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                            
-                       //decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas+evt.getKeyChar()));
-                }
-            } catch(Exception e) {
-                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }  
-        }
-    }//GEN-LAST:event_campoParcelasKeyPressed
 
     private void campoParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
@@ -1062,6 +1007,36 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }  
         }
     }//GEN-LAST:event_campoParcelasKeyReleased
+
+    private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
+        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() < maxCaracteresDesconto
+                && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+            try {
+                String valorCampoDesconto = campoPercentualDesconto.getText();
+                calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto));
+                //Se o usuário estiver apagando o conteúdo do campo
+                if (campoPercentualDesconto.getText().length() <= 0) { 
+                    //valorTotalLocacao = soma do valor de todos os produtos;
+                    /*calcularValorTotalLocacaoComDesconto(0);
+                    if(valorCampoDesconto.length() <= 1) {
+                        calcularValorTotalLocacao(); 
+                    } else { 
+                        //Faz o cálculo sem contas com o último número, pois este será apagado
+                        calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto.substring(0, valorCampoDesconto.length()-1)));
+                    }*/
+                } else {
+                    calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto));
+   
+                }
+            } catch(Exception e) {
+                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            }  
+        }
+    }//GEN-LAST:event_campoPercentualDescontoKeyReleased
    
     ///////////////////////////////EXCLUIR MÉTODO//////////NÃO ESTÁ SENDO CHAMADO//////////////////
     public double calcularValorTotalParcelasLocacao(int quantidadeParcelas) {
@@ -1279,7 +1254,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
     
     public void calcularValorTotalLocacaoComDesconto(int valorDesconto) {
-        
         valorTotalLocacao = new BigDecimal(valorTotalLocacao
                 - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorLocacao.setText("R$ " + valorTotalLocacao);

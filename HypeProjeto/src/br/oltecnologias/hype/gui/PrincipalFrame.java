@@ -35,13 +35,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -52,7 +49,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(String login) {
         loginUsuario = login;
         initComponents();
-        
+        setIconImage(new ImageIcon("Imagens\\Ícone.jpg").getImage());
         //labelLogoSistema.setIcon(new ImageIcon("Imagens\\.png"));
     }
 
@@ -2603,8 +2600,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarProdutoActionPerformed
         if(tabelaProdutos.getSelectedRow() >= 0) {
-            System.out.println("LINHA SELECIONADA TABELA PRODUTO: "+tabelaProdutos.getSelectedRow());
-            System.out.println("CÓDIGO DO PRODUTO: "+(String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
                     try {
@@ -3225,7 +3220,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Adiciona os dados da nova locação na tabela
             modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n"+e.getMessage(), 
                     "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3246,7 +3241,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getId()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getIdDaOperacao()});
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
@@ -3293,7 +3288,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         //Coluna de descrição
         modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
         //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getValorInString(), linha, 2);
+        modeloTabelaProdutos.setValueAt("R$ "+produto.getValorInString(), linha, 2);
         //Coluna de descrição
         modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
         //Coluna de descrição
