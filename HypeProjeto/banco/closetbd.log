@@ -1,2 +1,33 @@
-/*C2*/SET SCHEMA PUBLIC
+/*C3*/SET SCHEMA PUBLIC
+drop table cliente cascade\u000a
+drop table configuracao cascade\u000a
+SET SCHEMA SYSTEM_LOBS
+DELETE FROM LOB_IDS WHERE LOB_ID=36
+INSERT INTO LOB_IDS VALUES(36,317,0,40)
+DELETE FROM LOB_IDS WHERE LOB_ID=37
+INSERT INTO LOB_IDS VALUES(37,191,0,40)
+DELETE FROM LOB_IDS WHERE LOB_ID=38
+INSERT INTO LOB_IDS VALUES(38,184,0,40)
+DELETE FROM LOB_IDS WHERE LOB_ID=39
+INSERT INTO LOB_IDS VALUES(39,352,0,40)
+DELETE FROM LOB_IDS WHERE LOB_ID=40
+INSERT INTO LOB_IDS VALUES(40,302,0,40)
+DELETE FROM LOB_IDS WHERE LOB_ID=41
+INSERT INTO LOB_IDS VALUES(41,346,0,40)
+DELETE FROM LOB_IDS WHERE LOB_ID=42
+INSERT INTO LOB_IDS VALUES(42,133,0,40)
+COMMIT
+SET SCHEMA PUBLIC
+drop table despesa cascade\u000a
+drop table empresa cascade\u000a
+drop table endereco cascade\u000a
+drop table fornecedor cascade\u000a
+drop table locacao cascade\u000a
+drop table medidas cascade\u000a
+drop table produto cascade\u000a
+drop table venda cascade\u000a
+drop table movimentacao cascade\u000a
+drop table produtolocado cascade\u000a
+drop table produtoVendido cascade\u000a
+drop table temporada cascade
 DISCONNECT
