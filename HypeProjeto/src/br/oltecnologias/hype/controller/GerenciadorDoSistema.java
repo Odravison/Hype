@@ -231,7 +231,6 @@ public class GerenciadorDoSistema {
 
                 if ((mov.getData().get(Calendar.DAY_OF_YEAR) >= dataInicial.get(Calendar.DAY_OF_YEAR)
                         && mov.getData().get(Calendar.YEAR) >= dataInicial.get(Calendar.YEAR))
-
                         && (mov.getData().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR)
                         && mov.getData().get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR))) {
 
@@ -324,7 +323,7 @@ public class GerenciadorDoSistema {
         System.out.println("CHEGOU NO ADICIONARMOVIMENTACAO");
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
-        
+
         try {
 
             mjp.create(movimentacao);
@@ -368,9 +367,13 @@ public class GerenciadorDoSistema {
         }
     }
 
-    public boolean isTemporadaAtivada() throws TemporadaInexistenteException {
+    public boolean isTemporadaAtivada(String tipo) throws TemporadaInexistenteException {
         if (this.temporada != null) {
-            return this.temporada.isIsAtivada();
+            if (tipo.toUpperCase().equals("VENDA")){
+                return this.temporada.isIsAtivadaDeVenda();
+            } else if (tipo.toUpperCase().equals("LOCAÇÃO")){
+                return this.temporada.isIsAtivadaDeLocacao();
+            }
         }
         throw new TemporadaInexistenteException("A temporada ainda não foi criada 1");
 
@@ -400,25 +403,38 @@ public class GerenciadorDoSistema {
 
     }
 
-    public int getPercentualDescontoTemporada() throws TemporadaInexistenteException {
+    public int getPercentualDescontoTemporada(String tipo) throws TemporadaInexistenteException {
         if (this.temporada != null) {
-            return this.temporada.getPertentualDeDesconto();
+            if (tipo.toUpperCase().equals("VENDA")) {
+                return this.temporada.getPercentualDeDescontoDeVenda();
+            } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
+                return this.temporada.getPercentualDeDescontoDeLocacao();
+            } else {
+                throw new TemporadaInexistenteException("Tipo de desconto inválido");
+            }
         }
         throw new TemporadaInexistenteException("A temporada ainda não foi criada 2 ");
 
     }
 
-    public void ativarTemporada(int percentualDesconto) throws TemporadaInexistenteException, Exception {
+    public void ativarTemporada(int percentualDesconto, String tipo) throws TemporadaInexistenteException, Exception {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         TemporadaJpaController tjp = new TemporadaJpaController(emf);
         try {
             if (this.temporada == null) {
 
-                throw new TemporadaInexistenteException("A temporada ainda não foi criada 3");
+                throw new TemporadaInexistenteException("A temporada ainda não foi criada COD: 3");
             }
 
-            this.temporada.ativarTemporada(percentualDesconto);
-            tjp.edit(temporada);
+            if (tipo.toUpperCase().equals("VENDA")) {
+                this.temporada.ativarTemporadaDeVenda(percentualDesconto);
+                tjp.edit(temporada);
+            } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
+                this.temporada.ativarTemporadaDeLocacao(percentualDesconto);
+                tjp.edit(temporada);
+            } else {
+                throw new TemporadaInexistenteException("TIPO DE DESCONTO INEXISTENTE COD: 4");
+            }
 
         } finally {
             if (emf != null) {
@@ -428,7 +444,7 @@ public class GerenciadorDoSistema {
 
     }
 
-    public void desativarTemporada() throws TemporadaInexistenteException, Exception {
+    public void desativarTemporada(String tipo) throws TemporadaInexistenteException, Exception {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         TemporadaJpaController tjp = new TemporadaJpaController(emf);
         try {
@@ -436,8 +452,15 @@ public class GerenciadorDoSistema {
                 throw new TemporadaInexistenteException("A temporada ainda não foi criada");
             }
 
-            this.temporada.desativarTemporada();
-            tjp.edit(temporada);
+            if (tipo.toUpperCase().equals("VENDA")) {
+                this.temporada.desativarTemporadaDeVenda();
+                tjp.edit(temporada);
+            } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
+                this.temporada.desativarTemporadaDeLocacao();
+                tjp.edit(temporada);
+            } else {
+                throw new TemporadaInexistenteException("TIPO DE DESCONTO INEXISTENTE COD: 5");
+            }
 
         } finally {
             if (emf != null) {
@@ -560,12 +583,11 @@ public class GerenciadorDoSistema {
                 if (mov.getData().get(Calendar.DAY_OF_MONTH) == diaDeHoje
                         && mov.getData().get(Calendar.MONTH) == mesDeHoje
                         && mov.getData().get(Calendar.YEAR) == anoDeHoje) {
-                    if (mov.getMovimento().toUpperCase().equals("DESPESA")){
+                    if (mov.getMovimento().toUpperCase().equals("DESPESA")) {
                         valorTotalEmCaixa -= mov.getValor();
                     } else {
                         valorTotalEmCaixa += mov.getValor();
                     }
-                    
 
                 }
             }
@@ -644,11 +666,9 @@ public class GerenciadorDoSistema {
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         Movimentacao mov;
 
-        
-
         try {
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
-                usuarioLogado.getNome(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
+                    usuarioLogado.getNome(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
             mjp.create(mov);
             return mov;
         } finally {
@@ -658,12 +678,12 @@ public class GerenciadorDoSistema {
         }
 
     }
-    
+
     public Movimentacao adicionarMovimentacaoDeVenda(Venda venda) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         Movimentacao mov;
-        
+
         try {
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNome(),
                     Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
@@ -675,14 +695,14 @@ public class GerenciadorDoSistema {
             }
         }
     }
-    
+
     public Movimentacao adicionarMovimentacaoDeDespesa(Despesa despesa) throws TipoInexistenteDeMovimentacao {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         Movimentacao mov;
-        
+
         try {
-            mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), 
+            mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(),
                     despesa.getEmissor(), despesa.getFavorecido(), despesa.getId(), despesa.getFormaDePagamento());
             mjp.create(mov);
             return mov;
@@ -692,52 +712,51 @@ public class GerenciadorDoSistema {
             }
         }
     }
-    
-    public Configuracao getConfiguracao(){
+
+    public Configuracao getConfiguracao() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ConfiguracaoJpaController cjp = new ConfiguracaoJpaController(emf);
-        
-        try{
-            
-            if (cjp.getConfiguracaoCount() == 0){
+
+        try {
+
+            if (cjp.getConfiguracaoCount() == 0) {
                 return Configuracao.getInstance();
             } else {
                 Configuracao conf = cjp.findConfiguracao(1);
                 return conf;
             }
-            
+
         } finally {
             emf.close();
         }
-        
-        
+
     }
-    
-    public void salvarEstadoDeConfiguracao(Configuracao configuracao) throws Exception{
+
+    public void salvarEstadoDeConfiguracao(Configuracao configuracao) throws Exception {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ConfiguracaoJpaController cjp = new ConfiguracaoJpaController(emf);
-        
-        try{
-            
-            if (cjp.getConfiguracaoCount() == 0){
+
+        try {
+
+            if (cjp.getConfiguracaoCount() == 0) {
                 cjp.create(configuracao);
             } else {
                 cjp.edit(configuracao);
             }
-            
+
         } finally {
             emf.close();
         }
-        
+
     }
-    
-    public Usuario pesquisarUsuarioPeloNome(String nome){
+
+    public Usuario pesquisarUsuarioPeloNome(String nome) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
         Usuario user = null;
-        try{
-            for (Usuario u: ujp.getAllUsuarios()){
-                if (u.getNome().toUpperCase().equals(nome.toUpperCase())){
+        try {
+            for (Usuario u : ujp.getAllUsuarios()) {
+                if (u.getNome().toUpperCase().equals(nome.toUpperCase())) {
                     user = u;
                 }
             }
@@ -746,6 +765,5 @@ public class GerenciadorDoSistema {
             emf.close();
         }
     }
-    
-    
+
 }

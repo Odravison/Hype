@@ -16,8 +16,10 @@ import javax.persistence.Id;
 @Entity
 public class Temporada implements Serializable {
     
-    private boolean isAtivada;
-    private int pertentualDeDesconto;
+    private boolean isAtivadaDeLocacao;
+    private boolean isAtivadaDeVenda;
+    private int percentualDeDescontoDeVenda;
+    private int percentualDeDescontoDeLocacao;
     
     @Id
     private long id;
@@ -29,34 +31,27 @@ public class Temporada implements Serializable {
         return TemporadaHolder.INSTANCE;
     }
 
-    public void ativarTemporada(int percentualDesconto) {
-        this.pertentualDeDesconto = percentualDesconto;
-        this.isAtivada = true;
+    public void ativarTemporadaDeVenda(int percentualDesconto) {
+        this.percentualDeDescontoDeVenda = percentualDesconto;
+        this.isAtivadaDeVenda = true;
     }
 
-    public void desativarTemporada() {
-        this.isAtivada = false;
+    public void desativarTemporadaDeVenda() {
+        this.isAtivadaDeVenda = false;
+    }
+    
+    public void ativarTemporadaDeLocacao(int percentualDesconto) {
+        this.percentualDeDescontoDeLocacao = percentualDesconto;
+        this.isAtivadaDeLocacao = true;
+    }
+
+    public void desativarTemporadaDeLocacao() {
+        this.isAtivadaDeLocacao = false;
     }
     
     private static class TemporadaHolder {
 
         private static final Temporada INSTANCE = new Temporada();
-    }
-
-    public boolean isIsAtivada() {
-        return isAtivada;
-    }
-
-    public void setIsAtivada(boolean isAtivada) {
-        this.isAtivada = isAtivada;
-    }
-
-    public int getPertentualDeDesconto() {
-        return pertentualDeDesconto;
-    }
-
-    public void setPertentualDeDesconto(int pertentualDeDesconto) {
-        this.pertentualDeDesconto = pertentualDeDesconto;
     }
 
     public long getId() {
@@ -65,6 +60,38 @@ public class Temporada implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isIsAtivadaDeLocacao() {
+        return isAtivadaDeLocacao;
+    }
+
+    public void setIsAtivadaDeLocacao(boolean isAtivadaDeLocacao) {
+        this.isAtivadaDeLocacao = isAtivadaDeLocacao;
+    }
+
+    public boolean isIsAtivadaDeVenda() {
+        return isAtivadaDeVenda;
+    }
+
+    public void setIsAtivadaDeVenda(boolean isAtivadaDeVenda) {
+        this.isAtivadaDeVenda = isAtivadaDeVenda;
+    }
+
+    public int getPercentualDeDescontoDeVenda() {
+        return percentualDeDescontoDeVenda;
+    }
+
+    public void setPercentualDeDescontoDeVenda(int percentualDeDescontoDeVenda) {
+        this.percentualDeDescontoDeVenda = percentualDeDescontoDeVenda;
+    }
+
+    public int getPercentualDeDescontoDeLocacao() {
+        return percentualDeDescontoDeLocacao;
+    }
+
+    public void setPercentualDeDescontoDeLocacao(int percentualDeDescontoDeLocacao) {
+        this.percentualDeDescontoDeLocacao = percentualDeDescontoDeLocacao;
     }
     
     
