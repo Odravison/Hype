@@ -2661,6 +2661,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma despesa na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
+      
     }//GEN-LAST:event_botaoEditarDespesaActionPerformed
 
     private void botaoEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarUsuarioActionPerformed
