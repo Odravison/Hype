@@ -35,13 +35,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -52,7 +49,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(String login) {
         loginUsuario = login;
         initComponents();
-        
+        setIconImage(new ImageIcon("Imagens\\Ícone.jpg").getImage());
         //labelLogoSistema.setIcon(new ImageIcon("Imagens\\.png"));
     }
 
@@ -152,6 +149,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoAlterarDiretorioRelatorios = new javax.swing.JButton();
         botaoSalvarDiretorioRelatorios = new javax.swing.JButton();
         campoDiretorioRelatorios = new javax.swing.JTextField();
+        campoNomeImpressora = new javax.swing.JTextField();
+        labelNomeImpressora = new javax.swing.JLabel();
+        botaoAlterarNomeImpressora = new javax.swing.JButton();
+        botaoSalvarNomeImpressora = new javax.swing.JButton();
         painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
         botaoPesquisarUsuario = new javax.swing.JButton();
@@ -1257,7 +1258,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
         listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
     }
 
     //cria um defaultablemodel com as informações acima
@@ -1522,6 +1523,45 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
     campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());
 
+    campoNomeImpressora.setEditable(false);
+    campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+    campoNomeImpressora.setForeground(new java.awt.Color(153, 153, 153));
+    campoNomeImpressora.setToolTipText("Informe o caminho do diretório");
+    campoNomeImpressora.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+    campoNomeImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            campoNomeImpressoraMouseClicked(evt);
+        }
+    });
+    campoNomeImpressora.addKeyListener(new java.awt.event.KeyAdapter() {
+        public void keyTyped(java.awt.event.KeyEvent evt) {
+            campoNomeImpressoraKeyTyped(evt);
+        }
+    });
+    campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());
+
+    labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    labelNomeImpressora.setText("Nome da impressora");
+
+    botaoAlterarNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoAlterarNomeImpressora.setText("Alterar");
+    botaoAlterarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoAlterarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoAlterarNomeImpressoraActionPerformed(evt);
+        }
+    });
+
+    botaoSalvarNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoSalvarNomeImpressora.setText(" Salvar ");
+    botaoSalvarNomeImpressora.setToolTipText("Salvar diretório");
+    botaoSalvarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoSalvarNomeImpressoraActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
     painelConfiguracoes.setLayout(painelConfiguracoesLayout);
     painelConfiguracoesLayout.setHorizontalGroup(
@@ -1529,6 +1569,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelConfiguracoesLayout.createSequentialGroup()
             .addGap(32, 32, 32)
             .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(labelNomeImpressora)
+                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                    .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(botaoAlterarNomeImpressora)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoSalvarNomeImpressora))
                 .addComponent(labelDiretorioRelatorios)
                 .addComponent(labelDiretorioDocumentos)
                 .addComponent(labelDiretorioBackups)
@@ -1577,7 +1624,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(botaoSalvarDiretorioRelatorios)
                 .addComponent(botaoAlterarDiretorioRelatorios)
                 .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(294, Short.MAX_VALUE))
+            .addGap(30, 30, 30)
+            .addComponent(labelNomeImpressora)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(botaoSalvarNomeImpressora)
+                .addComponent(botaoAlterarNomeImpressora)
+                .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addContainerGap(216, Short.MAX_VALUE))
     );
 
     try {
@@ -2032,7 +2086,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoGerarRelatorioActionPerformed
 
     private void botaoSalvarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioBackupActionPerformed
-        // TODO add your handling code here:
+        if(campoDiretorioBackup.getText().length() <= 0) {
+           JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                GerenciadorDoSistema.getInstance().getConfiguracao().setDiretorioDeBackup(campoDiretorioBackup.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                campoDiretorioBackup.setEditable(false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
 
     private void campoDiretorioBackupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioBackupMouseClicked
@@ -2051,7 +2115,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoDiretorioDocumentos.getText().length() <= 0) {
            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            Configuracao.getInstance().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
+            try {
+                GerenciadorDoSistema.getInstance().getConfiguracao().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                campoDiretorioRelatorios.setEditable(false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_botaoSalvarDiretorioDocumentosActionPerformed
 
@@ -2530,8 +2600,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarProdutoActionPerformed
         if(tabelaProdutos.getSelectedRow() >= 0) {
-            System.out.println("LINHA SELECIONADA TABELA PRODUTO: "+tabelaProdutos.getSelectedRow());
-            System.out.println("CÓDIGO DO PRODUTO: "+(String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
                     try {
@@ -2680,7 +2748,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(campoDiretorioRelatorios.getText().length() <= 0) {
            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de relátorios corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            Configuracao.getInstance().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+            try {
+                GerenciadorDoSistema.getInstance().getConfiguracao().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                campoDiretorioRelatorios.setEditable(false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_botaoSalvarDiretorioRelatoriosActionPerformed
 
@@ -3084,6 +3158,36 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_comboFiltrarUsuariosActionPerformed
 
+    private void campoNomeImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNomeImpressoraMouseClicked
+        if(campoNomeImpressora.getText().equals("Informe o nome")) {
+            eliminarTextoDeCampo(campoNomeImpressora);
+        }
+    }//GEN-LAST:event_campoNomeImpressoraMouseClicked
+
+    private void campoNomeImpressoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeImpressoraKeyTyped
+        if(campoNomeImpressora.getText().equals("Informe o nome")) {
+            eliminarTextoDeCampo(campoNomeImpressora);
+        }
+    }//GEN-LAST:event_campoNomeImpressoraKeyTyped
+
+    private void botaoAlterarNomeImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarNomeImpressoraActionPerformed
+        campoNomeImpressora.setEditable(true);
+    }//GEN-LAST:event_botaoAlterarNomeImpressoraActionPerformed
+
+    private void botaoSalvarNomeImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarNomeImpressoraActionPerformed
+        if(campoNomeImpressora.getText().length() <= 0) {
+           JOptionPane.showMessageDialog(null, "Informe o nome da impressora corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            try {
+                GerenciadorDoSistema.getInstance().getConfiguracao().setNomeDaImpressora(campoNomeImpressora.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                campoNomeImpressora.setEditable(false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_botaoSalvarNomeImpressoraActionPerformed
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -3115,24 +3219,30 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         try {
             //Adiciona os dados da nova locação na tabela
-            modeloTabelaLocacoes.addRow(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n"+e.getMessage(), 
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
-        //Adiciona os dadosa nova venda na tabela
-        modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
-
+        try {
+            //Adiciona os dadosa nova venda na tabela
+            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()),
+                "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da venda na tabela:\n"+e.getMessage(), 
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getId()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getIdDaOperacao()});
     }
     
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
@@ -3179,7 +3289,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         //Coluna de descrição
         modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
         //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getValorInString(), linha, 2);
+        modeloTabelaProdutos.setValueAt("R$ "+produto.getValorInString(), linha, 2);
         //Coluna de descrição
         modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
         //Coluna de descrição
@@ -3226,6 +3336,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoDiretorioBackup.setEditable(false);
         campoDiretorioDocumentos.setEditable(false);
         campoDiretorioRelatorios.setEditable(false);
+        campoNomeImpressora.setEditable(false);
     }
     
     public void adicionarClientesNaTabela(List<Cliente> clientes) {
@@ -3269,7 +3380,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarMovimentacoesNaTabela(List<Movimentacao> movimentacoes) {
         for(Movimentacao movimentacao: movimentacoes) {
             modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-                movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
+                movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
         }
     }
     
@@ -3328,6 +3439,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoAlterarDiretorioBackup;
     private javax.swing.JButton botaoAlterarDiretorioDocumentos;
     private javax.swing.JButton botaoAlterarDiretorioRelatorios;
+    private javax.swing.JButton botaoAlterarNomeImpressora;
     private javax.swing.JButton botaoAtivarTemporada;
     private javax.swing.JButton botaoEditarCliente;
     private javax.swing.JButton botaoEditarDespesa;
@@ -3362,6 +3474,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoSalvarDiretorioBackup;
     private javax.swing.JButton botaoSalvarDiretorioDocumentos;
     private javax.swing.JButton botaoSalvarDiretorioRelatorios;
+    private javax.swing.JButton botaoSalvarNomeImpressora;
     private javax.swing.JButton botaoVerContrato;
     private javax.swing.JButton botaoVerLocacoesCliente;
     private javax.swing.JButton botaoVerRecibosLocacao;
@@ -3369,6 +3482,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField campoDiretorioBackup;
     private javax.swing.JTextField campoDiretorioDocumentos;
     private javax.swing.JTextField campoDiretorioRelatorios;
+    private javax.swing.JTextField campoNomeImpressora;
     private javax.swing.JTextField campoPesquisarClientes;
     private javax.swing.JTextField campoPesquisarFornecedores;
     private javax.swing.JTextField campoPesquisarLocacoes;
@@ -3394,6 +3508,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelFiltrarVenda;
     private javax.swing.JLabel labelLoginUsuario;
     private javax.swing.JLabel labelLogoEmpresa;
+    private javax.swing.JLabel labelNomeImpressora;
     private javax.swing.JLabel labelValorCaixa;
     private javax.swing.JLabel labelValorEmCaixa;
     private javax.swing.JPanel painelAdministrador;

@@ -370,7 +370,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                       //  Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
                     Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
                     
-                    configuracao.setEmpresa(new Empresa(campoNome.getText(), campoCnpj.getText(),
+                    configuracao.setEmpresa(new Empresa(campoCnpj.getText(), campoNome.getText(),
                         campoTelefone.getText(), new Endereco(campoRua.getText(), campoBairro.getText(), comboUf.getSelectedItem().toString(),
                         Integer.parseInt(campoNumero.getText()), campoCidade.getText())));
                     

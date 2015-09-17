@@ -30,9 +30,8 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
-        ImageIcon imagemTituloJanela = new ImageIcon("Imagens\\Mini logo hype!.png");
-        setIconImage(imagemTituloJanela.getImage());
-        labelLogo.setIcon(new ImageIcon("Imagens\\Logo.png"));
+        setIconImage(new ImageIcon("Imagens\\Ícone.jpg").getImage());
+        labelLogo.setIcon(new ImageIcon("Imagens\\Logo.jpg"));
         
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
@@ -76,13 +75,13 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeral.setMinimumSize(new java.awt.Dimension(600, 500));
         painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
 
-        painelDeLogin.setBackground(new java.awt.Color(234, 234, 255));
+        painelDeLogin.setBackground(new java.awt.Color(213, 215, 205));
         painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
         painelDeLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelDeLogin.setName("hype!\n"); // NOI18N
         painelDeLogin.setPreferredSize(new java.awt.Dimension(420, 350));
 
-        labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelUsuario.setText("Login:");
 
         campoLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -92,7 +91,7 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelSenha.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelSenha.setText("Senha:");
 
         campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -117,14 +116,14 @@ public class LoginFrame extends javax.swing.JFrame {
             painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDeLoginLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelUsuario)
-                    .addComponent(labelSenha))
+                .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelSenha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(campoSenha)
                     .addGroup(painelDeLoginLayout.createSequentialGroup()
-                        .addGap(0, 160, Short.MAX_VALUE)
+                        .addGap(0, 154, Short.MAX_VALUE)
                         .addComponent(botaoEntrar))
                     .addComponent(campoLogin))
                 .addGap(65, 65, 65))
@@ -156,7 +155,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(478, Short.MAX_VALUE))
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(546, 546, 546)
+                .addGap(497, 497, 497)
                 .addComponent(labelLogo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
