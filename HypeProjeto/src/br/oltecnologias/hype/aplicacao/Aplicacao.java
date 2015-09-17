@@ -15,6 +15,7 @@ import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import br.oltecnologias.hype.dao.ProdutoJpaRepository;
 import br.oltecnologias.hype.dao.VendaJpaRepository;
+import br.oltecnologias.hype.gui.LoginFrame;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
@@ -141,35 +142,35 @@ public class Aplicacao {
 //
 //        }
 
-                Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
-                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
-                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
-                List<Venda> movimentacoes = new ArrayList<Venda>();
-                List<ProdutoVendido> lista = new ArrayList<ProdutoVendido>();
-                
-                Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
-                Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
-                Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
-                conf.setEmpresa(empresa);
-                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(conf);
-                GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
-                
-                
-                
-                Calendar dataInicial = Calendar.getInstance();
-                
-                for (int i = 0; i < 10; i++){
-                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
-                }
-                for (Venda m: movimentacoes){
-                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
-                }
-                
-                Calendar dataFinal = Calendar.getInstance();
-                
-                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
-                
-                System.out.println("RODOU");
+//                Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
+//                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
+//                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
+//                List<Venda> movimentacoes = new ArrayList<Venda>();
+//                List<ProdutoVendido> lista = new ArrayList<ProdutoVendido>();
+//                
+//                Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
+//                Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
+//                Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
+//                conf.setEmpresa(empresa);
+//                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(conf);
+//                GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
+//                
+//                
+//                
+//                Calendar dataInicial = Calendar.getInstance();
+//                
+//                for (int i = 0; i < 10; i++){
+//                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
+//                }
+//                for (Venda m: movimentacoes){
+//                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
+//                }
+//                
+//                Calendar dataFinal = Calendar.getInstance();
+//                
+//                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
+//                
+//                System.out.println("RODOU");
         
 //        for (Locacao l: GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes()){
 //            System.out.println(l.getId());
@@ -178,7 +179,33 @@ public class Aplicacao {
 //            
 //            
 //        }
-                
+                /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginFrame().setVisible(true);
+        });
                 
     }
 }

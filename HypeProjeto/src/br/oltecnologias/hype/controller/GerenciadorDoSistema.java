@@ -549,7 +549,7 @@ public class GerenciadorDoSistema {
     public double getValorCaixaDiario() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
-        double valorTotalEmCaixa = 0;
+        double valorTotalEmCaixa = 0.00;
         Calendar c = Calendar.getInstance();
         int diaDeHoje = c.get(Calendar.DAY_OF_MONTH);
         int mesDeHoje = c.get(Calendar.MONTH);
@@ -560,8 +560,12 @@ public class GerenciadorDoSistema {
                 if (mov.getData().get(Calendar.DAY_OF_MONTH) == diaDeHoje
                         && mov.getData().get(Calendar.MONTH) == mesDeHoje
                         && mov.getData().get(Calendar.YEAR) == anoDeHoje) {
-
-                    valorTotalEmCaixa += mov.getValor();
+                    if (mov.getMovimento().toUpperCase().equals("DESPESA")){
+                        valorTotalEmCaixa -= mov.getValor();
+                    } else {
+                        valorTotalEmCaixa += mov.getValor();
+                    }
+                    
 
                 }
             }
@@ -644,7 +648,7 @@ public class GerenciadorDoSistema {
 
         try {
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
-                usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
+                usuarioLogado.getNome(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
             mjp.create(mov);
             return mov;
         } finally {
@@ -661,7 +665,7 @@ public class GerenciadorDoSistema {
         Movimentacao mov;
         
         try {
-            mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
+            mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNome(),
                     Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
             mjp.create(mov);
             return mov;
