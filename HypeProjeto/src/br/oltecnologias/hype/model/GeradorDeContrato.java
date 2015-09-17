@@ -44,30 +44,29 @@ public class GeradorDeContrato {
         produtos = new ArrayList<Produto>();
 
     }
-    
-    public void imprimirContrato(Locacao locacao) throws IOException, Exception{
-        
-        
+
+    public void gerarEImprimirContrato(Locacao locacao) throws IOException, Exception {
+
         gerarContrato(locacao);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
-        
+
         String diretorio = conf.getDiretorioDeDocumentos()
-                    + "\\" + locacao.getCliente().getNome()+ "\\Contratos\\" +  "DL_" + diaContrato + "__H_" + horaGeracao +".pdf";
-        
-        
+                + "\\" + locacao.getCliente().getNome() + "\\Contratos\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf";
+
         FileInputStream fis = new FileInputStream(diretorio);
-        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao +".pdf", conf.getNomeDaImpressora());
+        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf", 
+                conf.getNomeDaImpressora());
 
         printPDFFile.print();
-        
+
     }
 
     // Deveria receber uma locação, pois todos os dados últeis para gerar o contrato se encontram nela
     public void gerarContrato(Locacao locacao) throws DocumentException, IOException, Exception {
-        
+
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId());
-        
+
         Document pdf = new Document();
         File diretorio = null;
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
@@ -86,21 +85,23 @@ public class GeradorDeContrato {
         try {
             diretorio = new File(conf.getDiretorioDeDocumentos()
                     + "\\" + locacao.getCliente().getNome() + "\\Contratos");
-            
+
             diretorio.mkdir();
-            
+
             System.out.println(diretorio.toString());
-            
-            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao +".pdf"));
+
+            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf"));
             pdf.open();
-            pdf.setPageSize(PageSize.A4);   
-            
+            pdf.setPageSize(PageSize.A4);
+
+            String diretorioFinal = diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf";
+
             System.out.println("Tirar: chagou aqui! 1");
 
             Paragraph tituloContrato = new Paragraph("CONTRATO DE LOCAÇÃO DE ROUPAS E ACESSÓRIOS", timesNewRoman14);
             tituloContrato.setAlignment(Paragraph.ALIGN_CENTER);
             tituloContrato.setSpacingAfter(10);
-            
+
             System.out.println("Tirar: chagou aqui! 3");
 
             Paragraph textoContrato;
@@ -113,7 +114,7 @@ public class GeradorDeContrato {
                                                             .concat(conf.getContratoPt7())))))), timesNewRoman12);
             textoContrato.setAlignment(Paragraph.ALIGN_JUSTIFIED);
             textoContrato.setPaddingTop(2);
-            
+
             System.out.println("Tirar: chagou aqui! 4");
 
             Paragraph periodo;
@@ -123,20 +124,20 @@ public class GeradorDeContrato {
             Paragraph objLocados;
             objLocados = new Paragraph("Trajes e acessórios Locados: \n" + getDescricaoDeProdutos(), courier12);
             objLocados.setSpacingAfter(20);
-            
+
             System.out.println("Tirar: chagou aqui! 5");
 
             Paragraph linhaAssinatura;
             linhaAssinatura = new Paragraph("________________________________________________________________________", timesNewRoman12);
             linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
-            
+
             System.out.println("Tirar: chagou aqui! 6");
 
             Paragraph dadosCliente;
             dadosCliente = new Paragraph("Locador: " + locacao.getCliente().getNome() + ", portador do nº de CPF: " + locacao.getCliente().getCpf(), timesNewRoman12);
             dadosCliente.setSpacingAfter(40);
             dadosCliente.setAlignment(Paragraph.ALIGN_CENTER);
-            
+
             System.out.println("Tirar: chagou aqui! 7");
 
             Paragraph dadosEmpresa;
@@ -144,16 +145,16 @@ public class GeradorDeContrato {
                     + ", portador do nº de CNPJ: " + Configuracao.getInstance().getEmpresa().getCnpj(), timesNewRoman12);
             dadosEmpresa.setSpacingAfter(20);
             dadosEmpresa.setAlignment(Paragraph.ALIGN_CENTER);
-            
+
             System.out.println("Tirar: chagou aqui! 8");
 
             Paragraph diaLocal;
             diaLocal = new Paragraph(Configuracao.getInstance().getEmpresa().getEndereco().getCidade()
                     + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
-                        
-            System.out.println("Título do contrato: "+tituloContrato);
-            
+
+            System.out.println("Título do contrato: " + tituloContrato);
+
             pdf.add(tituloContrato);
             pdf.add(textoContrato);
             pdf.add(periodo);
@@ -163,9 +164,9 @@ public class GeradorDeContrato {
             pdf.add(linhaAssinatura);
             pdf.add(dadosEmpresa);
             pdf.add(diaLocal);
-            
+
             pdf.newPage();
-            
+
             pdf.add(tituloContrato);
             pdf.add(textoContrato);
             pdf.add(periodo);
@@ -175,6 +176,10 @@ public class GeradorDeContrato {
             pdf.add(linhaAssinatura);
             pdf.add(dadosEmpresa);
             pdf.add(diaLocal);
+
+            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+            
+            desktop.open(new File(diretorioFinal));
 
         } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());
@@ -187,10 +192,10 @@ public class GeradorDeContrato {
 
     private String getDescricaoDeProdutos() {
         String descCompleta = "";
-        for (Produto p: this.produtos) {
+        for (Produto p : this.produtos) {
             descCompleta += p.getDescricao() + "\n";
         }
-                
+
         return descCompleta;
     }
 }

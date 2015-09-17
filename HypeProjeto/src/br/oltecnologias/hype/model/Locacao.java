@@ -114,7 +114,7 @@ public class Locacao implements Serializable {
     }
 
     public void imprimirContrato() throws DocumentException, IOException, Exception {
-        GeradorDeContrato.getInstance().imprimirContrato(this);
+        GeradorDeContrato.getInstance().gerarEImprimirContrato(this);
     }
 
     public long getId() {

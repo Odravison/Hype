@@ -14,6 +14,8 @@ import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
 import br.oltecnologias.hype.model.Venda;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -39,8 +41,12 @@ public class GerenciadorDeLocacao {
     }
 
     // FALTA TESTAR
-    public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException, LocacaoInexistenteException {
+    public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor,
+            Calendar dataLocacao, Calendar dataDeDevolucao, String formaDePagamento, int parcelas,
+            double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException,
+            ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException,
+            LocacaoInexistenteException, IOException, Exception {
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 
@@ -67,6 +73,8 @@ public class GerenciadorDeLocacao {
         }
 
         System.out.println("===========>>>>>>>>>>>>>>>  A locação persistida tem id de número: " + locacao.getId());
+
+        locacao.imprimirContrato();
 
         return locacao;
     }
@@ -277,7 +285,7 @@ public class GerenciadorDeLocacao {
 
         return loc;
     }
-    
+
     public List<Locacao> pesquisarLocacoesDeCliente(String cpfCliente) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -295,5 +303,19 @@ public class GerenciadorDeLocacao {
             emf.close();
         }
 
+    }
+
+    public void abrirContratoDeLocacao(long idLocacao) throws LocacaoInexistenteException, IOException {
+
+        Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
+
+        File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                + "\\" + locacao.getCliente().getNome() + "\\Contratos");
+
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+
+        desktop.open(diretorio);
+        
+        
     }
 }
