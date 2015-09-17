@@ -4,6 +4,7 @@ import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
+import br.oltecnologias.hype.exception.ContratoNaoGeradoException;
 import br.oltecnologias.hype.exception.LocacaoExistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
@@ -14,6 +15,8 @@ import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
 import br.oltecnologias.hype.model.Venda;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
@@ -39,8 +42,12 @@ public class GerenciadorDeLocacao {
     }
 
     // FALTA TESTAR
-    public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException, ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException, LocacaoInexistenteException {
+    public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor,
+            Calendar dataLocacao, Calendar dataDeDevolucao, String formaDePagamento, int parcelas,
+            double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException,
+            ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException,
+            LocacaoInexistenteException, IOException, Exception {
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
 
@@ -67,6 +74,8 @@ public class GerenciadorDeLocacao {
         }
 
         System.out.println("===========>>>>>>>>>>>>>>>  A locação persistida tem id de número: " + locacao.getId());
+
+        locacao.imprimirContrato();
 
         return locacao;
     }
@@ -277,7 +286,7 @@ public class GerenciadorDeLocacao {
 
         return loc;
     }
-    
+
     public List<Locacao> pesquisarLocacoesDeCliente(String cpfCliente) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -295,5 +304,28 @@ public class GerenciadorDeLocacao {
             emf.close();
         }
 
+    }
+
+    public void verUltimoContratoGerado(long idLocacao) throws LocacaoInexistenteException, IOException, ContratoNaoGeradoException {
+
+        Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
+
+        if (locacao.getCaminhoUltimoContrato().equals("")) {
+            throw new ContratoNaoGeradoException("O contrato para locação ainda não foi gerado");
+        } else {
+            File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                    + "\\" + locacao.getCliente().getNome() + "\\Contratos\\" + locacao.getCaminhoUltimoContrato());
+
+            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+
+            desktop.open(diretorio);
+        }
+
+    }
+    
+    public void gerarEImprimirPxRecibo(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException{
+        Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
+        
+        locacao.gerarEImprimirPxRecibo(valorDessePagamento);
     }
 }
