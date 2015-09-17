@@ -29,6 +29,8 @@ import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -1436,8 +1438,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     campoDiretorioBackup.setEditable(false);
-    campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
     campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1450,7 +1451,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoDiretorioBackupKeyTyped(evt);
         }
     });
-    campoDiretorioBackup.setText(Configuracao.getInstance().getDiretorioDeBackup());
 
     labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioBackups.setText("Diretório de backups");
@@ -1466,8 +1466,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     campoDiretorioDocumentos.setEditable(false);
-    campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoDiretorioDocumentos.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoDiretorioDocumentos.setToolTipText("Informe o caminho do diretório");
     campoDiretorioDocumentos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1480,7 +1479,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoDiretorioDocumentosKeyTyped(evt);
         }
     });
-    campoDiretorioDocumentos.setText(Configuracao.getInstance().getDiretorioDeDocumentos());
 
     labelDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioDocumentos.setText("Diretório de Documentos");
@@ -1526,8 +1524,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     campoDiretorioRelatorios.setEditable(false);
-    campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoDiretorioRelatorios.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoDiretorioRelatorios.setToolTipText("Informe o caminho do diretório");
     campoDiretorioRelatorios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1535,16 +1532,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoDiretorioRelatoriosMouseClicked(evt);
         }
     });
+    campoDiretorioRelatorios.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            campoDiretorioRelatoriosActionPerformed(evt);
+        }
+    });
     campoDiretorioRelatorios.addKeyListener(new java.awt.event.KeyAdapter() {
         public void keyTyped(java.awt.event.KeyEvent evt) {
             campoDiretorioRelatoriosKeyTyped(evt);
         }
     });
-    campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());
 
     campoNomeImpressora.setEditable(false);
-    campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoNomeImpressora.setForeground(new java.awt.Color(153, 153, 153));
+    campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoNomeImpressora.setToolTipText("Informe o caminho do diretório");
     campoNomeImpressora.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoNomeImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1557,7 +1557,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoNomeImpressoraKeyTyped(evt);
         }
     });
-    campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());
+    Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+    campoDiretorioRelatorios.setText(configuracao.getDiretorioDeRelatorios());
+    campoDiretorioDocumentos.setText(configuracao.getDiretorioDeDocumentos());
+    campoDiretorioBackup.setText(configuracao.getDiretorioDeBackup());
+    campoNomeImpressora.setText(configuracao.getNomeDaImpressora());
 
     labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelNomeImpressora.setText("Nome da impressora");
@@ -2466,7 +2470,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     }
                 } 
             } else {
-                JOptionPane.showMessageDialog(null, "A despesa não pôde ser excluída", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nao e~possivel excluir este tipo de movimentaçao", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma despesa na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2534,6 +2538,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
 
                         if (((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+                            
                             VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
                                     Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
 
@@ -2723,7 +2728,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
 
     private void botaoEditarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarEmpresaActionPerformed
-        Empresa empresa = Configuracao.getInstance().getEmpresa(); //pegar do gerenciador do sistema
+        Empresa empresa = GerenciadorDoSistema.getInstance().getConfiguracao().getEmpresa(); 
         EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, empresa);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
@@ -2778,9 +2783,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoVerRecibosLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosLocacaoActionPerformed
         try {
-            Runtime.getRuntime().exec("cmd /c dir c:\\");
-            System.out.println("ABRIR PASTA");
-        } catch (IOException e) {
+            
+            String nomeCliente = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
+                    .getCliente().getNome();
+            Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                    +nomeCliente+"\\Recibos"));
+            
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível ver os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerRecibosLocacaoActionPerformed
@@ -3215,6 +3225,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.dispose();
         atualizarValorEmCaixa();
     }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
+
+    private void campoDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoDiretorioRelatoriosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoDiretorioRelatoriosActionPerformed
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");

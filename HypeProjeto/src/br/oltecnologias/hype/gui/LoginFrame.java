@@ -42,7 +42,6 @@ public class LoginFrame extends javax.swing.JFrame {
             dialogDiretorios.setAlwaysOnTop(true);
             dialogDiretorios.setVisible(true);
         }
-        //if(!GerenciadorDoSistema.getInstance().isEmpresaCadastrada()) {
         if(configuracao.getEmpresa() == null) {
             CadastrarEmpresaDialog dialogEmpresa = new CadastrarEmpresaDialog(null);
             dialogEmpresa.setLocationRelativeTo(null);
