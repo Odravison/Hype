@@ -1261,7 +1261,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
         listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
     }
 
     //cria um defaultablemodel com as informações acima
@@ -3223,19 +3223,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         try {
             //Adiciona os dados da nova locação na tabela
-            modeloTabelaLocacoes.addRow(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                    "", "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
-                //GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                //,"R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
+            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento()});
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n"+e.getMessage(), 
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
     
     public void adicionarNovaVendaNaTabela(Venda venda) {
-        //Adiciona os dadosa nova venda na tabela
-        modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
-
+        try {
+            //Adiciona os dadosa nova venda na tabela
+            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()),
+                "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da venda na tabela:\n"+e.getMessage(), 
+                    "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }
     
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
@@ -3379,7 +3384,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarMovimentacoesNaTabela(List<Movimentacao> movimentacoes) {
         for(Movimentacao movimentacao: movimentacoes) {
             modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
-                movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario()});
+                movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
         }
     }
     
