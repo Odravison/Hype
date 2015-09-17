@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.model;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import com.itextpdf.text.BadElementException;
@@ -38,6 +39,7 @@ public class GeradorDeRecibo {
 
     private static GeradorDeRecibo singleton;
     private List<Produto> produtos;
+    private Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
 
     public static GeradorDeRecibo getInstance() {
         if (singleton == null) {
@@ -83,6 +85,7 @@ public class GeradorDeRecibo {
         boolean umReal = false, tem = false;
         while (!vlrS.equals("0")) {
             tam = vlrS.length();
+            
 // retira do valor a 1a. parte, 2a. parte, por exemplo, para 123456789:
 // 1a. parte = 789 (centena)
 // 2a. parte = 456 (mil)
@@ -222,8 +225,8 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome());
+            diretorio = new File(conf.getDiretorioDeDocumentos()
+                    + "\\" + loc.getCliente().getNome() + "\\Recibos");
 
             diretorio.mkdir();
 
@@ -238,7 +241,7 @@ public class GeradorDeRecibo {
             Paragraph cabecalhoDeRecibo;
             cabecalhoDeRecibo = new Paragraph("Terni Vellucci \n"
                     + "CNPJ 22.833.691/0001-47 Av.Presidente Epitácio Pessoa, 2400 Centro – João Pessoa – PB\n"
-                    + "Fone: " + Configuracao.getInstance().getEmpresa().getTelefone(), timesNewRoman12);
+                    + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
             cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
             cabecalhoDeRecibo.setSpacingAfter(10);
 
@@ -265,7 +268,7 @@ public class GeradorDeRecibo {
             linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
 
             Paragraph diaLocal;
-            diaLocal = new Paragraph(Configuracao.getInstance().getEmpresa().getEndereco().getCidade()
+            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
                     + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
@@ -288,12 +291,12 @@ public class GeradorDeRecibo {
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
 
-            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome() + "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
+            String diretorioImpressao = conf.getDiretorioDeDocumentos()
+                    + "\\" + loc.getCliente().getNome() + "\\Recibos\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
             PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
-                    Configuracao.getInstance().getNomeDaImpressora());
+                    conf.getNomeDaImpressora());
 
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
@@ -315,12 +318,12 @@ public class GeradorDeRecibo {
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
         
         
-        String diretorio = Configuracao.getInstance().getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome()+ "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf";
+        String diretorio = conf.getDiretorioDeDocumentos()
+                    + "\\" + loc.getCliente().getNome()+ "\\Recibos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf";
         
         
         FileInputStream fis = new FileInputStream(diretorio);
-        PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf", Configuracao.getInstance().getNomeDaImpressora());
+        PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao +".pdf", conf.getNomeDaImpressora());
         
         
         printPDFFile.print();
@@ -373,8 +376,8 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(Configuracao.getInstance().getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome() + "\\Contratos");
+            diretorio = new File(conf.getDiretorioDeDocumentos()
+                    + "\\" + loc.getCliente().getNome() + "\\Recibos");
 
             diretorio.mkdir();
 
@@ -389,7 +392,7 @@ public class GeradorDeRecibo {
             Paragraph cabecalhoDeRecibo;
             cabecalhoDeRecibo = new Paragraph("Terni Vellucci \n"
                     + "CNPJ 22.833.691/0001-47 Av.Presidente Epitácio Pessoa, 2400 Centro – João Pessoa – PB\n"
-                    + "Fone: " + Configuracao.getInstance().getEmpresa().getTelefone(), timesNewRoman12);
+                    + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
             cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
             cabecalhoDeRecibo.setSpacingAfter(10);
 
@@ -416,7 +419,7 @@ public class GeradorDeRecibo {
             linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
 
             Paragraph diaLocal;
-            diaLocal = new Paragraph(Configuracao.getInstance().getEmpresa().getEndereco().getCidade()
+            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
                     + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
@@ -439,12 +442,12 @@ public class GeradorDeRecibo {
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
             
-            String diretorioImpressao = Configuracao.getInstance().getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome() + "\\Contratos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
+            String diretorioImpressao = conf.getDiretorioDeDocumentos()
+                    + "\\" + loc.getCliente().getNome() + "\\Recibos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
             PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
-                    Configuracao.getInstance().getNomeDaImpressora());
+                    conf.getNomeDaImpressora());
 
             printPDFFile.print();
 

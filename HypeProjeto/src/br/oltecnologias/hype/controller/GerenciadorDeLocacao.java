@@ -1,6 +1,5 @@
 package br.oltecnologias.hype.controller;
 
-import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
@@ -14,14 +13,12 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
-import br.oltecnologias.hype.model.Venda;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -72,9 +69,7 @@ public class GerenciadorDeLocacao {
         } finally {
             emf.close();
         }
-
-        System.out.println("===========>>>>>>>>>>>>>>>  A locação persistida tem id de número: " + locacao.getId());
-
+        
         locacao.imprimirContrato();
 
         return locacao;
