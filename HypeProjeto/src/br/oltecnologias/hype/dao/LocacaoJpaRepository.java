@@ -74,6 +74,8 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             if (!existsLocacao(id)) {
                 throw new LocacaoInexistenteException("Esta locação não existe");
             }
+            
+            return em.find(Locacao.class, id);
 
         } finally {
             if (em != null) {
@@ -81,7 +83,7 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             }
         }
 
-        return em.find(Locacao.class, id);
+        
 
     }
 
@@ -218,17 +220,18 @@ public class LocacaoJpaRepository implements LocacaoRepository {
             if (!existsLocacao(idLocacao)) {
                 throw new LocacaoInexistenteException("Esta locação não existe, logo, não é possível buscar produtos!");
             }
-            Query q = em.createQuery("FROM ProdutoLocado WHERE fk_locacao = :parametro", Locacao.class);
-            q.setParameter("parametro", idLocacao);
-            produtos = q.getResultList();
+            Locacao locacao = em.find(Locacao.class, idLocacao);
+            produtos = locacao.getProdutos();
+//            Query q = em.createQuery("FROM ProdutoLocado WHERE fk_locacao = :parametro", Locacao.class);
+//            q.setParameter("parametro", idLocacao);
+//            produtos = q.getResultList();
+            return produtos;
 
         } finally {
             if (em != null) {
                 em.close();
             }
         }
-
-        return produtos;
 
     }
 

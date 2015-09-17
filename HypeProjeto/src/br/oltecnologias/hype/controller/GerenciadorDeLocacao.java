@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -51,16 +52,16 @@ public class GerenciadorDeLocacao {
             locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
             locacao.setAtiva(true);
-            
+
             ljp.create(locacao);
-            
+
             cliente.adicionarLocacao(locacao);
             GerenciadorDePessoas.getInstance().editarCliente(cliente);
 
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
-            
+
         } finally {
             emf.close();
         }
@@ -215,19 +216,12 @@ public class GerenciadorDeLocacao {
     }
 
     public String getProdutosDeLocacaoInString(long idLocacao) throws LocacaoInexistenteException, ProdutoInexistenteException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
         String produtosLocados = "";
-
-        try {
-            for (ProdutoLocado produto : ljp.getProdutosFromLocacao(idLocacao)) {
-                produtosLocados += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(produto.getCodigoProduto()).getNome() + ", ";
-            }
-        } finally {
-            emf.close();
+        for (Produto produto : this.getProdutosDeLocacao(idLocacao)) {
+            produtosLocados += produto.getNome() + ", ";
         }
-
         return produtosLocados;
+
     }
 
     public List<Produto> getProdutosDeLocacao(long id) throws LocacaoInexistenteException, ProdutoInexistenteException {
