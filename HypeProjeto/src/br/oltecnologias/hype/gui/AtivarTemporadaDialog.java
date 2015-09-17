@@ -137,8 +137,8 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         );
 
         try {
-            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                campoPercentualDescontoLocacao.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                campoPercentualDescontoLocacao.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO")));
                 campoPercentualDescontoLocacao.setEditable(false);
                 painelCorLocacao.setBackground(new java.awt.Color(0, 153, 51));
                 sliderTemporadaLocacao.setValue(100);
@@ -252,17 +252,17 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         );
 
         try {
-            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                campoPercentualDescontoLocacao.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()));
-                campoPercentualDescontoLocacao.setEditable(false);
-                painelCorLocacao.setBackground(new java.awt.Color(0, 153, 51));
-                sliderTemporadaLocacao.setValue(100);
-                labelTemporadaLocacao.setText("Temporada Ativada:");
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
+                campoPercentualDescontoVenda.setText(Integer.toString(GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")));
+                campoPercentualDescontoVenda.setEditable(false);
+                painelCorVenda.setBackground(new java.awt.Color(0, 153, 51));
+                sliderTemporadaVenda.setValue(100);
+                labelTemporadaVenda.setText("Temporada Ativada:");
             }
         } catch(TemporadaInexistenteException e) {
-            sliderTemporadaLocacao.setValue(0);
-            labelTemporadaLocacao.setText("Temporada Desativada:");
-            painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
+            sliderTemporadaVenda.setValue(0);
+            labelTemporadaVenda.setText("Temporada Desativada:");
+            painelCorVenda.setBackground(new java.awt.Color(204, 0, 0));
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -332,32 +332,36 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             
             if(sliderTemporadaLocacao.getValue() > 60) {
                 GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de locação
-                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoLocacao.getText()));
+                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoLocacao.getText()),
+                        "LOCAÇÃO");
                 JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de locação com "+campoPercentualDescontoLocacao.getText()+"% de desconto");
                 
                 setVisible(false);
             } else {
                 try {
-                    GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada();
-                    GerenciadorDoSistema.getInstance().desativarTemporada(); //de locação
-                    JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de locação desativada");
-                    setVisible(false);
+                    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                        GerenciadorDoSistema.getInstance().desativarTemporada("LOCAÇÃO"); //de locação
+                        JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de locação desativada");
+                        setVisible(false);
+                    }
                 } catch(TemporadaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 } 
             } 
             if(sliderTemporadaVenda.getValue() > 60) {
                 GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de venda
-                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoLocacao.getText()));
-                JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de venda com "+campoPercentualDescontoLocacao.getText()+"% de desconto");
+                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoVenda.getText()),
+                        "VENDA");
+                JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de venda com "+campoPercentualDescontoVenda.getText()+"% de desconto");
                 
                 setVisible(false);
             } else {
                 try {
-                    GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada();
-                    GerenciadorDoSistema.getInstance().desativarTemporada(); //de venda
-                    JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de venda desativada");
-                    setVisible(false);
+                    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                        GerenciadorDoSistema.getInstance().desativarTemporada("VENDA"); //de venda
+                        JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de venda desativada");
+                        setVisible(false);
+                    } 
                 } catch(TemporadaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 } 

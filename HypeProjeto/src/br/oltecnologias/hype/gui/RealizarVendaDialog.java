@@ -746,14 +746,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         labelValorParcelas.setText("");
                     } else { 
                         //Faz o cálculo sem contas com o último número, pois este será apagado
-                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(calcularValorTotalParcelasLocacao(
+                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(calcularValorTotalParcelasVenda(
                                 Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
                                     ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
                                 //decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))));
                     }
                 } else {
                     //if(valorCampoParcelas.length() > 0) {
-                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+new BigDecimal(calcularValorTotalParcelasLocacao(Integer.parseInt(valorCampoParcelas+evt.getKeyChar()))
+                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+new BigDecimal(calcularValorTotalParcelasVenda(Integer.parseInt(valorCampoParcelas+evt.getKeyChar()))
                                 ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
                     //} else {
                       //  labelValorParcelas.setText(" = "+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(evt.getKeyChar()+"")));
@@ -787,12 +787,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyPressed
 
-    public double calcularValorTotalParcelasLocacao(int quantidadeParcelas) {
+    public double calcularValorTotalParcelasVenda(int quantidadeParcelas) {
         double valorParcelas = 0;
         try {
-            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 valorParcelas = (valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)) / quantidadeParcelas;
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)) / quantidadeParcelas;
             }
         } catch(TemporadaInexistenteException e) {
             valorParcelas = valorTotalVenda / quantidadeParcelas;
@@ -962,9 +962,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     
     public void calcularValorTotalVenda() {
         try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 valorTotalVenda = new BigDecimal(valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)
                                             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 
                 labelValorVenda.setText("R$ " + valorTotalVenda);
@@ -977,9 +977,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     
     public void calcularValorTotalVendaComDesconto(int valorDesconto) {
         try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 double valorTotalComDescontoTemporada = valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100);
+                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100);
                 
                 valorTotalVenda = new BigDecimal(valorTotalComDescontoTemporada 
                         - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();

@@ -99,6 +99,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioCredito = new javax.swing.JRadioButton();
         radioDebito = new javax.swing.JRadioButton();
         labelValorParcelas = new javax.swing.JLabel();
+        labelStatus = new javax.swing.JLabel();
+        labelStatusTemporada = new javax.swing.JLabel();
 
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -601,6 +603,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelValorParcelas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelValorParcelas.setForeground(new java.awt.Color(0, 0, 102));
 
+        labelStatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelStatus.setText("Temporada de descontos");
+
+        labelStatusTemporada.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        try {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));
+                labelStatusTemporada.setText("ON");
+            }
+        } catch(TemporadaInexistenteException e) {
+            labelStatusTemporada.setText("OFF");
+            labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -626,8 +642,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(labelSimboloPorcentagem)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
+                            .addComponent(labelStatus)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(labelStatusTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(botaoConcluir)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(botaoCancelar))
@@ -661,7 +681,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelSimboloPorcentagem)
                         .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelStatus)
+                        .addComponent(labelStatusTemporada)))
                 .addContainerGap(77, Short.MAX_VALUE))
         );
 
@@ -1042,9 +1064,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     public double calcularValorTotalParcelasLocacao(int quantidadeParcelas) {
         double valorParcelas = 0;
         try {
-            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
                 valorParcelas = (valorTotalLocacao
-                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)) / quantidadeParcelas;
+                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO")) / 100)) / quantidadeParcelas;
             }
         } catch(TemporadaInexistenteException e) {
             valorParcelas = valorTotalLocacao / quantidadeParcelas;
@@ -1236,9 +1258,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     ///////////////////////////////RETIRAR MÉTODO///////////////////////////////QQ
     public void calcularValorTotalLocacao() {
         try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
                 valorTotalLocacao = new BigDecimal(valorTotalLocacao
-                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)
+                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO")) / 100)
                             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 
                 labelValorLocacao.setText("R$ " + valorTotalLocacao);
@@ -1330,6 +1352,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelNomeCliente;
     private javax.swing.JLabel labelParcelas;
     private javax.swing.JLabel labelSimboloPorcentagem;
+    private javax.swing.JLabel labelStatus;
+    private javax.swing.JLabel labelStatusTemporada;
     private javax.swing.JLabel labelValorLocacao;
     private javax.swing.JLabel labelValorParcelas;
     private javax.swing.JLabel labelValorTotal;
