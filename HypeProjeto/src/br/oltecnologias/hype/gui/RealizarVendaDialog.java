@@ -82,6 +82,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelDesconto = new javax.swing.JLabel();
         labelSimboloPorcentagem = new javax.swing.JLabel();
         labelValorParcelas = new javax.swing.JLabel();
+        labelStatus = new javax.swing.JLabel();
+        labelStatusTemporada = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
@@ -472,6 +474,20 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelValorParcelas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelValorParcelas.setForeground(new java.awt.Color(0, 0, 102));
 
+        labelStatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelStatus.setText("Temporada de descontos");
+
+        labelStatusTemporada.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        try {
+            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
+                labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));
+                labelStatusTemporada.setText("ON");
+            }
+        } catch(TemporadaInexistenteException e) {
+            labelStatusTemporada.setText("OFF");
+            labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -479,6 +495,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
+                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -486,18 +505,21 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelDesconto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelSimboloPorcentagem)
-                        .addGap(87, 87, 87)
-                        .addComponent(botaoConcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
-                    .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                    .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
-                    .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelStatus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelStatusTemporada, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(labelDesconto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelSimboloPorcentagem)
+                                .addGap(87, 87, 87)
+                                .addComponent(botaoConcluir)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoCancelar)))))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
@@ -522,7 +544,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                             .addComponent(labelDesconto)
                             .addComponent(labelSimboloPorcentagem)
                             .addComponent(labelValorTotal))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelStatus)
+                    .addComponent(labelStatusTemporada))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -1038,6 +1064,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelParcelas;
     private javax.swing.JLabel labelPesquisar;
     private javax.swing.JLabel labelSimboloPorcentagem;
+    private javax.swing.JLabel labelStatus;
+    private javax.swing.JLabel labelStatusTemporada;
     private javax.swing.JLabel labelValorParcelas;
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JLabel labelValorVenda;

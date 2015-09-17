@@ -37,6 +37,8 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelDiretorioRelatorios = new javax.swing.JLabel();
         labelDiretorioDocumentos = new javax.swing.JLabel();
         labelDiretorioBackups = new javax.swing.JLabel();
+        campoDiretorioRelatorios1 = new javax.swing.JTextField();
+        labelDiretorioRelatorios1 = new javax.swing.JLabel();
         botaoSalvar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
@@ -108,6 +110,24 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDiretorioBackups.setText("Diretório de backups");
 
+        campoDiretorioRelatorios1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        campoDiretorioRelatorios1.setForeground(new java.awt.Color(153, 153, 153));
+        campoDiretorioRelatorios1.setText("Informe o nome da impressora");
+        campoDiretorioRelatorios1.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoDiretorioRelatorios1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                campoDiretorioRelatorios1MouseClicked(evt);
+            }
+        });
+        campoDiretorioRelatorios1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoDiretorioRelatorios1KeyTyped(evt);
+            }
+        });
+
+        labelDiretorioRelatorios1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelDiretorioRelatorios1.setText("Nome da impressora");
+
         javax.swing.GroupLayout painelDiretoriosLayout = new javax.swing.GroupLayout(painelDiretorios);
         painelDiretorios.setLayout(painelDiretoriosLayout);
         painelDiretoriosLayout.setHorizontalGroup(
@@ -120,8 +140,10 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                     .addComponent(labelDiretorioBackups)
                     .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelDiretorioRelatorios1)
+                    .addComponent(campoDiretorioRelatorios1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         painelDiretoriosLayout.setVerticalGroup(
             painelDiretoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,6 +160,10 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 .addComponent(labelDiretorioRelatorios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(labelDiretorioRelatorios1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(campoDiretorioRelatorios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -169,7 +195,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 .addComponent(painelDiretorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoSalvar)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -277,6 +303,14 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             setVisible(true);
         }*/
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void campoDiretorioRelatorios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioRelatorios1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoDiretorioRelatorios1MouseClicked
+
+    private void campoDiretorioRelatorios1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioRelatorios1KeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoDiretorioRelatorios1KeyTyped
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -296,9 +330,11 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoDiretorioBackup;
     private javax.swing.JTextField campoDiretorioDocumentos;
     private javax.swing.JTextField campoDiretorioRelatorios;
+    private javax.swing.JTextField campoDiretorioRelatorios1;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelDiretorioRelatorios;
+    private javax.swing.JLabel labelDiretorioRelatorios1;
     private javax.swing.JPanel painelDiretorios;
     // End of variables declaration//GEN-END:variables
 }

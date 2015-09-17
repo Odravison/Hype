@@ -21,12 +21,15 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Fornecedor;
+import br.oltecnologias.hype.model.GeradorDeContrato;
+import br.oltecnologias.hype.model.GeradorDeRecibo;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Color;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -35,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -956,6 +961,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     botaoGerarReciboLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoGerarReciboLocacao.setText("Gerar Recibo");
+    botaoGerarReciboLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoGerarReciboLocacao.setVisible(false);
     botaoGerarReciboLocacao.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -965,6 +971,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     botaoVerRecibosLocacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoVerRecibosLocacao.setText("Ver Recibos");
+    botaoVerRecibosLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoVerRecibosLocacao.setVisible(false);
     botaoVerRecibosLocacao.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2761,16 +2768,30 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_campoDiretorioRelatoriosKeyTyped
 
     private void botaoVerContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerContratoActionPerformed
-        //Abrir o pdf com o contrato da locação selecionada
-        modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1);
+        /*try {
+            GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
+                Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }*/
     }//GEN-LAST:event_botaoVerContratoActionPerformed
 
     private void botaoVerRecibosLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosLocacaoActionPerformed
-        JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        try {
+            Runtime.getRuntime().exec("cmd /c dir c:\\");
+            System.out.println("ABRIR PASTA");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível ver os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_botaoVerRecibosLocacaoActionPerformed
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
-        JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        try {
+            GeradorDeRecibo.getInstance().gerarRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                    Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_botaoGerarReciboLocacaoActionPerformed
 
     private void botaoVerRecibosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosVendaActionPerformed
@@ -2789,7 +2810,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 try {
                     Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0));
                     //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong((String) modeloTabelaFornecedores.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)), cliente);
+                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)), cliente);
                     
                     JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
                 } catch (Exception e) {
