@@ -65,6 +65,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         labelProdutosVendidos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelProdutosVendidos.setText("Produtos Vendidos:");
 
+        areaProdutosVendidos.setEditable(false);
         areaProdutosVendidos.setColumns(20);
         areaProdutosVendidos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         areaProdutosVendidos.setRows(5);

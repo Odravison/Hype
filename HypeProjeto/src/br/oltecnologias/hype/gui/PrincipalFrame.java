@@ -3342,47 +3342,128 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
     
     public void atualizarDadosClienteNaTabela(Cliente cliente, int linha) {
-        //Coluna de índice  1 = nome do produto
-        modeloTabelaClientes.setValueAt(cliente.getNome(), linha, 1);
-        //Coluna de índice  2 = contado
-        modeloTabelaClientes.setValueAt(cliente.getCelular(), linha, 2);
+        String cpfSelecionado = cliente.getCpf();
+        if(cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(linha, 0))) {
+            //Coluna de índice  1 = nome do cliente
+            modeloTabelaClientes.setValueAt(cliente.getNome(), linha, 1);
+            //Coluna de índice  2 = contado
+            modeloTabelaClientes.setValueAt(cliente.getCelular(), linha, 2);
+        } else {
+            for(int i=0; i < modeloTabelaClientes.getRowCount(); i++) {
+                if(cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(i, 0))) {
+                    //Coluna de índice  1 = nome do cliente
+                    modeloTabelaClientes.setValueAt(cliente.getNome(), i, 1);
+                    //Coluna de índice  2 = contado
+                    modeloTabelaClientes.setValueAt(cliente.getCelular(), i, 2);
+                    
+                    break;
+                }
+            }
+        }
     }
     
     public void atualizarDadosProdutoNaTabela(Produto produto, int linha) {
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt("R$ "+produto.getValorInString(), linha, 2);
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getFinalidade(), linha, 4);
+        String codigoProduto = produto.getCodigo();
+        if(codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(linha, 0))) {
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt("R$ " + produto.getValorInString(), linha, 2);
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt(produto.getFinalidade(), linha, 4);
+        } else {
+            for(int i=0; i < modeloTabelaProdutos.getRowCount(); i++) {
+                if(codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(i, 0))) {
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt(produto.getDescricao(), i, 1);
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt("R$ " + produto.getValorInString(), i, 2);
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt(produto.getQuantidade(), i, 3);
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt(produto.getFinalidade(), i, 4);
+                    
+                    break;
+                }
+            }
+        }
         
     }
     
     public void atualizarDadosFornecedorNaTabela(Fornecedor fornecedor, int linha) {
-        //Coluna de nome
-        modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), linha, 1);
-        //Coluna de endereo
-        modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), linha, 2);
-        //Coluna de índice telefone
-        modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), linha, 3);
+        String cnpjSelecionado = fornecedor.getCnpj();
+        if(cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(linha, 0))) {
+            //Coluna de nome
+            modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), linha, 1);
+            //Coluna de endereo
+            modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), linha, 2);
+            //Coluna de índice telefone
+            modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), linha, 3);
+        } else {
+            for(int i=0; i < modeloTabelaFornecedores.getRowCount(); i++) {
+                if(cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(i, 0))) {
+                    //Coluna de nome
+                    modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), i, 1);
+                    //Coluna de endereo
+                    modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), i, 2);
+                    //Coluna de índice telefone
+                    modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), i, 3);
+                    
+                    break;
+                }
+            }
+        }
+        
     }
     
     public void atualizarDadosDespesaNaTabela(Movimentacao movimentacao, int linha) {
-        //Coluna de valor
-        modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), linha, 1);
-        //Coluna de responsável
-        modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), linha, 3);
-        //Coluna de beneficiário
-        modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), linha, 4);
+        String idSelecionado = Long.toString(movimentacao.getIdDaOperacao());
+        if(idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(linha, 0))) {
+            //Coluna de valor
+            modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), linha, 1);
+            //Coluna de responsável
+            modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), linha, 3);
+            //Coluna de beneficiário
+            modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), linha, 4);
+        } else {
+            for(int i=0; i < modeloTabelaMovimentacoes.getRowCount(); i++) {
+                if(idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(i, 0))) {
+                    //Coluna de valor
+                    modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), i, 1);
+                    //Coluna de responsável
+                    modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), i, 3);
+                    //Coluna de beneficiário
+                    modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), i, 4);
+                    
+                    break;
+                }
+            }
+        }
+       
     }
     
     public void atualizarDadosUsuarioNaTabela(Usuario usuario, int linha) {
-        //Coluna de nome
-        modeloTabelaUsuarios.setValueAt(usuario.getNome(), linha, 0);
-        //Coluna de nome
-        modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), linha, 2);
+        String loginSelecionado = usuario.getNickName();
+        if(loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(linha, 0))) {
+            //Coluna de nome
+            modeloTabelaUsuarios.setValueAt(usuario.getNome(), linha, 0);
+            //Coluna de nome
+            modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), linha, 2);
+        } else {
+            for(int i=0; i < modeloTabelaUsuarios.getRowCount(); i++) {
+                if(loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(i, 0))) {
+                    //Coluna de nome
+                    modeloTabelaUsuarios.setValueAt(usuario.getNome(), i, 0);
+                    //Coluna de nome
+                    modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), i, 2);
+                    
+                    break;
+                }
+            }
+        }
+        
     }
     
     public void atualizarValorEmCaixa() {
@@ -3393,10 +3474,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
         labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(valorEmCaixa));
-    }
-    
-    public void atualizarTabelaProdutos() {
-        
     }
     
     public void desabilitarCamposDeDiretorios() {
