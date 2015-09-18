@@ -29,6 +29,8 @@ import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Usuario;
 import br.oltecnologias.hype.model.Venda;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -1429,6 +1431,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoSalvarDiretorioBackup.setText(" Salvar ");
     botaoSalvarDiretorioBackup.setToolTipText("Salvar diretório");
     botaoSalvarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioBackup.setEnabled(false);
     botaoSalvarDiretorioBackup.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             botaoSalvarDiretorioBackupActionPerformed(evt);
@@ -1436,8 +1439,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     campoDiretorioBackup.setEditable(false);
-    campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
     campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1450,7 +1452,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoDiretorioBackupKeyTyped(evt);
         }
     });
-    campoDiretorioBackup.setText(Configuracao.getInstance().getDiretorioDeBackup());
 
     labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioBackups.setText("Diretório de backups");
@@ -1459,6 +1460,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoSalvarDiretorioDocumentos.setText(" Salvar ");
     botaoSalvarDiretorioDocumentos.setToolTipText("Salvar diretório");
     botaoSalvarDiretorioDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioDocumentos.setEnabled(false);
     botaoSalvarDiretorioDocumentos.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             botaoSalvarDiretorioDocumentosActionPerformed(evt);
@@ -1466,8 +1468,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     campoDiretorioDocumentos.setEditable(false);
-    campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoDiretorioDocumentos.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoDiretorioDocumentos.setToolTipText("Informe o caminho do diretório");
     campoDiretorioDocumentos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1480,7 +1481,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoDiretorioDocumentosKeyTyped(evt);
         }
     });
-    campoDiretorioDocumentos.setText(Configuracao.getInstance().getDiretorioDeDocumentos());
 
     labelDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelDiretorioDocumentos.setText("Diretório de Documentos");
@@ -1519,6 +1519,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoSalvarDiretorioRelatorios.setText(" Salvar ");
     botaoSalvarDiretorioRelatorios.setToolTipText("Salvar diretório");
     botaoSalvarDiretorioRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarDiretorioRelatorios.setEnabled(false);
     botaoSalvarDiretorioRelatorios.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             botaoSalvarDiretorioRelatoriosActionPerformed(evt);
@@ -1526,8 +1527,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     campoDiretorioRelatorios.setEditable(false);
-    campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoDiretorioRelatorios.setForeground(new java.awt.Color(153, 153, 153));
+    campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoDiretorioRelatorios.setToolTipText("Informe o caminho do diretório");
     campoDiretorioRelatorios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoDiretorioRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1540,11 +1540,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoDiretorioRelatoriosKeyTyped(evt);
         }
     });
-    campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());
 
     campoNomeImpressora.setEditable(false);
-    campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoNomeImpressora.setForeground(new java.awt.Color(153, 153, 153));
+    campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     campoNomeImpressora.setToolTipText("Informe o caminho do diretório");
     campoNomeImpressora.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoNomeImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1557,7 +1555,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             campoNomeImpressoraKeyTyped(evt);
         }
     });
-    campoDiretorioRelatorios.setText(Configuracao.getInstance().getDiretorioDeRelatorios());
+    Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+    campoDiretorioRelatorios.setText(configuracao.getDiretorioDeRelatorios());
+    campoDiretorioDocumentos.setText(configuracao.getDiretorioDeDocumentos());
+    campoDiretorioBackup.setText(configuracao.getDiretorioDeBackup());
+    campoNomeImpressora.setText(configuracao.getNomeDaImpressora());
 
     labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     labelNomeImpressora.setText("Nome da impressora");
@@ -1575,6 +1577,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     botaoSalvarNomeImpressora.setText(" Salvar ");
     botaoSalvarNomeImpressora.setToolTipText("Salvar diretório");
     botaoSalvarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoSalvarNomeImpressora.setEnabled(false);
     botaoSalvarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             botaoSalvarNomeImpressoraActionPerformed(evt);
@@ -2097,9 +2100,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                GerenciadorDoSistema.getInstance().getConfiguracao().setDiretorioDeBackup(campoDiretorioBackup.getText());
-                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+                configuracao.setDiretorioDeBackup(campoDiretorioBackup.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
+                JOptionPane.showMessageDialog(null, "Diretório de backup salvo com sucesso!");
                 campoDiretorioBackup.setEditable(false);
+                botaoSalvarDiretorioBackup.setEnabled(false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2123,9 +2129,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                GerenciadorDoSistema.getInstance().getConfiguracao().setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
-                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+                configuracao.setDiretorioDeDocumentos(campoDiretorioDocumentos.getText().replace("\\", "\\\\"));
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
+                JOptionPane.showMessageDialog(null, "Diretório de documentos salvo com sucesso!");
                 campoDiretorioRelatorios.setEditable(false);
+                botaoSalvarDiretorioDocumentos.setEnabled(false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2466,7 +2475,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     }
                 } 
             } else {
-                JOptionPane.showMessageDialog(null, "A despesa não pôde ser excluída", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Nao é possível excluir este tipo de movimentaçao", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma despesa na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2534,6 +2543,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
 
                         if (((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+                            
                             VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
                                     Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
 
@@ -2723,7 +2733,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
 
     private void botaoEditarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarEmpresaActionPerformed
-        Empresa empresa = Configuracao.getInstance().getEmpresa(); //pegar do gerenciador do sistema
+        Empresa empresa = GerenciadorDoSistema.getInstance().getConfiguracao().getEmpresa(); 
         EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, empresa);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
@@ -2731,14 +2741,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoAlterarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioBackupActionPerformed
         campoDiretorioBackup.setEditable(true);
+        botaoSalvarDiretorioBackup.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioBackupActionPerformed
 
     private void botaoAlterarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioDocumentosActionPerformed
         campoDiretorioDocumentos.setEditable(true);
+        botaoSalvarDiretorioDocumentos.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioDocumentosActionPerformed
 
     private void botaoAlterarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioRelatoriosActionPerformed
         campoDiretorioRelatorios.setEditable(true);
+        botaoSalvarDiretorioRelatorios.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
 
     private void botaoSalvarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioRelatoriosActionPerformed
@@ -2746,9 +2759,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de relátorios corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                GerenciadorDoSistema.getInstance().getConfiguracao().setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
-                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+                configuracao.setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
+                JOptionPane.showMessageDialog(null, "Diretorio de relatórios salvo com sucesso!");
                 campoDiretorioRelatorios.setEditable(false);
+                botaoSalvarDiretorioRelatorios.setEnabled(false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2768,19 +2784,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_campoDiretorioRelatoriosKeyTyped
 
     private void botaoVerContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerContratoActionPerformed
-        /*try {
+        try {
             GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
                 Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível abrir o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }*/
+        }
     }//GEN-LAST:event_botaoVerContratoActionPerformed
 
     private void botaoVerRecibosLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosLocacaoActionPerformed
         try {
-            Runtime.getRuntime().exec("cmd /c dir c:\\");
-            System.out.println("ABRIR PASTA");
-        } catch (IOException e) {
+            
+            String nomeCliente = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
+                    .getCliente().getNome();
+            Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                    +nomeCliente+"\\Recibos"));
+            
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível ver os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerRecibosLocacaoActionPerformed
@@ -3190,6 +3211,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoAlterarNomeImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarNomeImpressoraActionPerformed
         campoNomeImpressora.setEditable(true);
+        botaoSalvarNomeImpressora.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarNomeImpressoraActionPerformed
 
     private void botaoSalvarNomeImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarNomeImpressoraActionPerformed
@@ -3197,9 +3219,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
            JOptionPane.showMessageDialog(null, "Informe o nome da impressora corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                GerenciadorDoSistema.getInstance().getConfiguracao().setNomeDaImpressora(campoNomeImpressora.getText());
-                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(GerenciadorDoSistema.getInstance().getConfiguracao());
+                Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+                configuracao.setNomeDaImpressora(campoNomeImpressora.getText());
+                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
+                JOptionPane.showMessageDialog(null, "Nome da impressora salvo com sucesso!");
                 campoNomeImpressora.setEditable(false);
+                botaoSalvarNomeImpressora.setEnabled(false);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }

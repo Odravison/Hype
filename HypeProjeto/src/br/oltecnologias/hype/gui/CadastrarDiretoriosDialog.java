@@ -37,8 +37,8 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelDiretorioRelatorios = new javax.swing.JLabel();
         labelDiretorioDocumentos = new javax.swing.JLabel();
         labelDiretorioBackups = new javax.swing.JLabel();
-        campoDiretorioRelatorios1 = new javax.swing.JTextField();
-        labelDiretorioRelatorios1 = new javax.swing.JLabel();
+        campoNomeImpressora = new javax.swing.JTextField();
+        labelNomeImpressora = new javax.swing.JLabel();
         botaoSalvar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
@@ -110,23 +110,23 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDiretorioBackups.setText("Diretório de backups");
 
-        campoDiretorioRelatorios1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoDiretorioRelatorios1.setForeground(new java.awt.Color(153, 153, 153));
-        campoDiretorioRelatorios1.setText("Informe o nome da impressora");
-        campoDiretorioRelatorios1.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-        campoDiretorioRelatorios1.addMouseListener(new java.awt.event.MouseAdapter() {
+        campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+        campoNomeImpressora.setForeground(new java.awt.Color(153, 153, 153));
+        campoNomeImpressora.setText("Informe o nome da impressora");
+        campoNomeImpressora.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+        campoNomeImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                campoDiretorioRelatorios1MouseClicked(evt);
+                campoNomeImpressoraMouseClicked(evt);
             }
         });
-        campoDiretorioRelatorios1.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoNomeImpressora.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoDiretorioRelatorios1KeyTyped(evt);
+                campoNomeImpressoraKeyTyped(evt);
             }
         });
 
-        labelDiretorioRelatorios1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDiretorioRelatorios1.setText("Nome da impressora");
+        labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelNomeImpressora.setText("Nome da impressora");
 
         javax.swing.GroupLayout painelDiretoriosLayout = new javax.swing.GroupLayout(painelDiretorios);
         painelDiretorios.setLayout(painelDiretoriosLayout);
@@ -141,8 +141,8 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                     .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelDiretorioRelatorios1)
-                    .addComponent(campoDiretorioRelatorios1, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelNomeImpressora)
+                    .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         painelDiretoriosLayout.setVerticalGroup(
@@ -161,9 +161,9 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(labelDiretorioRelatorios1)
+                .addComponent(labelNomeImpressora)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoDiretorioRelatorios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -277,6 +277,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             configuracao.setDiretorioDeBackup(campoDiretorioBackup.getText());
             configuracao.setDiretorioDeDocumentos(campoDiretorioDocumentos.getText());
             configuracao.setDiretorioDeRelatorios(campoDiretorioRelatorios.getText());
+            configuracao.setNomeDaImpressora(campoNomeImpressora.getText());
             
             try {
                 GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(configuracao);
@@ -304,13 +305,17 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         }*/
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
-    private void campoDiretorioRelatorios1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioRelatorios1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDiretorioRelatorios1MouseClicked
+    private void campoNomeImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNomeImpressoraMouseClicked
+        if(campoDiretorioRelatorios.getText().equals("Informe o nome da impressora")) {
+            eliminarTextoDeCampo(campoDiretorioRelatorios);
+        }
+    }//GEN-LAST:event_campoNomeImpressoraMouseClicked
 
-    private void campoDiretorioRelatorios1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioRelatorios1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoDiretorioRelatorios1KeyTyped
+    private void campoNomeImpressoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeImpressoraKeyTyped
+        if(campoNomeImpressora.getText().equals("Informe o nome da impressora")) {
+            eliminarTextoDeCampo(campoNomeImpressora);
+        }
+    }//GEN-LAST:event_campoNomeImpressoraKeyTyped
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -330,11 +335,11 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     private javax.swing.JTextField campoDiretorioBackup;
     private javax.swing.JTextField campoDiretorioDocumentos;
     private javax.swing.JTextField campoDiretorioRelatorios;
-    private javax.swing.JTextField campoDiretorioRelatorios1;
+    private javax.swing.JTextField campoNomeImpressora;
     private javax.swing.JLabel labelDiretorioBackups;
     private javax.swing.JLabel labelDiretorioDocumentos;
     private javax.swing.JLabel labelDiretorioRelatorios;
-    private javax.swing.JLabel labelDiretorioRelatorios1;
+    private javax.swing.JLabel labelNomeImpressora;
     private javax.swing.JPanel painelDiretorios;
     // End of variables declaration//GEN-END:variables
 }

@@ -29,16 +29,16 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="painelDados1" alignment="1" min="-2" max="-2" attributes="0"/>
+                  <Component id="painelDados" min="-2" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="botaoSalvar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="botaoCancelar" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="painelDados1" alignment="1" min="-2" max="-2" attributes="0"/>
-                  <Component id="painelDados" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
@@ -86,7 +86,7 @@
                           <Component id="campoPercentualDescontoLocacao" min="-2" pref="45" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="labelSimboloPorcento" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="32" max="32767" attributes="0"/>
+                          <EmptySpace pref="90" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labelTemporadaLocacao" min="-2" max="-2" attributes="0"/>
@@ -94,7 +94,7 @@
                           <Component id="painelCorLocacao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="sliderTemporadaLocacao" min="-2" pref="94" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -104,20 +104,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelPercentualDescontoLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="campoPercentualDescontoLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelSimboloPorcento" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="labelTemporadaLocacao" min="-2" max="-2" attributes="0"/>
+                      <Component id="painelCorLocacao" min="-2" max="-2" attributes="0"/>
                       <Component id="sliderTemporadaLocacao" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelPercentualDescontoLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="campoPercentualDescontoLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelSimboloPorcento" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="labelTemporadaLocacao" min="-2" max="-2" attributes="0"/>
-                              <Component id="painelCorLocacao" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
@@ -250,7 +246,7 @@
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Temporada de Desconto de Loca&#xe7;&#xf5;es"/>
+            <TitledBorder title="Temporada de Desconto de Vendas"/>
           </Border>
         </Property>
       </Properties>
@@ -267,16 +263,17 @@
                           <Component id="campoPercentualDescontoVenda" min="-2" pref="45" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="labelSimboloPorcento1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="102" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="labelTemporadaVenda" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="painelCorVenda" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="sliderTemporadaVenda" min="-2" pref="94" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="44" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -289,11 +286,18 @@
                       <Component id="campoPercentualDescontoVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelSimboloPorcento1" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="labelTemporadaVenda" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="painelCorVenda" alignment="1" min="-2" max="-2" attributes="0"/>
-                      <Component id="sliderTemporadaVenda" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="labelTemporadaVenda" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="painelCorVenda" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="sliderTemporadaVenda" min="-2" pref="28" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>

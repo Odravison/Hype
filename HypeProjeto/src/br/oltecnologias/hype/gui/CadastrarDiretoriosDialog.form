@@ -77,8 +77,8 @@
                       <Component id="campoDiretorioDocumentos" alignment="0" min="-2" pref="454" max="-2" attributes="0"/>
                       <Component id="campoDiretorioBackup" alignment="0" min="-2" pref="454" max="-2" attributes="0"/>
                       <Component id="campoDiretorioRelatorios" alignment="0" min="-2" pref="454" max="-2" attributes="0"/>
-                      <Component id="labelDiretorioRelatorios1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="campoDiretorioRelatorios1" alignment="0" min="-2" pref="454" max="-2" attributes="0"/>
+                      <Component id="labelNomeImpressora" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="campoNomeImpressora" alignment="0" min="-2" pref="454" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="20" max="32767" attributes="0"/>
               </Group>
@@ -100,9 +100,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="campoDiretorioRelatorios" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                  <Component id="labelDiretorioRelatorios1" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelNomeImpressora" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="campoDiretorioRelatorios1" min="-2" max="-2" attributes="0"/>
+                  <Component id="campoNomeImpressora" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -190,7 +190,7 @@
             <Property name="text" type="java.lang.String" value="Diret&#xf3;rio de backups"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="campoDiretorioRelatorios1">
+        <Component class="javax.swing.JTextField" name="campoNomeImpressora">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="2"/>
@@ -204,11 +204,11 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoDiretorioRelatorios1MouseClicked"/>
-            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoDiretorioRelatorios1KeyTyped"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoNomeImpressoraMouseClicked"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoNomeImpressoraKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="labelDiretorioRelatorios1">
+        <Component class="javax.swing.JLabel" name="labelNomeImpressora">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>

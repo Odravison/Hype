@@ -120,7 +120,7 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         );
 
         botaoOk.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        botaoOk.setText("OK");
+        botaoOk.setText("  OK  ");
         botaoOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

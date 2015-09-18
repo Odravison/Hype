@@ -109,30 +109,28 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                         .addComponent(campoPercentualDescontoLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSimboloPorcento)
-                        .addContainerGap(32, Short.MAX_VALUE))
+                        .addContainerGap(90, Short.MAX_VALUE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelTemporadaLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(painelCorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(sliderTemporadaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(39, 39, 39))))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelPercentualDescontoLocacao)
+                    .addComponent(campoPercentualDescontoLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSimboloPorcento))
+                .addGap(16, 16, 16)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(sliderTemporadaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelPercentualDescontoLocacao)
-                            .addComponent(campoPercentualDescontoLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelSimboloPorcento))
-                        .addGap(16, 16, 16)
-                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(labelTemporadaLocacao)
-                            .addComponent(painelCorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(labelTemporadaLocacao)
+                    .addComponent(painelCorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sliderTemporadaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -171,7 +169,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         });
 
         painelDados1.setBackground(new java.awt.Color(255, 255, 255));
-        painelDados1.setBorder(javax.swing.BorderFactory.createTitledBorder("Temporada de Desconto de Locações"));
+        painelDados1.setBorder(javax.swing.BorderFactory.createTitledBorder("Temporada de Desconto de Vendas"));
 
         labelPercentualDescontoVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelPercentualDescontoVenda.setText("Percentual de desconto para produtos de venda:");
@@ -226,14 +224,15 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoPercentualDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelSimboloPorcento1))
+                        .addComponent(labelSimboloPorcento1)
+                        .addContainerGap(102, Short.MAX_VALUE))
                     .addGroup(painelDados1Layout.createSequentialGroup()
                         .addComponent(labelTemporadaVenda)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(painelCorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(sliderTemporadaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(44, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(sliderTemporadaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))))
         );
         painelDados1Layout.setVerticalGroup(
             painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,11 +242,15 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                     .addComponent(labelPercentualDescontoVenda)
                     .addComponent(campoPercentualDescontoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSimboloPorcento1))
-                .addGap(16, 16, 16)
-                .addGroup(painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelTemporadaVenda)
-                    .addComponent(painelCorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sliderTemporadaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDados1Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addGroup(painelDados1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelTemporadaVenda)
+                            .addComponent(painelCorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDados1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(sliderTemporadaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -269,15 +272,15 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(painelDados1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(botaoSalvar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
-                    .addComponent(painelDados1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoCancelar)))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
@@ -319,53 +322,62 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_sliderTemporadaLocacaoStateChanged
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        try {
-            if(campoPercentualDescontoLocacao.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o percentual de desconto para os produtos de locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoPercentualDescontoVenda.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o percentual de desconto para os produtos de venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoPercentualDescontoLocacao.getText().length() > 0 && Integer.parseInt(campoPercentualDescontoLocacao.getText()) > 100) { 
-                JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoPercentualDescontoVenda.getText().length() > 0 && Integer.parseInt(campoPercentualDescontoVenda.getText()) > 100) { 
-                JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+        try {            
+            boolean ativou = false;
             
             if(sliderTemporadaLocacao.getValue() > 60) {
-                GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de locação
-                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoLocacao.getText()),
-                        "LOCAÇÃO");
-                JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de locação com "+campoPercentualDescontoLocacao.getText()+"% de desconto");
+                String percentualDescontoLocacao = campoPercentualDescontoLocacao.getText();
+                if (percentualDescontoLocacao.length() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Informe o percentual de desconto para os produtos de locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else if (percentualDescontoLocacao.length() > 0 && Integer.parseInt(percentualDescontoLocacao) > 100) {
+                    JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else {
                 
-                setVisible(false);
+                    GerenciadorDoSistema.getInstance().setTemporada(); 
+                    GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(percentualDescontoLocacao),
+                            "LOCAÇÃO");
+                    JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de locação com "+percentualDescontoLocacao+"% de desconto");
+                    ativou = true;
+                }
             } else {
                 try {
                     if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
                         GerenciadorDoSistema.getInstance().desativarTemporada("LOCAÇÃO"); //de locação
                         JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de locação desativada");
-                        setVisible(false);
+                        ativou = true;
                     }
                 } catch(TemporadaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 } 
             } 
             if(sliderTemporadaVenda.getValue() > 60) {
-                GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de venda
-                GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(campoPercentualDescontoVenda.getText()),
-                        "VENDA");
-                JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de venda com "+campoPercentualDescontoVenda.getText()+"% de desconto");
-                
-                setVisible(false);
+                String percentualDescontoVenda =  campoPercentualDescontoVenda.getText();
+                if (percentualDescontoVenda.length() <= 0) {
+                    JOptionPane.showMessageDialog(null, "Informe o percentual de desconto para os produtos de venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else if (percentualDescontoVenda.length() > 0 && Integer.parseInt(percentualDescontoVenda) > 100) {
+                    JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    GerenciadorDoSistema.getInstance().setTemporada(); //Ativar temporada de venda
+                    GerenciadorDoSistema.getInstance().ativarTemporada(Integer.parseInt(percentualDescontoVenda),
+                            "VENDA");
+                    JOptionPane.showMessageDialog(null, "Temporada ativada para produtos de venda com " + percentualDescontoVenda + "% de desconto");
+                    ativou = true;
+                }
             } else {
                 try {
-                    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                         GerenciadorDoSistema.getInstance().desativarTemporada("VENDA"); //de venda
                         JOptionPane.showMessageDialog(null, "Temporada de descontos para produtos de venda desativada");
-                        setVisible(false);
+                        ativou = true;
                     } 
                 } catch(TemporadaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 } 
             }
+            
+            if(ativou) {
+                setVisible(false);
+            } 
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.WARNING_MESSAGE);
         }
@@ -402,7 +414,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
 
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
         if(!numeros.contains(evt.getKeyChar()+"") || campo.getText().length()>= maxCaracteres
-                || Integer.parseInt(campo.getText()+evt.getKeyChar()) > 100){// se o carácter que gerou o evento não estiver na lista 
+                || Integer.parseInt(campo.getText()+evt.getKeyChar()) > 100){
             evt.consume();
         } 
     }

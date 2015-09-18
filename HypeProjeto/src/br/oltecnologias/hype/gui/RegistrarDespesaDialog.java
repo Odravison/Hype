@@ -89,7 +89,9 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
 
         areaObservacao.setColumns(20);
         areaObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        areaObservacao.setLineWrap(true);
         areaObservacao.setRows(5);
+        areaObservacao.setWrapStyleWord(true);
         scPnObservacao.setViewportView(areaObservacao);
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
