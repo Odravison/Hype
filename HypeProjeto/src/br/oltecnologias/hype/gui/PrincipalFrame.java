@@ -40,8 +40,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -56,8 +54,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(String login) {
         loginUsuario = login;
         initComponents();
-        setIconImage(new ImageIcon("Imagens\\Ícone.jpg").getImage());
-        //labelLogoSistema.setIcon(new ImageIcon("Imagens\\.png"));
+        setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png")).getImage());
     }
 
     /**

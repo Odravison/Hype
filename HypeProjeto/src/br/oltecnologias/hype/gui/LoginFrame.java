@@ -34,7 +34,7 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
         
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.ico")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png")).getImage());
            
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
@@ -150,6 +150,9 @@ public class LoginFrame extends javax.swing.JFrame {
         labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         labelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Logo Closet.png"))); // NOI18N
 
+        labelIconeCloset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png"))); // NOI18N
+        labelIconeCloset.setVisible(false);
+
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
@@ -159,13 +162,13 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(478, Short.MAX_VALUE))
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(497, 497, 497)
+                .addGap(505, 505, 505)
                 .addComponent(labelLogo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelIconeCloset)
-                .addGap(71, 71, 71))
+                .addContainerGap())
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -174,9 +177,9 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(labelLogo)
                 .addGap(50, 50, 50)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addComponent(labelIconeCloset)
-                .addGap(27, 27, 27))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
