@@ -21,19 +21,12 @@ import javax.swing.JOptionPane;
  * @author Cliente
  */
 public class EditarClienteDialog extends java.awt.Dialog {
-
-    /**
-     * Creates new form EditarClienteDialog
-     */
-    public EditarClienteDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
     
     public EditarClienteDialog(java.awt.Frame parent, Cliente cliente) {
         super(parent);
         this.cliente = cliente;
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
     }
     
     /**
@@ -547,9 +540,6 @@ public class EditarClienteDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Fecha o dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
@@ -736,23 +726,6 @@ public class EditarClienteDialog extends java.awt.Dialog {
     
     public Cliente getCliente() {
         return cliente;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarClienteDialog dialog = new EditarClienteDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private Cliente cliente;

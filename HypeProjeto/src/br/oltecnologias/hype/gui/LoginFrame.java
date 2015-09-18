@@ -18,8 +18,6 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -34,7 +32,7 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
         
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
            
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
@@ -65,7 +63,9 @@ public class LoginFrame extends javax.swing.JFrame {
         campoSenha = new javax.swing.JPasswordField();
         botaoEntrar = new javax.swing.JButton();
         labelLogo = new javax.swing.JLabel();
-        labelIconeCloset = new javax.swing.JLabel();
+        labelIconeCloset64 = new javax.swing.JLabel();
+        labelIconeBordaBranca = new javax.swing.JLabel();
+        labelIconeBotaoBranco = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Closet");
@@ -78,7 +78,7 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeral.setMinimumSize(new java.awt.Dimension(600, 500));
         painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
 
-        painelDeLogin.setBackground(new java.awt.Color(213, 215, 205));
+        painelDeLogin.setBackground(new java.awt.Color(234, 234, 234));
         painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153)));
         painelDeLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelDeLogin.setName("hype!\n"); // NOI18N
@@ -150,35 +150,57 @@ public class LoginFrame extends javax.swing.JFrame {
         labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
         labelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Logo Closet.png"))); // NOI18N
 
-        labelIconeCloset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png"))); // NOI18N
-        labelIconeCloset.setVisible(false);
+        labelIconeCloset64.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64.png"))); // NOI18N
+        labelIconeCloset64.setVisible(false);
+
+        labelIconeBordaBranca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png"))); // NOI18N
+        labelIconeBordaBranca.setVisible(false);
+
+        labelIconeBotaoBranco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-botaobranco.png"))); // NOI18N
+        labelIconeBotaoBranco.setVisible(false);
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addContainerGap(468, Short.MAX_VALUE)
+                .addGap(473, 473, 473)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(478, Short.MAX_VALUE))
+                .addContainerGap(473, Short.MAX_VALUE))
             .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(505, 505, 505)
+                .addGap(504, 504, 504)
                 .addComponent(labelLogo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelIconeCloset)
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
+                        .addComponent(labelIconeCloset64)
+                        .addGap(74, 74, 74))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelIconeBotaoBranco)
+                        .addComponent(labelIconeBordaBranca)))
                 .addContainerGap())
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addGap(74, 74, 74)
-                .addComponent(labelLogo)
-                .addGap(50, 50, 50)
-                .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                .addComponent(labelIconeCloset)
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelGeralLayout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(labelLogo)
+                        .addGap(50, 50, 50)
+                        .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelIconeBotaoBranco)
+                        .addGap(95, 95, 95)))
+                .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
+                        .addComponent(labelIconeBordaBranca)
+                        .addGap(165, 165, 165))
+                    .addComponent(labelIconeCloset64, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -287,7 +309,9 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoEntrar;
     private javax.swing.JTextField campoLogin;
     private javax.swing.JPasswordField campoSenha;
-    private javax.swing.JLabel labelIconeCloset;
+    private javax.swing.JLabel labelIconeBordaBranca;
+    private javax.swing.JLabel labelIconeBotaoBranco;
+    private javax.swing.JLabel labelIconeCloset64;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelSenha;
     private javax.swing.JLabel labelUsuario;

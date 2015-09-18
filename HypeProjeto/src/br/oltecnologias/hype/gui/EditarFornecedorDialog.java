@@ -17,18 +17,11 @@ import javax.swing.JOptionPane;
  */
 public class EditarFornecedorDialog extends java.awt.Dialog {
 
-    /**
-     * Creates new form EditarFornecedorDialog
-     */
-    public EditarFornecedorDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
-
     public EditarFornecedorDialog(java.awt.Frame parent, Fornecedor fornecedor) {
         super(parent);
         this.fornecedor = fornecedor;
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -310,9 +303,6 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Closes the dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
@@ -423,24 +413,6 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
     
     public Fornecedor getFornecedor() {
         return fornecedor;
-    }
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarFornecedorDialog dialog = new EditarFornecedorDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private Fornecedor fornecedor;

@@ -45,7 +45,7 @@ import javax.swing.table.DefaultTableModel;
 public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     
-     public RealizarLocacaoDialog(Frame owner) {
+    public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
         locador = null;
@@ -54,7 +54,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         pane = new JOptionPane();
         dialog = null;
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
-        decimalFormat = new DecimalFormat("#.##");
     }
 
 
@@ -1270,7 +1269,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private Movimentacao novaMovimentacao;
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaProdutosLocados;
-    private DecimalFormat decimalFormat;
     private JOptionPane pane;
     private JDialog dialog;
     private int maxParcelas = 6;

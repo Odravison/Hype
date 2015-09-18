@@ -17,20 +17,13 @@ import javax.swing.JOptionPane;
  * @author Luender Lima
  */
 public class CadastrarFornecedorDialog extends java.awt.Dialog {
-
-    /**
-     * Creates new form CadastrarFornecedorDialog
-     */
-    public CadastrarFornecedorDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
     
     public CadastrarFornecedorDialog(Frame owner) {
         super(owner);
         initComponents();
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
     }
 
     /**
@@ -416,23 +409,6 @@ public class CadastrarFornecedorDialog extends java.awt.Dialog {
     
     public Fornecedor getNovoFornecedor() {
         return novoFornecedor;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CadastrarFornecedorDialog dialog = new CadastrarFornecedorDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     protected boolean salvarSelecionado;

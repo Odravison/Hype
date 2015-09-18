@@ -54,7 +54,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(String login) {
         loginUsuario = login;
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
     }
 
     /**

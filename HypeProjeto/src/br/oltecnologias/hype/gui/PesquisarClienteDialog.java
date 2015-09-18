@@ -23,14 +23,6 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PesquisarClienteDialog extends java.awt.Dialog {
 
-    /**
-     * Creates new form PesquisarClienteDialog
-     */
-    public PesquisarClienteDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
-    
     public PesquisarClienteDialog(Frame owner) {
         super(owner);
         initComponents();

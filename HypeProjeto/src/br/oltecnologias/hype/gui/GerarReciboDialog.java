@@ -18,6 +18,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
     public GerarReciboDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
