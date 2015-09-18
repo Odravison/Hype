@@ -368,16 +368,23 @@ public class GerenciadorDoSistema {
         }
     }
 
-    public boolean isTemporadaAtivada(String tipo) throws TemporadaInexistenteException {
+    public boolean isTemporadaAtivada(String tipo) throws TemporadaInexistenteException, Exception {
         if (this.temporada != null) {
             if (tipo.toUpperCase().equals("VENDA")){
                 return this.temporada.isIsAtivadaDeVenda();
             } else if (tipo.toUpperCase().equals("LOCAÇÃO")){
                 return this.temporada.isIsAtivadaDeLocacao();
             }
+        } else {
+            this.setTemporada();
+            if (tipo.toUpperCase().equals("VENDA")){
+                return this.temporada.isIsAtivadaDeVenda();
+            } else if (tipo.toUpperCase().equals("LOCAÇÃO")){
+                return this.temporada.isIsAtivadaDeLocacao();
+            }
         }
-        throw new TemporadaInexistenteException("A temporada ainda não foi criada 1");
-
+        
+        throw new TemporadaInexistenteException("Tipo inválido");
     }
 
     public void setTemporada() throws TemporadaExistenteException, Exception {
