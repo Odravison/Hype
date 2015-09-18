@@ -483,7 +483,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));
                 labelStatusTemporada.setText("ON");
             }
-        } catch(TemporadaInexistenteException e) {
+        } catch(Exception e) {
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
@@ -811,7 +811,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 valorParcelas = (valorTotalVenda
                         - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)) / quantidadeParcelas;
             }
-        } catch(TemporadaInexistenteException e) {
+        } catch(Exception e) {
             valorParcelas = valorTotalVenda / quantidadeParcelas;
             
         }
@@ -991,7 +991,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 labelValorVenda.setText("R$ " + valorTotalVenda);
                 
             }
-        } catch (TemporadaInexistenteException e) {
+        } catch (Exception e) {
             valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorVenda.setText("R$ " + valorTotalVenda);
         }

@@ -142,7 +142,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 sliderTemporadaLocacao.setValue(100);
                 labelTemporadaLocacao.setText("Temporada Ativada:");
             }
-        } catch(TemporadaInexistenteException e) {
+        } catch(Exception e) {
             sliderTemporadaLocacao.setValue(0);
             labelTemporadaLocacao.setText("Temporada Desativada:");
             painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
@@ -262,7 +262,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 sliderTemporadaVenda.setValue(100);
                 labelTemporadaVenda.setText("Temporada Ativada:");
             }
-        } catch(TemporadaInexistenteException e) {
+        } catch(Exception e) {
             sliderTemporadaVenda.setValue(0);
             labelTemporadaVenda.setText("Temporada Desativada:");
             painelCorVenda.setBackground(new java.awt.Color(204, 0, 0));
