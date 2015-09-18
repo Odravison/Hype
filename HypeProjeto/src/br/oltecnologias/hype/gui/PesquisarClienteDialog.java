@@ -237,12 +237,12 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
     
     public String getNomeClienteSelecionado() {
         //O nome do cliente está na segunda coluna da tabela
-        return (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 1);
+        return (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 1);
     }
     
     public String getCpfLocador() {
         //O CPF do cliente está na primeira coluna da tabela
-        return (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0);
+        return (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0);
     }
 
     protected boolean okSelecionado;

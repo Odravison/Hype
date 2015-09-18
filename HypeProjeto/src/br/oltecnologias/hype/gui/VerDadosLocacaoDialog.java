@@ -84,7 +84,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 descricaoProdutosLocados += produto.getDescricao()+"\n";
             }
         } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível exibir os produtos locado:s\n"+e.getMessage(),
+            JOptionPane.showMessageDialog(null, "Não foi possível exibir os produtos locado:\n"+e.getMessage(),
                 "Aviso", JOptionPane.WARNING_MESSAGE);
         }
         areaProdutosLocados.setText(descricaoProdutosLocados);

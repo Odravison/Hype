@@ -5,7 +5,10 @@
  */
 package br.oltecnologias.hype.gui;
 
+import br.oltecnologias.hype.controller.GerenciadorDeVenda;
+import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.Venda;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -65,7 +68,16 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         areaProdutosVendidos.setColumns(20);
         areaProdutosVendidos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         areaProdutosVendidos.setRows(5);
-        areaProdutosVendidos.setText("Listar os produtos vendidos");
+        String descricaoProdutosVendidos = "";
+        try {
+            for(Produto produto: GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId())) {
+                descricaoProdutosVendidos += produto.getDescricao()+"\n";
+            }
+        } catch(Exception e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível exibir os produtos vendidos:\n"+e.getMessage(),
+                "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+        areaProdutosVendidos.setText(descricaoProdutosVendidos);
         scPnProdutosVendidos.setViewportView(areaProdutosVendidos);
 
         labelFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

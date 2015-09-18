@@ -568,7 +568,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         } else {
             try {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalVenda();
                 campoPercentualDesconto.setEnabled(true);
@@ -610,7 +610,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(tabelaProdutosVendidos.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) modeloTabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
+            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) tabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
             calcularValorTotalVenda();
             campoPercentualDesconto.setEnabled(true);
         }
@@ -734,7 +734,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(evt.getClickCount() == 2){            
             try {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalVenda();
                 campoPercentualDesconto.setEnabled(true);
@@ -746,7 +746,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private void tabelaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosVendidosMouseClicked
         if(evt.getClickCount() == 2){            
-            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) modeloTabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
+            removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) tabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
             calcularValorTotalVenda();
         }
         if(produtosVendidos.size() <= 0) {
