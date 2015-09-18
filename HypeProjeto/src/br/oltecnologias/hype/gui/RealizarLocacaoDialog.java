@@ -954,6 +954,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
         if(produtosLocados.size() <= 0) {
             campoPercentualDesconto.setEnabled(false);
+            campoPercentualDesconto.setText("");
+            labelValorLocacao.setText("");
         }
     }//GEN-LAST:event_tabelaProdutosLocadosMouseClicked
 
@@ -990,7 +992,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcelas
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > 12) {
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > maxParcelas) {
             evt.consume();
         } 
     }//GEN-LAST:event_campoParcelasKeyTyped
