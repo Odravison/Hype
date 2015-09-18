@@ -750,7 +750,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
-                }  else {
+                } else {
                     valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
                             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
@@ -881,6 +881,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalLocacao();
+                campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
@@ -901,6 +902,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotalLocacao();
+            campoPercentualDesconto.setEnabled(true);
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -992,33 +994,25 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcelas
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > maxParcelas) {
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > maxParcelas 
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) == 0) {
             evt.consume();
         } 
     }//GEN-LAST:event_campoParcelasKeyTyped
 
     private void campoParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
-                && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || Integer.parseInt(campoParcelas.getText()) > 0) {
             try {
                 //Se o usuário estiver apagando o conteúdo do campo
                 if (campoParcelas.getText().length() <= 0) { 
-                    
                     labelValorParcelas.setText("");
-                    /*if(valorCampoParcelas.length() <= 1) {
-                        labelValorParcelas.setText("");
-                    } else { 
-                        //Faz o cálculo sem contas com o último número, pois este será apagado
-                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                        
-                        //decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
-                    }*/
+
                 } else {
                     labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
                             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
                             
-                       //decimalFormat.format(valorTotalLocacao/Integer.parseInt(valorCampoParcelas+evt.getKeyChar()));
                 }
             } catch(Exception e) {
                 pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
@@ -1032,13 +1026,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-                && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || Integer.parseInt(campoParcelas.getText()) > 0) {
             try {
-                //String valorCampoDesconto = campoPercentualDesconto.getText();
-                //calcularValorTotalLocacaoComDesconto(Integer.parseInt(valorCampoDesconto));
                 //Se o usuário estiver apagando o conteúdo do campo
                 if (campoPercentualDesconto.getText().length() > 0) {
-        
                     labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
                             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
    
@@ -1054,21 +1046,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }  
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
-   
-    ///////////////////////////////EXCLUIR MÉTODO//////////NÃO ESTÁ SENDO CHAMADO//////////////////
-    public double calcularValorTotalParcelasLocacao(int quantidadeParcelas) {
-        double valorParcelas = 0;
-        try {
-            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
-                valorParcelas = (valorTotalLocacao
-                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO")) / 100)) / quantidadeParcelas;
-            }
-        } catch(TemporadaInexistenteException e) {
-            valorParcelas = valorTotalLocacao / quantidadeParcelas;
-            
-        }
-        return valorParcelas;
-    }
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -1266,46 +1243,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 
                 labelValorLocacao.setText("R$ " + valorTotalLocacao);
                 
-                
-                //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
-                       // - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100)));
             }
         } catch (TemporadaInexistenteException e) {
             valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorLocacao.setText("R$ " + valorTotalLocacao);
         }
-    }
-    
-    public void calcularValorTotalLocacaoComDesconto(int valorDesconto) {
-        valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-        
-        labelValorLocacao.setText("R$ " + valorTotalLocacao);
-            
-        /*try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada()) {
-                double valorTotalComDescontoTemporada = valorTotalLocacao
-                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada()) / 100);
-                
-                valorTotalLocacao = new BigDecimal(valorTotalComDescontoTemporada 
-                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                labelValorLocacao.setText("R$ " + valorTotalLocacao);
-                
-                
-                //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalComDescontoTemporada 
-                  //      - ((valorTotalComDescontoTemporada * valorDesconto)/100)));
-            } 
-        } catch (TemporadaInexistenteException e) {
-            System.out.println("(CALCULARVALTOTLOCACAO) ERRO: "+e.getMessage()+
-                    "valor R$ " + new BigDecimal(new BigDecimal(valorTotalLocacao
-                - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-            //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
-            valorTotalLocacao = new BigDecimal(valorTotalLocacao
-                - ((valorTotalLocacao * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-            labelValorLocacao.setText("R$ " + valorTotalLocacao);
-            
-            //labelValorLocacao.setText("R$ " + decimalFormat.format(valorTotalLocacao
-              //  - ((valorTotalLocacao * valorDesconto) / 100)));
-        }*/
     }
     
     public Locacao getNovaLocacao() {

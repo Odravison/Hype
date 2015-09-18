@@ -2023,6 +2023,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
             atualizarValorEmCaixa();
+            //Atualizando a tabela de produtos para que os dados fiquem consistentes
+            adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
@@ -2785,6 +2787,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoVerContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerContratoActionPerformed
         try {
+            System.out.println("(botao ver contato) ID LOCAÇÃO: "+Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
             GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
                 Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
         } catch (Exception e) {
@@ -3383,6 +3386,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
         labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(valorEmCaixa));
+    }
+    
+    public void atualizarTabelaProdutos() {
+        
     }
     
     public void desabilitarCamposDeDiretorios() {

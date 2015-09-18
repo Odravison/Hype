@@ -42,7 +42,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         initComponents();
         produtosVendidos = new ArrayList<ProdutoVendido>();
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeVenda();
-        decimalFormat = new DecimalFormat("#.##");
     }
 
     /**
@@ -348,8 +347,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
         campoParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoParcelas.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                campoParcelasKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campoParcelasKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoParcelasKeyTyped(evt);
@@ -456,9 +455,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelValorVenda.setForeground(new java.awt.Color(0, 153, 0));
 
         campoPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPercentualDesconto.setEnabled(false);
         campoPercentualDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                campoPercentualDescontoKeyPressed(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campoPercentualDescontoKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoPercentualDescontoKeyTyped(evt);
@@ -570,7 +570,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                labelValorVenda.setText("R$ "+decimalFormat.format(valorTotalVenda));
+                calcularValorTotalVenda();
+                campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             } 
@@ -610,7 +611,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) modeloTabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
-            labelValorVenda.setText("R$ "+decimalFormat.format(valorTotalVenda));
+            calcularValorTotalVenda();
+            campoPercentualDesconto.setEnabled(true);
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -641,6 +643,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
+                } else {
+                    valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -660,24 +665,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     campoEntrada.setText("0");
                     campoParcelas.setText("0");
                 }
-                System.out.println("QUANT PRODUTOS VENDIDOS: "+produtosVendidos.size()+", valor: "+valorTotalVenda+
-                        ", forma pag: "+formaPagamento+", parcelas: "+campoParcelas.getText()+", entrada: "+
-                        campoEntrada.getText()+", desconto: "+campoPercentualDesconto.getText());
+
                 try {
-                    for(ProdutoVendido p:produtosVendidos) {
-                        System.out.println("PRODUTO LOCADO: "+p.getCodigoProduto()+", QUANT: "+p.getQuantidade());
-                    }
-                    
                     GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalVenda, formaPagamento,
                             Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
 
-                    System.out.println("PASSOU DO REALIZAR VENDA");
-                    System.out.println("A NOVA VENDA É NULA? "+novaVenda==null);
-                    System.out.println("EMPRESA: ");
                     System.out.println(Configuracao.getInstance().getEmpresa().getNome());
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
-                    //novaMovimentacao = GerenciadorDoSistema.getInstance().cadastrarMovimentacao(novaMovimentacao);
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
 
@@ -698,7 +693,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto 
-                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100) {
+                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) == 0) {
             evt.consume();
         } 
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
@@ -740,7 +736,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                labelValorVenda.setText("R$ "+valorTotalVenda);
+                calcularValorTotalVenda();
+                campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -750,69 +747,63 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private void tabelaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosVendidosMouseClicked
         if(evt.getClickCount() == 2){            
             removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) modeloTabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
-            labelValorVenda.setText("R$ "+valorTotalVenda);
+            calcularValorTotalVenda();
+        }
+        if(produtosVendidos.size() <= 0) {
+            campoPercentualDesconto.setEnabled(false);
+            campoPercentualDesconto.setText("");
+            labelValorVenda.setText("");
         }
     }//GEN-LAST:event_tabelaProdutosVendidosMouseClicked
 
     private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcelas
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > 12) {
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > maxParcelas
+                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) == 0) {
             evt.consume();
-        } 
+        }  
     }//GEN-LAST:event_campoParcelasKeyTyped
 
-    private void campoParcelasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyPressed
+    private void campoParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
-                && Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) <= 12) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || Integer.parseInt(campoParcelas.getText()) > 0) {
             try {
-                String valorCampoParcelas = campoParcelas.getText();
                 //Se o usuário estiver apagando o conteúdo do campo
-                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) { 
-                    if(valorCampoParcelas.length() <= 1) {
-                        labelValorParcelas.setText("");
-                    } else { 
-                        //Faz o cálculo sem contas com o último número, pois este será apagado
-                        labelValorParcelas.setText(" = "+valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)+" X R$ "+new BigDecimal(calcularValorTotalParcelasVenda(
-                                Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1)))
-                                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                                //decimalFormat.format(valorTotalVenda/Integer.parseInt(valorCampoParcelas.substring(0, valorCampoParcelas.length()-1))));
-                    }
+                if (campoParcelas.getText().length() <= 0) { 
+                    labelValorParcelas.setText("");
+
                 } else {
-                    //if(valorCampoParcelas.length() > 0) {
-                        labelValorParcelas.setText(" = "+valorCampoParcelas+evt.getKeyChar()+" X R$ "+new BigDecimal(calcularValorTotalParcelasVenda(Integer.parseInt(valorCampoParcelas+evt.getKeyChar()))
-                                ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                    //} else {
-                      //  labelValorParcelas.setText(" = "+evt.getKeyChar()+" X R$ "+decimalFormat.format(valorTotalLocacao/Integer.parseInt(evt.getKeyChar()+"")));
-                    //}
+                    labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                            
                 }
             } catch(Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }  
         }
-    }//GEN-LAST:event_campoParcelasKeyPressed
+    }//GEN-LAST:event_campoParcelasKeyReleased
 
-    private void campoPercentualDescontoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyPressed
-        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() < maxCaracteresDesconto
-                && Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+    private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
+        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
+                && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || Integer.parseInt(campoParcelas.getText()) > 0) {
             try {
-                String valorCampoDesconto = campoPercentualDesconto.getText();
                 //Se o usuário estiver apagando o conteúdo do campo
-                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) { 
-                    if(valorCampoDesconto.length() <= 1) {
-                        calcularValorTotalVenda(); 
-                    } else { 
-                        //Faz o cálculo sem contas com o último número, pois este será apagado
-                        calcularValorTotalVendaComDesconto(Integer.parseInt(valorCampoDesconto.substring(0, valorCampoDesconto.length()-1)));
-                    }
+                if (campoPercentualDesconto.getText().length() > 0) {
+                    labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+   
                 } else {
-                        calcularValorTotalVendaComDesconto(Integer.parseInt(valorCampoDesconto+evt.getKeyChar()));
+                    labelValorVenda.setText("R$ " + valorTotalVenda);
                 }
             } catch(Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }  
         }
-    }//GEN-LAST:event_campoPercentualDescontoKeyPressed
-
+    }//GEN-LAST:event_campoPercentualDescontoKeyReleased
+    
+    //////////////tirar
     public double calcularValorTotalParcelasVenda(int quantidadeParcelas) {
         double valorParcelas = 0;
         try {
@@ -995,16 +986,17 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 valorTotalVenda = new BigDecimal(valorTotalVenda
                         - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)
-                                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 
                 labelValorVenda.setText("R$ " + valorTotalVenda);
+                
             }
         } catch (TemporadaInexistenteException e) {
             valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorVenda.setText("R$ " + valorTotalVenda);
         }
     }
-    
+    /*
     public void calcularValorTotalVendaComDesconto(int valorDesconto) {
         try {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
@@ -1022,7 +1014,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 - ((valorTotalVenda * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorVenda.setText("R$ " + valorTotalVenda);
         }
-    }
+    }*/
     
     public boolean alterarDados() {        
         concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
@@ -1052,7 +1044,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     protected Movimentacao novaMovimentacao;
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaProdutosVendidos;
-    private DecimalFormat decimalFormat;
+    private int maxParcelas = 6;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
