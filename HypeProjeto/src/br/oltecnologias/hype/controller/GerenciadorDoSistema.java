@@ -50,6 +50,7 @@ public class GerenciadorDoSistema {
     private static GerenciadorDoSistema singleton = null;
     private Usuario usuarioLogado;
     private Temporada temporada = null;
+    private Configuracao conf = this.getConfiguracao();
 
     private GerenciadorDoSistema() {
 
@@ -200,7 +201,7 @@ public class GerenciadorDoSistema {
         List<String> relatorio = new ArrayList<String>();
         relatorio.add("      DATA     ");
         relatorio.add("   MOVIMENTO   ");
-        relatorio.add("  RESPONSÁVEL  ");
+        relatorio.add("    RESPONS.   ");
         relatorio.add("     VALOR     ");
         relatorio.add("   PAGAMENTO   ");
         String diretorioFinal = null;
@@ -268,7 +269,7 @@ public class GerenciadorDoSistema {
 
             try {
 
-                diretorio = new File(Configuracao.getInstance().getDiretorioDeRelatorios());
+                diretorio = new File(conf.getDiretorioDeRelatorios());
                 diretorio.mkdir();
 
                 PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Relatorio_"
@@ -537,9 +538,9 @@ public class GerenciadorDoSistema {
             System.out.println("VAI TRANSFORMAR O OBJECT EM VENDA");
             Venda venda = (Venda) obj;
             System.out.println("VENDA\nVALOR: " + venda.getValor() + ", DATA: " + venda.getDataVenda() + ", EMPRESA: "
-                    + Configuracao.getInstance().getEmpresa().getNome() + " ID: " + venda.getId() + ", FORMAPAG: " + venda.getFormaDePagamento());
+                    + conf.getEmpresa().getNome() + " ID: " + venda.getId() + ", FORMAPAG: " + venda.getFormaDePagamento());
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
-                    Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
+                    conf.getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("DESPESA")) {
             System.out.println("VAI TRANSFORMAR O OBJECT EM DESPESA");
             Despesa despesa = (Despesa) obj;
@@ -549,11 +550,11 @@ public class GerenciadorDoSistema {
             System.out.println("VAI TRANSFORMAR O OBJECT EM LOCAÇÃO");
             Locacao locacao = (Locacao) obj;
             System.out.println("LOCAÇÃO\nVALOR: " + (locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago())
-                    + ", EMPRESA: " + Configuracao.getInstance().getEmpresa().getNome()
-                    + Configuracao.getInstance().getEmpresa().getNome() + " ID: " + locacao.getId() + ", FORMAPAG: " + locacao.getFormaDePagamento());
+                    + ", EMPRESA: " + conf.getEmpresa().getNome()
+                    + conf.getEmpresa().getNome() + " ID: " + locacao.getId() + ", FORMAPAG: " + locacao.getFormaDePagamento());
 
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
-                    usuarioLogado.getNickName(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
+                    usuarioLogado.getNickName(), conf.getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
         } else {
             throw new TipoInexistenteDeMovimentacao("Este tipo de movimentação não existe.");
         }
@@ -668,7 +669,7 @@ public class GerenciadorDoSistema {
 
         try {
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
-                    usuarioLogado.getNome(), Configuracao.getInstance().getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
+                    usuarioLogado.getNome(), conf.getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
             mjp.create(mov);
             return mov;
         } finally {
@@ -686,7 +687,7 @@ public class GerenciadorDoSistema {
 
         try {
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNome(),
-                    Configuracao.getInstance().getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
+                    conf.getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
             mjp.create(mov);
             return mov;
         } finally {

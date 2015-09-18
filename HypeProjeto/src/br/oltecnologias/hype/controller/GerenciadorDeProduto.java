@@ -136,6 +136,20 @@ public class GerenciadorDeProduto {
             emf.close();
         }
     }
+    
+    public void adicionarQuantidade(String codigoDoProduto, int quantidade) throws ProdutoInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
+        Produto p;
+
+        try {
+            p = pjp.findById(codigoDoProduto);
+            p.addQuant(quantidade);
+            pjp.editarProduto(p);
+        } finally {
+            emf.close();
+        }
+    }
 
     public List<Produto> getProdutosDeLocacao() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");

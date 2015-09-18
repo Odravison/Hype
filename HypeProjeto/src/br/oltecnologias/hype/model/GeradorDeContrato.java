@@ -48,6 +48,7 @@ public class GeradorDeContrato {
     public void gerarEImprimirContrato(Locacao locacao) throws IOException, Exception {
 
         gerarContrato(locacao);
+        System.out.println("");
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
 
@@ -68,7 +69,7 @@ public class GeradorDeContrato {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId());
 
         Document pdf = new Document();
-        File diretorio = null;
+        File diretorio;
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
 
@@ -83,20 +84,25 @@ public class GeradorDeContrato {
         Font courier12 = new Font(Font.FontFamily.COURIER, 12);
 
         try {
-            diretorio = new File(conf.getDiretorioDeDocumentos()
-                    + "\\" + locacao.getCliente().getNome() + "\\Contratos");
-
-            diretorio.mkdir();
+            diretorio = new File(conf.getDiretorioDeDocumentos() + "\\" + locacao.getCliente().getNome() + "\\Contratos");
+            System.out.println(locacao.getCliente().getNome());
+            System.out.println("O que tem no conf =======>>>>>>>> " + conf.getDiretorioDeDocumentos());
+            System.out.println("======>>>>>>>>>> DIRETORIO CRIADO: " + diretorio.mkdirs());
+            
 
             System.out.println(diretorio.toString());
 
             PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf"));
             pdf.open();
             pdf.setPageSize(PageSize.A4);
-
+            
+            System.out.println("CHEGUEI2");
+            
             String diretorioFinal = diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf";
             
-            locacao.setCaminhoUltimoContrato("DL_" + diaContrato + "__H_" + horaGeracao + ".pdf");
+            System.out.println("CHEGUEI 3");
+            
+            locacao.setCaminhoUltimoContrato(diretorioFinal);
 
             System.out.println("Tirar: chagou aqui! 1");
 
@@ -143,15 +149,15 @@ public class GeradorDeContrato {
             System.out.println("Tirar: chagou aqui! 7");
 
             Paragraph dadosEmpresa;
-            dadosEmpresa = new Paragraph("Locatário: " + Configuracao.getInstance().getEmpresa().getNome()
-                    + ", portador do nº de CNPJ: " + Configuracao.getInstance().getEmpresa().getCnpj(), timesNewRoman12);
+            dadosEmpresa = new Paragraph("Locatário: " + conf.getEmpresa().getNome()
+                    + ", portador do nº de CNPJ: " + conf.getEmpresa().getCnpj(), timesNewRoman12);
             dadosEmpresa.setSpacingAfter(20);
             dadosEmpresa.setAlignment(Paragraph.ALIGN_CENTER);
 
             System.out.println("Tirar: chagou aqui! 8");
 
             Paragraph diaLocal;
-            diaLocal = new Paragraph(Configuracao.getInstance().getEmpresa().getEndereco().getCidade()
+            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
                     + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
@@ -178,10 +184,17 @@ public class GeradorDeContrato {
             pdf.add(linhaAssinatura);
             pdf.add(dadosEmpresa);
             pdf.add(diaLocal);
+            
+            System.out.println("FINALIZEI TUDO");
 
             java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
             
+            System.out.println("VOU TENTAR ABRIR O ARQUIVO");
+            
             desktop.open(new File(diretorioFinal));
+            
+            System.out.println("ABRI O ARQUIVO");
+                    
 
         } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());
@@ -189,6 +202,8 @@ public class GeradorDeContrato {
         } finally {
             pdf.close();
         }
+        
+        
 
     }
 

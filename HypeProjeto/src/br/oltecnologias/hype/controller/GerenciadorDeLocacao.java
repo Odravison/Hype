@@ -65,14 +65,16 @@ public class GerenciadorDeLocacao {
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
-
+            
+            locacao.imprimirContrato();
+            
+            return locacao;
+            
         } finally {
             emf.close();
         }
         
-        locacao.imprimirContrato();
-
-        return locacao;
+        
     }
 
     public List<Locacao> getLocacoes() {
@@ -115,7 +117,7 @@ public class GerenciadorDeLocacao {
                                 && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
                             emprestou = true;
                             for (ProdutoLocado p : produtosDaLocacao) {
-                                GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).addQuant(p.getQuantidade());
+                                GerenciadorDeProduto.getInstance().adicionarQuantidade(p.getCodigoProduto(), p.getQuantidade());
                             }
 
                             clienteFinalizada = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
