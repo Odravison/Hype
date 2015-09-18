@@ -610,7 +610,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));
                 labelStatusTemporada.setText("ON");
             }
-        } catch(TemporadaInexistenteException e) {
+        } catch(Exception e) {
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
@@ -1244,7 +1244,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 labelValorLocacao.setText("R$ " + valorTotalLocacao);
                 
             }
-        } catch (TemporadaInexistenteException e) {
+        } catch (Exception e) {
             valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorLocacao.setText("R$ " + valorTotalLocacao);
         }
