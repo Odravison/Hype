@@ -75,7 +75,7 @@ public class LoginFrame extends javax.swing.JFrame {
         painelGeral.setPreferredSize(new java.awt.Dimension(1366, 730));
 
         painelDeLogin.setBackground(new java.awt.Color(213, 215, 205));
-        painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(204, 204, 204), new java.awt.Color(153, 153, 153), new java.awt.Color(204, 204, 204)));
+        painelDeLogin.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153), new java.awt.Color(153, 153, 153)));
         painelDeLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painelDeLogin.setName("hype!\n"); // NOI18N
         painelDeLogin.setPreferredSize(new java.awt.Dimension(420, 350));

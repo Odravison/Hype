@@ -895,15 +895,19 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Este produto não pode ser vendido! \n\nQuantidade de produtos insuficiente no estoque", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            ProdutoVendido novoProdutoVendido = new ProdutoVendido(produto.getCodigo(), 1);
-            produtosVendidos.add(novoProdutoVendido);
-            //Adiciona os dados do novo produto na tabela
-            modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), novoProdutoVendido.getQuantidade()});
-            //Atualiza a quantidade de produtos em estoque
-            removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
+            if(getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
+                ProdutoVendido novoProdutoVendido = new ProdutoVendido(produto.getCodigo(), 1);
+                produtosVendidos.add(novoProdutoVendido);
+                //Adiciona os dados do novo produto na tabela
+                modeloTabelaProdutosVendidos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), novoProdutoVendido.getQuantidade()});
+                //Atualiza a quantidade de produtos em estoque
+                removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
 
-            //Atualiza o valor total da locação
-            valorTotalVenda += produto.getValor();
+                //Atualiza o valor total da locação
+                valorTotalVenda += produto.getValor();
+            } else {
+                JOptionPane.showMessageDialog(null, "Este produto não pode ser vendido! \n\nQuantidade de produtos insuficiente no estoque", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
         
     }
