@@ -65,16 +65,15 @@ public class GerenciadorDeLocacao {
             for (ProdutoLocado p : produtosLocados) {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
-            
+
             locacao.imprimirContrato();
-            
+
             return locacao;
-            
+
         } finally {
             emf.close();
         }
-        
-        
+
     }
 
     public List<Locacao> getLocacoes() {
@@ -91,6 +90,22 @@ public class GerenciadorDeLocacao {
         }
 
         return locacoesRetorno;
+    }
+
+    public void setUltimoCaminhoContrato(long id, String caminho) throws LocacaoInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+
+        try {
+
+            Locacao loc = this.pesquisarLocacaoPorId(id);
+            System.out.println("========>>>>>>>>> o caminho é esse: " + caminho);
+            loc.setCaminhoUltimoContrato(caminho);
+            ljp.editarLocacao(loc);
+
+        } finally {
+            emf.close();
+        }
     }
 
     public void finalizarLocacao(long idLoc, Cliente cliente)
@@ -306,23 +321,19 @@ public class GerenciadorDeLocacao {
     public void verUltimoContratoGerado(long idLocacao) throws LocacaoInexistenteException, IOException, ContratoNaoGeradoException {
 
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
-
-        if (locacao.getCaminhoUltimoContrato().equals("")) {
-            throw new ContratoNaoGeradoException("O contrato para locação ainda não foi gerado");
-        } else {
-            File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                    + "\\" + locacao.getCliente().getNome() + "\\Contratos\\" + locacao.getCaminhoUltimoContrato());
-
-            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-
-            desktop.open(diretorio);
-        }
+        File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos() 
+                + "\\" + locacao.getCliente().getNome() + "\\Contratos");
+        java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+        desktop.open(diretorio);
+        
+//            System.out.println("agora sai no throws: ====>>>>> " + locacao.getCaminhoUltimoContrato());
+//            throw new ContratoNaoGeradoException("O contrato para locação ainda não foi gerado");
 
     }
-    
-    public void gerarEImprimirPxRecibo(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException{
+
+    public void gerarEImprimirPxRecibo(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
-        
+
         locacao.gerarEImprimirPxRecibo(valorDessePagamento);
     }
 }
