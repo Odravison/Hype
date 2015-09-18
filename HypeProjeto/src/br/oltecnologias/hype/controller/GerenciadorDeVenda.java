@@ -3,6 +3,7 @@ package br.oltecnologias.hype.controller;
 import br.oltecnologias.hype.dao.VendaJpaRepository;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.VendaInexistenteException;
+import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import java.util.ArrayList;
@@ -124,6 +125,24 @@ public class GerenciadorDeVenda {
             return listaDeRetorno;
             
         } finally {
+            emf.close();
+        }
+    }
+    
+    public List<Produto> getProdutosDeVenda(long id) throws ProdutoInexistenteException, VendaInexistenteException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        VendaJpaRepository vjp = new VendaJpaRepository(emf);
+        
+        try{
+            List<Produto> retorno = new ArrayList<Produto>();
+            List<ProdutoVendido> produtosVendidos = this.pesquisarVendaPorId(id).getProdutosVendidos();
+            for (ProdutoVendido pv: produtosVendidos){
+                retorno.add(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getCodigoProduto()));
+            }
+            return retorno;
+            
+            
+        } finally{
             emf.close();
         }
     }

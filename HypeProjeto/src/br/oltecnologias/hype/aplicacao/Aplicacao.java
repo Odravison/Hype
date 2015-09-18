@@ -143,7 +143,7 @@ public class Aplicacao {
 //
 //        }
 
-//                Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
+                Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
 //                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
 //                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
 //                List<Venda> movimentacoes = new ArrayList<Venda>();
@@ -158,7 +158,7 @@ public class Aplicacao {
 //                
 //                
 //                
-//                Calendar dataInicial = Calendar.getInstance();
+                Calendar dataInicial = Calendar.getInstance();
 //                
 //                for (int i = 0; i < 10; i++){
 //                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
@@ -167,12 +167,12 @@ public class Aplicacao {
 //                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
 //                }
 //                
-//                Calendar dataFinal = Calendar.getInstance();
+                Calendar dataFinal = Calendar.getInstance();
 //                
-//                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
-//                
-//                System.out.println("RODOU");
-        
+                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
+                
+                System.out.println("RODOU");
+//        
 //        for (Locacao l: GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes()){
 //            System.out.println(l.getId());
 //            System.out.println("O cliente tem locações de quantidade: " 
@@ -180,9 +180,9 @@ public class Aplicacao {
 //            
 //            
 //        }
-            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-
-            desktop.open(new File("C:\\"));
+//            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+//
+//            desktop.open(new File("C:\\"));
                 
     }
 }
