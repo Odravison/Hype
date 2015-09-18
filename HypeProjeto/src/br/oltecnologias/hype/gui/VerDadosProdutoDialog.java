@@ -175,7 +175,7 @@ public class VerDadosProdutoDialog extends java.awt.Dialog {
         );
 
         botaook.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaook.setText("OK");
+        botaook.setText("  OK  ");
         botaook.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaook.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

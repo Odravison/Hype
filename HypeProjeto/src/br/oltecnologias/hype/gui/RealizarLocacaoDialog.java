@@ -451,6 +451,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setText("Desconto:");
 
         campoPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoPercentualDesconto.setEnabled(false);
         campoPercentualDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 campoPercentualDescontoKeyReleased(evt);
@@ -935,6 +936,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalLocacao();
+                campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
@@ -949,6 +951,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if(evt.getClickCount() == 2){            
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotalLocacao();
+        }
+        if(produtosLocados.size() <= 0) {
+            campoPercentualDesconto.setEnabled(false);
         }
     }//GEN-LAST:event_tabelaProdutosLocadosMouseClicked
 

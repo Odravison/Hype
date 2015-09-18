@@ -186,7 +186,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDataInicial.setText(&quot;Data: &quot;+locacao.getDataLocacaoInString());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDataInicial.setText(&quot;Data Inicial: &quot;+locacao.getDataLocacaoInString());"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelDataFinal">

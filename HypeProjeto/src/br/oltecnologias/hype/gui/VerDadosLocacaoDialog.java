@@ -94,7 +94,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         painelDadosContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Datas do Contrato"));
 
         labelDataInicial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDataInicial.setText("Data: "+locacao.getDataLocacaoInString());
+        labelDataInicial.setText("Data Inicial: "+locacao.getDataLocacaoInString());
 
         labelDataFinal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDataFinal.setText("Data Final: "+locacao.getVencimento());
