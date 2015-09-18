@@ -58,7 +58,9 @@ public class VerDadosDespesaDialog extends java.awt.Dialog {
         areaObservacao.setEditable(false);
         areaObservacao.setColumns(20);
         areaObservacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        areaObservacao.setLineWrap(true);
         areaObservacao.setRows(5);
+        areaObservacao.setWrapStyleWord(true);
         areaObservacao.setText(despesa.getObservacao());
         scPnObservacao.setViewportView(areaObservacao);
 
