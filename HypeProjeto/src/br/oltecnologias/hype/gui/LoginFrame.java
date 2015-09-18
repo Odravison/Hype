@@ -30,8 +30,8 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
-        setIconImage(new ImageIcon("Imagens\\Ícone.jpg").getImage());
-        labelLogo.setIcon(new ImageIcon("Imagens\\Logo.jpg"));
+        setIconImage(new ImageIcon("\\src\\br\\oltecnologias\\hype\\imagens\\Ícone.jpg").getImage());
+        labelLogo.setIcon(new ImageIcon("\\src\\br\\oltecnologias\\hype\\imagens\\Logo.jpg"));
         
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
