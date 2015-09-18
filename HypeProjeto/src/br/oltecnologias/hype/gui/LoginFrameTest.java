@@ -28,9 +28,9 @@ import javax.swing.JProgressBar;
  *
  * @author Luender Lima
  */
-public class LoginFrame extends javax.swing.JFrame {
+public class LoginFrameTest extends javax.swing.JFrame {
 
-    public LoginFrame() {
+    public LoginFrameTest() {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage()); 
@@ -65,11 +65,12 @@ public class LoginFrame extends javax.swing.JFrame {
         botaoEntrar = new javax.swing.JButton();
         labelLogo = new javax.swing.JLabel();
         labelIconeBotaoBranco = new javax.swing.JLabel();
+        labelMensagemCarregando = new javax.swing.JLabel();
+        barCarregando = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Closet");
         setName("frameLogin"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(1366, 730));
         setResizable(false);
         setSize(new java.awt.Dimension(1366, 730));
 
@@ -86,7 +87,7 @@ public class LoginFrame extends javax.swing.JFrame {
         labelUsuario.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelUsuario.setText("Login:");
 
-        campoLogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoLogin.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         campoLogin.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoLoginKeyTyped(evt);
@@ -96,14 +97,14 @@ public class LoginFrame extends javax.swing.JFrame {
         labelSenha.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         labelSenha.setText("Senha:");
 
-        campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoSenha.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoSenhaKeyTyped(evt);
             }
         });
 
-        botaoEntrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoEntrar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoEntrar.setText("Entrar");
         botaoEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -125,7 +126,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(campoSenha)
                     .addGroup(painelDeLoginLayout.createSequentialGroup()
-                        .addGap(0, 154, Short.MAX_VALUE)
+                        .addGap(0, 150, Short.MAX_VALUE)
                         .addComponent(botaoEntrar))
                     .addComponent(campoLogin))
                 .addGap(65, 65, 65))
@@ -141,7 +142,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addGroup(painelDeLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelSenha))
-                .addGap(63, 63, 63)
+                .addGap(55, 55, 55)
                 .addComponent(botaoEntrar)
                 .addGap(70, 70, 70))
         );
@@ -150,6 +151,12 @@ public class LoginFrame extends javax.swing.JFrame {
 
         labelIconeBotaoBranco.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png"))); // NOI18N
         labelIconeBotaoBranco.setVisible(false);
+
+        labelMensagemCarregando.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelMensagemCarregando.setVisible(false);
+
+        barCarregando.setBackground(new java.awt.Color(255, 255, 255));
+        barCarregando.setVisible(false);
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
@@ -166,19 +173,35 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 399, Short.MAX_VALUE)
                 .addComponent(labelIconeBotaoBranco)
                 .addContainerGap())
+            .addGroup(painelGeralLayout.createSequentialGroup()
+                .addGap(574, 574, 574)
+                .addComponent(labelMensagemCarregando)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelGeralLayout.createSequentialGroup()
+                    .addGap(536, 536, 536)
+                    .addComponent(barCarregando, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(537, Short.MAX_VALUE)))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelGeralLayout.createSequentialGroup()
                 .addGap(74, 74, 74)
                 .addComponent(labelLogo)
-                .addGap(50, 50, 50)
-                .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addGap(23, 23, 23)
+                .addComponent(labelMensagemCarregando)
+                .addGap(32, 32, 32)
+                .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(402, Short.MAX_VALUE)
                 .addComponent(labelIconeBotaoBranco)
                 .addGap(244, 244, 244))
+            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(painelGeralLayout.createSequentialGroup()
+                    .addGap(339, 339, 339)
+                    .addComponent(barCarregando, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(339, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -196,9 +219,6 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
-        JProgressBar bar = new JProgressBar();
-        this.add(bar);
-        bar.setIndeterminate(true);
                     
         if(campoLogin.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o login do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -217,16 +237,48 @@ public class LoginFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                     
-                    System.out.println("VAI COMEÇAR A ABIR A PRINCIPALFRAME");
-                    
+                    LoginFrameTest loginFrame = this;
                     Executors.newFixedThreadPool(7).execute(new Runnable() {
                         public void run() {
-                            new PrincipalFrame(campoLogin.getText()).setVisible(true);
+                            new PrincipalFrame(campoLogin.getText(), loginFrame).setVisible(true);
                         }
                     });
-                    System.out.println("SAIU DA THREAD");
-                    bar.setIndeterminate(false);
-                    setVisible(false);
+                    
+                    painelDeLogin.setVisible(false);
+                    barCarregando.setVisible(true);
+                    labelMensagemCarregando.setVisible(true);
+                    
+                    new Thread() {
+                        public void run() {
+                            int pontos = 0;
+                            String pontosTxt = "";
+                            while(loginFrame.isVisible()) {
+                                /*if(pontos == 3) {
+                                    pontosTxt = "";
+                                    pontos = 0;
+                                } else {
+                                    pontosTxt += ".";
+                                    pontos++;
+                                }*/
+                                //labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
+                                for (int i = 0; i < 100; i++) {
+                                    try {
+                                        sleep(30);
+                                        barCarregando.setValue(i);
+                                    } catch (InterruptedException e) {
+                                        JOptionPane.showMessageDialog(null, "O sistema está sendo carregado\n\nAguarde...");
+                                    }
+                                    if(i == 99) {
+                                        pontosTxt = "";
+                                    } else if(i % 25 == 0 && i > 0) {
+                                        pontosTxt += ".";
+                                    } 
+                                    labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
+                                }
+                            }
+                            
+                        }
+                    }.start();  
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
@@ -265,20 +317,21 @@ public class LoginFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginFrameTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginFrameTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginFrameTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginFrameTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */ //SwingUtilities.invokeLater
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LoginFrame().setVisible(true);
+                new LoginFrameTest().setVisible(true);
             }
         });
     }
@@ -286,11 +339,13 @@ public class LoginFrame extends javax.swing.JFrame {
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar barCarregando;
     private javax.swing.JButton botaoEntrar;
     private javax.swing.JTextField campoLogin;
     private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel labelIconeBotaoBranco;
     private javax.swing.JLabel labelLogo;
+    private javax.swing.JLabel labelMensagemCarregando;
     private javax.swing.JLabel labelSenha;
     private javax.swing.JLabel labelUsuario;
     private javax.swing.JPanel painelDeLogin;

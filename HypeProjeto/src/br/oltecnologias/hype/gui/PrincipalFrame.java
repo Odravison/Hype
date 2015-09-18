@@ -21,7 +21,6 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Fornecedor;
-import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.GeradorDeRecibo;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
@@ -31,7 +30,6 @@ import br.oltecnologias.hype.model.Venda;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -54,12 +52,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public PrincipalFrame(String login) {
         loginUsuario = login;
         initComponents();
-        setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
-    }
+        setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+    }  
+    
+    public PrincipalFrame(String login, LoginFrameTest loginFrame) {
+        loginUsuario = login;
+        initComponents();
+        setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        loginFrame.setVisible(false);
+        loginFrame.dispose();
+    }   
 
-    /**
-     * Cria um novo form PrincipalFrame
-     */
     public PrincipalFrame() {
         initComponents();
     }
@@ -2097,7 +2100,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelVendasMouseClicked
 
     private void botaoGerarRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarRelatorioActionPerformed
-        GerarRelatorioDialog dialog = new GerarRelatorioDialog(new java.awt.Frame(), true);
+        GerarRelatorioDialog dialog = new GerarRelatorioDialog(new java.awt.Frame());
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoGerarRelatorioActionPerformed

@@ -5,7 +5,6 @@
  */
 package br.oltecnologias.hype.gui;
 
-import br.oltecnologias.hype.model.Produto;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -18,7 +17,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
     public GerarReciboDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

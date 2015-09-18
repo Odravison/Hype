@@ -15,10 +15,10 @@ import javax.swing.JOptionPane;
  */
 public class GerarRelatorioDialog extends java.awt.Dialog {
 
-    public GerarRelatorioDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public GerarRelatorioDialog(java.awt.Frame parent) {
+        super(parent);
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

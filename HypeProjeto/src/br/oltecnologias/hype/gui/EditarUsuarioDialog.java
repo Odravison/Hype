@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Cliente
+ * @author Luender Lima
  */
 public class EditarUsuarioDialog extends java.awt.Dialog {
     
@@ -20,6 +20,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         super(parent);
         this.usuario = usuario;
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

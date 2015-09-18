@@ -11,27 +11,18 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
-import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
-import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
-import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -43,7 +34,6 @@ import javax.swing.table.DefaultTableModel;
  * @author Luender Lima
  */
 public class RealizarLocacaoDialog extends java.awt.Dialog {
-
     
     public RealizarLocacaoDialog(Frame owner) {
         super(owner);
@@ -54,6 +44,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         pane = new JOptionPane();
         dialog = null;
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
 
@@ -687,9 +678,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Closes the dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();

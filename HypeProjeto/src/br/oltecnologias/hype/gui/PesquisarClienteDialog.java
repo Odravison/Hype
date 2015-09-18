@@ -10,8 +10,6 @@ import br.oltecnologias.hype.model.Cliente;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
-import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -19,13 +17,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Cliente
+ * @author Luender Lima
  */
 public class PesquisarClienteDialog extends java.awt.Dialog {
 
     public PesquisarClienteDialog(Frame owner) {
         super(owner);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

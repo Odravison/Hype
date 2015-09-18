@@ -22,7 +22,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     public CadastrarEmpresaDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -280,7 +280,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     *Fecha a dialog
+     *Este dialog não pode ser fechado até que os dados sejam cadastrados
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         //setVisible(false);

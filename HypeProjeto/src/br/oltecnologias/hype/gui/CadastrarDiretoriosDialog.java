@@ -22,7 +22,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     public CadastrarDiretoriosDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone-64-bordabranca.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -200,7 +200,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Closes the dialog
+     * Este dialog não pode ser fechado até todos os dados serem salvos
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         //setVisible(false);
