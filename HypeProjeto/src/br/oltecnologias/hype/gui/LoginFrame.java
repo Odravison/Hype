@@ -34,11 +34,8 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
         
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(
-                        this.getClass().getResource("/src/br/oltecnologias/hype/imagens/Ícone.png")));
-        
-        labelLogo.setIcon(new ImageIcon("/src/br/oltecnologias/hype/imagens/Logo.png"));
-        
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Ícone.png")).getImage());
+           
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
                 || configuracao.getDiretorioDeRelatorios() == null) {
@@ -150,6 +147,7 @@ public class LoginFrame extends javax.swing.JFrame {
         );
 
         labelLogo.setFont(new java.awt.Font("Calisto MT", 0, 36)); // NOI18N
+        labelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Logo.png"))); // NOI18N
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
@@ -171,7 +169,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(labelLogo)
                 .addGap(50, 50, 50)
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
