@@ -14,6 +14,9 @@ import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Usuario;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +33,11 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
         getRootPane().setDefaultButton(botaoEntrar);
-        setIconImage(new ImageIcon("\\src\\br\\oltecnologias\\hype\\imagens\\Ícone.jpg").getImage());
-        labelLogo.setIcon(new ImageIcon("\\src\\br\\oltecnologias\\hype\\imagens\\Logo.jpg"));
+        
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("/src/br/oltecnologias/hype/imagens/Ícone.png")));
+        
+        labelLogo.setIcon(new ImageIcon("/src/br/oltecnologias/hype/imagens/Logo.png"));
         
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
