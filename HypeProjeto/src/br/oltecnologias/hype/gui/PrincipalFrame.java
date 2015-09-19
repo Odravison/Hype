@@ -181,11 +181,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         labelLogoEmpresa.setIcon(new ImageIcon("Imagens\\Mini Logo Empresa.png"));
         labelLogoEmpresa.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        labelLogoEmpresa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Mini logo Empresa.png"))); // NOI18N
 
         labelLoginUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         labelLoginUsuario.setText("Logado com "+loginUsuario);
 
         botaoSair.setIcon(new ImageIcon("Imagens\\Sair do sistema.png"));
+        botaoSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Sair do sistema.png"))); // NOI18N
         botaoSair.setToolTipText("Sair do Sistema");
         botaoSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoSair.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -210,7 +212,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelTopoLayout.setVerticalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
+                .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(8, 8, 8))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -1896,7 +1898,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     painelGeralLayout.setVerticalGroup(
                         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelGeralLayout.createSequentialGroup()
-                            .addContainerGap(59, Short.MAX_VALUE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1913,7 +1915,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     );
                     layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(painelGeral, 704, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
                     );
 
                     pack();

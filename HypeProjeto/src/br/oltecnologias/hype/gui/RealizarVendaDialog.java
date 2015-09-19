@@ -9,6 +9,7 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
@@ -477,7 +478,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));
                 labelStatusTemporada.setText("ON");
             }
-        } catch(Exception e) {
+        } catch(TemporadaInexistenteException e) {
+            labelStatusTemporada.setText("OFF");
+            labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
+        } catch (Exception e) {
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
@@ -487,7 +491,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(painelFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
                     .addComponent(painelProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE)
@@ -542,7 +546,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelStatus)
                     .addComponent(labelStatusTemporada))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -982,6 +986,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 labelValorVenda.setText("R$ " + valorTotalVenda);
                 
             }
+        } catch (TemporadaInexistenteException e) {
+            valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorVenda.setText("R$ " + valorTotalVenda);
         } catch (Exception e) {
             valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorVenda.setText("R$ " + valorTotalVenda);

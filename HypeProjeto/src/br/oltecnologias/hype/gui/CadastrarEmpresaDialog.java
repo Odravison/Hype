@@ -313,53 +313,63 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         JOptionPane pane = new JOptionPane();
+        JDialog messageDialog = new JDialog();
+        messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        
         try {
             if(campoNome.getText().length() <= 0) {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o nome do estabelecimento comercial");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
             } else if(campoCnpj.getText().charAt(16) == ' ') {//O último caractere do número de CNPJ não pode ser vazio
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o CNPJ da empresa");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
             } else if(campoRua.getText().length() <= 0) {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe a rua do estabelecimento comercial");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
             } else if(campoCidade.getText().length() <= 0) {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe a cidade do estabelecimento comercial");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
             } else if(campoBairro.getText().length() <= 0) {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o bairro do estabelecimento comercial");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
             } else if(campoNumero.getText().length() <= 0) {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o número do estabelecimento comercial");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
             } else if(campoTelefone.getText().charAt(13) == ' ') { //O último caractere do número de telefone não pode ser vazio
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o número de telefone do estabelecimento comercial");
-                JDialog messageDialog = pane.createDialog("Aviso");
+                messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -379,7 +389,8 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                     
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                     pane.setMessage("Empresa cadastrada com sucesso!");
-                    JDialog messageDialog = pane.createDialog("Aviso");
+                    messageDialog = pane.createDialog("Aviso");
+                    messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                     messageDialog.setAlwaysOnTop(true);
                     messageDialog.setVisible(true);
                     
@@ -389,7 +400,8 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 } catch (Exception e) {
                     pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                     pane.setMessage(e.getMessage());
-                    JDialog messageDialog = pane.createDialog("Erro");
+                    messageDialog = pane.createDialog("Erro");
+                    messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                     messageDialog.setAlwaysOnTop(true);
                     messageDialog.setVisible(true);
                 }
@@ -397,7 +409,8 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         } catch(Exception e) {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage(e.getMessage());
-            JDialog messageDialog = pane.createDialog("Erro");
+            messageDialog = pane.createDialog("Erro");
+            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
         }

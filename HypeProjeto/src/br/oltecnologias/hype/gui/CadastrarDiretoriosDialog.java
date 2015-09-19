@@ -203,8 +203,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
      * Este dialog não pode ser fechado até todos os dados serem salvos
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        //setVisible(false);
-        //dispose();
+
     }//GEN-LAST:event_closeDialog
 
     private void campoDiretorioBackupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioBackupMouseClicked
@@ -244,14 +243,14 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoDiretorioRelatoriosKeyTyped
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        boolean cadastrou = false;
         JOptionPane pane = new JOptionPane();
-        JDialog messageDialog;
+        JDialog messageDialog = new JDialog();
         
         if(campoDiretorioBackup.getText().length() <= 0 || campoDiretorioBackup.getText().equals("Caminho do diretório")) {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de backup");
             messageDialog = pane.createDialog("Aviso");
+            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
@@ -259,6 +258,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de documentos");
             messageDialog = pane.createDialog("Aviso");
+            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
@@ -266,6 +266,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de relatórios");
             messageDialog = pane.createDialog("Aviso");
+            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
@@ -283,6 +284,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                 pane.setMessage("Diretórios cadastrados com sucesso!");
                 messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
 
@@ -292,15 +294,12 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage(e.getMessage());
                 messageDialog = pane.createDialog("Aviso");
+                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
             }
             
         }
-        /*
-        if(!cadastrou) {
-            setVisible(true);
-        }*/
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void campoNomeImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNomeImpressoraMouseClicked

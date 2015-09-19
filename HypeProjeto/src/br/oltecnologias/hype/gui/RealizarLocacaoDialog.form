@@ -829,7 +829,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="try {&#xa;    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada(&quot;LOCA&#xc7;&#xc3;O&quot;)) {&#xa;        labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));&#xa;        labelStatusTemporada.setText(&quot;ON&quot;);&#xa;    } &#xa;} catch(Exception e) {&#xa;    labelStatusTemporada.setText(&quot;OFF&quot;);&#xa;    labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="try {&#xa;    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada(&quot;LOCA&#xc7;&#xc3;O&quot;)) {&#xa;        labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));&#xa;        labelStatusTemporada.setText(&quot;ON&quot;);&#xa;    } &#xa;} catch(TemporadaInexistenteException e) {&#xa;    labelStatusTemporada.setText(&quot;OFF&quot;);&#xa;    labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));&#xa;} catch (Exception e) {&#xa;    valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();&#xa;    labelValorLocacao.setText(&quot;R$ &quot; + valorTotalLocacao);&#xa;}"/>
       </AuxValues>
     </Component>
   </SubComponents>
