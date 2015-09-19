@@ -88,7 +88,7 @@ public class Locacao implements Serializable {
 
     private int percentualDesconto;
 
-    private String caminhoUltimoContrato;
+    private String caminhoUltimoContrato = "";
 
     public Locacao() {
     }
@@ -122,17 +122,17 @@ public class Locacao implements Serializable {
     }
 
     public void gerarRecibo() throws LocacaoInexistenteException, ProdutoInexistenteException {
-        GeradorDeRecibo.getInstance().gerarRecibo(this);
+        GeradorDeRecibo.getInstance().gerarReciboDeLocacao(this);
     }
 
     public void imprimirRecibo() throws IOException, FileNotFoundException,
             PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
-        GeradorDeRecibo.getInstance().gerarEImprimirRecibo(this);
+        GeradorDeRecibo.getInstance().gerarEImprimirReciboDeLocacao(this);
     }
 
     public void gerarEImprimirPxRecibo(double valorDessePagamento)
             throws LocacaoInexistenteException, ProdutoInexistenteException {
-        GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(this, valorDessePagamento);
+        GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(this, valorDessePagamento);
     }
 
     public long getId() {

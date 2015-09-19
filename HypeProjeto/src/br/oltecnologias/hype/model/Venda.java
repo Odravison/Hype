@@ -1,5 +1,8 @@
 package br.oltecnologias.hype.model;
 
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.VendaInexistenteException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -39,7 +42,10 @@ public class Venda implements Serializable {
     private double entrada;
     
     private int percentualDesconto;
-
+    
+    private double jaPago;
+    
+    private double valorDeEntrada;
 
     public Venda() {
     }
@@ -55,7 +61,7 @@ public class Venda implements Serializable {
      */
     
     public Venda(List<ProdutoVendido> produtos, double valor, String formaDePagamento, 
-            Calendar dataVenda, int quantidadeParcelas, double entrada, int percentualDesconto) {
+            Calendar dataVenda, int quantidadeParcelas, double entrada, int percentualDesconto, double valorDeEntrada) {
         this.produtosVendidos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
@@ -66,6 +72,7 @@ public class Venda implements Serializable {
         if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
         }
+        this.valorDeEntrada = valorDeEntrada;
     }
 
     public long getId() {
@@ -139,5 +146,35 @@ public class Venda implements Serializable {
     public void setPercentualDesconto(int percentualDesconto) {
         this.percentualDesconto = percentualDesconto;
     }
+
+    public double getJaPago() {
+        return jaPago;
+    }
+
+    public void setJaPago(double jaPago) {
+        this.jaPago = jaPago;
+    }
+    
+    public void addValorJaPago(double valorDessePagamento){
+        this.jaPago += valorDessePagamento;
+    }
+
+    public double getValorDeEntrada() {
+        return valorDeEntrada;
+    }
+
+    public void setValorDeEntrada(double valorDeEntrada) {
+        this.valorDeEntrada = valorDeEntrada;
+    }
+
+    public void gerarEImprimirRecibo() throws ProdutoInexistenteException, VendaInexistenteException {
+        GeradorDeRecibo.getInstance().gerarReciboDeVenda(this);
+    }
+    
+    public void gerarEImprimirPxRecibo(double valorDessePagamento) throws VendaInexistenteException{
+        GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(this, valorDessePagamento);
+    }
+    
+    
 
 }

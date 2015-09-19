@@ -331,7 +331,7 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public void gerarEImprimirPxRecibo(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarEImprimirPxReciboDeLocacao(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
 
         locacao.gerarEImprimirPxRecibo(valorDessePagamento);
