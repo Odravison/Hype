@@ -3,6 +3,9 @@ package br.oltecnologias.hype.model;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.VendaInexistenteException;
+import java.awt.print.PrinterException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -157,11 +160,11 @@ public class Venda implements Serializable {
         this.jaPago += valorDessePagamento;
     }
 
-    public void gerarEImprimirRecibo() throws ProdutoInexistenteException, VendaInexistenteException {
+    public void gerarEImprimirRecibo() throws ProdutoInexistenteException, VendaInexistenteException, IOException, FileNotFoundException, PrinterException {
         GeradorDeRecibo.getInstance().gerarReciboDeVenda(this);
     }
     
-    public void gerarEImprimirPxRecibo(double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException{
+    public void gerarEImprimirPxRecibo(double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException{
         GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(this, valorDessePagamento);
     }
     

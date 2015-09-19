@@ -108,52 +108,15 @@ public class GerenciadorDeLocacao {
         }
     }
 
-    public void finalizarLocacao(long idLoc, Cliente cliente)
-            throws ProdutoInexistenteException, LocacaoInexistenteException, ClienteInexistenteException, ClienteExistenteException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-
-        List<Locacao> locacoes = new ArrayList<Locacao>();
-        List<Locacao> locacoesDoCliente = new ArrayList<Locacao>();
-        List<ProdutoLocado> produtosDaLocacao = new ArrayList<ProdutoLocado>();
-
-        Cliente clienteFinalizada = null;
-
-        boolean emprestou = false;
-        try {
-            locacoes = ljp.getAllLocacao();
-            locacoesDoCliente = ljp.getLocacaoByCliente(cliente.getCpf());
-            produtosDaLocacao = ljp.getProdutosFromLocacao(idLoc);
-
-            for (Locacao locacaoCliente : locacoesDoCliente) {
-                if (locacaoCliente.getId() == idLoc) {
-                    for (Locacao locacaoGer : locacoes) {
-                        if (locacaoGer.getId() == idLoc
-                                && cliente.getCpf().equals(locacaoGer.getCliente().getCpf())) {
-                            emprestou = true;
-                            for (ProdutoLocado p : produtosDaLocacao) {
-                                GerenciadorDeProduto.getInstance().adicionarQuantidade(p.getCodigoProduto(), p.getQuantidade());
-                            }
-
-                            clienteFinalizada = GerenciadorDePessoas.getInstance().pesquisarCliente(cliente.getCpf());
-                            locacaoCliente.setAtiva(!emprestou);
-                            GerenciadorDePessoas.getInstance().editarCliente(clienteFinalizada);
-
-                            //Verificar se a ação de cima vai cascatear para as filhas, caso não, é necessário executar o código abaixo.
-//                        ljp.removerLocacao(locacaoGer);
-                        }
-                    }
-                }
-
+    public void finalizarLocacao(long idLoc) throws LocacaoInexistenteException, ProdutoInexistenteException{
+        
+            Locacao locacao = this.pesquisarLocacaoPorId(idLoc);
+            for (ProdutoLocado pl: locacao.getProdutos()){
+                GerenciadorDeProduto.getInstance().adicionarQuantidade(pl.getCodigoProduto(), pl.getQuantidade());
             }
-        } finally {
-            emf.close();
-        }
-
-        if (!(emprestou)) {
-            throw new LocacaoInexistenteException("O cliente não possui a locação referente.");
-        }
-
+            locacao.setAtiva(false);
+            this.editarLocacao(locacao);
+            
     }
 
     public List<Locacao> listarLocacoesPorDataDeLocacao(Calendar data) {
