@@ -28,11 +28,15 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public void realizarVenda(Venda venda) {
+    public void realizarVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         VendaJpaRepository vjp = new VendaJpaRepository(emf);
         try {
+            for (ProdutoVendido pv: venda.getProdutosVendidos()){
+                GerenciadorDeProduto.getInstance().removerQuantidade(pv.getCodigoProduto(), pv.getQuantidade());
+            }
             vjp.create(venda);
+            venda.gerarEImprimirRecibo();
             
         } finally {
             if (emf != null){
@@ -76,7 +80,7 @@ public class GerenciadorDeVenda {
             
             Venda venda = vjp.findById(idVenda);
             for (ProdutoVendido p: venda.getProdutosVendidos()){
-                retorno += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).getDescricao();
+                retorno += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).getNome() + ", ";
             
             }
             return retorno;
@@ -145,6 +149,23 @@ public class GerenciadorDeVenda {
         } finally{
             emf.close();
         }
+    }
+
+    public void editarVenda(Venda venda) throws VendaInexistenteException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        VendaJpaRepository vjp = new VendaJpaRepository(emf);
+        
+        try{
+            
+            vjp.editarVenda(venda);
+            
+        } finally {
+            emf.close();
+        }
+    }
+    
+    public void gerarEImprimirPxRecibo(long idVenda, double valorDessePagamento) throws VendaInexistenteException{
+        this.pesquisarVendaPorId(idVenda).gerarEImprimirPxRecibo(valorDessePagamento);
     }
     
     

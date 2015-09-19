@@ -6,9 +6,11 @@
 package br.oltecnologias.hype.model;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
+import br.oltecnologias.hype.exception.VendaInexistenteException;
 import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -16,6 +18,8 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -23,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.Annotation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -190,17 +195,19 @@ public class GeradorDeRecibo {
         return (s);
     }
 
-    public void gerarRecibo(Locacao loc) throws LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarReciboDeLocacao(Locacao loc) throws LocacaoInexistenteException, ProdutoInexistenteException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
+        double valorDaOperacao = 0;
+        
 
-        double valorResta = loc.getValorLocacao() - loc.getValorDeEntrada();
+        double valorResta = 0;
 
         try {
 
             logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(307, 91);
+            logo.scaleToFit(270, 54);
 
         } catch (BadElementException | IOException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
@@ -222,6 +229,21 @@ public class GeradorDeRecibo {
         String ano = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
 
         String dataLocFormatada = new SimpleDateFormat("dd/MM/yyyy").format(loc.getDataLocacao().getTime());
+        
+        if(loc.getFormaDePagamento().toUpperCase().equals("À VISTA") || 
+                loc.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO") ||
+                loc.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")){
+            valorDaOperacao = loc.getValorLocacao();
+            loc.addValorJaPago(valorDaOperacao);
+        } else if (loc.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")){
+            if (loc.getValorDeEntrada()>0){
+                valorDaOperacao = loc.getValorDeEntrada();
+                loc.addValorJaPago(valorDaOperacao);
+                valorResta = loc.getValorLocacao() - loc.getValorDeEntrada();
+            }             
+        }
+        
+        GerenciadorDeLocacao.getInstance().editarLocacao(loc);
 
         try {
 
@@ -229,9 +251,7 @@ public class GeradorDeRecibo {
                     + "\\" + loc.getCliente().getNome() + "\\Recibos");
 
             diretorio.mkdir();
-
-            System.out.println(diretorio.toString());
-
+            
             PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Rec_"
                     + diaRecibo + "__H_" + horaGeracao + ".pdf"));
 
@@ -239,11 +259,27 @@ public class GeradorDeRecibo {
             pdf.setPageSize(PageSize.A4);
 
             Paragraph cabecalhoDeRecibo;
-            cabecalhoDeRecibo = new Paragraph("Terni Vellucci \n"
-                    + "CNPJ 22.833.691/0001-47 Av.Presidente Epitácio Pessoa, 2400 Centro – João Pessoa – PB\n"
+            cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
+                    + conf.getEmpresa().getCnpj() + "\n"
+                    + conf.getEmpresa().getEndereco().toString() + "\n"
                     + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
             cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
             cabecalhoDeRecibo.setSpacingAfter(10);
+            
+            PdfPTable tabelaCabecalho = new PdfPTable(2);
+            PdfPCell celulaImagem = new PdfPCell(logo);
+            
+            PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
+            
+            celulaImagem.setBorder(-1);
+            celulaImagem.setPadding(10);
+            
+            celulaTCabecalho.setBorder(-1);
+            celulaTCabecalho.setPadding(10);
+            
+            tabelaCabecalho.addCell(celulaImagem);
+            tabelaCabecalho.addCell(celulaTCabecalho);
+            tabelaCabecalho.setSpacingAfter(10);
 
             Paragraph tituloDeRecibo;
             tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
@@ -253,17 +289,21 @@ public class GeradorDeRecibo {
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
             Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + valorPorExtenso(loc.getValorDeEntrada()) + "\n"
-                    + "Forma de pagamento: " + loc.getFormaDePagamento() + "\n"
-                    + "Referente à locação de " + descCurtaProd.toString() + "\n "
-                    + "Valor Total: " + loc.getValorLocacao() + "\n"
-                    + "Entrada: " + loc.getValorDeEntrada() + "\n"
-                    + "Resta: " + valorResta + "\n"
-                    + "Para dia: " + loc.getDataLocacao(), timesNewRoman12);
-            textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ " + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + " reais) "
+                    + "na forma de pagamento: " + loc.getFormaDePagamento()
+                    + " Referente à locação de " + descCurtaProd.toString() + ".\n "
+                    + "Valor Total: " + loc.getValorLocacao() + " "
+                    + "Entrada: " + loc.getValorDeEntrada() + ". \n"
+                    + "Resta: " + valorResta + " "
+                    + "Para dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
+            textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
-            linhaAssinatura = new Paragraph("________________________________________________________________________",
+            linhaAssinatura = new Paragraph("\n"
+                    + "\n"
+                    + "________________________________________________________________________ \n"
+                    + conf.getEmpresa().getNome() + "\n"
+                    + "\n",
                     timesNewRoman12);
             linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
 
@@ -273,30 +313,36 @@ public class GeradorDeRecibo {
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
             Paragraph linhaDeCorte;
-            linhaDeCorte = new Paragraph("==============================================================",
+            linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
                     timesNewRoman12);
             linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
+            linhaDeCorte.setSpacingAfter(10);
+            linhaDeCorte.setSpacingBefore(10);
 
-            pdf.add(logo);
-            pdf.add(cabecalhoDeRecibo);
+            pdf.add(tabelaCabecalho);
             pdf.add(tituloDeRecibo);
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
+            pdf.add(diaLocal);
 
             pdf.add(linhaDeCorte);
 
-            pdf.add(logo);
-            pdf.add(cabecalhoDeRecibo);
+            pdf.add(tabelaCabecalho);
             pdf.add(tituloDeRecibo);
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
+            pdf.add(diaLocal);
 
-            String diretorioImpressao = conf.getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome() + "\\Recibos\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
-
+            String diretorioImpressao = diretorio.toString() + "\\" + "Rec_"
+                    + diaRecibo + "__H_" + horaGeracao + ".pdf";
+             
             FileInputStream fis = new FileInputStream(diretorioImpressao);
-            PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
+            
+            PrintPdf printPDFFile; 
+            printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
                     conf.getNomeDaImpressora());
+            
+            printPDFFile.print();
 
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
@@ -306,14 +352,13 @@ public class GeradorDeRecibo {
             
         } finally {
             pdf.close();
-            loc.setJaPago(loc.getValorDeEntrada());
 
         }
 
     }
 
-    public void gerarEImprimirRecibo(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
-        gerarRecibo(loc);
+    public void gerarEImprimirReciboDeLocacao(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
+        gerarReciboDeLocacao(loc);
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
         
@@ -339,7 +384,7 @@ public class GeradorDeRecibo {
         return descricaoCurta;
     }
 
-    public void gerarEImprimirPxRecibo(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarEImprimirPxReciboDeLocacao(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         Image logo = null;
@@ -383,18 +428,30 @@ public class GeradorDeRecibo {
 
             System.out.println(diretorio.toString());
 
-            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Rec_"
-                    + diaRecibo + "__H_" + horaGeracao + ".pdf"));
+            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + 
+                    "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf"));
 
             pdf.open();
             pdf.setPageSize(PageSize.A4);
 
             Paragraph cabecalhoDeRecibo;
-            cabecalhoDeRecibo = new Paragraph("Terni Vellucci \n"
-                    + "CNPJ 22.833.691/0001-47 Av.Presidente Epitácio Pessoa, 2400 Centro – João Pessoa – PB\n"
+            cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
+                    + conf.getEmpresa().getCnpj() + "\n"
+                    + conf.getEmpresa().getEndereco().toString() + "\n"
                     + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
             cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
             cabecalhoDeRecibo.setSpacingAfter(10);
+            
+            PdfPTable tabelaCabecalho = new PdfPTable(2);
+            PdfPCell celulaImagem = new PdfPCell(logo);
+            
+            PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
+            
+            celulaImagem.setBorder(-1);
+            celulaTCabecalho.setBorder(-1);
+            
+            tabelaCabecalho.addCell(celulaImagem);
+            tabelaCabecalho.addCell(celulaTCabecalho);
 
             Paragraph tituloDeRecibo;
             tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
@@ -410,11 +467,14 @@ public class GeradorDeRecibo {
                     + "Valor Total: " + loc.getValorLocacao() + "\n"
                     + "Pago neste dia: " + valorDessePagamento + "\n"
                     + "Resta: " + valorResta + "\n"
-                    + "Para dia: " + loc.getDataLocacao(), timesNewRoman12);
+                    + "Para dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);
 
             Paragraph linhaAssinatura;
-            linhaAssinatura = new Paragraph("________________________________________________________________________",
+            linhaAssinatura = new Paragraph("\n"
+                    + "\n"
+                    + "________________________________________________________________________ \n"
+                    + conf.getEmpresa().getNome() + "\n",
                     timesNewRoman12);
             linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
 
@@ -428,27 +488,191 @@ public class GeradorDeRecibo {
                     timesNewRoman12);
             linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
 
-            pdf.add(logo);
-            pdf.add(cabecalhoDeRecibo);
+            pdf.add(tabelaCabecalho);
             pdf.add(tituloDeRecibo);
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
 
             pdf.add(linhaDeCorte);
 
-            pdf.add(logo);
-            pdf.add(cabecalhoDeRecibo);
+            pdf.add(tabelaCabecalho);
             pdf.add(tituloDeRecibo);
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
             
             String diretorioImpressao = conf.getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome() + "\\Recibos\\" +  "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
+                    + "\\" + loc.getCliente().getNome() + "\\Recibos\\" + 
+                    "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
-            PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
-                    conf.getNomeDaImpressora());
+            PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", conf.getNomeDaImpressora());
 
+            printPDFFile.print();
+            
+            loc.setJaPago(loc.getJaPago() + valorDessePagamento);
+            GerenciadorDeLocacao.getInstance().editarLocacao(loc);
+
+        } catch (DocumentException | FileNotFoundException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (IOException | PrinterException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } finally {
+            pdf.close();
+        }
+    }
+    
+    public void gerarReciboDeVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException {
+        this.produtos = GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId());
+
+        Image logo = null;
+        double valorDaOperacao = 0;
+        
+
+        double valorResta = 0;
+
+        try {
+
+            logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
+            logo.scaleToFit(270, 54);
+
+        } catch (BadElementException | IOException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
+        Font timesNewRoman18 = new Font(Font.FontFamily.TIMES_ROMAN, 18);
+        Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+        Font courier12 = new Font(Font.FontFamily.COURIER, 12);
+
+        Document pdf = new Document();
+        File diretorio;
+
+        String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
+        String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(venda.getDataVenda().getTime());
+
+        String dia = new SimpleDateFormat("dd").format(Calendar.getInstance().getTime());
+        String mes = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(Calendar.getInstance().getTime());
+        String ano = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
+
+        String dataVendaFormatada = new SimpleDateFormat("dd/MM/yyyy").format(venda.getDataVenda().getTime());
+        
+        if(venda.getFormaDePagamento().toUpperCase().equals("À VISTA") || 
+                venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO") ||
+                venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")){
+            valorDaOperacao = venda.getValor();
+            venda.addValorJaPago(valorDaOperacao);
+        } else if (venda.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")){
+            if (venda.getValorDeEntrada()>0){
+                valorDaOperacao = venda.getValorDeEntrada();
+                venda.addValorJaPago(valorDaOperacao);
+                valorResta = venda.getValor() - venda.getValorDeEntrada();
+            }             
+        }
+        
+        GerenciadorDeVenda.getInstance().editarVenda(venda);
+
+        try {
+
+            diretorio = new File(conf.getDiretorioDeDocumentos()
+                    + "\\Vendas\\" + venda.getId());
+
+            diretorio.mkdir();
+            
+            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Rec_"
+                    + diaRecibo + "__H_" + horaGeracao + ".pdf"));
+
+            pdf.open();
+            pdf.setPageSize(PageSize.A4);
+
+            Paragraph cabecalhoDeRecibo;
+            cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
+                    + conf.getEmpresa().getCnpj() + "\n"
+                    + conf.getEmpresa().getEndereco().toString() + "\n"
+                    + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
+            cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+            cabecalhoDeRecibo.setSpacingAfter(10);
+            
+            PdfPTable tabelaCabecalho = new PdfPTable(2);
+            PdfPCell celulaImagem = new PdfPCell(logo);
+            
+            PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
+            
+            celulaImagem.setBorder(-1);
+            celulaImagem.setPadding(10);
+            
+            celulaTCabecalho.setBorder(-1);
+            celulaTCabecalho.setPadding(10);
+            
+            tabelaCabecalho.addCell(celulaImagem);
+            tabelaCabecalho.addCell(celulaTCabecalho);
+            tabelaCabecalho.setSpacingAfter(10);
+
+            Paragraph tituloDeRecibo;
+            tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
+            tituloDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph descCurtaProd;
+            descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
+
+            Paragraph textoRecibo;
+            textoRecibo = new Paragraph("Recebi de ____________________________________________________________ a importância de R$ " 
+                    + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + " reais) "
+                    + "na forma de pagamento: " + venda.getFormaDePagamento()
+                    + " Referente à compra de " + descCurtaProd.toString() + ".\n "
+                    + "Valor Total: " + venda.getValor() + " "
+                    + "Entrada: " + venda.getValorDeEntrada() + ". \n"
+                    + "Resta: " + valorResta + " "
+                    + "Para dia: " + venda.getDataVendaInString(), timesNewRoman12);
+            textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+
+            Paragraph linhaAssinatura;
+            linhaAssinatura = new Paragraph("\n"
+                    + "\n"
+                    + "________________________________________________________________________ \n"
+                    + conf.getEmpresa().getNome() + "\n"
+                    + "\n"
+                    + "________________________________________________________________________\n"
+                    + "CLIENTE",
+                    timesNewRoman12);
+            linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph diaLocal;
+            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
+                    + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
+            diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
+
+            Paragraph linhaDeCorte;
+            linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
+                    timesNewRoman12);
+            linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
+            linhaDeCorte.setSpacingAfter(10);
+            linhaDeCorte.setSpacingBefore(10);
+
+            pdf.add(tabelaCabecalho);
+            pdf.add(tituloDeRecibo);
+            pdf.add(textoRecibo);
+            pdf.add(linhaAssinatura);
+            pdf.add(diaLocal);
+
+            pdf.add(linhaDeCorte);
+
+            pdf.add(tabelaCabecalho);
+            pdf.add(tituloDeRecibo);
+            pdf.add(textoRecibo);
+            pdf.add(linhaAssinatura);
+            pdf.add(diaLocal);
+
+            String diretorioImpressao = diretorio.toString() + "\\" + "Rec_"
+                    + diaRecibo + "__H_" + horaGeracao + ".pdf";
+             
+            FileInputStream fis = new FileInputStream(diretorioImpressao);
+            
+            PrintPdf printPDFFile; 
+            printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", 
+                    conf.getNomeDaImpressora());
+            
             printPDFFile.print();
 
         } catch (DocumentException | FileNotFoundException ex) {
@@ -459,7 +683,150 @@ public class GeradorDeRecibo {
             
         } finally {
             pdf.close();
-            loc.setJaPago(loc.getJaPago() + valorDessePagamento);
+
+        }
+
+    }
+
+    public void gerarEImprimirPxReciboDeVenda(Venda venda, double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException {
+        this.produtos = GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId());
+
+        Image logo = null;
+        
+        venda.addValorJaPago(valorDessePagamento);
+        double valorResta = venda.getValor() - venda.getJaPago();
+        
+
+        try {
+
+            logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
+            logo.scaleToFit(307, 91);
+
+        } catch (BadElementException | IOException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
+        Font timesNewRoman18 = new Font(Font.FontFamily.TIMES_ROMAN, 18);
+        Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+        Font courier12 = new Font(Font.FontFamily.COURIER, 12);
+
+        Document pdf = new Document();
+        File diretorio;
+
+        String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
+        String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(venda.getDataVenda().getTime());
+
+        String dia = new SimpleDateFormat("dd").format(Calendar.getInstance().getTime());
+        String mes = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(Calendar.getInstance().getTime());
+        String ano = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
+
+        String dataLocFormatada = new SimpleDateFormat("dd/MM/yyyy").format(venda.getDataVenda().getTime());
+
+        try {
+
+            diretorio = new File(conf.getDiretorioDeDocumentos()
+                    + "\\Vendas\\" + venda.getId());
+
+            diretorio.mkdir();
+
+            System.out.println(diretorio.toString());
+
+            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + 
+                    "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf"));
+
+            pdf.open();
+            pdf.setPageSize(PageSize.A4);
+
+            Paragraph cabecalhoDeRecibo;
+            cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
+                    + conf.getEmpresa().getCnpj() + "\n"
+                    + conf.getEmpresa().getEndereco().toString() + "\n"
+                    + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
+            cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+            cabecalhoDeRecibo.setSpacingAfter(10);
+            
+            PdfPTable tabelaCabecalho = new PdfPTable(2);
+            PdfPCell celulaImagem = new PdfPCell(logo);
+            
+            PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
+            
+            celulaImagem.setBorder(-1);
+            celulaTCabecalho.setBorder(-1);
+            
+            tabelaCabecalho.addCell(celulaImagem);
+            tabelaCabecalho.addCell(celulaTCabecalho);
+
+            Paragraph tituloDeRecibo;
+            tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
+            tituloDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph descCurtaProd;
+            descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
+
+            Paragraph textoRecibo;
+            textoRecibo = new Paragraph("Recebi de ____________________________________________________________ a importância de R$ " 
+                    + valorDessePagamento + " (" + valorPorExtenso(valorDessePagamento) + " reais) "
+                    + "na forma de pagamento: " + venda.getFormaDePagamento()
+                    + " Referente à compra de " + descCurtaProd.toString() + ".\n "
+                    + "Valor Total: " + venda.getValor() + " "
+                    + "Entrada: " + venda.getValorDeEntrada() + ". \n"
+                    + "Resta: " + valorResta + " "
+                    + "Para dia: " + venda.getDataVendaInString(), timesNewRoman12);
+            textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph linhaAssinatura;
+            linhaAssinatura = new Paragraph("\n"
+                    + "\n"
+                    + "________________________________________________________________________ \n"
+                    + conf.getEmpresa().getNome() + "\n"
+                    + "\n"
+                    + "________________________________________________________________________\n"
+                    + "CLIENTE",
+                    timesNewRoman12);
+            linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
+
+            Paragraph diaLocal;
+            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
+                    + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
+            diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
+
+            Paragraph linhaDeCorte;
+            linhaDeCorte = new Paragraph("==============================================================",
+                    timesNewRoman12);
+            linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
+
+            pdf.add(tabelaCabecalho);
+            pdf.add(tituloDeRecibo);
+            pdf.add(textoRecibo);
+            pdf.add(linhaAssinatura);
+
+            pdf.add(linhaDeCorte);
+
+            pdf.add(tabelaCabecalho);
+            pdf.add(tituloDeRecibo);
+            pdf.add(textoRecibo);
+            pdf.add(linhaAssinatura);
+            
+            String diretorioImpressao = conf.getDiretorioDeDocumentos() + "\\Vendas\\" + venda.getId() 
+                    + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
+
+            FileInputStream fis = new FileInputStream(diretorioImpressao);
+            PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", conf.getNomeDaImpressora());
+
+            printPDFFile.print();
+            
+            venda.setJaPago(venda.getJaPago() + valorDessePagamento);
+            GerenciadorDeVenda.getInstance().editarVenda(venda);
+
+        } catch (DocumentException | FileNotFoundException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } catch (IOException | PrinterException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+            
+        } finally {
+            pdf.close();
         }
     }
 }
