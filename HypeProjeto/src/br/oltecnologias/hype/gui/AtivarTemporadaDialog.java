@@ -86,6 +86,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         sliderTemporadaLocacao.setBackground(new java.awt.Color(255, 255, 255));
         sliderTemporadaLocacao.setPaintTrack(false);
         sliderTemporadaLocacao.setSnapToTicks(true);
+        sliderTemporadaLocacao.setValue(0);
         sliderTemporadaLocacao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         sliderTemporadaLocacao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sliderTemporadaLocacao.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -140,6 +141,10 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 sliderTemporadaLocacao.setValue(100);
                 labelTemporadaLocacao.setText("Temporada Ativada:");
             }
+        } catch (TemporadaInexistenteException e) {
+            sliderTemporadaLocacao.setValue(0);
+            labelTemporadaLocacao.setText("Temporada Desativada:");
+            painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
         } catch(Exception e) {
             sliderTemporadaLocacao.setValue(0);
             labelTemporadaLocacao.setText("Temporada Desativada:");
@@ -202,6 +207,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         sliderTemporadaVenda.setBackground(new java.awt.Color(255, 255, 255));
         sliderTemporadaVenda.setPaintTrack(false);
         sliderTemporadaVenda.setSnapToTicks(true);
+        sliderTemporadaVenda.setValue(0);
         sliderTemporadaVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         sliderTemporadaVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         sliderTemporadaVenda.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -260,6 +266,10 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 sliderTemporadaVenda.setValue(100);
                 labelTemporadaVenda.setText("Temporada Ativada:");
             }
+        } catch (TemporadaInexistenteException e) {
+            sliderTemporadaVenda.setValue(0);
+            labelTemporadaVenda.setText("Temporada Desativada:");
+            painelCorVenda.setBackground(new java.awt.Color(204, 0, 0));
         } catch(Exception e) {
             sliderTemporadaVenda.setValue(0);
             labelTemporadaVenda.setText("Temporada Desativada:");
@@ -315,7 +325,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             sliderTemporadaLocacao.setBackground(new java.awt.Color(204, 0, 0));
             painelCorLocacao.setBackground(new java.awt.Color(204, 0, 0));
             sliderTemporadaLocacao.setValue(0);
-            campoPercentualDescontoLocacao.setEditable(true);
+            campoPercentualDescontoLocacao.setEnabled(true);
         }
     }//GEN-LAST:event_sliderTemporadaLocacaoStateChanged
 
@@ -406,7 +416,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             sliderTemporadaVenda.setBackground(new java.awt.Color(204, 0, 0));
             painelCorVenda.setBackground(new java.awt.Color(204, 0, 0));
             sliderTemporadaVenda.setValue(0);
-            campoPercentualDescontoVenda.setEditable(true);
+            campoPercentualDescontoVenda.setEnabled(true);
         }
     }//GEN-LAST:event_sliderTemporadaVendaStateChanged
 

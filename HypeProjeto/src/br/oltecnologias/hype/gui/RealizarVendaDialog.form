@@ -31,7 +31,7 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="23" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                   <Component id="painelFormaPagamento" alignment="1" pref="788" max="32767" attributes="0"/>
                   <Component id="painelProdutos" alignment="1" pref="788" max="32767" attributes="0"/>
@@ -98,7 +98,7 @@
                   <Component id="labelStatus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labelStatusTemporada" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -640,7 +640,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="try {&#xa;    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada(&quot;VENDA&quot;)) {&#xa;        labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));&#xa;        labelStatusTemporada.setText(&quot;ON&quot;);&#xa;    } &#xa;} catch(Exception e) {&#xa;    labelStatusTemporada.setText(&quot;OFF&quot;);&#xa;    labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));&#xa;}"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="try {&#xa;    if(GerenciadorDoSistema.getInstance().isTemporadaAtivada(&quot;VENDA&quot;)) {&#xa;        labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));&#xa;        labelStatusTemporada.setText(&quot;ON&quot;);&#xa;    } &#xa;} catch(TemporadaInexistenteException e) {&#xa;    labelStatusTemporada.setText(&quot;OFF&quot;);&#xa;    labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));&#xa;} catch (Exception e) {&#xa;    labelStatusTemporada.setText(&quot;OFF&quot;);&#xa;    labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));&#xa;}"/>
       </AuxValues>
     </Component>
   </SubComponents>
