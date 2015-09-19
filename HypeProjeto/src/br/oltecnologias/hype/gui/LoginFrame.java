@@ -1,29 +1,13 @@
 package br.oltecnologias.hype.gui;
 
-import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
-import br.oltecnologias.hype.exception.ClienteExistenteException;
-import br.oltecnologias.hype.exception.ClienteInexistenteException;
-import br.oltecnologias.hype.exception.LocacaoInexistenteException;
-import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.UsuarioExistenteException;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Configuracao;
-import br.oltecnologias.hype.model.Empresa;
-import br.oltecnologias.hype.model.Endereco;
-import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Usuario;
-import java.awt.BorderLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JProgressBar;
 
 
 /**
@@ -200,7 +184,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
-                .addContainerGap(402, Short.MAX_VALUE)
+                .addContainerGap(395, Short.MAX_VALUE)
                 .addComponent(labelIconeBotaoBranco)
                 .addGap(244, 244, 244))
             .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,7 +202,7 @@ public class LoginFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 710, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, 703, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -260,7 +244,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     barCarregando.setVisible(true);
                     labelMensagemCarregando.setVisible(true);
                     
-                    new Thread() {
+                    threadCarregandoSistema = new Thread() {
                         public void run() {
                             String pontosTxt = "";
                             while(loginFrame.isVisible()) { 
@@ -269,7 +253,6 @@ public class LoginFrame extends javax.swing.JFrame {
                                         sleep(30);
                                         barCarregando.setValue(i);
                                     } catch (InterruptedException e) {
-                                        JOptionPane.showMessageDialog(null, "O sistema está sendo carregado\n\nAguarde...");
                                     }
                                     if (i == 99) {
                                         pontosTxt = "";
@@ -281,7 +264,8 @@ public class LoginFrame extends javax.swing.JFrame {
                             }
 
                                 }
-                    }.start(); 
+                    }; 
+                    threadCarregandoSistema.start();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
@@ -303,6 +287,9 @@ public class LoginFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_campoSenhaKeyTyped
       
+    public void fecharThreadDeCarregamento() {
+        threadCarregandoSistema.interrupt();
+    }
     /**
      * @param args the command line arguments
      */
@@ -341,6 +328,7 @@ public class LoginFrame extends javax.swing.JFrame {
     
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
+    private Thread threadCarregandoSistema;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar barCarregando;
     private javax.swing.JButton botaoEntrar;

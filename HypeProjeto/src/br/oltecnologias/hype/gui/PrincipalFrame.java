@@ -59,6 +59,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         loginUsuario = login;
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        loginFrame.fecharThreadDeCarregamento();
         loginFrame.setVisible(false);
         loginFrame.dispose();
     }   
@@ -286,7 +287,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnRlCliente.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pnRlCliente.setPreferredSize(new java.awt.Dimension(806, 345));
+        pnRlCliente.setPreferredSize(new java.awt.Dimension(806, 340));
 
         tabelaClientes.setAutoCreateRowSorter(true);
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -416,9 +417,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(labelFiltrarClientes)
                         .addComponent(comboFiltrarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(21, 21, 21)
+                .addGap(18, 18, 18)
                 .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18))
         );
 
         abas.addTab("  Clientes  ", painelClientes);
@@ -469,7 +470,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         pnRlProduto.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnRlProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pnRlProduto.setPreferredSize(new java.awt.Dimension(1176, 359));
+        pnRlProduto.setPreferredSize(new java.awt.Dimension(1176, 340));
 
         tabelaProdutos.setAutoCreateRowSorter(true);
         tabelaProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -627,7 +628,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(comboFiltrarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoEditarProduto)
                 .addComponent(botaoExcluirProduto))
-            .addGap(18, 18, 18)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
@@ -680,7 +681,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     pnRlFornecedores.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlFornecedores.setPreferredSize(new java.awt.Dimension(1136, 359));
+    pnRlFornecedores.setPreferredSize(new java.awt.Dimension(1136, 340));
 
     tabelaFornecedores.setAutoCreateRowSorter(true);
     tabelaFornecedores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -804,7 +805,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarFornecedor))
-            .addGap(39, 39, 39)
+            .addGap(36, 36, 36)
             .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelFornecedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFiltrarFornecedores)
@@ -814,7 +815,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(botaoExcluirFornecedor)))
             .addGap(18, 18, 18)
             .addComponent(pnRlFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(73, 73, 73))
+            .addGap(18, 18, 18))
     );
 
     abas.addTab("Fornecedores", painelFornecedores);
@@ -864,7 +865,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     pnRlLocacoes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlLocacoes.setPreferredSize(new java.awt.Dimension(1286, 359));
+    pnRlLocacoes.setPreferredSize(new java.awt.Dimension(1286, 340));
 
     tabelaLocacoes.setAutoCreateRowSorter(true);
     tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -999,15 +1000,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboFiltrarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoFinalizarLocacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoGerarReciboLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoVerRecibosLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoVerContrato)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoFinalizarLocacao))
+                        .addComponent(botaoVerContrato))
                     .addComponent(pnRlLocacoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addContainerGap(19, Short.MAX_VALUE))
     );
     painelLocacoesLayout.setVerticalGroup(
         painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1018,7 +1019,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarLocacao))
-            .addGap(40, 40, 40)
+            .addGap(36, 36, 36)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelLocacoesLayout.createSequentialGroup()
                     .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1031,11 +1032,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(botaoVerRecibosLocacao)
-                            .addComponent(botaoGerarReciboLocacao))
-                        .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(botaoVerContrato)
-                            .addComponent(botaoFinalizarLocacao)))))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(botaoGerarReciboLocacao)
+                            .addComponent(botaoFinalizarLocacao))
+                        .addComponent(botaoVerContrato))))
+            .addGap(18, 18, 18))
     );
 
     abas.addTab("  Locações  ", painelLocacoes);
@@ -1095,7 +1095,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     pnRlVendas.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
     pnRlVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlVendas.setPreferredSize(new java.awt.Dimension(1286, 359));
+    pnRlVendas.setPreferredSize(new java.awt.Dimension(1286, 340));
 
     tabelaVendas.setAutoCreateRowSorter(true);
     tabelaVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1210,7 +1210,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarVendas))
-            .addGap(38, 38, 38)
+            .addGap(36, 36, 36)
             .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoVerRecibosVenda)
@@ -1218,9 +1218,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFiltrarVenda)
                     .addComponent(comboFiltrarVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addGap(19, 19, 19)
+            .addGap(18, 18, 18)
             .addComponent(pnRlVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(73, 73, 73))
+            .addGap(18, 18, 18))
     );
 
     abas.addTab("   Vendas   ", painelVendas);
@@ -1411,8 +1411,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(labelFiltrarMovimentacao)
                     .addComponent(comboFiltrarMovimentacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGap(18, 18, 18)
-            .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap(54, Short.MAX_VALUE))
+            .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(37, Short.MAX_VALUE))
     );
 
     atualizarValorEmCaixa();
@@ -1719,7 +1719,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                     pnRlUsuario.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                     pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-                    pnRlUsuario.setPreferredSize(new java.awt.Dimension(596, 359));
+                    pnRlUsuario.setPreferredSize(new java.awt.Dimension(596, 340));
 
                     tabelaUsuarios.setAutoCreateRowSorter(true);
                     tabelaUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1859,11 +1859,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 .addComponent(botaoNovoUsuario)
                                 .addComponent(botaoAtivarTemporada)
                                 .addComponent(botaoEditarEmpresa))
-                            .addGap(46, 46, 46)
+                            .addGap(50, 50, 50)
                             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(botaoPesquisarUsuario))
-                            .addGap(39, 39, 39)
+                            .addGap(36, 36, 36)
                             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(labelFiltrarUsuarios)
@@ -1873,7 +1873,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                     .addComponent(botaoExcluirUsuario)))
                             .addGap(18, 18, 18)
                             .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addContainerGap())
+                            .addGap(18, 18, 18))
                     );
 
                     try {
@@ -2515,8 +2515,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
         if (evt.getClickCount() == 1) {
-            botaoGerarReciboVenda.setVisible(true);
             botaoVerRecibosVenda.setVisible(true);
+            if(((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-2))
+                    .toUpperCase().equals("À VISTA")) {
+                botaoGerarReciboVenda.setVisible(true);
+            } 
         }
         if(evt.getClickCount() == 2) {
             
@@ -2585,14 +2588,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             botaoVerRecibosLocacao.setVisible(true);
             botaoVerContrato.setVisible(true);
-            botaoFinalizarLocacao.setVisible(true);
-            /*if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))) {
-                botaoGerarReciboLocacao.setVisible(true);
-            } */
+            botaoGerarReciboLocacao.setVisible(true);
+            if(((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-2))
+                    .toUpperCase().equals("ABERTA")) {
+                botaoFinalizarLocacao.setVisible(true);
+            } 
+            
         }
         if(evt.getClickCount() == 2) {
             
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
+            Executors.newFixedThreadPool(5).execute(new Runnable() {
                 public void run() {
                     try {
                         //Passa, como parâmetro, a locação pesquisada pelo id
@@ -2814,7 +2819,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
                         .getCliente().getNome();
                 Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                        +nomeCliente+"\\Recibos"));
+                        +"\\"+nomeCliente+"\\Recibos"));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2826,17 +2831,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
-            try {
-                GerarReciboDialog dialog = new GerarReciboDialog(null);
-                dialog.setLocationRelativeTo(null);
-                if (dialog.alterarDados()) {
-                    GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                        Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
+            //if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))) {
+                try {
+                    GerarReciboDialog dialog = new GerarReciboDialog(null);
+                    dialog.setLocationRelativeTo(null);
+                    if (dialog.alterarDados()) {
+                        GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1))), dialog.getValorRecibo());
+                    }
+                    dialog.dispose();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-                dialog.dispose();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+           // } else {
+             //   JOptionPane.showMessageDialog(null, "Não é possível gerar um recido para uma locação finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
+            //}
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2878,17 +2887,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(tabelaLocacoes.getSelectedRow() >= 0) {
             int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
             //Sim = 0
-            if(escolha == 0) { 
+            if (escolha == 0) {
                 try {
                     Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0));
-                    //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)), cliente);
+                    String idLocacao = (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1);
                     
+                    //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
+                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong(idLocacao), cliente);
+
                     JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+                    
+                    atualizarStatusDeLocacao(idLocacao, tabelaLocacoes.getSelectedRow());
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } 
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -3498,6 +3511,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         }
         
+    }
+    
+    public void atualizarStatusDeLocacao(String idLocacao, int linha) {
+        int quantColunas = modeloTabelaLocacoes.getColumnCount();
+        if(idLocacao.equals((String) modeloTabelaLocacoes.getValueAt(linha, quantColunas-1))) {
+            //Atualiza a coluna de status
+            modeloTabelaLocacoes.setValueAt("Fechada", linha, quantColunas-2);
+ 
+        } else {
+            //Varre o model da tabela para atualizar o status na linha correta
+            for(int i=0; i < modeloTabelaLocacoes.getRowCount(); i++) {
+                if(idLocacao.equals((String) modeloTabelaLocacoes.getValueAt(i, quantColunas-1))) {
+                    //Coluna de nome
+                    modeloTabelaLocacoes.setValueAt("Fechada", i, quantColunas-2);
+                    
+                    break;
+                }
+            }
+        }
     }
     
     public void atualizarValorEmCaixa() {

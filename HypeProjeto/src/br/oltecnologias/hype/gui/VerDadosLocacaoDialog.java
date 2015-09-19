@@ -6,9 +6,12 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
+import java.awt.Desktop;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,7 +45,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelValorTotal = new javax.swing.JLabel();
         labelStatus = new javax.swing.JLabel();
         botaoOk = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botaoGerarContrato = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -208,12 +211,12 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jButton1.setText("Gerar Contrato");
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botaoGerarContrato.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        botaoGerarContrato.setText("Gerar Contrato");
+        botaoGerarContrato.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoGerarContrato.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoGerarContratoActionPerformed(evt);
             }
         });
 
@@ -225,7 +228,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(botaoGerarContrato)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoOk))
                     .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -239,7 +242,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoOk)
-                    .addComponent(jButton1))
+                    .addComponent(botaoGerarContrato))
                 .addGap(23, 23, 23))
         );
 
@@ -256,19 +259,22 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoOkActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoGerarContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarContratoActionPerformed
         try {
-            GeradorDeContrato.getInstance().gerarContrato(locacao);
+            GeradorDeContrato.getInstance().gerarContrato(locacao); 
+            JOptionPane.showMessageDialog(null, "Contrato da locação gerado com sucesso!");
+            Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                        +"\\"+locacao.getCliente().getNome()+"\\Contratos"));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível gerar o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_botaoGerarContratoActionPerformed
 
     private Locacao locacao;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaProdutosLocados;
+    private javax.swing.JButton botaoGerarContrato;
     private javax.swing.JButton botaoOk;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
     private javax.swing.JLabel labelDesconto;
