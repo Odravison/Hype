@@ -46,7 +46,7 @@ public class Venda implements Serializable {
     
     private int percentualDesconto;
     
-    private double jaPago;
+    private double jaPago = 0;
     
 
     public Venda() {
@@ -70,6 +70,9 @@ public class Venda implements Serializable {
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
         this.entrada = entrada;
+        if (entrada == 0) {
+            this.jaPago = valor;
+        }
         this.percentualDesconto = percentualDesconto;
         if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
