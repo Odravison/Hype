@@ -390,7 +390,7 @@ public class GeradorDeRecibo {
         try {
 
             logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(307, 91);
+            logo.scaleToFit(270, 54);
 
         } catch (BadElementException | IOException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
@@ -686,7 +686,7 @@ public class GeradorDeRecibo {
         try {
 
             logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(307, 91);
+            logo.scaleToFit(270, 54);
 
         } catch (BadElementException | IOException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
