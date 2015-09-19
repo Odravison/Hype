@@ -878,7 +878,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } else {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
@@ -900,7 +900,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutos.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) tabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotalLocacao();
             campoPercentualDesconto.setEnabled(true);
         }
@@ -935,7 +935,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if(evt.getClickCount() == 2) {            
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
@@ -951,7 +951,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) tabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotalLocacao();
         }
         if(produtosLocados.size() <= 0) {

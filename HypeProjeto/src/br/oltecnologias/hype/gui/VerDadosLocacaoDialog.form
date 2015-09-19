@@ -136,7 +136,7 @@
                 <Property name="rows" type="int" value="5"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String descricaoProdutosLocados = &quot;&quot;;&#xa;try {&#xa;    for(Produto produto: GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId())) {&#xa;        descricaoProdutosLocados += produto.getDescricao()+&quot;\n&quot;;&#xa;    }&#xa;} catch(Exception e) {&#xa;    JOptionPane.showMessageDialog(null, &quot;N&#xe3;o foi poss&#xed;vel exibir os produtos locado:s\n&quot;+e.getMessage(), &#xa;                    &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;}&#xa;areaProdutosLocados.setText(descricaoProdutosLocados);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String descricaoProdutosLocados = &quot;&quot;;&#xa;try {&#xa;    for(Produto produto: GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId())) {&#xa;        descricaoProdutosLocados += produto.getDescricao()+&quot;\n&quot;;&#xa;    }&#xa;} catch(Exception e) {&#xa;    JOptionPane.showMessageDialog(null, &quot;N&#xe3;o foi poss&#xed;vel exibir os produtos locado:\n&quot;+e.getMessage(), &#xa;                    &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;}&#xa;areaProdutosLocados.setText(descricaoProdutosLocados);"/>
               </AuxValues>
             </Component>
           </SubComponents>

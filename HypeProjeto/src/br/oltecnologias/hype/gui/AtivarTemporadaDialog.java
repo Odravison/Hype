@@ -149,9 +149,9 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         }
 
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png"))); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -159,9 +159,9 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
         });
 
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png"))); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -294,7 +294,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoSalvar)
                     .addComponent(botaoCancelar))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -311,7 +311,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             labelTemporadaLocacao.setText("Temporada Ativada: ");
             painelCorLocacao.setBackground(new java.awt.Color(0, 153, 51));
             sliderTemporadaLocacao.setValue(100);
-            
+            campoPercentualDescontoLocacao.setEnabled(false);
         } else {
             labelTemporadaLocacao.setText("Temporada desativada: ");
             sliderTemporadaLocacao.setBackground(new java.awt.Color(204, 0, 0));
@@ -402,7 +402,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
             labelTemporadaVenda.setText("Temporada Ativada: ");
             painelCorVenda.setBackground(new java.awt.Color(0, 153, 51));
             sliderTemporadaVenda.setValue(100);
-            
+            campoPercentualDescontoVenda.setEnabled(false);
         } else {
             labelTemporadaVenda.setText("Temporada desativada: ");
             sliderTemporadaVenda.setBackground(new java.awt.Color(204, 0, 0));

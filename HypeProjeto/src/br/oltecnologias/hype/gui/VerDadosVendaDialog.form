@@ -144,6 +144,7 @@
           <SubComponents>
             <Component class="javax.swing.JTextArea" name="areaProdutosVendidos">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -151,7 +152,7 @@
                 <Property name="rows" type="int" value="5"/>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="areaProdutosVendidos.setText(&quot;Listar os produtos vendidos&quot;);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String descricaoProdutosVendidos = &quot;&quot;;&#xa;try {&#xa;    for(Produto produto: GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId())) {&#xa;        descricaoProdutosVendidos += produto.getDescricao()+&quot;\n&quot;;&#xa;    }&#xa;} catch(Exception e) {&#xa;    JOptionPane.showMessageDialog(null, &quot;N&#xe3;o foi poss&#xed;vel exibir os produtos vendidos:\n&quot;+e.getMessage(), &#xa;                    &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;}&#xa;areaProdutosVendidos.setText(descricaoProdutosVendidos);"/>
               </AuxValues>
             </Component>
           </SubComponents>

@@ -6,12 +6,9 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
-import br.oltecnologias.hype.model.Configuracao;
 import javax.swing.ImageIcon;
 
 import br.oltecnologias.hype.model.Configuracao;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -306,8 +303,8 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void campoNomeImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNomeImpressoraMouseClicked
-        if(campoDiretorioRelatorios.getText().equals("Informe o nome da impressora")) {
-            eliminarTextoDeCampo(campoDiretorioRelatorios);
+        if(campoNomeImpressora.getText().equals("Informe o nome da impressora")) {
+            eliminarTextoDeCampo(campoNomeImpressora);
         }
     }//GEN-LAST:event_campoNomeImpressoraMouseClicked
 

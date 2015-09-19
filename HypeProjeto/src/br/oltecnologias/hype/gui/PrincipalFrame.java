@@ -1556,364 +1556,372 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
     Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
-    campoDiretorioRelatorios.setText(configuracao.getDiretorioDeRelatorios());
-    campoDiretorioDocumentos.setText(configuracao.getDiretorioDeDocumentos());
-    campoDiretorioBackup.setText(configuracao.getDiretorioDeBackup());
-    campoNomeImpressora.setText(configuracao.getNomeDaImpressora());
-
-    labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    labelNomeImpressora.setText("Nome da impressora");
-
-    botaoAlterarNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoAlterarNomeImpressora.setText("Alterar");
-    botaoAlterarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoAlterarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoAlterarNomeImpressoraActionPerformed(evt);
+    if(configuracao.getDiretorioDeRelatorios() != null) {
+        campoDiretorioRelatorios.setText(configuracao.getDiretorioDeRelatorios().replace("\\\\", "\\"));
         }
-    });
+        if(configuracao.getDiretorioDeDocumentos() != null) {
+            campoDiretorioDocumentos.setText(configuracao.getDiretorioDeDocumentos().replace("\\\\", "\\"));
+            }
+            if(configuracao.getDiretorioDeBackup() != null) {
+                campoDiretorioBackup.setText(configuracao.getDiretorioDeBackup().replace("\\\\", "\\"));
+                }
+                if(configuracao.getNomeDaImpressora() != null) {
+                    campoNomeImpressora.setText(configuracao.getNomeDaImpressora().replace("\\\\", "\\"));
+                    }
 
-    botaoSalvarNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoSalvarNomeImpressora.setText(" Salvar ");
-    botaoSalvarNomeImpressora.setToolTipText("Salvar diretório");
-    botaoSalvarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoSalvarNomeImpressora.setEnabled(false);
-    botaoSalvarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoSalvarNomeImpressoraActionPerformed(evt);
-        }
-    });
+                    labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    labelNomeImpressora.setText("Nome da impressora");
 
-    javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
-    painelConfiguracoes.setLayout(painelConfiguracoesLayout);
-    painelConfiguracoesLayout.setHorizontalGroup(
-        painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-            .addGap(32, 32, 32)
-            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(labelNomeImpressora)
-                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                    .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(botaoAlterarNomeImpressora)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoSalvarNomeImpressora))
-                .addComponent(labelDiretorioRelatorios)
-                .addComponent(labelDiretorioDocumentos)
-                .addComponent(labelDiretorioBackups)
-                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
-                        .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoAlterarDiretorioDocumentos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoSalvarDiretorioDocumentos))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
-                        .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(botaoAlterarDiretorioBackup)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSalvarDiretorioBackup)))
-                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(botaoAlterarDiretorioRelatorios)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoSalvarDiretorioRelatorios)))
-            .addContainerGap(687, Short.MAX_VALUE))
-    );
-    painelConfiguracoesLayout.setVerticalGroup(
-        painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelConfiguracoesLayout.createSequentialGroup()
-            .addGap(66, 66, 66)
-            .addComponent(labelDiretorioBackups)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoSalvarDiretorioBackup)
-                .addComponent(botaoAlterarDiretorioBackup))
-            .addGap(30, 30, 30)
-            .addComponent(labelDiretorioDocumentos)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoSalvarDiretorioDocumentos)
-                .addComponent(botaoAlterarDiretorioDocumentos))
-            .addGap(30, 30, 30)
-            .addComponent(labelDiretorioRelatorios)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoSalvarDiretorioRelatorios)
-                .addComponent(botaoAlterarDiretorioRelatorios)
-                .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(30, 30, 30)
-            .addComponent(labelNomeImpressora)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoSalvarNomeImpressora)
-                .addComponent(botaoAlterarNomeImpressora)
-                .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addContainerGap(216, Short.MAX_VALUE))
-    );
+                    botaoAlterarNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoAlterarNomeImpressora.setText("Alterar");
+                    botaoAlterarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoAlterarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoAlterarNomeImpressoraActionPerformed(evt);
+                        }
+                    });
 
-    try {
-        if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
+                    botaoSalvarNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoSalvarNomeImpressora.setText(" Salvar ");
+                    botaoSalvarNomeImpressora.setToolTipText("Salvar diretório");
+                    botaoSalvarNomeImpressora.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoSalvarNomeImpressora.setEnabled(false);
+                    botaoSalvarNomeImpressora.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoSalvarNomeImpressoraActionPerformed(evt);
+                        }
+                    });
 
-            abas.addTab("Configuração", painelConfiguracoes);
-        }
-    } catch (UsuarioInexistenteException e) {
-        setVisible(false);
-        new LoginFrame().setVisible(true);
-    }
+                    javax.swing.GroupLayout painelConfiguracoesLayout = new javax.swing.GroupLayout(painelConfiguracoes);
+                    painelConfiguracoes.setLayout(painelConfiguracoesLayout);
+                    painelConfiguracoesLayout.setHorizontalGroup(
+                        painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                            .addGap(32, 32, 32)
+                            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(labelNomeImpressora)
+                                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                                    .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(botaoAlterarNomeImpressora)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botaoSalvarNomeImpressora))
+                                .addComponent(labelDiretorioRelatorios)
+                                .addComponent(labelDiretorioDocumentos)
+                                .addComponent(labelDiretorioBackups)
+                                .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
+                                        .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(botaoAlterarDiretorioDocumentos)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(botaoSalvarDiretorioDocumentos))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelConfiguracoesLayout.createSequentialGroup()
+                                        .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(botaoAlterarDiretorioBackup)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(botaoSalvarDiretorioBackup)))
+                                .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(botaoAlterarDiretorioRelatorios)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botaoSalvarDiretorioRelatorios)))
+                            .addContainerGap(687, Short.MAX_VALUE))
+                    );
+                    painelConfiguracoesLayout.setVerticalGroup(
+                        painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelConfiguracoesLayout.createSequentialGroup()
+                            .addGap(66, 66, 66)
+                            .addComponent(labelDiretorioBackups)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botaoSalvarDiretorioBackup)
+                                .addComponent(botaoAlterarDiretorioBackup))
+                            .addGap(30, 30, 30)
+                            .addComponent(labelDiretorioDocumentos)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botaoSalvarDiretorioDocumentos)
+                                .addComponent(botaoAlterarDiretorioDocumentos))
+                            .addGap(30, 30, 30)
+                            .addComponent(labelDiretorioRelatorios)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(botaoSalvarDiretorioRelatorios)
+                                .addComponent(botaoAlterarDiretorioRelatorios)
+                                .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(30, 30, 30)
+                            .addComponent(labelNomeImpressora)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(painelConfiguracoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(botaoSalvarNomeImpressora)
+                                .addComponent(botaoAlterarNomeImpressora)
+                                .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addContainerGap(216, Short.MAX_VALUE))
+                    );
 
-    painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
-    painelAdministrador.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-    painelAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            painelAdministradorMouseClicked(evt);
-        }
-    });
+                    try {
+                        if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
 
-    botaoNovoUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoNovoUsuario.setText("Novo Usuário");
-    botaoNovoUsuario.setToolTipText("Criar novo usuário");
-    botaoNovoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoNovoUsuarioActionPerformed(evt);
-        }
-    });
+                            abas.addTab("Configuração", painelConfiguracoes);
+                        }
+                    } catch (UsuarioInexistenteException e) {
+                        setVisible(false);
+                        new LoginFrame().setVisible(true);
+                    }
 
-    botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoPesquisarUsuario.setText("Pesquisar");
-    botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoPesquisarUsuario.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoPesquisarUsuarioActionPerformed(evt);
-        }
-    });
+                    painelAdministrador.setBackground(new java.awt.Color(255, 255, 255));
+                    painelAdministrador.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+                    painelAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            painelAdministradorMouseClicked(evt);
+                        }
+                    });
 
-    campoPesquisarUsuarios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-    campoPesquisarUsuarios.setForeground(new java.awt.Color(153, 153, 153));
-    campoPesquisarUsuarios.setText("Pesquisar Usuário");
-    campoPesquisarUsuarios.setToolTipText("Informe o nome do usuário");
-    campoPesquisarUsuarios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-    campoPesquisarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            campoPesquisarUsuariosMouseClicked(evt);
-        }
-    });
-    campoPesquisarUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
-        public void keyTyped(java.awt.event.KeyEvent evt) {
-            campoPesquisarUsuariosKeyTyped(evt);
-        }
-    });
+                    botaoNovoUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoNovoUsuario.setText("Novo Usuário");
+                    botaoNovoUsuario.setToolTipText("Criar novo usuário");
+                    botaoNovoUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoNovoUsuario.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoNovoUsuarioActionPerformed(evt);
+                        }
+                    });
 
-    pnRlUsuario.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    pnRlUsuario.setPreferredSize(new java.awt.Dimension(596, 359));
+                    botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoPesquisarUsuario.setText("Pesquisar");
+                    botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoPesquisarUsuario.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoPesquisarUsuarioActionPerformed(evt);
+                        }
+                    });
 
-    tabelaUsuarios.setAutoCreateRowSorter(true);
-    tabelaUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    tabelaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    tabelaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-    tabelaUsuarios.getTableHeader().setResizingAllowed(false);
-    tabelaUsuarios.getTableHeader().setReorderingAllowed(false);
-    String[] nomesColunasTabelaUsuarios = {"Nome do Usuário", "Login", "Categoria"};
-    //Define a fonte do cabeçalho da tabela usuários
-    tabelaUsuarios.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
-    //Definindo o tamanho da linha
-    tabelaUsuarios.setRowHeight(25);
+                    campoPesquisarUsuarios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
+                    campoPesquisarUsuarios.setForeground(new java.awt.Color(153, 153, 153));
+                    campoPesquisarUsuarios.setText("Pesquisar Usuário");
+                    campoPesquisarUsuarios.setToolTipText("Informe o nome do usuário");
+                    campoPesquisarUsuarios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
+                    campoPesquisarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            campoPesquisarUsuariosMouseClicked(evt);
+                        }
+                    });
+                    campoPesquisarUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
+                        public void keyTyped(java.awt.event.KeyEvent evt) {
+                            campoPesquisarUsuariosKeyTyped(evt);
+                        }
+                    });
 
-    //Linhas da tabela
-    List<Object[]> listaLinhasUsuarios = new ArrayList<>();
+                    pnRlUsuario.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                    pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    pnRlUsuario.setPreferredSize(new java.awt.Dimension(596, 359));
 
-    //Adicionando valores nas linhas
-    for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
-        listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
-    }
-    //cria um defaultablemodel com as informações acima
-    modeloTabelaUsuarios = new DefaultTableModel(
-        listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){
+                    tabelaUsuarios.setAutoCreateRowSorter(true);
+                    tabelaUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    tabelaUsuarios.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                    tabelaUsuarios.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+                    tabelaUsuarios.getTableHeader().setResizingAllowed(false);
+                    tabelaUsuarios.getTableHeader().setReorderingAllowed(false);
+                    String[] nomesColunasTabelaUsuarios = {"Nome do Usuário", "Login", "Categoria"};
+                    //Define a fonte do cabeçalho da tabela usuários
+                    tabelaUsuarios.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
+                    //Definindo o tamanho da linha
+                    tabelaUsuarios.setRowHeight(25);
 
-        boolean[] canEdit = new boolean [] {false, false, false};
+                    //Linhas da tabela
+                    List<Object[]> listaLinhasUsuarios = new ArrayList<>();
 
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex){
-            return canEdit [columnIndex];
-        }
+                    //Adicionando valores nas linhas
+                    for (Usuario usuario : GerenciadorDePessoas.getInstance().getUsuarios()) {
+                        listaLinhasUsuarios.add(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
+                    }
+                    //cria um defaultablemodel com as informações acima
+                    modeloTabelaUsuarios = new DefaultTableModel(
+                        listaLinhasUsuarios.toArray(new Object[listaLinhasUsuarios.size()][]), nomesColunasTabelaUsuarios){
 
-    };
+                        boolean[] canEdit = new boolean [] {false, false, false};
 
-    //define o model da tabela
-    tabelaUsuarios.setModel(modeloTabelaUsuarios);
-    // Redimensionando a largura da coluna de nome
-    tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);
-    // Redimensionando a largura da coluna de nickName
-    tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(170);
-    // Redimensionando a largura da coluna de categoria
-    tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);
+                        @Override
+                        public boolean isCellEditable(int rowIndex, int columnIndex){
+                            return canEdit [columnIndex];
+                        }
 
-    tabelaUsuarios.getRowSorter().toggleSortOrder(0);
-    tabelaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-        public void mouseClicked(java.awt.event.MouseEvent evt) {
-            tabelaUsuariosMouseClicked(evt);
-        }
-    });
-    pnRlUsuario.setViewportView(tabelaUsuarios);
+                    };
 
-    botaoAtivarTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoAtivarTemporada.setText("Temporada de Desconto");
-    botaoAtivarTemporada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoAtivarTemporada.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoAtivarTemporadaActionPerformed(evt);
-        }
-    });
+                    //define o model da tabela
+                    tabelaUsuarios.setModel(modeloTabelaUsuarios);
+                    // Redimensionando a largura da coluna de nome
+                    tabelaUsuarios.getColumnModel().getColumn(0).setPreferredWidth(300);
+                    // Redimensionando a largura da coluna de nickName
+                    tabelaUsuarios.getColumnModel().getColumn(1).setPreferredWidth(170);
+                    // Redimensionando a largura da coluna de categoria
+                    tabelaUsuarios.getColumnModel().getColumn(2).setPreferredWidth(120);
 
-    botaoExcluirUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoExcluirUsuario.setText("  Excluir  ");
-    botaoExcluirUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoExcluirUsuario.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoExcluirUsuarioActionPerformed(evt);
-        }
-    });
-    botaoExcluirUsuario.setVisible(false);
+                    tabelaUsuarios.getRowSorter().toggleSortOrder(0);
+                    tabelaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseClicked(java.awt.event.MouseEvent evt) {
+                            tabelaUsuariosMouseClicked(evt);
+                        }
+                    });
+                    pnRlUsuario.setViewportView(tabelaUsuarios);
 
-    botaoEditarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoEditarUsuario.setText("  Editar  ");
-    botaoEditarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoEditarUsuarioActionPerformed(evt);
-        }
-    });
-    botaoEditarUsuario.setVisible(false);
+                    botaoAtivarTemporada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoAtivarTemporada.setText("Temporada de Desconto");
+                    botaoAtivarTemporada.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoAtivarTemporada.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoAtivarTemporadaActionPerformed(evt);
+                        }
+                    });
 
-    botaoEditarEmpresa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoEditarEmpresa.setText("Editar Empresa");
-    botaoEditarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoEditarEmpresa.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoEditarEmpresaActionPerformed(evt);
-        }
-    });
+                    botaoExcluirUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoExcluirUsuario.setText("  Excluir  ");
+                    botaoExcluirUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoExcluirUsuario.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoExcluirUsuarioActionPerformed(evt);
+                        }
+                    });
+                    botaoExcluirUsuario.setVisible(false);
 
-    comboFiltrarUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    comboFiltrarUsuarios.setMaximumRowCount(1);
-    comboFiltrarUsuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos" }));
-    comboFiltrarUsuarios.setToolTipText("Selecionar tipo de filtro");
-    comboFiltrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    comboFiltrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            comboFiltrarUsuariosActionPerformed(evt);
-        }
-    });
+                    botaoEditarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoEditarUsuario.setText("  Editar  ");
+                    botaoEditarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoEditarUsuario.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoEditarUsuarioActionPerformed(evt);
+                        }
+                    });
+                    botaoEditarUsuario.setVisible(false);
 
-    labelFiltrarUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    labelFiltrarUsuarios.setText("Filtrar por:");
+                    botaoEditarEmpresa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoEditarEmpresa.setText("Editar Empresa");
+                    botaoEditarEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoEditarEmpresa.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoEditarEmpresaActionPerformed(evt);
+                        }
+                    });
 
-    javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
-    painelAdministrador.setLayout(painelAdministradorLayout);
-    painelAdministradorLayout.setHorizontalGroup(
-        painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelAdministradorLayout.createSequentialGroup()
-            .addGap(32, 32, 32)
-            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelAdministradorLayout.createSequentialGroup()
-                    .addComponent(botaoNovoUsuario)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoEditarEmpresa)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoAtivarTemporada))
-                .addGroup(painelAdministradorLayout.createSequentialGroup()
-                    .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoPesquisarUsuario))
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(painelAdministradorLayout.createSequentialGroup()
-                        .addComponent(labelFiltrarUsuarios)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboFiltrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoEditarUsuario)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoExcluirUsuario))
-                    .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-            .addContainerGap(709, Short.MAX_VALUE))
-    );
-    painelAdministradorLayout.setVerticalGroup(
-        painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelAdministradorLayout.createSequentialGroup()
-            .addGap(23, 23, 23)
-            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoNovoUsuario)
-                .addComponent(botaoAtivarTemporada)
-                .addComponent(botaoEditarEmpresa))
-            .addGap(46, 46, 46)
-            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(botaoPesquisarUsuario))
-            .addGap(39, 39, 39)
-            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelFiltrarUsuarios)
-                    .addComponent(comboFiltrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoEditarUsuario)
-                    .addComponent(botaoExcluirUsuario)))
-            .addGap(18, 18, 18)
-            .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addContainerGap())
-    );
+                    comboFiltrarUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    comboFiltrarUsuarios.setMaximumRowCount(1);
+                    comboFiltrarUsuarios.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos" }));
+                    comboFiltrarUsuarios.setToolTipText("Selecionar tipo de filtro");
+                    comboFiltrarUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    comboFiltrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            comboFiltrarUsuariosActionPerformed(evt);
+                        }
+                    });
 
-    try {
-        if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
+                    labelFiltrarUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    labelFiltrarUsuarios.setText("Filtrar por:");
 
-            abas.addTab("Administrador", painelAdministrador);
-        }
-    } catch (UsuarioInexistenteException e) {
-        setVisible(false);
-        new LoginFrame().setVisible(true);
-    }
+                    javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
+                    painelAdministrador.setLayout(painelAdministradorLayout);
+                    painelAdministradorLayout.setHorizontalGroup(
+                        painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelAdministradorLayout.createSequentialGroup()
+                            .addGap(32, 32, 32)
+                            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(painelAdministradorLayout.createSequentialGroup()
+                                    .addComponent(botaoNovoUsuario)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botaoEditarEmpresa)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botaoAtivarTemporada))
+                                .addGroup(painelAdministradorLayout.createSequentialGroup()
+                                    .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(botaoPesquisarUsuario))
+                                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(painelAdministradorLayout.createSequentialGroup()
+                                        .addComponent(labelFiltrarUsuarios)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(comboFiltrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(botaoEditarUsuario)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(botaoExcluirUsuario))
+                                    .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap(709, Short.MAX_VALUE))
+                    );
+                    painelAdministradorLayout.setVerticalGroup(
+                        painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelAdministradorLayout.createSequentialGroup()
+                            .addGap(23, 23, 23)
+                            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(botaoNovoUsuario)
+                                .addComponent(botaoAtivarTemporada)
+                                .addComponent(botaoEditarEmpresa))
+                            .addGap(46, 46, 46)
+                            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(botaoPesquisarUsuario))
+                            .addGap(39, 39, 39)
+                            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(labelFiltrarUsuarios)
+                                    .addComponent(comboFiltrarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(botaoEditarUsuario)
+                                    .addComponent(botaoExcluirUsuario)))
+                            .addGap(18, 18, 18)
+                            .addComponent(pnRlUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap())
+                    );
 
-    javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
-    painelGeral.setLayout(painelGeralLayout);
-    painelGeralLayout.setHorizontalGroup(
-        painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelGeralLayout.createSequentialGroup()
-            .addContainerGap()
-            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-    );
-    painelGeralLayout.setVerticalGroup(
-        painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelGeralLayout.createSequentialGroup()
-            .addContainerGap(59, Short.MAX_VALUE)
-            .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-            .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, 0))
-    );
+                    try {
+                        if(GerenciadorDePessoas.getInstance().isAdministrador(loginUsuario)) {
 
-    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-    getContentPane().setLayout(layout);
-    layout.setHorizontalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(layout.createSequentialGroup()
-            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(0, 0, Short.MAX_VALUE))
-    );
-    layout.setVerticalGroup(
-        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-    );
+                            abas.addTab("Administrador", painelAdministrador);
+                        }
+                    } catch (UsuarioInexistenteException e) {
+                        setVisible(false);
+                        new LoginFrame().setVisible(true);
+                    }
 
-    pack();
-    }// </editor-fold>//GEN-END:initComponents
+                    javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
+                    painelGeral.setLayout(painelGeralLayout);
+                    painelGeralLayout.setHorizontalGroup(
+                        painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelGeralLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    );
+                    painelGeralLayout.setVerticalGroup(
+                        painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelGeralLayout.createSequentialGroup()
+                            .addContainerGap(59, Short.MAX_VALUE)
+                            .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, 0))
+                    );
+
+                    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+                    getContentPane().setLayout(layout);
+                    layout.setHorizontalGroup(
+                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(painelGeral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                    );
+                    layout.setVerticalGroup(
+                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(painelGeral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    );
+
+                    pack();
+                }// </editor-fold>//GEN-END:initComponents
 
     private void botaoNovoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoClienteActionPerformed
         CadastrarClienteDialog dialog = new CadastrarClienteDialog(null);
@@ -2329,9 +2337,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
-                    try {
+                    try {                        
                         VerDadosClienteDialog dialog = new VerDadosClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
-                                (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                                (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
                         dialog.setLocationRelativeTo(null);
                         dialog.setVisible(true);
                     } catch (ClienteInexistenteException e) {
@@ -2360,7 +2368,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
                         EditarClienteDialog dialog = new EditarClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
-                                (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                                (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
 
                         dialog.setLocationRelativeTo(null);
                         if (dialog.alterarDados()) {
@@ -2385,7 +2393,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             if(escolha == 0) { 
                 try {
                     //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
-                    GerenciadorDePessoas.getInstance().removerCliente((String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0));
+                    GerenciadorDePessoas.getInstance().removerCliente((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0));
                     removerClienteDaTabela(tabelaClientes.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!");
                 } catch (ClienteInexistenteException e) {
@@ -2404,7 +2412,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             if(escolha == 0) { 
                 try {
                     //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
-                    GerenciadorDeProduto.getInstance().removerProduto((String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
+                    GerenciadorDeProduto.getInstance().removerProduto((String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
                     removerProdutoDaTabela(tabelaProdutos.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
                 } catch (ProdutoInexistenteException e) {
@@ -2423,7 +2431,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             if(escolha == 0) { 
                 try {
                     //Pesquisa o produto selecionado através do seu CNPJ (0 = primeira coluna da tabela)
-                    GerenciadorDePessoas.getInstance().removerFornecedor((String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0));
+                    GerenciadorDePessoas.getInstance().removerFornecedor((String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0));
                     removerFornecedorDaTabela(tabelaFornecedores.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Fornecedor removido com sucesso!");
                 } catch (FornecedorInexistenteException e) {
@@ -2437,7 +2445,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirUsuarioActionPerformed
         if(tabelaUsuarios.getSelectedRow() >= 0) {
-            String login = (String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
+            String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
             if (login.equals(GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName())) {
                 JOptionPane.showMessageDialog(null, "Você não pode excluir seu próprio usuário do sistema", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
@@ -2461,13 +2469,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoExcluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirDespesaActionPerformed
         if(tabelaMovimentacoes.getSelectedRow() >= 0) {
-            if(((String )modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+            if(((String )tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
                 int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta despesa?", "Atenção!", JOptionPane.YES_NO_OPTION);
                 //Sim = 0
                 if(escolha == 0) { 
                     try {
                         //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
-                        GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
+                        GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
                                 tabelaLocacoes.getColumnCount()-1)));
                         
                         removerMovimentacaoDaTabela(tabelaMovimentacoes.getSelectedRow());
@@ -2496,7 +2504,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
                     try {
                         VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
-                                (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
+                                (String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
 
                         dialog.setLocationRelativeTo(null);
                         dialog.setVisible(true);
@@ -2521,7 +2529,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Passa, como parâmetro, a venda pesquisada pelo seu código 
                         VerDadosVendaDialog dialog = new VerDadosVendaDialog(null, GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
-                                Long.parseLong((String) modeloTabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))));
+                                Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))));
 
                         dialog.setLocationRelativeTo(null);
                         dialog.setVisible(true);
@@ -2544,16 +2552,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     //Passa, como parâmetro, a movimentacao pesquisada pelo id
                     try {
 
-                        if (((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+                        if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
                             
                             VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                                    Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
+                                    Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
 
                             dialog.setLocationRelativeTo(null);
                             dialog.setVisible(true);
                         } else {
                             VerDadosMovimentacaoDialog dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
-                                    Long.parseLong((String) modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
+                                    Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
 
                             dialog.setLocationRelativeTo(null);
                             dialog.setVisible(true);
@@ -2589,7 +2597,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Passa, como parâmetro, a locação pesquisada pelo id
                         VerDadosLocacaoDialog dialog = new VerDadosLocacaoDialog(null, GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                                Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))));
+                                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))));
 
                         dialog.setLocationRelativeTo(null);
                         dialog.setVisible(true);
@@ -2614,7 +2622,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Pesquisa o produto selecionado através do seucódigo
                         EditarProdutoDialog dialog = new EditarProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                                (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                                (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
 
                         dialog.setLocationRelativeTo(null);
                         if (dialog.alterarDados()) {
@@ -2637,7 +2645,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             try {
                 //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
                 EditarFornecedorDialog dialog = new EditarFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
-                        (String) modeloTabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
+                        (String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
                 
                 dialog.setLocationRelativeTo(null);
                 if (dialog.alterarDados()) {
@@ -2655,13 +2663,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
         if(tabelaMovimentacoes.getSelectedRow() >= 0) {
-            if(((String )modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+            if(((String )tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
                 Executors.newFixedThreadPool(10).execute(new Runnable() {
                     public void run() {
                         try {
                             //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
                             EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                                    Long.parseLong(modeloTabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1).toString())));
+                                    Long.parseLong(tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1).toString())));
 
                             dialog.setLocationRelativeTo(null);
                             if (dialog.alterarDados()) {
@@ -2691,7 +2699,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
                         EditarUsuarioDialog dialog = new EditarUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
-                                (String) modeloTabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
+                                (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
 
                         dialog.setLocationRelativeTo(null);
 
@@ -2719,7 +2727,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
                         VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
-                                (String) modeloTabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                                (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
 
                         dialog.setLocationRelativeTo(null);
                         dialog.setVisible(true);
@@ -2787,9 +2795,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoVerContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerContratoActionPerformed
         try {
-            System.out.println("(botao ver contato) ID LOCAÇÃO: "+Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
             GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
-                Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível abrir o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2799,7 +2806,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         try {
             
             String nomeCliente = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
+                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
                     .getCliente().getNome();
             Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
                     +nomeCliente+"\\Recibos"));
@@ -2815,7 +2822,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             dialog.setLocationRelativeTo(null);
             if (dialog.alterarDados()) {
                 GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                    Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
+                    Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
             }
             dialog.dispose();
             
@@ -2839,9 +2846,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Sim = 0
             if(escolha == 0) { 
                 try {
-                    Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0));
+                    Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0));
                     //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong((String) modeloTabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)), cliente);
+                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)), cliente);
                     
                     JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
                 } catch (Exception e) {
@@ -3335,47 +3342,128 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
     
     public void atualizarDadosClienteNaTabela(Cliente cliente, int linha) {
-        //Coluna de índice  1 = nome do produto
-        modeloTabelaClientes.setValueAt(cliente.getNome(), linha, 1); 
-        //Coluna de índice  2 = contado
-        modeloTabelaClientes.setValueAt(cliente.getCelular(), linha, 2);
+        String cpfSelecionado = cliente.getCpf();
+        if(cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(linha, 0))) {
+            //Coluna de índice  1 = nome do cliente
+            modeloTabelaClientes.setValueAt(cliente.getNome(), linha, 1);
+            //Coluna de índice  2 = contado
+            modeloTabelaClientes.setValueAt(cliente.getCelular(), linha, 2);
+        } else {
+            for(int i=0; i < modeloTabelaClientes.getRowCount(); i++) {
+                if(cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(i, 0))) {
+                    //Coluna de índice  1 = nome do cliente
+                    modeloTabelaClientes.setValueAt(cliente.getNome(), i, 1);
+                    //Coluna de índice  2 = contado
+                    modeloTabelaClientes.setValueAt(cliente.getCelular(), i, 2);
+                    
+                    break;
+                }
+            }
+        }
     }
     
     public void atualizarDadosProdutoNaTabela(Produto produto, int linha) {
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt("R$ "+produto.getValorInString(), linha, 2);
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
-        //Coluna de descrição
-        modeloTabelaProdutos.setValueAt(produto.getFinalidade(), linha, 4);
+        String codigoProduto = produto.getCodigo();
+        if(codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(linha, 0))) {
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt("R$ " + produto.getValorInString(), linha, 2);
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
+            //Coluna de descrição
+            modeloTabelaProdutos.setValueAt(produto.getFinalidade(), linha, 4);
+        } else {
+            for(int i=0; i < modeloTabelaProdutos.getRowCount(); i++) {
+                if(codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(i, 0))) {
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt(produto.getDescricao(), i, 1);
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt("R$ " + produto.getValorInString(), i, 2);
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt(produto.getQuantidade(), i, 3);
+                    //Coluna de descrição
+                    modeloTabelaProdutos.setValueAt(produto.getFinalidade(), i, 4);
+                    
+                    break;
+                }
+            }
+        }
         
     }
     
     public void atualizarDadosFornecedorNaTabela(Fornecedor fornecedor, int linha) {
-        //Coluna de nome
-        modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), linha, 1);
-        //Coluna de endereo
-        modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), linha, 2);
-        //Coluna de índice telefone
-        modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), linha, 3);
+        String cnpjSelecionado = fornecedor.getCnpj();
+        if(cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(linha, 0))) {
+            //Coluna de nome
+            modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), linha, 1);
+            //Coluna de endereo
+            modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), linha, 2);
+            //Coluna de índice telefone
+            modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), linha, 3);
+        } else {
+            for(int i=0; i < modeloTabelaFornecedores.getRowCount(); i++) {
+                if(cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(i, 0))) {
+                    //Coluna de nome
+                    modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), i, 1);
+                    //Coluna de endereo
+                    modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), i, 2);
+                    //Coluna de índice telefone
+                    modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), i, 3);
+                    
+                    break;
+                }
+            }
+        }
+        
     }
     
     public void atualizarDadosDespesaNaTabela(Movimentacao movimentacao, int linha) {
-        //Coluna de valor
-        modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), linha, 1);
-        //Coluna de responsável
-        modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), linha, 3);
-        //Coluna de beneficiário
-        modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), linha, 4);
+        String idSelecionado = Long.toString(movimentacao.getIdDaOperacao());
+        if(idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(linha, 0))) {
+            //Coluna de valor
+            modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), linha, 1);
+            //Coluna de responsável
+            modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), linha, 3);
+            //Coluna de beneficiário
+            modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), linha, 4);
+        } else {
+            for(int i=0; i < modeloTabelaMovimentacoes.getRowCount(); i++) {
+                if(idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(i, 0))) {
+                    //Coluna de valor
+                    modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), i, 1);
+                    //Coluna de responsável
+                    modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), i, 3);
+                    //Coluna de beneficiário
+                    modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), i, 4);
+                    
+                    break;
+                }
+            }
+        }
+       
     }
     
     public void atualizarDadosUsuarioNaTabela(Usuario usuario, int linha) {
-        //Coluna de nome
-        modeloTabelaUsuarios.setValueAt(usuario.getNome(), linha, 0);
-        //Coluna de nome
-        modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), linha, 2);
+        String loginSelecionado = usuario.getNickName();
+        if(loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(linha, 0))) {
+            //Coluna de nome
+            modeloTabelaUsuarios.setValueAt(usuario.getNome(), linha, 0);
+            //Coluna de nome
+            modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), linha, 2);
+        } else {
+            for(int i=0; i < modeloTabelaUsuarios.getRowCount(); i++) {
+                if(loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(i, 0))) {
+                    //Coluna de nome
+                    modeloTabelaUsuarios.setValueAt(usuario.getNome(), i, 0);
+                    //Coluna de nome
+                    modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), i, 2);
+                    
+                    break;
+                }
+            }
+        }
+        
     }
     
     public void atualizarValorEmCaixa() {
@@ -3386,10 +3474,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
         labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(valorEmCaixa));
-    }
-    
-    public void atualizarTabelaProdutos() {
-        
     }
     
     public void desabilitarCamposDeDiretorios() {
