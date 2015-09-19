@@ -23,6 +23,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         super(parent);
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -283,8 +284,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
      *Este dialog não pode ser fechado até que os dados sejam cadastrados
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        //setVisible(false);
-        //dispose();
+        
     }//GEN-LAST:event_closeDialog
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
@@ -418,23 +418,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         } if(campo.getText().length()>= maxCaracteres){ 
             evt.consume(); 
         }
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CadastrarEmpresaDialog dialog = new CadastrarEmpresaDialog(new java.awt.Frame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
