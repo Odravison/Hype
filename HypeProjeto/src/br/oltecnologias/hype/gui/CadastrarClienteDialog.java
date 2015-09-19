@@ -6,15 +6,10 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
-import br.oltecnologias.hype.exception.ClienteExistenteException;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
-import java.awt.Dialog;
 import java.awt.Frame;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -23,18 +18,11 @@ import javax.swing.JOptionPane;
  * @author Luender Lima
  */
 public class CadastrarClienteDialog extends java.awt.Dialog {
-
-    /**
-     * Cria um novo form CadastrarClienteDialog
-     */
-    public CadastrarClienteDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
     
     public CadastrarClienteDialog(Frame owner) {
         super(owner);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -474,7 +462,8 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -484,7 +473,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -541,9 +529,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Closes the dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
@@ -725,23 +710,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
     
     public Cliente getNovoCliente() {
         return novoCliente;
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CadastrarClienteDialog dialog = new CadastrarClienteDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números

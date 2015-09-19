@@ -7,9 +7,6 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.TemporadaInexistenteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +19,7 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
     public AtivarTemporadaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -417,23 +415,6 @@ public class AtivarTemporadaDialog extends java.awt.Dialog {
                 || Integer.parseInt(campo.getText()+evt.getKeyChar()) > 100){
             evt.consume();
         } 
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AtivarTemporadaDialog dialog = new AtivarTemporadaDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números

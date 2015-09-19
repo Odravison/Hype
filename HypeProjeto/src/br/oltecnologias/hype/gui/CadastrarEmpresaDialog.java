@@ -22,6 +22,8 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     public CadastrarEmpresaDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -242,7 +244,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -279,11 +281,10 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     *Fecha a dialog
+     *Este dialog não pode ser fechado até que os dados sejam cadastrados
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
-        //setVisible(false);
-        //dispose();
+        
     }//GEN-LAST:event_closeDialog
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
@@ -417,23 +418,6 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
         } if(campo.getText().length()>= maxCaracteres){ 
             evt.consume(); 
         }
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                CadastrarEmpresaDialog dialog = new CadastrarEmpresaDialog(new java.awt.Frame());
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números

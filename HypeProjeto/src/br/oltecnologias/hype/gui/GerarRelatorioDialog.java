@@ -15,9 +15,10 @@ import javax.swing.JOptionPane;
  */
 public class GerarRelatorioDialog extends java.awt.Dialog {
 
-    public GerarRelatorioDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public GerarRelatorioDialog(java.awt.Frame parent) {
+        super(parent);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -134,9 +135,6 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Fecha o dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
@@ -163,24 +161,6 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                GerarRelatorioDialog dialog = new GerarRelatorioDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;

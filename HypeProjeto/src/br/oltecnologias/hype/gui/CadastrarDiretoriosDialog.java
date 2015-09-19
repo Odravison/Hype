@@ -22,6 +22,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     public CadastrarDiretoriosDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -167,7 +168,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -199,7 +200,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Closes the dialog
+     * Este dialog não pode ser fechado até todos os dados serem salvos
      */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         //setVisible(false);

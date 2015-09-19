@@ -11,27 +11,18 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ClienteInexistenteException;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
-import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.model.Cliente;
-import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
-import java.awt.Dialog;
 import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -43,9 +34,8 @@ import javax.swing.table.DefaultTableModel;
  * @author Luender Lima
  */
 public class RealizarLocacaoDialog extends java.awt.Dialog {
-
     
-     public RealizarLocacaoDialog(Frame owner) {
+    public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
         locador = null;
@@ -54,7 +44,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         pane = new JOptionPane();
         dialog = null;
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
-        decimalFormat = new DecimalFormat("#.##");
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
     }
 
 
@@ -169,7 +161,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -179,7 +170,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoConcluir.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoConcluir.setText("Concluir");
         botaoConcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoConcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConcluirActionPerformed(evt);
@@ -688,9 +678,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Closes the dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
@@ -1270,7 +1257,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private Movimentacao novaMovimentacao;
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaProdutosLocados;
-    private DecimalFormat decimalFormat;
     private JOptionPane pane;
     private JDialog dialog;
     private int maxParcelas = 6;

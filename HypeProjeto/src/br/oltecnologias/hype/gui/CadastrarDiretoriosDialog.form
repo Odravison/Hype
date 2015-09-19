@@ -232,7 +232,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarActionPerformed"/>
       </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoSalvar.setIcon(new ImageIcon(&quot;Imagens\\Salvar.png&quot;));"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource(&quot;/br/oltecnologias/hype/imagens/Salvar.png&quot;)));"/>
       </AuxValues>
     </Component>
   </SubComponents>

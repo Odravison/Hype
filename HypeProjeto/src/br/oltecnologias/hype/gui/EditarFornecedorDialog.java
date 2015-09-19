@@ -17,18 +17,13 @@ import javax.swing.JOptionPane;
  */
 public class EditarFornecedorDialog extends java.awt.Dialog {
 
-    /**
-     * Creates new form EditarFornecedorDialog
-     */
-    public EditarFornecedorDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
-
     public EditarFornecedorDialog(java.awt.Frame parent, Fornecedor fornecedor) {
         super(parent);
         this.fornecedor = fornecedor;
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
     }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -248,7 +243,6 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -258,7 +252,6 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -310,9 +303,6 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * Closes the dialog
-     */
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
@@ -423,24 +413,6 @@ public class EditarFornecedorDialog extends java.awt.Dialog {
     
     public Fornecedor getFornecedor() {
         return fornecedor;
-    }
-    
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                EditarFornecedorDialog dialog = new EditarFornecedorDialog(new java.awt.Frame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
     }
 
     private Fornecedor fornecedor;

@@ -10,8 +10,6 @@ import br.oltecnologias.hype.model.Cliente;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
-import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -19,21 +17,14 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Cliente
+ * @author Luender Lima
  */
 public class PesquisarClienteDialog extends java.awt.Dialog {
 
-    /**
-     * Creates new form PesquisarClienteDialog
-     */
-    public PesquisarClienteDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
-    
     public PesquisarClienteDialog(Frame owner) {
         super(owner);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -134,7 +125,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         );
 
         botaoOk.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoOk.setText("  OK  ");
+        botaoOk.setText("Selecionar");
         botaoOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +134,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         });
 
         botaoVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoVoltar.setText("Voltar");
+        botaoVoltar.setText(" Voltar ");
         botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

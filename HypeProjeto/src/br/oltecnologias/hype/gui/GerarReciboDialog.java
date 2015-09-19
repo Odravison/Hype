@@ -5,7 +5,6 @@
  */
 package br.oltecnologias.hype.gui;
 
-import br.oltecnologias.hype.model.Produto;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -18,13 +17,14 @@ public class GerarReciboDialog extends java.awt.Dialog {
     public GerarReciboDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         labelObrigatorio = new javax.swing.JLabel();
-        botaoSalvar = new javax.swing.JButton();
+        botaoGerar = new javax.swing.JButton();
         painelDados = new javax.swing.JPanel();
         labelValor = new javax.swing.JLabel();
         campoValor = new javax.swing.JTextField();
@@ -41,13 +41,12 @@ public class GerarReciboDialog extends java.awt.Dialog {
         labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         labelObrigatorio.setText("Obrigatório *");
 
-        botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        botaoSalvar.setText(" Salvar ");
-        botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new ImageIcon("Imagens\\Salvar.png"));
-        botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
+        botaoGerar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoGerar.setText(" Gerar ");
+        botaoGerar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoGerar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoSalvarActionPerformed(evt);
+                botaoGerarActionPerformed(evt);
             }
         });
 
@@ -96,7 +95,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelObrigatorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoSalvar)))
+                        .addComponent(botaoGerar)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -106,7 +105,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoSalvar)
+                    .addComponent(botaoGerar)
                     .addComponent(labelObrigatorio))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -128,7 +127,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoValorKeyTyped
 
-    private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+    private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
             // Valida campos 
             if(campoValor.getText().length() <= 0) {
@@ -145,7 +144,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_botaoSalvarActionPerformed
+    }//GEN-LAST:event_botaoGerarActionPerformed
 
     public boolean alterarDados() {        
         salvarSelecionado = false;  //Marcamos que o salvar não foi selecionado
@@ -162,7 +161,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
     private int maxCaracteresPreco = 10;
     protected boolean salvarSelecionado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton botaoSalvar;
+    private javax.swing.JButton botaoGerar;
     private javax.swing.JTextField campoValor;
     private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelValor;
