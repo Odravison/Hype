@@ -32,4 +32,6 @@ public interface UsuarioRepository {
     
     public boolean isAdministrador(String login) throws UsuarioInexistenteException;
     
+    public int getUserCount();
+    
 }

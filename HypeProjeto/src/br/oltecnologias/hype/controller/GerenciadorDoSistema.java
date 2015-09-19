@@ -12,6 +12,7 @@ import br.oltecnologias.hype.exception.MovimentacaoInexistenteException;
 import br.oltecnologias.hype.exception.TemporadaExistenteException;
 import br.oltecnologias.hype.exception.TemporadaInexistenteException;
 import br.oltecnologias.hype.exception.TipoInexistenteDeMovimentacao;
+import br.oltecnologias.hype.exception.UsuarioExistenteException;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Empresa;
@@ -773,5 +774,20 @@ public class GerenciadorDoSistema {
             emf.close();
         }
     }
-
+    
+    public void inserirAdminPadrao() throws UsuarioExistenteException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        UsuarioJpaRepository ujp = new UsuarioJpaRepository(emf);
+        
+        try{
+            if (ujp.getUserCount() == 0){
+                Usuario userDefault = new Usuario("Administrador", "admin", "admin", true);
+                ujp.create(userDefault);
+            }
+            
+            
+        } finally{
+            emf.close();
+        }
+    }
 }

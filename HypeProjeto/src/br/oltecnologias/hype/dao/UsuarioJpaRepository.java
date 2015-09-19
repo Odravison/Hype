@@ -211,5 +211,13 @@ public class UsuarioJpaRepository implements UsuarioRepository{
         }
 
         return false;
-    }    
+    }
+
+    @Override
+    public int getUserCount() {
+        
+        return this.getAllUsuarios().size();
+    }
+    
+    
 }
