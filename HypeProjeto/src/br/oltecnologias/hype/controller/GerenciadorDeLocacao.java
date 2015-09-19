@@ -51,9 +51,7 @@ public class GerenciadorDeLocacao {
         Locacao locacao = null;
 
         try {
-
-            double valorFinal = valor - ((percentualDesconto / 100) * valor);
-            locacao = new Locacao(cliente, produtosLocados, valorFinal, dataLocacao,
+            locacao = new Locacao(cliente, produtosLocados, valor, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
             locacao.setAtiva(true);
 
@@ -67,6 +65,8 @@ public class GerenciadorDeLocacao {
             }
 
             locacao.imprimirContrato();
+            locacao.gerarRecibo();
+            
 
             return locacao;
 
@@ -335,5 +335,10 @@ public class GerenciadorDeLocacao {
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
 
         locacao.gerarEImprimirPxRecibo(valorDessePagamento);
+    }
+    
+    public boolean isLocacaoPaga(long idLocacao) throws LocacaoInexistenteException{
+        Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
+        return locacao.isLocacaoPaga();
     }
 }

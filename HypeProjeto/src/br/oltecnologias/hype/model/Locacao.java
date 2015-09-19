@@ -88,7 +88,6 @@ public class Locacao implements Serializable {
 
     private int percentualDesconto;
 
-    
     private String caminhoUltimoContrato;
 
     public Locacao() {
@@ -131,7 +130,7 @@ public class Locacao implements Serializable {
         GeradorDeRecibo.getInstance().gerarEImprimirRecibo(this);
     }
 
-    public void gerarEImprimirPxRecibo(double valorDessePagamento) 
+    public void gerarEImprimirPxRecibo(double valorDessePagamento)
             throws LocacaoInexistenteException, ProdutoInexistenteException {
         GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(this, valorDessePagamento);
     }
@@ -266,6 +265,10 @@ public class Locacao implements Serializable {
 
     public void setCaminhoUltimoContrato(String caminhoUltimoContrato) {
         this.caminhoUltimoContrato = caminhoUltimoContrato;
+    }
+
+    public boolean isLocacaoPaga() {
+        return (this.jaPago == this.valorLocacao);
     }
 
 }

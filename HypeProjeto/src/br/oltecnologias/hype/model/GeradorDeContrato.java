@@ -48,7 +48,7 @@ public class GeradorDeContrato {
     public void gerarEImprimirContrato(Locacao locacao) throws IOException, Exception {
 
         gerarContrato(locacao);
-        System.out.println("");
+        
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
 

@@ -76,7 +76,7 @@ public class GerenciadorDeVenda {
             
             Venda venda = vjp.findById(idVenda);
             for (ProdutoVendido p: venda.getProdutosVendidos()){
-                retorno += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).getDescricao();
+                retorno += GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(p.getCodigoProduto()).getNome() + ", ";
             
             }
             return retorno;
