@@ -341,4 +341,17 @@ public class GerenciadorDeLocacao {
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
         return locacao.isLocacaoPaga();
     }
+    
+    public void editarLocacao(Locacao locacao) throws LocacaoInexistenteException{
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+        
+        try{
+            
+            ljp.editarLocacao(locacao);
+            
+        } finally {
+            emf.close();
+        }
+    }
 }

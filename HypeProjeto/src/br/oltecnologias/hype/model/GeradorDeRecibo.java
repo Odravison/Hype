@@ -240,6 +240,8 @@ public class GeradorDeRecibo {
                 valorResta = loc.getValorLocacao() - loc.getValorDeEntrada();
             }             
         }
+        
+        GerenciadorDeLocacao.getInstance().editarLocacao(loc);
 
         try {
 
@@ -501,6 +503,9 @@ public class GeradorDeRecibo {
             PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", conf.getNomeDaImpressora());
 
             printPDFFile.print();
+            
+            loc.setJaPago(loc.getJaPago() + valorDessePagamento);
+            GerenciadorDeLocacao.getInstance().editarLocacao(loc);
 
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
@@ -510,7 +515,6 @@ public class GeradorDeRecibo {
             
         } finally {
             pdf.close();
-            loc.setJaPago(loc.getJaPago() + valorDessePagamento);
         }
     }
 }
