@@ -2830,7 +2830,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 GerarReciboDialog dialog = new GerarReciboDialog(null);
                 dialog.setLocationRelativeTo(null);
                 if (dialog.alterarDados()) {
-                    GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                    GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
                         Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
                 }
                 dialog.dispose();
@@ -2862,8 +2862,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 GerarReciboDialog dialog = new GerarReciboDialog(null);
                 dialog.setLocationRelativeTo(null);
                 if (dialog.alterarDados()) {
-                   // GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
-                     //   Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))), dialog.getValorRecibo());
+                    GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
+                          Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))), dialog.getValorRecibo());
                 }
                 dialog.dispose();
             } catch (Exception e) {

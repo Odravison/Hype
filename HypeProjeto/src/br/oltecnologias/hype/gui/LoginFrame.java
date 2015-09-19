@@ -19,6 +19,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.net.URL;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
@@ -35,7 +37,10 @@ public class LoginFrame extends javax.swing.JFrame {
         getRootPane().setDefaultButton(botaoEntrar);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage()); 
         
-        //GerenciadorDoSistema.getInstance().adicionarUsuarioAdmin();
+        try {
+            GerenciadorDoSistema.getInstance().inserirAdminPadrao();
+        } catch (UsuarioExistenteException e) { }
+        
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
                 || configuracao.getDiretorioDeRelatorios() == null) {
