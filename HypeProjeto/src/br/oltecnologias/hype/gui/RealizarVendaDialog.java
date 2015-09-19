@@ -477,11 +477,16 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 labelStatusTemporada.setForeground(new java.awt.Color(0, 153, 0));
                 labelStatusTemporada.setText("ON");
+            } else {
+                labelStatusTemporada.setText("OFF");
+                labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
             }
         } catch(TemporadaInexistenteException e) {
+            System.out.println("LANÇOU A EXCEÇÃO "+e.getMessage());
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         } catch (Exception e) {
+            System.out.println("LANÇOU A EXCEÇÃO "+e.getMessage());
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
@@ -597,8 +602,13 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void painelSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelSelecionarMouseClicked
-        if(campoPesquisar.getText().length() <= 0)
-        criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
+        if(campoPesquisar.getText().length() <= 0) {
+            criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
+        }
+        //Se alguma linha da tabela estiver selecionada
+        if(tabelaProdutos.getSelectedRow() >= 0) {
+            tabelaProdutos.clearSelection();
+        }
     }//GEN-LAST:event_painelSelecionarMouseClicked
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
@@ -614,6 +624,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
         if(campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
+        }
+        //Se alguma linha da tabela estiver selecionada
+        if(tabelaProdutosVendidos.getSelectedRow() >= 0) {
+            tabelaProdutosVendidos.clearSelection();
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
 
@@ -652,7 +666,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 }
                 
                 if (radioCartao.isSelected()) {
-                    formaPagamento = "Cartão";
+                    if(radioCartao.isSelected()) {
+                        formaPagamento = "Cartão - Crédito";
+                    } else {
+                        formaPagamento = "Cartão - Débito";
+                    }
                 } else if (radioPromissoria.isSelected()) {
                     formaPagamento = "Promissória";
                 } else {
@@ -666,7 +684,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                             Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
 
-                    System.out.println(Configuracao.getInstance().getEmpresa().getNome());
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
                     
                     JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
@@ -733,6 +750,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 
                 calcularValorTotalVenda();
                 campoPercentualDesconto.setEnabled(true);
+                campoParcelas.setEnabled(true);
+            campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -746,6 +765,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
         if(produtosVendidos.size() <= 0) {
             campoPercentualDesconto.setEnabled(false);
+            campoParcelas.setEnabled(false);
+            campoEntrada.setEnabled(false);
             campoPercentualDesconto.setText("");
             labelValorVenda.setText("");
         }
@@ -798,21 +819,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
     
-    //////////////tirar
-    public double calcularValorTotalParcelasVenda(int quantidadeParcelas) {
-        double valorParcelas = 0;
-        try {
-            if(GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
-                valorParcelas = (valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)) / quantidadeParcelas;
-            }
-        } catch(Exception e) {
-            valorParcelas = valorTotalVenda / quantidadeParcelas;
-            
-        }
-        return valorParcelas;
-    }
-    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -839,6 +845,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelParcelas.setVisible(true);
         campoEntrada.setVisible(true);
         campoParcelas.setVisible(true);
+        if(produtosVendidos.isEmpty()) {
+            campoEntrada.setEnabled(false);
+            campoParcelas.setEnabled(false);
+        }
     }
     
     public void desabilitarCampos() {
@@ -985,6 +995,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 
                 labelValorVenda.setText("R$ " + valorTotalVenda);
                 
+            } else {
+                valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                labelValorVenda.setText("R$ " + valorTotalVenda);
             }
         } catch (TemporadaInexistenteException e) {
             valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();

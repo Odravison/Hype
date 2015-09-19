@@ -325,7 +325,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if(locacao.isAtiva()) {&#xa;    labelStatus.setText(&quot;Status: N&#xe3;o Finalizada&quot;);&#xa;} else {&#xa;    labelStatus.setText(&quot;Status: Finalizada&quot;);&#xa;}"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelStatus.setText(&quot;Status: &quot;+locacao.getStatus());"/>
               </AuxValues>
             </Component>
           </SubComponents>

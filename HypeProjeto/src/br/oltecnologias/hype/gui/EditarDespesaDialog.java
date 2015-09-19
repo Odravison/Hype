@@ -9,7 +9,6 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Movimentacao;
 import java.util.Calendar;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +59,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         labelNome.setText("Nome:*");
 
         campoNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoNome.setText(despesa.getNome());
         campoNome.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoNomeKeyTyped(evt);
@@ -70,6 +70,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         labelValor.setText("Valor:* R$ ");
 
         campoValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoValor.setText(despesa.getValorInString());
         campoValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoValorKeyTyped(evt);
@@ -80,6 +81,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         labelFavorecido.setText("Favorecido:*");
 
         campoFavorecido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoFavorecido.setText(despesa.getFavorecido());
         campoFavorecido.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoFavorecidoKeyTyped(evt);
@@ -94,6 +96,12 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         areaObservacao.setLineWrap(true);
         areaObservacao.setRows(5);
         areaObservacao.setWrapStyleWord(true);
+        areaObservacao.setText(despesa.getObservacao());
+        areaObservacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                areaObservacaoKeyTyped(evt);
+            }
+        });
         scPnObservacao.setViewportView(areaObservacao);
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
@@ -263,6 +271,12 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    private void areaObservacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaObservacaoKeyTyped
+        if(campoFavorecido.getText().length()>= maxCaracteresNome){ 
+            evt.consume(); 
+        }
+    }//GEN-LAST:event_areaObservacaoKeyTyped
+
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
@@ -298,6 +312,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 30;
     private int maxCaracteresValor = 10;
+    private int maxCaracteresObs = 250;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
     private javax.swing.JButton botaoCancelar;

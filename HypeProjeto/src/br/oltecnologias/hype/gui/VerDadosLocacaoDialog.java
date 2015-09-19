@@ -124,11 +124,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelValorTotal.setText("Valor Total: R$ "+locacao.getValorLocacaoInString());
 
         labelStatus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        if(locacao.isAtiva()) {
-            labelStatus.setText("Status: Não Finalizada");
-        } else {
-            labelStatus.setText("Status: Finalizada");
-        }
+        labelStatus.setText("Status: "+locacao.getStatus());
 
         javax.swing.GroupLayout painelPagamentoLayout = new javax.swing.GroupLayout(painelPagamento);
         painelPagamento.setLayout(painelPagamentoLayout);

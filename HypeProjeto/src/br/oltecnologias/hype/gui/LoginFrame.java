@@ -35,6 +35,7 @@ public class LoginFrame extends javax.swing.JFrame {
         getRootPane().setDefaultButton(botaoEntrar);
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage()); 
         
+        //GerenciadorDoSistema.getInstance().adicionarUsuarioAdmin();
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
         if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
                 || configuracao.getDiretorioDeRelatorios() == null) {
@@ -238,11 +239,17 @@ public class LoginFrame extends javax.swing.JFrame {
                     }
                     
                     LoginFrame loginFrame = this;
-                    Executors.newFixedThreadPool(7).execute(new Runnable() {
+                    /*java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             new PrincipalFrame(campoLogin.getText(), loginFrame).setVisible(true);
                         }
-                    });
+                    });*/
+                    
+                    Executors.newFixedThreadPool(5).execute(new Runnable() {
+                        public void run() {
+                            new PrincipalFrame(campoLogin.getText(), loginFrame).setVisible(true);
+                        }
+                    }); 
                     
                     painelDeLogin.setVisible(false);
                     barCarregando.setVisible(true);
@@ -250,31 +257,22 @@ public class LoginFrame extends javax.swing.JFrame {
                     
                     new Thread() {
                         public void run() {
-                            int pontos = 0;
                             String pontosTxt = "";
-                            while(loginFrame.isVisible()) {
-                                /*if(pontos == 3) {
-                                    pontosTxt = "";
-                                    pontos = 0;
-                                } else {
-                                    pontosTxt += ".";
-                                    pontos++;
-                                }*/
-                                //labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
-                                    for (int i = 0; i < 100; i++) {
-                                        try {
-                                            sleep(30);
-                                            barCarregando.setValue(i);
-                                        } catch (InterruptedException e) {
-                                            JOptionPane.showMessageDialog(null, "O sistema está sendo carregado\n\nAguarde...");
-                                        }
-                                        if(i == 99) {
-                                            pontosTxt = "";
-                                        } else if(i % 25 == 0 && i > 0) {
-                                            pontosTxt += ".";
-                                        } 
-                                        labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
+                            while(loginFrame.isVisible()) { 
+                                for (int i = 0; i < 100; i++) {
+                                    try {
+                                        sleep(30);
+                                        barCarregando.setValue(i);
+                                    } catch (InterruptedException e) {
+                                        JOptionPane.showMessageDialog(null, "O sistema está sendo carregado\n\nAguarde...");
                                     }
+                                    if (i == 99) {
+                                        pontosTxt = "";
+                                    } else if (i % 25 == 0 && i > 0) {
+                                        pontosTxt += ".";
+                                    }
+                                    labelMensagemCarregando.setText("Carregando o Closet. Aguarde" + pontosTxt);
+                                }
                             }
 
                                 }
@@ -335,7 +333,7 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
     }
-
+    
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
     // Variables declaration - do not modify//GEN-BEGIN:variables

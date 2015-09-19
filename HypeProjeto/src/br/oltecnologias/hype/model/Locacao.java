@@ -267,5 +267,12 @@ public class Locacao implements Serializable {
     public void setCaminhoUltimoContrato(String caminhoUltimoContrato) {
         this.caminhoUltimoContrato = caminhoUltimoContrato;
     }
+    
+    public String getStatus() {
+        if(ativa) {
+            return "Aberta";
+        }
+        return "Fechada";
+    }
 
 }

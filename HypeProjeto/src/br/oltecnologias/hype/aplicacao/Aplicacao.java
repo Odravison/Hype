@@ -15,7 +15,10 @@ import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
 import br.oltecnologias.hype.dao.ProdutoJpaRepository;
 import br.oltecnologias.hype.dao.VendaJpaRepository;
+import br.oltecnologias.hype.gui.CadastrarDiretoriosDialog;
+import br.oltecnologias.hype.gui.CadastrarEmpresaDialog;
 import br.oltecnologias.hype.gui.LoginFrame;
+import br.oltecnologias.hype.gui.PrincipalFrame;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
@@ -53,6 +56,31 @@ public class Aplicacao {
      * @param args
      */
     public static void main(String[] args) throws DocumentException, IOException, Exception {
+        
+        //GerenciadorDoSistema.getInstance().adicionarUsuarioAdmin();
+        
+        Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
+        if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
+                || configuracao.getDiretorioDeRelatorios() == null) {
+            
+            CadastrarDiretoriosDialog dialogDiretorios = new CadastrarDiretoriosDialog(null);
+            dialogDiretorios.setLocationRelativeTo(null);
+            dialogDiretorios.setAlwaysOnTop(true);
+            dialogDiretorios.setVisible(true);
+        }
+        if(configuracao.getEmpresa() == null) {
+            CadastrarEmpresaDialog dialogEmpresa = new CadastrarEmpresaDialog(null);
+            dialogEmpresa.setLocationRelativeTo(null);
+            dialogEmpresa.setAlwaysOnTop(true);
+            dialogEmpresa.setVisible(true);
+        }
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new LoginFrame().setVisible(true);
+            }
+        });
+
 //        System.out.println("####################### Realizando os seguintes testes: ########################### \n"
 //                + "Teste de cadastro/edição/remoção de produto; \n"
 //                + "Teste de cadastro/edição/remoção de locações \n"
@@ -143,7 +171,7 @@ public class Aplicacao {
 //
 //        }
 
-                Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
+               // Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
 //                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
 //                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
 //                List<Venda> movimentacoes = new ArrayList<Venda>();
@@ -158,7 +186,7 @@ public class Aplicacao {
 //                
 //                
 //                
-                Calendar dataInicial = Calendar.getInstance();
+                //Calendar dataInicial = Calendar.getInstance();
 //                
 //                for (int i = 0; i < 10; i++){
 //                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
@@ -167,11 +195,11 @@ public class Aplicacao {
 //                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
 //                }
 //                
-                Calendar dataFinal = Calendar.getInstance();
+                //Calendar dataFinal = Calendar.getInstance();
 //                
-                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
+                //GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
                 
-                System.out.println("RODOU");
+                //System.out.println("RODOU");
 //        
 //        for (Locacao l: GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes()){
 //            System.out.println(l.getId());

@@ -142,14 +142,11 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
-            Calendar dataInicial = Calendar.getInstance();
-            Calendar dataFinal = Calendar.getInstance();
-            
-            dataInicial.setTime(dateDataInicial.getDate());
-            dataFinal.setTime(dateDataFinal.getDate());
-
-            GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
-            
+            if(dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
+                JOptionPane.showMessageDialog(null, "A data final do contrato não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dateDataInicial.getCalendar(), dateDataFinal.getCalendar());
+            }
             setVisible(false);
             dispose();
         } catch(Exception e) {

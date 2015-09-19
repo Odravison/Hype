@@ -6,7 +6,6 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
-import javax.swing.ImageIcon;
 
 import br.oltecnologias.hype.model.Configuracao;
 import javax.swing.JDialog;
@@ -17,7 +16,6 @@ import javax.swing.JOptionPane;
  * @author Luender Lima
  */
 public class CadastrarDiretoriosDialog extends java.awt.Dialog {
-
 
     public CadastrarDiretoriosDialog(java.awt.Frame parent) {
         super(parent);

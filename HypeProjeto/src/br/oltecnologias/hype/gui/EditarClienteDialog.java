@@ -724,7 +724,7 @@ public class EditarClienteDialog extends java.awt.Dialog {
     private int maxCaracteresNome = 40;
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
-    private int maxCaracteresObs = 450;
+    private int maxCaracteresObs = 250;
     private int maxCaracteresComprimento = 4;
     private int maxCaracteresMedidas = 2;
     protected boolean salvarSelecionado;

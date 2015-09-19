@@ -286,7 +286,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnRlCliente.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pnRlCliente.setPreferredSize(new java.awt.Dimension(806, 359));
+        pnRlCliente.setPreferredSize(new java.awt.Dimension(806, 345));
 
         tabelaClientes.setAutoCreateRowSorter(true);
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -418,7 +418,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(comboFiltrarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(21, 21, 21)
                 .addComponent(pnRlCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         abas.addTab("  Clientes  ", painelClientes);
@@ -877,14 +877,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Altura das linhas
     tabelaLocacoes.setRowHeight(25);
 
-    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Vencimento", ""};
+    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Vencimento", "Status", ""};
     //Essa lista terá as linhas da tabela
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
     //Adicionando valores nas linhas
     for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
         try {
             listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Ocorreu um erro na hora de buscar os dados da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
@@ -893,7 +893,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false, false, false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -909,13 +909,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de nome do cliente
     tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(280);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(660);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(620);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(110);
+    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(95);
     // Redimensionando a largura da coluna de data do vencimento
-    tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(110);
+    tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(100);
     // Redimensionando a largura da coluna id da locação
-    tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(0);
+    tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(65);
+    // Redimensionando a largura da coluna id da locação
+    tabelaLocacoes.getColumnModel().getColumn(6).setPreferredWidth(0);
 
     tabelaLocacoes.getRowSorter().toggleSortOrder(4);
     tabelaLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1136,11 +1138,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna data da venda
     tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(120);
     // Redimensionando a largura da coluna de produtos vendidos
-    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(880);
+    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(900);
     // Redimensionando a largura da coluna de valor total
-    tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);
+    tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(95);
     // Redimensionando a largura da coluna de forma de pagamento
-    tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(170);
+    tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(165);
     // Redimensionando a largura da coluna id da venda
     tabelaVendas.getColumnModel().getColumn(4).setPreferredWidth(0);
 
@@ -1893,14 +1895,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addContainerGap())
                     );
                     painelGeralLayout.setVerticalGroup(
                         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelGeralLayout.createSequentialGroup()
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap(16, Short.MAX_VALUE)
                             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(0, 0, 0))
                     );
@@ -2314,7 +2316,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         //Passa, como parâmetro, o produto pesquisado pelo código 
                         VerDadosProdutoDialog dialog = new VerDadosProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                                (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                                (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
 
                         dialog.setLocationRelativeTo(null);
                         dialog.setVisible(true);
@@ -2444,21 +2446,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirUsuarioActionPerformed
         if(tabelaUsuarios.getSelectedRow() >= 0) {
             String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
-            if (login.equals(GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName())) {
-                JOptionPane.showMessageDialog(null, "Você não pode excluir seu próprio usuário do sistema", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else {
-                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
-                //Sim = 0
-                if(escolha == 0) { 
-                    try {
-                        //Remove o usuário selecionado através do seu login
-                        GerenciadorDePessoas.getInstance().removerUsuario(login);
-                        removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
-                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
-                    } catch (UsuarioInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                } 
+            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
+            //Sim = 0
+            if (escolha == 0) {
+                try {
+                    //Remove o usuário selecionado através do seu login
+                    GerenciadorDePessoas.getInstance().removerUsuario(login);
+                    removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
+                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                } catch (UsuarioInexistenteException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2522,7 +2520,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
         if(evt.getClickCount() == 2) {
             
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
+            Executors.newFixedThreadPool(5).execute(new Runnable() {
                 public void run() {
                     try {
                         //Passa, como parâmetro, a venda pesquisada pelo seu código 
@@ -2541,15 +2539,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void tabelaMovimentacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaMovimentacoesMouseClicked
         if (evt.getClickCount() == 1) {
-            botaoExcluirDespesa.setVisible(true);
-            botaoEditarDespesa.setVisible(true);
+            if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+                botaoExcluirDespesa.setVisible(true);
+                botaoEditarDespesa.setVisible(true);
+            }
         }
         if(evt.getClickCount() == 2) {
             Executors.newFixedThreadPool(10).execute(new Runnable() {
                 public void run() {
                     //Passa, como parâmetro, a movimentacao pesquisada pelo id
                     try {
-
                         if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
                             
                             VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
@@ -2574,19 +2573,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaMovimentacoesMouseClicked
 
     private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
-        if (evt.getClickCount() == 1) {
+        if (evt.getClickCount() == 1 && (!((String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)).equals(
+                    GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName()))) {
+            
             botaoEditarUsuario.setVisible(true);
             botaoExcluirUsuario.setVisible(true);
         }
-        
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
     private void tabelaLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaLocacoesMouseClicked
         if (evt.getClickCount() == 1) {
             botaoVerRecibosLocacao.setVisible(true);
-            botaoGerarReciboLocacao.setVisible(true);
             botaoVerContrato.setVisible(true);
             botaoFinalizarLocacao.setVisible(true);
+            /*if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))) {
+                botaoGerarReciboLocacao.setVisible(true);
+            } */
         }
         if(evt.getClickCount() == 2) {
             
@@ -2662,12 +2664,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
         if(tabelaMovimentacoes.getSelectedRow() >= 0) {
             if(((String )tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-                Executors.newFixedThreadPool(10).execute(new Runnable() {
+                Executors.newFixedThreadPool(5).execute(new Runnable() {
                     public void run() {
                         try {
                             //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
                             EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                                    Long.parseLong(tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1).toString())));
+                                    Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
 
                             dialog.setLocationRelativeTo(null);
                             if (dialog.alterarDados()) {
@@ -2692,7 +2694,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarUsuarioActionPerformed
         if(tabelaUsuarios.getSelectedRow() >= 0) {
             
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
+            Executors.newFixedThreadPool(5).execute(new Runnable() {
                 public void run() {
                     try {
                         //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
@@ -2792,50 +2794,84 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_campoDiretorioRelatoriosKeyTyped
 
     private void botaoVerContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerContratoActionPerformed
-        try {
-            GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
-                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível abrir o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaLocacoes.getSelectedRow() >= 0) {
+            try {
+                GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
+                    Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível abrir o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerContratoActionPerformed
 
     private void botaoVerRecibosLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosLocacaoActionPerformed
-        try {
-            
-            String nomeCliente = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
-                    .getCliente().getNome();
-            Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                    +nomeCliente+"\\Recibos"));
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível ver os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaLocacoes.getSelectedRow() >= 0) {
+            try {
+
+                String nomeCliente = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                    Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
+                        .getCliente().getNome();
+                Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                        +nomeCliente+"\\Recibos"));
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerRecibosLocacaoActionPerformed
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
-        try {
-            GerarReciboDialog dialog = new GerarReciboDialog(null);
-            dialog.setLocationRelativeTo(null);
-            if (dialog.alterarDados()) {
-                GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                    Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
+        if(tabelaLocacoes.getSelectedRow() >= 0) {
+            try {
+                GerarReciboDialog dialog = new GerarReciboDialog(null);
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    GeradorDeRecibo.getInstance().gerarEImprimirPxRecibo(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                        Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))), dialog.getValorRecibo());
+                }
+                dialog.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-            dialog.dispose();
-            
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoGerarReciboLocacaoActionPerformed
 
     private void botaoVerRecibosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosVendaActionPerformed
-        JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaVendas.getSelectedRow() >= 0) {
+            try {
+                Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
+                        +"\\Vendas\\"+(String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1)));
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_botaoVerRecibosVendaActionPerformed
 
     private void botaoGerarReciboVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboVendaActionPerformed
-        JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if(tabelaVendas.getSelectedRow() >= 0) {
+            try {
+                GerarReciboDialog dialog = new GerarReciboDialog(null);
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                   // GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
+                     //   Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))), dialog.getValorRecibo());
+                }
+                dialog.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_botaoGerarReciboVendaActionPerformed
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
@@ -3041,9 +3077,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
                     try {
                         //Adiciona os dados da nova locação na tabela
-                        modeloTabelaLocacoes.addRow(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                        modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                             GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                            "R$ " + locacao.getValorLocacaoInString(), locacao.getVencimento()});
+                            "R$ " + locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     } 
@@ -3053,9 +3089,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(campoPesquisarLocacoes.getText())) {
                     try {
                         //Adiciona os dados da locação na tabela
-                        modeloTabelaLocacoes.addRow(new Object[]{Long.toString(locacao.getId()), locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                        modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                             GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                            "R$ " + locacao.getValorLocacaoInString(), locacao.getVencimento()});
+                            "R$ " + locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     } 
@@ -3282,7 +3318,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Adiciona os dados da nova locação na tabela
             modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});
+                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n"+e.getMessage(), 
                     "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3479,6 +3515,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoDiretorioDocumentos.setEditable(false);
         campoDiretorioRelatorios.setEditable(false);
         campoNomeImpressora.setEditable(false);
+        botaoSalvarDiretorioBackup.setEnabled(false);
+        botaoSalvarDiretorioDocumentos.setEnabled(false);
+        botaoSalvarDiretorioRelatorios.setEnabled(false);
+        botaoSalvarNomeImpressora.setEnabled(false);
     }
     
     public void adicionarClientesNaTabela(List<Cliente> clientes) {
@@ -3506,7 +3546,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             for(Locacao locacao: locacoes) {
                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                    "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), Long.toString(locacao.getId())});
+                    "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);

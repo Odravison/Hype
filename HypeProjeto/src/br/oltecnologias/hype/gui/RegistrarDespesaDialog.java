@@ -95,6 +95,11 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
         areaObservacao.setLineWrap(true);
         areaObservacao.setRows(5);
         areaObservacao.setWrapStyleWord(true);
+        areaObservacao.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                areaObservacaoKeyTyped(evt);
+            }
+        });
         scPnObservacao.setViewportView(areaObservacao);
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
@@ -255,6 +260,12 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoFavorecidoKeyTyped
 
+    private void areaObservacaoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_areaObservacaoKeyTyped
+        if(areaObservacao.getText().length()+1 >= maxCaracteresObs) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_areaObservacaoKeyTyped
+
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
             evt.consume();
@@ -290,6 +301,7 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresNome = 30;
     private int maxCaracteresValor = 10;
+    private int maxCaracteresObs = 250;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea areaObservacao;
     private javax.swing.JButton botaoCancelar;
