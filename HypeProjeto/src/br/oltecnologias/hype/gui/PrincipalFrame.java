@@ -3532,7 +3532,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         for(Usuario usuario: usuarios) {
             modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
         }
-    }
+    }       
     
     /**
      * @param args the command line arguments

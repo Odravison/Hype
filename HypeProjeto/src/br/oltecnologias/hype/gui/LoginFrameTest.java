@@ -261,24 +261,24 @@ public class LoginFrameTest extends javax.swing.JFrame {
                                     pontos++;
                                 }*/
                                 //labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
-                                for (int i = 0; i < 100; i++) {
-                                    try {
-                                        sleep(30);
-                                        barCarregando.setValue(i);
-                                    } catch (InterruptedException e) {
-                                        JOptionPane.showMessageDialog(null, "O sistema está sendo carregado\n\nAguarde...");
+                                    for (int i = 0; i < 100; i++) {
+                                        try {
+                                            sleep(30);
+                                            barCarregando.setValue(i);
+                                        } catch (InterruptedException e) {
+                                            JOptionPane.showMessageDialog(null, "O sistema está sendo carregado\n\nAguarde...");
+                                        }
+                                        if(i == 99) {
+                                            pontosTxt = "";
+                                        } else if(i % 25 == 0 && i > 0) {
+                                            pontosTxt += ".";
+                                        } 
+                                        labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
                                     }
-                                    if(i == 99) {
-                                        pontosTxt = "";
-                                    } else if(i % 25 == 0 && i > 0) {
-                                        pontosTxt += ".";
-                                    } 
-                                    labelMensagemCarregando.setText("Carregando o Closet. Aguarde"+pontosTxt);
-                                }
                             }
-                            
-                        }
-                    }.start();  
+
+                                }
+                    }.start(); 
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
