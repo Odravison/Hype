@@ -865,7 +865,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } else {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
@@ -887,7 +887,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) tabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotalLocacao();
             campoPercentualDesconto.setEnabled(true);
         }
@@ -922,7 +922,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if(evt.getClickCount() == 2) {            
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                        (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
@@ -938,7 +938,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
-            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) tabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotalLocacao();
         }
         if(produtosLocados.size() <= 0) {
@@ -1016,7 +1016,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || Integer.parseInt(campoParcelas.getText()) > 0) {
             try {
-                //Se o usuário estiver apagando o conteúdo do campo
                 if (campoPercentualDesconto.getText().length() > 0) {
                     labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
                             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());

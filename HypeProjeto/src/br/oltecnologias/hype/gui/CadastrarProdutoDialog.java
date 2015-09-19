@@ -11,7 +11,6 @@ import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -340,7 +339,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoSalvar)
                         .addComponent(botaoCancelar)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         pack();

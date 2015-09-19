@@ -63,10 +63,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         loginFrame.dispose();
     }   
 
-    public PrincipalFrame() {
-        initComponents();
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -3565,7 +3561,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalFrame().setVisible(true);
+                new PrincipalFrame(null).setVisible(true);
             }
         });
     }
