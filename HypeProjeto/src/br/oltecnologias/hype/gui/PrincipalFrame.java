@@ -2889,11 +2889,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Sim = 0
             if (escolha == 0) {
                 try {
-                    Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), 0));
                     String idLocacao = (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1);
                     
                     //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong(idLocacao), cliente);
+                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong(idLocacao));
 
                     JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
                     
