@@ -45,7 +45,6 @@ public class Venda implements Serializable {
     
     private double jaPago;
     
-    private double valorDeEntrada;
 
     public Venda() {
     }
@@ -61,7 +60,7 @@ public class Venda implements Serializable {
      */
     
     public Venda(List<ProdutoVendido> produtos, double valor, String formaDePagamento, 
-            Calendar dataVenda, int quantidadeParcelas, double entrada, int percentualDesconto, double valorDeEntrada) {
+            Calendar dataVenda, int quantidadeParcelas, double entrada, int percentualDesconto) {
         this.produtosVendidos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
@@ -72,7 +71,6 @@ public class Venda implements Serializable {
         if (formaDePagamento.toUpperCase().equals("À VISTA")){
             this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
         }
-        this.valorDeEntrada = valorDeEntrada;
     }
 
     public long getId() {
@@ -159,19 +157,11 @@ public class Venda implements Serializable {
         this.jaPago += valorDessePagamento;
     }
 
-    public double getValorDeEntrada() {
-        return valorDeEntrada;
-    }
-
-    public void setValorDeEntrada(double valorDeEntrada) {
-        this.valorDeEntrada = valorDeEntrada;
-    }
-
     public void gerarEImprimirRecibo() throws ProdutoInexistenteException, VendaInexistenteException {
         GeradorDeRecibo.getInstance().gerarReciboDeVenda(this);
     }
     
-    public void gerarEImprimirPxRecibo(double valorDessePagamento) throws VendaInexistenteException{
+    public void gerarEImprimirPxRecibo(double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException{
         GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(this, valorDessePagamento);
     }
     

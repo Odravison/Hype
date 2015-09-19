@@ -564,10 +564,10 @@ public class GeradorDeRecibo {
             valorDaOperacao = venda.getValor();
             venda.addValorJaPago(valorDaOperacao);
         } else if (venda.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")){
-            if (venda.getValorDeEntrada()>0){
-                valorDaOperacao = venda.getValorDeEntrada();
+            if (venda.getEntrada()>0){
+                valorDaOperacao = venda.getEntrada();
                 venda.addValorJaPago(valorDaOperacao);
-                valorResta = venda.getValor() - venda.getValorDeEntrada();
+                valorResta = venda.getValor() - venda.getEntrada();
             }             
         }
         
@@ -622,7 +622,7 @@ public class GeradorDeRecibo {
                     + "na forma de pagamento: " + venda.getFormaDePagamento()
                     + " Referente à compra de " + descCurtaProd.toString() + ".\n "
                     + "Valor Total: " + venda.getValor() + " "
-                    + "Entrada: " + venda.getValorDeEntrada() + ". \n"
+                    + "Entrada: " + venda.getEntrada() + ". \n"
                     + "Resta: " + valorResta + " "
                     + "Para dia: " + venda.getDataVendaInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
@@ -770,7 +770,7 @@ public class GeradorDeRecibo {
                     + "na forma de pagamento: " + venda.getFormaDePagamento()
                     + " Referente à compra de " + descCurtaProd.toString() + ".\n "
                     + "Valor Total: " + venda.getValor() + " "
-                    + "Entrada: " + venda.getValorDeEntrada() + ". \n"
+                    + "Entrada: " + venda.getEntrada() + ". \n"
                     + "Resta: " + valorResta + " "
                     + "Para dia: " + venda.getDataVendaInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);

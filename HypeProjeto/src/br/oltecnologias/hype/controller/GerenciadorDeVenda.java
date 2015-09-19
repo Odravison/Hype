@@ -164,7 +164,7 @@ public class GerenciadorDeVenda {
         }
     }
     
-    public void gerarEImprimirPxRecibo(long idVenda, double valorDessePagamento) throws VendaInexistenteException{
+    public void gerarEImprimirPxRecibo(long idVenda, double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException{
         this.pesquisarVendaPorId(idVenda).gerarEImprimirPxRecibo(valorDessePagamento);
     }
     
