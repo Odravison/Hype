@@ -45,6 +45,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         dialog = null;
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
     }
 
 
@@ -159,7 +161,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -169,7 +170,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoConcluir.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoConcluir.setText("Concluir");
         botaoConcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoConcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConcluirActionPerformed(evt);

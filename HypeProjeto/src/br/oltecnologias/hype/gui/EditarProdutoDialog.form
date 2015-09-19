@@ -78,9 +78,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoSalvar.setIcon(new ImageIcon(&quot;Imagens\\Salvar.png&quot;));"/>
-      </AuxValues>
     </Component>
     <Container class="javax.swing.JPanel" name="painelDadosGerais">
       <Properties>
@@ -465,9 +462,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoCancelarActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoCancelar.setIcon(new ImageIcon(&quot;Imagens\\Cancelar.png&quot;));"/>
-      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

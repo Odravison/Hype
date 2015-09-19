@@ -39,6 +39,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         produtosVendidos = new ArrayList<ProdutoVendido>();
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeVenda();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
+        botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

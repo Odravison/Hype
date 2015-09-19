@@ -125,7 +125,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         );
 
         botaoOk.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoOk.setText("  OK  ");
+        botaoOk.setText("Selecionar");
         botaoOk.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoOk.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,7 +134,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
         });
 
         botaoVoltar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoVoltar.setText("Voltar");
+        botaoVoltar.setText(" Voltar ");
         botaoVoltar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

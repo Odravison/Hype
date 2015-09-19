@@ -401,9 +401,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSalvarActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoSalvar.setIcon(new ImageIcon(&quot;Imagens\\Salvar.png&quot;));"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="botaoCancelar">
       <Properties>
@@ -418,9 +415,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoCancelarActionPerformed"/>
       </Events>
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoCancelar.setIcon(new ImageIcon(&quot;Imagens\\Cancelar.png&quot;));"/>
-      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="labelObrigatorio">
       <Properties>
