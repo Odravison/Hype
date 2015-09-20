@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -2516,10 +2518,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
         if (evt.getClickCount() == 1) {
             botaoVerRecibosVenda.setVisible(true);
-            if(((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-2))
-                    .toUpperCase().equals("À VISTA")) {
-                botaoGerarReciboVenda.setVisible(true);
-            } 
+            botaoGerarReciboVenda.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
             
@@ -2589,11 +2588,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoVerRecibosLocacao.setVisible(true);
             botaoVerContrato.setVisible(true);
             botaoGerarReciboLocacao.setVisible(true);
-            if(((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-2))
-                    .toUpperCase().equals("ABERTA")) {
-                botaoFinalizarLocacao.setVisible(true);
-            } 
-            
+            botaoFinalizarLocacao.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
             
@@ -2831,21 +2826,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
-            //if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))) {
-                try {
-                    GerarReciboDialog dialog = new GerarReciboDialog(null);
+            try {
+                Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong((String) tabelaLocacoes.getValueAt(
+                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+                
+                if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(locacao.getId())) {
+                    GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
                     dialog.setLocationRelativeTo(null);
-                    if (dialog.alterarDados()) {
-                        GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1))), dialog.getValorRecibo());
-                    }
-                    dialog.dispose();
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    dialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Não é possível gerar um recido para uma locação finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-           // } else {
-             //   JOptionPane.showMessageDialog(null, "Não é possível gerar um recido para uma locação finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
-            //}
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2867,14 +2861,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoGerarReciboVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboVendaActionPerformed
         if(tabelaVendas.getSelectedRow() >= 0) {
-            try {
-                GerarReciboDialog dialog = new GerarReciboDialog(null);
-                dialog.setLocationRelativeTo(null);
-                if (dialog.alterarDados()) {
-                    GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
-                          Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))), dialog.getValorRecibo());
+            try { 
+                Venda venda = GerenciadorDeVenda.getInstance().pesquisarVendaPorId(Long.parseLong((String) tabelaVendas.getValueAt(
+                                                tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1)));
+                
+                double valorQueResta = venda.getValor()-venda.getJaPago();
+                //Verifica se a venda já foi paga
+                if(valorQueResta <= 0) {
+                    JOptionPane.showMessageDialog(null, "Não é possível gerar recibos para esta venda, ela já foi totalmente paga", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    GerarReciboDeVendaDialog dialog = new GerarReciboDeVendaDialog(null, venda);
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
                 }
-                dialog.dispose();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2885,21 +2884,30 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
-            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
-            //Sim = 0
-            if (escolha == 0) {
-                try {
-                    String idLocacao = (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1);
-                    
-                    //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                    GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong(idLocacao));
-
-                    JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
-                    
-                    atualizarStatusDeLocacao(idLocacao, tabelaLocacoes.getSelectedRow());
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            try {
+                if(GerenciadorDeLocacao.getInstance().isLocacaoPaga(Long.parseLong(
+                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))) {
+                    int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                    //Sim = 0
+                    if (escolha == 0) {
+                        try {
+                            String idLocacao = (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1);
+                            
+                            //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
+                            GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong(idLocacao));
+                            
+                            JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+                            
+                            atualizarStatusDeLocacao(idLocacao, tabelaLocacoes.getSelectedRow());
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esta locação já foi finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
+            } catch (LocacaoInexistenteException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3239,7 +3247,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             modeloTabelaFornecedores.setRowCount(0);
             try {
                 adicionarFornecedoresNaTabela(GerenciadorDePessoas.getInstance().getFornecedores());
-            } catch (FornecedorInexistenteException ex) {
+            } catch (FornecedorInexistenteException e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível fazer a pesquisa de fornecedores.", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -3341,7 +3349,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         try {
             //Adiciona os dadosa nova venda na tabela
             modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()),
-                "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
+                "R$ "+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da venda na tabela:\n"+e.getMessage(), 
                     "Aviso", JOptionPane.WARNING_MESSAGE);

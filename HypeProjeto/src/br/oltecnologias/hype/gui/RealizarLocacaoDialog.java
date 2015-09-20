@@ -23,6 +23,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -38,7 +40,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         super(owner);
         initComponents();
         locador = null;
-        valorTotalLocacao = 0;
+        valorGeral = 0;
+        valorTotalLocacao = valorGeral;
         produtosLocados = new ArrayList<ProdutoLocado>();
         pane = new JOptionPane();
         dialog = null;
@@ -46,6 +49,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
         botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
+        try {
+                percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
+            } catch (TemporadaInexistenteException e) {
+                pane.setMessage("Não foi possível atualizar o valor da temporada de desconto\n"+e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            }
     }
 
 
@@ -501,6 +514,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelEntrada.setText("Entrada: R$");
 
         campoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoEntrada.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                campoEntradaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoEntradaKeyTyped(evt);
+            }
+        });
 
         labelParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelParcelas.setText("Qtd. Parcelas:*");
@@ -626,8 +647,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(10, 10, 10)
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addComponent(labelDesconto)
@@ -736,7 +757,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
-            } else if ((radioCartao.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
+            } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
                 pane.setMessage("Informe a quantidade de parcelas da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
@@ -765,6 +786,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
                     campoEntrada.setText("0");
+                } else {
+                    //Apenas se nao estiver alterando o valor da variável valor total
+                    //valorTotalLocacao = new BigDecimal(valorTotalLocacao - Double.parseDouble(campoEntrada.getText())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
                 //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
                 if (campoParcelas.getText().length() <= 0) {
@@ -895,7 +919,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
-                
+                aplicarDescontosAoValor(); 
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
@@ -919,6 +943,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setVisible(true);
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            aplicarDescontosAoValor(); 
             calcularValorTotalLocacao();
             campoPercentualDesconto.setEnabled(true);
         }
@@ -959,6 +984,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
+                aplicarDescontosAoValor();                
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
@@ -977,6 +1003,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
+            aplicarDescontosAoValor(); 
             calcularValorTotalLocacao();
         }
         if(produtosLocados.size() <= 0) {
@@ -1031,6 +1058,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
                 && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || Integer.parseInt(campoParcelas.getText()) > 0) {
+            
+            
             try {
                 //Se o usuário estiver apagando o conteúdo do campo
                 if (campoParcelas.getText().length() <= 0) { 
@@ -1049,6 +1078,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }  
+            
         }
     }//GEN-LAST:event_campoParcelasKeyReleased
 
@@ -1056,7 +1086,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
                 && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || Integer.parseInt(campoParcelas.getText()) > 0) {
-            try {
+            aplicarDescontosAoValor();
+            /*try {
                 if (campoPercentualDesconto.getText().length() > 0) {
                     labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
                             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
@@ -1071,10 +1102,86 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
-            }  
+            }  */
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
+    private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
+        if (!numeros.contains(evt.getKeyChar() + "") || campoEntrada.getText().length() >= maxCaracteresEntrada
+                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) > valorTotalLocacao
+                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) == 0) {
+            evt.consume();
+        } else if(campoEntrada.getText().length()+1 == 3) {
+            campoEntrada.setText(campoEntrada.getText()+".");
+        }
+    }//GEN-LAST:event_campoEntradaKeyTyped
+ 
+    private void campoEntradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyReleased
+        if ((numeros.contains(evt.getKeyChar() + "") && campoEntrada.getText().length() < maxCaracteresEntrada)
+                || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || (Double.parseDouble(campoEntrada.getText()) > 0 && Double.parseDouble(campoEntrada.getText()) < valorTotalLocacao)) {
+            aplicarDescontosAoValor();
+            /*
+            try {
+                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    if (campoEntrada.getText().length() > 0) {
+                        valorTotalLocacao += Double.parseDouble(campoEntrada.getText());
+                    } else {
+                        valorTotalLocacao += Double.parseDouble(evt.getKeyChar()+"");
+                    }
+                } else {
+                    valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
+                }
+                
+                //Atualiza o valor total da locação exibido ao cliente
+                calcularValorTotalLocacao();
+                
+                if (campoPercentualDesconto.getText().length() > 0) {
+                    labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+   
+                }
+                //Atualiza o valor das parcelas, caso tenha algum valor no campo de parcelas
+                if (campoParcelas.getText().length() > 0) {
+                    labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                }
+                                
+            } catch(Exception e) {
+                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            }  
+            */
+        }
+    }//GEN-LAST:event_campoEntradaKeyReleased
+
+    public void aplicarDescontosAoValor() {
+        try {
+            valorTotalLocacao = valorGeral;
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                valorTotalLocacao = new BigDecimal(valorTotalLocacao
+                        - ((valorTotalLocacao * percentualDescontoTemporada) / 100)
+                ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            } 
+          
+        } catch (Exception e) {
+            valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        } 
+        
+        if (campoPercentualDesconto.getText().length() > 0) {
+            valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        }
+        if (campoEntrada.getText().length() > 0) {
+            valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
+        }
+        labelValorLocacao.setText("R$ " + valorTotalLocacao);
+    }
+    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -1144,7 +1251,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
 
                         //Atualiza o valor total da locação
-                        valorTotalLocacao += produto.getValor();
+                        //valorTotalLocacao += produto.getValor();
+                        
+                        valorGeral += produto.getValor(); //TESTAR
                     }
                 }
             } else {
@@ -1165,7 +1274,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
 
                 //Atualiza o valor total da locação
-                valorTotalLocacao += produto.getValor();
+                //valorTotalLocacao += produto.getValor();
+                
+                valorGeral += produto.getValor(); //TESTAR
             } else {
                 pane.setMessage("Este produto não pode ser locado! \n\nQuantidade de produtos insuficiente no estoque");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
@@ -1198,7 +1309,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             
             try {
                 //Atualiza o valor total da locação
-                valorTotalLocacao -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
+                //valorTotalLocacao -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
+                
+                valorGeral -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor(); //TESTAR
                 
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
@@ -1272,10 +1385,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
     
     public void calcularValorTotalLocacao() {
-        try {
+        /*try {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
                 valorTotalLocacao = new BigDecimal(valorTotalLocacao
-                        - ((valorTotalLocacao * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO")) / 100)
+                        - ((valorTotalLocacao * percentualDescontoTemporada) / 100)
                 ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 
                 labelValorLocacao.setText("R$ " + valorTotalLocacao);
@@ -1291,7 +1404,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } catch (Exception e) {
             valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorLocacao.setText("R$ " + valorTotalLocacao);
-        } 
+        } */
     }
     
     public Locacao getNovaLocacao() {
@@ -1309,6 +1422,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private ArrayList<ProdutoLocado> produtosLocados;
     private List<Produto> produtosEmEstoque;
     private double valorTotalLocacao;
+    private double valorGeral;
     protected boolean concluirSelecionado;
     protected Locacao novaLocacao;
     private Movimentacao novaMovimentacao;
@@ -1317,6 +1431,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private JOptionPane pane;
     private JDialog dialog;
     private int maxParcelas = 6;
+    private int maxCaracteresEntrada = 7;
+    private int percentualDescontoTemporada;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

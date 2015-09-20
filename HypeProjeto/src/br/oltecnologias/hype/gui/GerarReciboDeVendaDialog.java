@@ -5,19 +5,25 @@
  */
 package br.oltecnologias.hype.gui;
 
-import javax.swing.ImageIcon;
+import br.oltecnologias.hype.model.GeradorDeRecibo;
+import br.oltecnologias.hype.model.Venda;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Luender Lima
  */
-public class GerarReciboDialog extends java.awt.Dialog {
+public class GerarReciboDeVendaDialog extends java.awt.Dialog {
 
-    public GerarReciboDialog(java.awt.Frame parent) {
+    public GerarReciboDeVendaDialog(java.awt.Frame parent, Venda venda) {
         super(parent);
+        this.venda = venda;
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        valorQueResta = venda.getValor() - venda.getJaPago();
+        calcularQuantidadeParcelas();
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -27,7 +33,9 @@ public class GerarReciboDialog extends java.awt.Dialog {
         botaoGerar = new javax.swing.JButton();
         painelDados = new javax.swing.JPanel();
         labelValor = new javax.swing.JLabel();
-        campoValor = new javax.swing.JTextField();
+        labelValorRecibo = new javax.swing.JLabel();
+        labelQtdParcelas = new javax.swing.JLabel();
+        comboQuantidadeParcelas = new javax.swing.JComboBox();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -54,12 +62,21 @@ public class GerarReciboDialog extends java.awt.Dialog {
         painelDados.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do Recibo"));
 
         labelValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValor.setText("Valor do recibo:* R$");
+        labelValor.setText("Valor do recibo:* ");
 
-        campoValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoValor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoValorKeyTyped(evt);
+        labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
+        this.valorRecibo = new BigDecimal(venda.getValor()/venda.getQuantidadeParcelas()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        labelValorRecibo.setText("R$ "+valorRecibo);
+
+        labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelQtdParcelas.setText("Quantas parcelas serão pagas?");
+
+        comboQuantidadeParcelas.setMaximumRowCount(6);
+        comboQuantidadeParcelas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "  1  ", "  2  ", "  3  ", "  4  ", "  5  ", "  6  " }));
+        comboQuantidadeParcelas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboQuantidadeParcelasActionPerformed(evt);
             }
         });
 
@@ -67,21 +84,31 @@ public class GerarReciboDialog extends java.awt.Dialog {
         painelDados.setLayout(painelDadosLayout);
         painelDadosLayout.setHorizontalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addComponent(labelQtdParcelas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(comboQuantidadeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
-                .addContainerGap(100, Short.MAX_VALUE)
+                .addContainerGap(79, Short.MAX_VALUE)
                 .addComponent(labelValor)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(98, 98, 98))
+                .addComponent(labelValorRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelDadosLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelQtdParcelas)
+                    .addComponent(comboQuantidadeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelValor)
-                    .addComponent(campoValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                    .addComponent(labelValorRecibo))
+                .addGap(25, 25, 25))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -96,18 +123,18 @@ public class GerarReciboDialog extends java.awt.Dialog {
                         .addComponent(labelObrigatorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoGerar)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoGerar)
                     .addComponent(labelObrigatorio))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         pack();
@@ -118,53 +145,60 @@ public class GerarReciboDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_closeDialog
 
-    private void campoValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoValorKeyTyped
-        if((campoValor.getText().length() > 3 && !campoValor.getText().contains(".")) ||
-            (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
-            || campoValor.getText().length() >= maxCaracteresPreco) {
-
-            evt.consume();
-        }
-    }//GEN-LAST:event_campoValorKeyTyped
-
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
-            // Valida campos 
-            if(campoValor.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe o valor do recibo que será gerado", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else {
-                try {
-                    salvarSelecionado = true; //O botão Salvar foi selecionado
-                    setVisible(false);
+            GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(venda, valorRecibo);
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            //gerarSelecionado = true; //O botão gerar foi selecionado
+            setVisible(false);
+            dispose();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Nao foi possivel imprimir o recibo"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoGerarActionPerformed
 
-    public boolean alterarDados() {        
-        salvarSelecionado = false;  //Marcamos que o salvar não foi selecionado
+    private void comboQuantidadeParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboQuantidadeParcelasActionPerformed
+        valorRecibo = new BigDecimal(valorQueResta/Integer.parseInt((String) comboQuantidadeParcelas.getSelectedItem())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        labelValorRecibo.setText("R$ "+valorRecibo);
+    }//GEN-LAST:event_comboQuantidadeParcelasActionPerformed
+
+    public void calcularQuantidadeParcelas() {
+        int quantParcelas = 1;
+        while(valorQueResta/quantParcelas > valorRecibo) {
+            quantParcelas++;
+        }
+        String[] valores = new String[quantParcelas];
+        for(int i=0; i < quantParcelas; i++) {
+            valores[i] = i+1+"";
+        }
+        comboQuantidadeParcelas.setMaximumRowCount(quantParcelas);
+        comboQuantidadeParcelas.setModel(new javax.swing.DefaultComboBoxModel(valores));
+    }
+    
+    /*public boolean alterarDados() {        
+        gerarSelecionado = false;  //Marcamos que o salvar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible após ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return salvarSelecionado;   //Retornamos true, se ele pressionou ok.
+        return gerarSelecionado;   //Retornamos true, se ele pressionou ok.
     }
     
     public double getValorRecibo() {
-        return Double.parseDouble(campoValor.getText());
-    }
+        return valorRecibo;
+    }*/
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresPreco = 10;
-    protected boolean salvarSelecionado;
+    //protected boolean gerarSelecionado;
+    private Venda venda;
+    private double valorRecibo;
+    private double valorQueResta;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoGerar;
-    private javax.swing.JTextField campoValor;
+    private javax.swing.JComboBox comboQuantidadeParcelas;
     private javax.swing.JLabel labelObrigatorio;
+    private javax.swing.JLabel labelQtdParcelas;
     private javax.swing.JLabel labelValor;
+    private javax.swing.JLabel labelValorRecibo;
     private javax.swing.JPanel painelDados;
     // End of variables declaration//GEN-END:variables
 }
