@@ -102,9 +102,6 @@ public class Locacao implements Serializable {
         this.dataLocacao = dataLocacao;
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
-        if (valorDeEntrada == 0) {
-            this.jaPago = valorLocacao;
-        }
         this.parcelas = parcelas;
         this.ativa = true;
     }
@@ -119,7 +116,7 @@ public class Locacao implements Serializable {
     }
 
     public void gerarRecibo() throws LocacaoInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException {
-        GeradorDeRecibo.getInstance().gerarReciboDeLocacao(this);
+        GeradorDeRecibo.getInstance().gerarEImprimirReciboDeLocacao(this);
     }
 
     public void imprimirRecibo() throws IOException, FileNotFoundException,
@@ -277,6 +274,10 @@ public class Locacao implements Serializable {
     
     public boolean isFinalizada(){
         return !this.ativa;
+    }
+
+    String getDataDevolucaoInString() {
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
     }
 
 }

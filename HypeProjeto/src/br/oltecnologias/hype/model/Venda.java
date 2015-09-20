@@ -70,9 +70,6 @@ public class Venda implements Serializable {
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
         this.entrada = valorDeEntrada;
-        if (valorDeEntrada == 0) {
-            this.jaPago = valor;
-        }
         this.percentualDesconto = percentualDesconto;
     }
 
@@ -161,11 +158,7 @@ public class Venda implements Serializable {
     }
 
     public void gerarEImprimirRecibo() throws ProdutoInexistenteException, VendaInexistenteException, IOException, FileNotFoundException, PrinterException {
-        GeradorDeRecibo.getInstance().gerarReciboDeVenda(this);
-    }
-    
-    public void gerarEImprimirPxRecibo(double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException{
-        GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeVenda(this, valorDessePagamento);
+        GeradorDeRecibo.getInstance().gerarEImprimirReciboDeVenda(this);
     }
     
     

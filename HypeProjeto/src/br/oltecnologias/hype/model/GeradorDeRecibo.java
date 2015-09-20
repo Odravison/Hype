@@ -27,7 +27,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.Annotation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,11 +39,13 @@ import java.util.logging.Logger;
  *
  * @author Odravison
  */
+
 public class GeradorDeRecibo {
 
     private static GeradorDeRecibo singleton;
     private List<Produto> produtos;
     private Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
+    Image logo = null;
 
     public static GeradorDeRecibo getInstance() {
         if (singleton == null) {
@@ -55,6 +56,16 @@ public class GeradorDeRecibo {
 
     private GeradorDeRecibo() {
         this.produtos = new ArrayList<Produto>();
+        
+        try {
+            
+            logo = Image.getInstance(getClass().getResource("/br/oltecnologias/hype/imagens/logoRecibo.png"));
+            logo.scaleToFit(270, 54);
+            
+        } catch (BadElementException | IOException ex) {
+            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     public static String valorPorExtenso(double vlr) {
@@ -195,22 +206,12 @@ public class GeradorDeRecibo {
         return (s);
     }
 
-    public void gerarReciboDeLocacao(Locacao loc) throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
+    public void gerarEImprimirReciboDeLocacao(Locacao loc) throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
-        Image logo = null;
         double valorDaOperacao = 0;
 
         double valorResta = 0;
-
-        try {
-
-            logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(270, 54);
-
-        } catch (BadElementException | IOException ex) {
-            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
         Font timesNewRoman18 = new Font(Font.FontFamily.TIMES_ROMAN, 18);
@@ -232,10 +233,10 @@ public class GeradorDeRecibo {
         if (loc.getFormaDePagamento().toUpperCase().equals("À VISTA")
                 || loc.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")
                 || loc.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")) {
-            
+
             valorDaOperacao = loc.getValorLocacao();
             loc.addValorJaPago(valorDaOperacao);
-            
+
         } else if (loc.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
             if (loc.getValorDeEntrada() > 0) {
                 valorDaOperacao = loc.getValorDeEntrada();
@@ -296,8 +297,8 @@ public class GeradorDeRecibo {
                     + " Referente à locação de " + descCurtaProd.toString() + ".\n "
                     + "Valor Total: " + loc.getValorLocacao() + " "
                     + "Entrada: " + loc.getValorDeEntrada() + ". \n"
-                    + "Resta: " + valorResta + " "
-                    + "Para dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
+                    + "Resta: " + valorResta + " - "
+                    + "que será pago até o dia: " + loc.getDataDevolucaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -355,21 +356,6 @@ public class GeradorDeRecibo {
 
     }
 
-    public void gerarEImprimirReciboDeLocacao(Locacao loc) throws FileNotFoundException, IOException, PrinterException, LocacaoInexistenteException, ProdutoInexistenteException {
-        gerarReciboDeLocacao(loc);
-        String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
-        String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(loc.getDataLocacao().getTime());
-
-        String diretorio = conf.getDiretorioDeDocumentos()
-                + "\\" + loc.getCliente().getNome() + "\\Recibos\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
-
-        FileInputStream fis = new FileInputStream(diretorio);
-        PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", conf.getNomeDaImpressora());
-
-        printPDFFile.print();
-
-    }
-
     private String getDescricaoCurta(List<Produto> produtos) {
         String descricaoCurta = "";
         for (Produto p : produtos) {
@@ -382,19 +368,8 @@ public class GeradorDeRecibo {
     public void gerarEImprimirPxReciboDeLocacao(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
-        Image logo = null;
-
         loc.addValorJaPago(valorDessePagamento);
         double valorResta = loc.getValorLocacao() - loc.getJaPago();
-
-        try {
-
-            logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(270, 54);
-
-        } catch (BadElementException | IOException ex) {
-            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
         Font timesNewRoman18 = new Font(Font.FontFamily.TIMES_ROMAN, 18);
@@ -455,13 +430,13 @@ public class GeradorDeRecibo {
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
             Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + valorPorExtenso(valorDessePagamento) + "\n"
-                    + "Forma de pagamento: " + loc.getFormaDePagamento() + "\n"
+            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + valorPorExtenso(valorDessePagamento) + " na "
+                    + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
                     + "Referente à locação de " + descCurtaProd.toString() + "\n "
-                    + "Valor Total: " + loc.getValorLocacao() + "\n"
+                    + "Valor Total: " + loc.getValorLocacao() + "  -  "
                     + "Pago neste dia: " + valorDessePagamento + "\n"
-                    + "Resta: " + valorResta + "\n"
-                    + "Para dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
+                    + "Resta: " + valorResta + " - "
+                    + "que será pago até o dia: " + loc.getDataDevolucaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -496,7 +471,7 @@ public class GeradorDeRecibo {
             pdf.add(tituloDeRecibo);
             pdf.add(textoRecibo);
             pdf.add(linhaAssinatura);
-            
+
             GerenciadorDeLocacao.getInstance().editarLocacao(loc);
 
         } catch (DocumentException | FileNotFoundException ex) {
@@ -516,22 +491,12 @@ public class GeradorDeRecibo {
         }
     }
 
-    public void gerarReciboDeVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException, FileNotFoundException, IOException, PrinterException {
+    public void gerarEImprimirReciboDeVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId());
 
-        Image logo = null;
         double valorDaOperacao = 0;
 
         double valorResta = 0;
-
-        try {
-
-            logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(270, 54);
-
-        } catch (BadElementException | IOException ex) {
-            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
         Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
         Font timesNewRoman18 = new Font(Font.FontFamily.TIMES_ROMAN, 18);
@@ -614,11 +579,9 @@ public class GeradorDeRecibo {
             textoRecibo = new Paragraph("Recebi de ____________________________________________________________ a importância de R$ "
                     + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + " reais) "
                     + "na forma de pagamento: " + venda.getFormaDePagamento()
-                    + " Referente à compra de " + descCurtaProd.toString() + ".\n "
+                    + " Referente à compra de " + descCurtaProd.toString() + ".\n"
                     + "Valor Total: " + venda.getValor() + " "
-                    + "Entrada: " + venda.getEntrada() + ". \n"
-                    + "Resta: " + valorResta + " "
-                    + "Para dia: " + venda.getDataVendaInString(), timesNewRoman12);
+                    + "Entrada: " + venda.getEntrada() + ". \n" , timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -676,142 +639,5 @@ public class GeradorDeRecibo {
 
         }
 
-    }
-
-    public void gerarEImprimirPxReciboDeVenda(Venda venda, double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
-        this.produtos = GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId());
-
-        Image logo = null;
-
-        venda.addValorJaPago(valorDessePagamento);
-        double valorResta = venda.getValor() - venda.getJaPago();
-
-        try {
-
-            logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(270, 54);
-
-        } catch (BadElementException | IOException ex) {
-            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        Font timesNewRoman14 = new Font(Font.FontFamily.TIMES_ROMAN, 14, Font.BOLD);
-        Font timesNewRoman18 = new Font(Font.FontFamily.TIMES_ROMAN, 18);
-        Font timesNewRoman12 = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-        Font courier12 = new Font(Font.FontFamily.COURIER, 12);
-
-        Document pdf = new Document();
-        File diretorio;
-
-        String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
-        String diaRecibo = new SimpleDateFormat("dd.MM.yyyy").format(venda.getDataVenda().getTime());
-
-        String dia = new SimpleDateFormat("dd").format(Calendar.getInstance().getTime());
-        String mes = new SimpleDateFormat("MMMMM", new Locale("pt", "BR")).format(Calendar.getInstance().getTime());
-        String ano = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
-
-        String dataLocFormatada = new SimpleDateFormat("dd/MM/yyyy").format(venda.getDataVenda().getTime());
-
-        try {
-
-            diretorio = new File(conf.getDiretorioDeDocumentos()
-                    + "\\Vendas\\" + venda.getId());
-
-            diretorio.mkdirs();
-
-            System.out.println(diretorio.toString());
-
-            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString()
-                    + "\\" + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf"));
-
-            pdf.open();
-            pdf.setPageSize(PageSize.A4);
-
-            Paragraph cabecalhoDeRecibo;
-            cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
-                    + conf.getEmpresa().getCnpj() + "\n"
-                    + conf.getEmpresa().getEndereco().toString() + "\n"
-                    + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
-            cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
-            cabecalhoDeRecibo.setSpacingAfter(10);
-
-            PdfPTable tabelaCabecalho = new PdfPTable(2);
-            PdfPCell celulaImagem = new PdfPCell(logo);
-
-            PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
-
-            celulaImagem.setBorder(-1);
-            celulaTCabecalho.setBorder(-1);
-
-            tabelaCabecalho.addCell(celulaImagem);
-            tabelaCabecalho.addCell(celulaTCabecalho);
-
-            Paragraph tituloDeRecibo;
-            tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
-            tituloDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
-
-            Paragraph descCurtaProd;
-            descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
-
-            Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de ____________________________________________________________ a importância de R$ "
-                    + valorDessePagamento + " (" + valorPorExtenso(valorDessePagamento) + " reais) "
-                    + "na forma de pagamento: " + venda.getFormaDePagamento()
-                    + " Referente à compra de " + descCurtaProd.toString() + ".\n "
-                    + "Valor Total: " + venda.getValor() + " "
-                    + "Entrada: " + venda.getEntrada() + ". \n"
-                    + "Resta: " + valorResta + " "
-                    + "Para dia: " + venda.getDataVendaInString(), timesNewRoman12);
-            textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);
-
-            Paragraph linhaAssinatura;
-            linhaAssinatura = new Paragraph("\n"
-                    + "\n"
-                    + "________________________________________________________________________ \n"
-                    + conf.getEmpresa().getNome() + "\n"
-                    + "\n"
-                    + "________________________________________________________________________\n"
-                    + "CLIENTE",
-                    timesNewRoman12);
-            linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
-
-            Paragraph diaLocal;
-            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
-                    + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
-            diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
-
-            Paragraph linhaDeCorte;
-            linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
-                    timesNewRoman12);
-            linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
-
-            pdf.add(tabelaCabecalho);
-            pdf.add(tituloDeRecibo);
-            pdf.add(textoRecibo);
-            pdf.add(linhaAssinatura);
-
-            pdf.add(linhaDeCorte);
-
-            pdf.add(tabelaCabecalho);
-            pdf.add(tituloDeRecibo);
-            pdf.add(textoRecibo);
-            pdf.add(linhaAssinatura);
-
-            GerenciadorDeVenda.getInstance().editarVenda(venda);
-
-        } catch (DocumentException | FileNotFoundException ex) {
-            Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
-
-        } finally {
-            pdf.close();
-
-            String diretorioImpressao = conf.getDiretorioDeDocumentos() + "\\Vendas\\" + venda.getId()
-                    + "\\Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
-
-            FileInputStream fis = new FileInputStream(diretorioImpressao);
-            PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", conf.getNomeDaImpressora());
-
-            printPDFFile.print();
-        }
     }
 }

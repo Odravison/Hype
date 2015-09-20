@@ -210,6 +210,9 @@ public class GerenciadorDoSistema {
         String diretorioFinal = null;
 
         double valorRecebido = 0.00;
+        
+        double cartaoVenda = 0.00;
+        double cartaoLocacao = 0.00;
 
         int quantVenda = 0;
         double totalVenda = 0.00;
@@ -241,13 +244,23 @@ public class GerenciadorDoSistema {
                         && mov.getData().get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR))) {
 
                     if (mov.getMovimento().toUpperCase().equals("VENDA")) {
+                        Venda venda = GerenciadorDeVenda.getInstance().pesquisarVendaPorId(mov.getIdDaOperacao());
+                        if (venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")
+                            || venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")){
+                            cartaoVenda += venda.getJaPago();
+                        }
                         quantVenda++;
-                        valorRecebido = GerenciadorDeVenda.getInstance().pesquisarVendaPorId(mov.getIdDaOperacao()).getJaPago();
+                        valorRecebido = venda.getJaPago();
                         totalVenda += valorRecebido;
 
                     } else if (mov.getMovimento().toUpperCase().equals("LOCAÇÃO")) {
+                        Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(mov.getIdDaOperacao());
+                        if (locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
+                            || locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")){
+                            cartaoLocacao += locacao.getJaPago();
+                        }
                         quantLocacao++;
-                        valorRecebido = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(mov.getIdDaOperacao()).getJaPago();
+                        valorRecebido = locacao.getJaPago();
                         totalLocacao += valorRecebido;
 
                     } else if (mov.getMovimento().toUpperCase().equals("DESPESA")) {
@@ -305,21 +318,18 @@ public class GerenciadorDoSistema {
                 tituloRelatorio.setAlignment(Paragraph.ALIGN_CENTER);
                 tituloRelatorio.setSpacingAfter(10);
 
-                String teste = "|  DATA  |  MOVIMENTO  |  RESPONSAVEL  |  VALOR  |  RECEBIDO  |  PAGAMENTO  |";
-
-                Paragraph cabecalho = new Paragraph(teste, timesNewRoman12);
-
                 Paragraph resumoRelatorio = new Paragraph("Resumo do relatório: \n"
-                        + "Quantidade de vendas: " + quantVenda + " Total de venda: R$ " + totalVenda + "\n"
-                        + "Quantidade de Locações: " + quantLocacao + " Total de locações: R$ " + totalLocacao + "\n"
-                        + "Quantidade de Despesas: " + quantDespesa + " Total de despesas: R$ " + totalDespesa + "\n"
-                        + "Valor em caixa neste período: " + (totalVenda + totalLocacao - totalDespesa), timesNewRoman12);
+                        + "Quantidade de vendas: " + quantVenda + " - Total de venda: R$ " + totalVenda + "\n"
+                        + "Quantidade de Locações: " + quantLocacao + " - Total de locações: R$ " + totalLocacao + "\n"
+                        + "Quantidade de Despesas: " + quantDespesa + " - Total de despesas: R$ " + totalDespesa + "\n"
+                        + "Valor em caixa neste período: " + ((totalVenda + totalLocacao - totalDespesa)-(cartaoLocacao + cartaoVenda)) + "\n"
+                        + "Valor pago em Cartão para vendas: " + cartaoVenda + "\n"
+                        + "Valor pago em Cartão para locações: " + cartaoLocacao, timesNewRoman12);
                 resumoRelatorio.setAlignment(Paragraph.ALIGN_LEFT);
 
                 pdf.add(tituloRelatorio);
                 pdf.add(table);
                 pdf.add(resumoRelatorio);
-                pdf.add(cabecalho);
 
             } catch (DocumentException | IOException de) {
                 System.err.println(de.getMessage());
