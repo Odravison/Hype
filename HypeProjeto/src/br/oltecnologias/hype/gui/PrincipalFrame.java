@@ -2912,7 +2912,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         }
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Esta locação já foi finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (LocacaoInexistenteException ex) {
                 JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);

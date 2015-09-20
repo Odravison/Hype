@@ -41,6 +41,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         initComponents();
         locador = null;
         valorGeral = 0;
+        valorTotalComDescontos = 0;
         valorTotalLocacao = valorGeral;
         produtosLocados = new ArrayList<ProdutoLocado>();
         pane = new JOptionPane();
@@ -647,10 +648,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(10, 10, 10)
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
+                        .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -780,8 +781,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    //valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                      //      campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -919,7 +920,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
-                aplicarDescontosAoValor(); 
+                calcularValorTotal(); 
                 calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
@@ -943,7 +944,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setVisible(true);
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
-            aplicarDescontosAoValor(); 
+            calcularValorTotal(); 
             calcularValorTotalLocacao();
             campoPercentualDesconto.setEnabled(true);
         }
@@ -973,7 +974,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto 
-                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100) {
+                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100
+                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) == 0) {
             evt.consume();
         } 
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
@@ -984,8 +986,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
-                aplicarDescontosAoValor();                
-                calcularValorTotalLocacao();
+                calcularValorTotal();                
+                //calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
                 campoEntrada.setEnabled(true);
@@ -1003,8 +1005,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
         if(evt.getClickCount() == 2){            
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
-            aplicarDescontosAoValor(); 
-            calcularValorTotalLocacao();
+            calcularValorTotal(); 
+            //calcularValorTotalLocacao();
         }
         if(produtosLocados.size() <= 0) {
             campoPercentualDesconto.setEnabled(false);
@@ -1057,10 +1059,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private void campoParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
                 && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || Integer.parseInt(campoParcelas.getText()) > 0) {
+                || Integer.parseInt(campoParcelas.getText()) > 0
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) {
             
+            calcularValorTotal();
             
-            try {
+            /*try {
                 //Se o usuário estiver apagando o conteúdo do campo
                 if (campoParcelas.getText().length() <= 0) { 
                     labelValorParcelas.setText("");
@@ -1077,16 +1081,18 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
-            }  
+            }  */
             
         }
     }//GEN-LAST:event_campoParcelasKeyReleased
 
     private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-                && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || Integer.parseInt(campoParcelas.getText()) > 0) {
-            aplicarDescontosAoValor();
+                && (Integer.parseInt(campoPercentualDesconto.getText()) <= 100 &&  Integer.parseInt(campoPercentualDesconto.getText()) > 0))
+                || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
+                
+            calcularValorTotal();
             /*try {
                 if (campoPercentualDesconto.getText().length() > 0) {
                     labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
@@ -1107,20 +1113,21 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
-        if (!numeros.contains(evt.getKeyChar() + "") || campoEntrada.getText().length() >= maxCaracteresEntrada
-                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) > valorTotalLocacao
-                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) == 0) {
+        if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoEntrada.getText().length() >= maxCaracteresEntrada
+                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) >= valorTotalComDescontos
+                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) == 0) { 
+
             evt.consume();
-        } else if(campoEntrada.getText().length()+1 == 3) {
-            campoEntrada.setText(campoEntrada.getText()+".");
-        }
+        } 
     }//GEN-LAST:event_campoEntradaKeyTyped
  
     private void campoEntradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyReleased
-        if ((numeros.contains(evt.getKeyChar() + "") && campoEntrada.getText().length() < maxCaracteresEntrada)
+        if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.') 
+                && campoEntrada.getText().length() <= maxCaracteresEntrada && (Double.parseDouble(campoEntrada.getText()) > 0 && 
+                Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || (Double.parseDouble(campoEntrada.getText()) > 0 && Double.parseDouble(campoEntrada.getText()) < valorTotalLocacao)) {
-            aplicarDescontosAoValor();
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
+            calcularValorTotal();
             /*
             try {
                 if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -1159,23 +1166,22 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
 
-    public void aplicarDescontosAoValor() {
+    public void calcularValorTotal() {
         try {
             valorTotalLocacao = valorGeral;
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
-                valorTotalLocacao = new BigDecimal(valorTotalLocacao
-                        - ((valorTotalLocacao * percentualDescontoTemporada) / 100)
-                ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                valorTotalLocacao = valorTotalLocacao
+                        - ((valorTotalLocacao * percentualDescontoTemporada) / 100);
             } 
           
         } catch (Exception e) {
-            valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         } 
         
         if (campoPercentualDesconto.getText().length() > 0) {
-            valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            valorTotalLocacao = valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100);
         }
+        valorTotalComDescontos = valorTotalLocacao;
         if (campoEntrada.getText().length() > 0) {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
@@ -1190,9 +1196,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         }
-        
-        
-        
     }
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
@@ -1446,6 +1449,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private int maxParcelas = 6;
     private int maxCaracteresEntrada = 7;
     private int percentualDescontoTemporada;
+    private double valorTotalComDescontos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

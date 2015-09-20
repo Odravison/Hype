@@ -472,6 +472,10 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoEntradaKeyReleased"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoEntradaKeyTyped"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="labelParcelas">
           <Properties>
