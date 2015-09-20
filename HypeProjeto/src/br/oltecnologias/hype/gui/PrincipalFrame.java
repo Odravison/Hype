@@ -2855,21 +2855,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
             try {
-                long idLocacao = Long.parseLong(
-                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1));
-                if(GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
-                    
-                    if(GerenciadorDeLocacao.getInstance().isFinalizada(idLocacao)) {
+                Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
+                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+                
+                if(!locacao.isLocacaoPaga()) {
+                    if(!locacao.isFinalizada()) {
                         int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
                         //Sim = 0
                         if (escolha == 0) {
                             try {
                                 //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                                GerenciadorDeLocacao.getInstance().finalizarLocacao(idLocacao);
+                                GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId());
 
                                 JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
 
-                                atualizarStatusDeLocacao(Long.toString(idLocacao), tabelaLocacoes.getSelectedRow());
+                                atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
