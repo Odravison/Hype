@@ -30,7 +30,7 @@ public class GerenciadorDeProduto {
         return singleton;
     }
 
-    public Produto cadastrarProduto(Produto produto) throws ProdutoExistenteException, ProdutoInexistenteException {
+    public Produto cadastrarProduto(Produto produto) throws ProdutoExistenteException {
 
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
