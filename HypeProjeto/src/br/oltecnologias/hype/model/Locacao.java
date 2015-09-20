@@ -265,10 +265,10 @@ public class Locacao implements Serializable {
     }
     
     public String getStatus() {
-        if(ativa) {
-            return "Aberta";
+        if(isFinalizada()) {
+            return "Fechada";
         }
-        return "Fechada";
+        return "Aberta";
     }
 
     public boolean isLocacaoPaga() {

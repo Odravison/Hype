@@ -23,9 +23,9 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
     public GerarReciboDeLocacaoDialog(java.awt.Frame parent, Locacao locacao) {
         super(parent);
         this.locacao = locacao;
+        valorQueResta = locacao.getValorLocacao() - locacao.getJaPago();
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-        valorQueResta = locacao.getValorLocacao() - locacao.getJaPago();
         calcularQuantidadeParcelas();
     }
 
@@ -39,6 +39,8 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
         labelValorRecibo = new javax.swing.JLabel();
         labelQtdParcelas = new javax.swing.JLabel();
         comboQuantidadeParcelas = new javax.swing.JComboBox();
+        labelValorTotal = new javax.swing.JLabel();
+        labelValorResta = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -67,7 +69,7 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
         labelValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelValor.setText("Valor do recibo:* ");
 
-        labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
         this.valorRecibo = new BigDecimal(locacao.getValorLocacao()/locacao.getParcelas()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
         labelValorRecibo.setText("R$ "+valorRecibo);
@@ -83,35 +85,53 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
             }
         });
 
+        labelValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelValorTotal.setText("Valor total desta locação: R$ "+locacao.getValorLocacao());
+
+        labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelValorResta.setText("Resta a ser pago: R$"+valorQueResta);
+
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
         painelDadosLayout.setHorizontalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(labelQtdParcelas)
+                .addContainerGap()
+                .addComponent(labelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comboQuantidadeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
-                .addContainerGap(79, Short.MAX_VALUE)
-                .addComponent(labelValor)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelValorRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77))
+                .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(painelDadosLayout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelQtdParcelas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(comboQuantidadeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelValorRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72))))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(30, 30, 30)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(labelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelQtdParcelas)
                     .addComponent(comboQuantidadeParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(27, 27, 27)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelValor)
                     .addComponent(labelValorRecibo))
-                .addGap(25, 25, 25))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -119,25 +139,25 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelObrigatorio)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoGerar)))
+                        .addComponent(botaoGerar))
+                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(painelDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
+                .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoGerar)
                     .addComponent(labelObrigatorio))
-                .addGap(24, 24, 24))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -151,7 +171,8 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
             GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
-
+            
+            JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
             //gerarSelecionado = true; //O botão gerar foi selecionado
             setVisible(false);
             dispose();
@@ -161,8 +182,9 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoGerarActionPerformed
 
     private void comboQuantidadeParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboQuantidadeParcelasActionPerformed
-        valorRecibo = new BigDecimal(valorQueResta/Integer.parseInt((String) comboQuantidadeParcelas.getSelectedItem())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-        labelValorRecibo.setText("R$ "+valorRecibo);
+        valorRecibo = valorQueResta/((comboQuantidadeParcelas.getItemCount()+1)-(comboQuantidadeParcelas.getSelectedIndex()+1));
+        labelValorRecibo.setText("R$ "+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        labelValorResta.setText("Resta a ser pago: R$ "+new BigDecimal(valorQueResta-valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
     }//GEN-LAST:event_comboQuantidadeParcelasActionPerformed
 
     public void calcularQuantidadeParcelas() {
@@ -203,6 +225,8 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelQtdParcelas;
     private javax.swing.JLabel labelValor;
     private javax.swing.JLabel labelValorRecibo;
+    private javax.swing.JLabel labelValorResta;
+    private javax.swing.JLabel labelValorTotal;
     private javax.swing.JPanel painelDados;
     // End of variables declaration//GEN-END:variables
 }

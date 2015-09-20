@@ -921,7 +921,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 calcularValorTotal(); 
-                calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());

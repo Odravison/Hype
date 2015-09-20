@@ -29,7 +29,6 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         labelValor = new javax.swing.JLabel();
         labelResponsavel = new javax.swing.JLabel();
         labelData = new javax.swing.JLabel();
-        labelHorario = new javax.swing.JLabel();
         labelBeneficiario = new javax.swing.JLabel();
         botaoOk = new javax.swing.JButton();
 
@@ -57,9 +56,6 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
         labelData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelData.setText("Data: "+movimentacao.getDataInString());
 
-        labelHorario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelHorario.setText("Horário: "+new SimpleDateFormat("HH:mm").format(movimentacao.getData().getTime())+"Hrs");
-
         labelBeneficiario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelBeneficiario.setText("Beneficiário: "+movimentacao.getBeneficiario());
 
@@ -74,20 +70,17 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
                         .addComponent(labelBeneficiario, javax.swing.GroupLayout.PREFERRED_SIZE, 412, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDadosLayout.createSequentialGroup()
-                                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(101, 101, 101)
-                                .addComponent(labelHorario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 1, Short.MAX_VALUE)
+                        .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(labelResponsavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(painelDadosLayout.createSequentialGroup()
-                                .addGap(0, 1, Short.MAX_VALUE)
-                                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(labelResponsavel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(painelDadosLayout.createSequentialGroup()
-                                        .addComponent(labelMovimento, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(10, 10, 10))))
+                                .addComponent(labelMovimento, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(labelValor, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(10, 10, 10))
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,12 +92,10 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
                 .addGap(18, 18, 18)
                 .addComponent(labelResponsavel, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelHorario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(labelBeneficiario, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(labelData, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         botaoOk.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
@@ -155,7 +146,6 @@ public class VerDadosMovimentacaoDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoOk;
     private javax.swing.JLabel labelBeneficiario;
     private javax.swing.JLabel labelData;
-    private javax.swing.JLabel labelHorario;
     private javax.swing.JLabel labelMovimento;
     private javax.swing.JLabel labelResponsavel;
     private javax.swing.JLabel labelValor;
