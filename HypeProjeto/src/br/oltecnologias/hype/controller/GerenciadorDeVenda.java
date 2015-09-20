@@ -169,10 +169,6 @@ public class GerenciadorDeVenda {
         }
     }
     
-    public void gerarEImprimirPxRecibo(long idVenda, double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException{
-        this.pesquisarVendaPorId(idVenda).gerarEImprimirPxRecibo(valorDessePagamento);
-    }
-    
     
 
 }

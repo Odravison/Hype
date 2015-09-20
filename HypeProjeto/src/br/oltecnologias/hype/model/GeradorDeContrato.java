@@ -6,7 +6,9 @@
 package br.oltecnologias.hype.model;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
+import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
+import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -118,7 +120,7 @@ public class GeradorDeContrato {
             periodo.setAlignment(Paragraph.ALIGN_CENTER);
 
             Paragraph objLocados;
-            objLocados = new Paragraph("Trajes e acessórios Locados: \n" + getDescricaoDeProdutos(), courier12);
+            objLocados = new Paragraph("Trajes e acessórios Locados: \n" + getDescricaoDeProdutos(locacao.getId()), courier12);
             objLocados.setSpacingAfter(20);
 
             Paragraph linhaAssinatura;
@@ -172,10 +174,17 @@ public class GeradorDeContrato {
         }
     }
 
-    private String getDescricaoDeProdutos() {
+    private String getDescricaoDeProdutos(long idLocacao) throws LocacaoInexistenteException {
         String descCompleta = "";
+        List<ProdutoLocado> produtosLocados = new ArrayList<ProdutoLocado>();
+        produtosLocados = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao).getProdutos();
         for (Produto p : this.produtos) {
-            descCompleta += p.getDescricao() + "\n";
+            for (ProdutoLocado pl: produtosLocados){
+                if (pl.getCodigoProduto().toUpperCase().equals(p.getCodigo().toUpperCase())){
+                    descCompleta += pl.getQuantidade() + " - " +p.getDescricao() + "\n";
+                }
+            }
+            
         }
 
         return descCompleta;
