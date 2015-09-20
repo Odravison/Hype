@@ -31,7 +31,7 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public void realizarVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException, IOException, FileNotFoundException, PrinterException {
+    public Venda realizarVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException, IOException, FileNotFoundException, PrinterException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         VendaJpaRepository vjp = new VendaJpaRepository(emf);
         try {
@@ -40,6 +40,8 @@ public class GerenciadorDeVenda {
             }
             vjp.create(venda);
             venda.gerarEImprimirRecibo();
+            System.out.println("==========>>>>>>>>>>>>>> O ID DA VENDA É: " + venda.getId());
+            return venda;
             
         } finally {
             if (emf != null){

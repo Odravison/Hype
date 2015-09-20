@@ -33,18 +33,18 @@ public class Venda implements Serializable {
     @JoinColumn(name="fk_venda")
     private List<ProdutoVendido> produtosVendidos;
     
-    private double valor;
+    private double valor = 0;
     
     private String formaDePagamento;
     
     @Temporal(TemporalType.DATE)
     private Calendar dataVenda;
     
-    private int quantidadeParcelas;
+    private int quantidadeParcelas = 0;
 
-    private double entrada;
+    private double entrada = 0;
     
-    private int percentualDesconto;
+    private int percentualDesconto = 0;
     
     private double jaPago = 0;
     
@@ -63,20 +63,17 @@ public class Venda implements Serializable {
      */
     
     public Venda(List<ProdutoVendido> produtos, double valor, String formaDePagamento, 
-            Calendar dataVenda, int quantidadeParcelas, double entrada, int percentualDesconto) {
+            Calendar dataVenda, int quantidadeParcelas, double valorDeEntrada, int percentualDesconto) {
         this.produtosVendidos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
-        this.entrada = entrada;
-        if (entrada == 0) {
+        this.entrada = valorDeEntrada;
+        if (valorDeEntrada == 0) {
             this.jaPago = valor;
         }
         this.percentualDesconto = percentualDesconto;
-        if (formaDePagamento.toUpperCase().equals("À VISTA")){
-            this.valor = valor - (valor*Configuracao.getInstance().getDescontoAVista());
-        }
     }
 
     public long getId() {

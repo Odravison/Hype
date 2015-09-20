@@ -549,6 +549,7 @@ public class GeradorDeRecibo {
 
         if (venda.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
             if (venda.getEntrada() > 0) {
+
                 valorDaOperacao = venda.getEntrada();
                 venda.addValorJaPago(valorDaOperacao);
                 valorResta = venda.getValor() - venda.getEntrada();
@@ -559,7 +560,6 @@ public class GeradorDeRecibo {
 
             valorDaOperacao = venda.getValor();
             venda.addValorJaPago(valorDaOperacao);
-
         }
 
         GerenciadorDeVenda.getInstance().editarVenda(venda);
