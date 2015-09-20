@@ -2819,10 +2819,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
             try {
-                Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong((String) tabelaLocacoes.getValueAt(
-                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+                long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
+                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1));
                 
-                if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(locacao.getId())) {
+                if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
+                    Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
                     GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
