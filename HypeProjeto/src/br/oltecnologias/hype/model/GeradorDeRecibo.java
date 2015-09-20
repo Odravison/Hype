@@ -806,7 +806,7 @@ public class GeradorDeRecibo {
             pdf.close();
 
             String diretorioImpressao = conf.getDiretorioDeDocumentos() + "\\Vendas\\" + venda.getId()
-                    + "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
+                    + "\\Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
             PrintPdf printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf", conf.getNomeDaImpressora());
