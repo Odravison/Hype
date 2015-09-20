@@ -50,15 +50,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
         try {
-                percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
-            } catch (TemporadaInexistenteException e) {
-                pane.setMessage("Não foi possível atualizar o valor da temporada de desconto\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }
+            percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
+        } catch (TemporadaInexistenteException e) {
+            pane.setMessage("Não foi possível atualizar o valor da temporada de desconto\n" + e.getMessage());
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+        }
     }
 
 
@@ -1179,7 +1179,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if (campoEntrada.getText().length() > 0) {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
+        
         labelValorLocacao.setText("R$ " + valorTotalLocacao);
+        
+        if (campoParcelas.getText().length() <= 0) {
+            labelValorParcelas.setText("");
+
+        } else {
+            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
+                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+
+        }
+        
+        
+        
     }
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
