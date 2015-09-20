@@ -459,7 +459,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         });
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelValorTotal.setText("Valor Total: ");
+        labelValorTotal.setText("Valor Final: ");
 
         labelValorVenda.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorVenda.setForeground(new java.awt.Color(0, 153, 0));
