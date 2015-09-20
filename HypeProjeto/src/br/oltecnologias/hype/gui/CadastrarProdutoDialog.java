@@ -8,6 +8,7 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
+import br.oltecnologias.hype.exception.ProdutoExistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import java.awt.Frame;
@@ -401,18 +402,16 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
                 }
                                 
                 try {
-                    novoProduto = new Produto(campoCodigo.getText(), campoNome.getText(), 
+                    novoProduto = GerenciadorDeProduto.getInstance().cadastrarProduto(new Produto(campoCodigo.getText(), campoNome.getText(), 
                             Double.parseDouble(campoPreco.getText()), Integer.parseInt(campoQuantidade.getText()), 
-                            fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected());
-                    
-                    GerenciadorDeProduto.getInstance().cadastrarProduto(novoProduto);
+                            fornecedor, campoCor.getText(), Integer.parseInt(campoTamanho.getText()), radioAluguel.isSelected()));
 
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
 
                     salvarSelecionado = true; //O botão Salvar foi selecionado
                     setVisible(false);
 
-                } catch (Exception e) {
+                } catch (ProdutoExistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }  
             }

@@ -42,27 +42,13 @@ public class ProdutoJpaRepository implements ProdutoRepository {
         logger.info("adicionando produto {}", produto);
 
         EntityManager em = null;
-        try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-
-            if (existsCodigo(produto.getCodigo())) {
-                throw new ProdutoExistenteException("Produto com código: " + produto.getCodigo() + " já foi cadastrado");
-            }
-
-            em.persist(produto);
-            em.getTransaction().commit();
-
-        } catch (ProdutoExistenteException e) {
-            System.out.println(e.getMessage());
-
-        } catch (ProdutoInexistenteException ex) {
-
-        } finally {
-            if (em != null) {
-                em.close();
-            }
+        em = getEntityManager();
+        em.getTransaction().begin();
+        if (existsCodigo(produto.getCodigo())) {
+            throw new ProdutoExistenteException("Produto com código: " + produto.getCodigo() + " já foi cadastrado");
         }
+        em.persist(produto);
+        em.getTransaction().commit();
     }
 
     @Override
@@ -160,7 +146,7 @@ public class ProdutoJpaRepository implements ProdutoRepository {
     }
 
     @Override
-    public boolean existsCodigo(String codigo) throws ProdutoInexistenteException {
+    public boolean existsCodigo(String codigo) {
         Object result = null;
         EntityManager em = null;
 
