@@ -86,6 +86,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelStatusTemporada = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(885, 730));
         setResizable(false);
         setTitle("Realizar Venda");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -649,6 +650,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 }
             } else if (radioCredito.isSelected() && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda/2)) {
+                JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
@@ -806,7 +809,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
                 
-            calcularValorTotalComDesconto();
+            calcularValorTotal();
         }
         /*
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
@@ -843,7 +846,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
-            calcularValorTotal();
+            calcularValorTotalComDesconto();
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
     

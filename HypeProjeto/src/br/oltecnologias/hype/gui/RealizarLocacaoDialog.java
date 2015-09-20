@@ -213,6 +213,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campoPesquisar.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisar.setForeground(new java.awt.Color(204, 204, 255));
         campoPesquisar.setText("Pesquisar Produto");
+        campoPesquisar.setToolTipText("Pesquise pelo nome do produto");
         campoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 campoPesquisarMouseClicked(evt);
@@ -901,6 +902,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
+            modeloTabelaProdutos.setRowCount(0);
             for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }

@@ -321,6 +321,7 @@
               <Color blue="ff" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Pesquisar Produto"/>
+            <Property name="toolTipText" type="java.lang.String" value="Pesquise pelo nome do produto"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="campoPesquisarMouseClicked"/>
