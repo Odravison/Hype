@@ -45,6 +45,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelDesconto = new javax.swing.JLabel();
         labelValorTotal = new javax.swing.JLabel();
         labelStatus = new javax.swing.JLabel();
+        labelValorPago = new javax.swing.JLabel();
         botaoOk = new javax.swing.JButton();
         botaoGerarContrato = new javax.swing.JButton();
 
@@ -176,6 +177,9 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        labelValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelValorPago.setText("Valor já pago: R$ "+locacao.getJaPago());
+
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
         painelDadosLayout.setHorizontalGroup(
@@ -186,7 +190,8 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                     .addComponent(scPnProdutosVendidos, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelProdutosLocados)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(painelPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -197,7 +202,9 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelProdutosLocados)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(labelProdutosLocados)
+                    .addComponent(labelValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scPnProdutosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -288,6 +295,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelParcelas;
     private javax.swing.JLabel labelProdutosLocados;
     private javax.swing.JLabel labelStatus;
+    private javax.swing.JLabel labelValorPago;
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JPanel painelDados;
     private javax.swing.JPanel painelDadosContrato;
