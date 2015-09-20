@@ -43,6 +43,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -2027,16 +2028,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelFornecedoresMouseClicked
 
     private void botaoNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaLocacaoActionPerformed
-        RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
-        dialog.setLocationRelativeTo(null);
-        if (dialog.alterarDados()) {
-            adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
-            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            atualizarValorEmCaixa();
-            //Atualizando a tabela de produtos para que os dados fiquem consistentes
-            adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
-        }
-        dialog.dispose();
+        SwingWorker sw = new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
+                    adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+                    atualizarValorEmCaixa();
+                    //Atualizando a tabela de produtos para que os dados fiquem consistentes
+                    adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
+                }
+                dialog.dispose();
+                return null;
+            }
+        };
+        sw.execute();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
 
     private void campoPesquisarLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarLocacoesMouseClicked
