@@ -39,7 +39,6 @@ public class ProdutoJpaRepository implements ProdutoRepository {
 
     @Override
     public void create(Produto produto) throws ProdutoExistenteException {
-        logger.info("adicionando produto {}", produto);
 
         EntityManager em = null;
         em = getEntityManager();
@@ -53,7 +52,6 @@ public class ProdutoJpaRepository implements ProdutoRepository {
 
     @Override
     public Produto findById(String codigo) throws ProdutoInexistenteException {
-        logger.info("Procurando produto com id: ", codigo);
 
         EntityManager em = null;
         try {
