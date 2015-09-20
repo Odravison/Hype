@@ -77,7 +77,7 @@
         </Property>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Empresa empresa = Configuracao.getInstance().getEmpresa();&#xa;campoNome.setText(empresa.getNome());&#xa;campoCnpj.setText(empresa.getCnpj());&#xa;campoTelefone.setText(empresa.getTelefone());&#xa;campoRua.setText(empresa.getEndereco().getRua());&#xa;campoBairro.setText(empresa.getEndereco().getBairro());&#xa;campoCidade.setText(empresa.getEndereco().getCidade());&#xa;campoNumero.setText(empresa.getEndereco().getNumeroCasa()+&quot;&quot;);&#xa;comboUf.setSelectedItem(empresa.getEndereco().getUf());"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="Empresa empresa = GerenciadorDoSistema.getInstance().getConfiguracao().getEmpresa();&#xa;campoNome.setText(empresa.getNome());&#xa;campoCnpj.setText(empresa.getCnpj());&#xa;campoTelefone.setText(empresa.getTelefone());&#xa;campoRua.setText(empresa.getEndereco().getRua());&#xa;campoBairro.setText(empresa.getEndereco().getBairro());&#xa;campoCidade.setText(empresa.getEndereco().getCidade());&#xa;campoNumero.setText(empresa.getEndereco().getNumeroCasa()+&quot;&quot;);&#xa;comboUf.setSelectedItem(empresa.getEndereco().getUf());"/>
       </AuxValues>
 
       <Layout>

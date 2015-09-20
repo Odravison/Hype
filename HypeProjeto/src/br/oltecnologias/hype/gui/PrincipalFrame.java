@@ -131,7 +131,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaVendas = new javax.swing.JTable();
         labelFiltrarVenda = new javax.swing.JLabel();
         botaoVerRecibosVenda = new javax.swing.JButton();
-        botaoGerarReciboVenda = new javax.swing.JButton();
         painelCaixaERelatorios = new javax.swing.JPanel();
         botaoGerarRelatorio = new javax.swing.JButton();
         botaoFecharCaixa = new javax.swing.JButton();
@@ -1161,22 +1160,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelFiltrarVenda.setText("Filtrar por:");
 
     botaoVerRecibosVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoVerRecibosVenda.setText("Ver Recibos");
+    botaoVerRecibosVenda.setText("Ver Recibo");
+    botaoVerRecibosVenda.setActionCommand("Ver Recibo");
     botaoVerRecibosVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoVerRecibosVenda.setVisible(false);
     botaoVerRecibosVenda.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
             botaoVerRecibosVendaActionPerformed(evt);
-        }
-    });
-
-    botaoGerarReciboVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoGerarReciboVenda.setText("Gerar Recibo");
-    botaoGerarReciboVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoGerarReciboVenda.setVisible(false);
-    botaoGerarReciboVenda.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoGerarReciboVendaActionPerformed(evt);
         }
     });
 
@@ -1198,8 +1188,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboFiltrarVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(botaoGerarReciboVenda)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoVerRecibosVenda))
                     .addComponent(pnRlVendas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addContainerGap(19, Short.MAX_VALUE))
@@ -1215,9 +1203,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(botaoPesquisarVendas))
             .addGap(36, 36, 36)
             .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoVerRecibosVenda)
-                    .addComponent(botaoGerarReciboVenda))
+                .addComponent(botaoVerRecibosVenda)
                 .addGroup(painelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelFiltrarVenda)
                     .addComponent(comboFiltrarVendas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1314,7 +1300,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelFiltrarMovimentacao.setText("Filtrar por:");
 
     labelValorCaixa.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-    labelValorCaixa.setText("Valor em Caixa:");
+    labelValorCaixa.setText("Apurado:");
 
     comboFiltrarMovimentacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     comboFiltrarMovimentacoes.setMaximumRowCount(5);
@@ -2102,8 +2088,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarVendas, "Pesquisar Venda");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaVendas.getSelectedRow() >= 0 || (botaoGerarReciboVenda.isVisible() || botaoVerRecibosVenda.isVisible())) {
-            botaoGerarReciboVenda.setVisible(false);
+        if(tabelaVendas.getSelectedRow() >= 0 || botaoVerRecibosVenda.isVisible()) {
             botaoVerRecibosVenda.setVisible(false);
             tabelaVendas.clearSelection();
         }
@@ -2526,7 +2511,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void tabelaVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaVendasMouseClicked
         if (evt.getClickCount() == 1) {
             botaoVerRecibosVenda.setVisible(true);
-            botaoGerarReciboVenda.setVisible(true);
         }
         if(evt.getClickCount() == 2) {
             
@@ -2625,7 +2609,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarProdutoActionPerformed
         if(tabelaProdutos.getSelectedRow() >= 0) {
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
+            Executors.newFixedThreadPool(5).execute(new Runnable() {
                 public void run() {
                     try {
                         //Pesquisa o produto selecionado através do seucódigo
@@ -2843,7 +2827,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(null, "Não é possível gerar um recido para uma locação finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2857,7 +2841,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if(tabelaVendas.getSelectedRow() >= 0) {
             try {
                 Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                        +"\\Vendas\\"+(String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1)));
+                        +"\\Vendas\\"+tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1)+".pdf"));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2866,29 +2850,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerRecibosVendaActionPerformed
-
-    private void botaoGerarReciboVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboVendaActionPerformed
-        if(tabelaVendas.getSelectedRow() >= 0) {
-            try { 
-                Venda venda = GerenciadorDeVenda.getInstance().pesquisarVendaPorId(Long.parseLong((String) tabelaVendas.getValueAt(
-                                                tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1)));
-                
-                double valorQueResta = venda.getValor()-venda.getJaPago();
-                //Verifica se a venda já foi paga
-                if(valorQueResta <= 0) {
-                    JOptionPane.showMessageDialog(null, "Não é possível gerar recibos para esta venda, ela já foi totalmente paga", "Aviso", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    GerarReciboDeVendaDialog dialog = new GerarReciboDeVendaDialog(null, venda);
-                    dialog.setLocationRelativeTo(null);
-                    dialog.setVisible(true);
-                }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
-    }//GEN-LAST:event_botaoGerarReciboVendaActionPerformed
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
@@ -2902,7 +2863,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         //Sim = 0
                         if (escolha == 0) {
                             try {
-
                                 //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
                                 GerenciadorDeLocacao.getInstance().finalizarLocacao(idLocacao);
 
@@ -3689,7 +3649,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoFecharCaixa;
     private javax.swing.JButton botaoFinalizarLocacao;
     private javax.swing.JButton botaoGerarReciboLocacao;
-    private javax.swing.JButton botaoGerarReciboVenda;
     private javax.swing.JButton botaoGerarRelatorio;
     private javax.swing.JButton botaoNovaLocacao;
     private javax.swing.JButton botaoNovaVenda;

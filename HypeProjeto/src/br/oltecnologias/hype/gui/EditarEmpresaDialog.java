@@ -291,7 +291,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                 .addContainerGap(45, Short.MAX_VALUE))
         );
 
-        Empresa empresa = Configuracao.getInstance().getEmpresa();
+        Empresa empresa = GerenciadorDoSistema.getInstance().getConfiguracao().getEmpresa();
         campoNome.setText(empresa.getNome());
         campoCnpj.setText(empresa.getCnpj());
         campoTelefone.setText(empresa.getTelefone());
