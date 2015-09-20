@@ -206,7 +206,8 @@ public class GeradorDeRecibo {
         return (s);
     }
 
-    public void gerarEImprimirReciboDeLocacao(Locacao loc) throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
+    public void gerarEImprimirReciboDeLocacao(Locacao loc) 
+            throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         double valorDaOperacao = 0;
@@ -298,7 +299,7 @@ public class GeradorDeRecibo {
                     + "Valor Total: " + loc.getValorLocacao() + " "
                     + "Entrada: " + loc.getValorDeEntrada() + ". \n"
                     + "Resta: " + valorResta + " - "
-                    + "que será pago até o dia: " + loc.getDataDevolucaoInString(), timesNewRoman12);
+                    + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -365,7 +366,8 @@ public class GeradorDeRecibo {
         return descricaoCurta;
     }
 
-    public void gerarEImprimirPxReciboDeLocacao(Locacao loc, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
+    public void gerarEImprimirPxReciboDeLocacao(Locacao loc, double valorDessePagamento) 
+            throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
         loc.addValorJaPago(valorDessePagamento);
@@ -436,7 +438,7 @@ public class GeradorDeRecibo {
                     + "Valor Total: " + loc.getValorLocacao() + "  -  "
                     + "Pago neste dia: " + valorDessePagamento + "\n"
                     + "Resta: " + valorResta + " - "
-                    + "que será pago até o dia: " + loc.getDataDevolucaoInString(), timesNewRoman12);
+                    + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -491,7 +493,8 @@ public class GeradorDeRecibo {
         }
     }
 
-    public void gerarEImprimirReciboDeVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException, FileNotFoundException, IOException, PrinterException {
+    public void gerarEImprimirReciboDeVenda(Venda venda) 
+            throws ProdutoInexistenteException, VendaInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId());
 
         double valorDaOperacao = 0;
@@ -535,12 +538,11 @@ public class GeradorDeRecibo {
         try {
 
             diretorio = new File(conf.getDiretorioDeDocumentos()
-                    + "\\Vendas\\" + venda.getId());
+                    + "\\Vendas");
 
             diretorio.mkdirs();
 
-            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Rec_"
-                    + diaRecibo + "__H_" + horaGeracao + ".pdf"));
+            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + venda.getId() + ".pdf"));
 
             pdf.open();
             pdf.setPageSize(PageSize.A4);
@@ -626,13 +628,13 @@ public class GeradorDeRecibo {
 
         } finally {
             pdf.close();
-            String diretorioImpressao = diretorio.toString() + "\\" + "Rec_"
-                    + diaRecibo + "__H_" + horaGeracao + ".pdf";
+            
+            String diretorioImpressao = diretorio.toString() + "\\" + venda.getId() + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
 
             PrintPdf printPDFFile;
-            printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf",
+            printPDFFile = new PrintPdf(fis, venda.getId() + ".pdf",
                     conf.getNomeDaImpressora());
 
             printPDFFile.print();
