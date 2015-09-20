@@ -46,10 +46,10 @@
                       <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                       <Component id="labelValorTotal" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="labelValorLocacao" min="-2" pref="98" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="labelValorParcelas" min="-2" pref="152" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="labelValorLocacao" min="-2" pref="106" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="labelValorParcelas" min="-2" pref="154" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="labelDesconto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="campoPercentualDesconto" min="-2" pref="43" max="-2" attributes="0"/>
