@@ -781,8 +781,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    //valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                      //      campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -1091,7 +1091,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
                 
-            calcularValorTotal();
+            calcularValorTotalComDesconto();
             /*try {
                 if (campoPercentualDesconto.getText().length() > 0) {
                     labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
@@ -1185,7 +1185,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
         
-        labelValorLocacao.setText("R$ " + valorTotalLocacao);
+        labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
@@ -1194,6 +1194,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
                     ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
+        }
+    }
+    
+    public void calcularValorTotalComDesconto() { 
+        if (campoPercentualDesconto.getText().length() > 0) {            
+            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        } else {
+            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).doubleValue());
         }
     }
     

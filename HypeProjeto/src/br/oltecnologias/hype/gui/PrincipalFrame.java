@@ -289,7 +289,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnRlCliente.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pnRlCliente.setPreferredSize(new java.awt.Dimension(806, 340));
+        pnRlCliente.setPreferredSize(new java.awt.Dimension(826, 340));
 
         tabelaClientes.setAutoCreateRowSorter(true);
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -328,11 +328,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         // Redimensionando a largura da coluna de CPF
         tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);
         // Redimensionando a largura da coluna de nome
-        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(380);
+        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(390);
         // Redimensionando a largura da coluna de número do celular
         tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);
         // Redimensionando a largura da coluna de data de cadastro
-        tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(130);
+        tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(140);
 
         tabelaClientes.getRowSorter().toggleSortOrder(3);
         tabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -399,7 +399,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addGap(4, 4, 4)
                             .addComponent(botaoExcluirCliente))
                         .addComponent(pnRlCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(499, Short.MAX_VALUE))
+                .addContainerGap(479, Short.MAX_VALUE))
         );
         painelClientesLayout.setVerticalGroup(
             painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,7 +457,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarProdutos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisarProdutos.setForeground(new java.awt.Color(153, 153, 153));
         campoPesquisarProdutos.setText("Pesquisar Produto");
-        campoPesquisarProdutos.setToolTipText("Informe o nome do produto");
+        campoPesquisarProdutos.setToolTipText("Informe o nome ou o código produto");
         campoPesquisarProdutos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoPesquisarProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -852,7 +852,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarLocacoes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarLocacoes.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarLocacoes.setText("Pesquisar Locação");
-    campoPesquisarLocacoes.setToolTipText("");
     campoPesquisarLocacoes.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
