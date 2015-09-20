@@ -2893,23 +2893,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
         if(tabelaLocacoes.getSelectedRow() >= 0) {
             try {
-                if(GerenciadorDeLocacao.getInstance().isLocacaoPaga(Long.parseLong(
-                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))) {
-                    int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
-                    //Sim = 0
-                    if (escolha == 0) {
-                        try {
-                            String idLocacao = (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1);
-                            
-                            //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                            GerenciadorDeLocacao.getInstance().finalizarLocacao(Long.parseLong(idLocacao));
-                            
-                            JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
-                            
-                            atualizarStatusDeLocacao(idLocacao, tabelaLocacoes.getSelectedRow());
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                long idLocacao = Long.parseLong(
+                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1));
+                if(GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
+                    
+                    if(GerenciadorDeLocacao.getInstance().isFinalizada(idLocacao)) {
+                        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                        //Sim = 0
+                        if (escolha == 0) {
+                            try {
+
+                                //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
+                                GerenciadorDeLocacao.getInstance().finalizarLocacao(idLocacao);
+
+                                JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+
+                                atualizarStatusDeLocacao(Long.toString(idLocacao), tabelaLocacoes.getSelectedRow());
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);

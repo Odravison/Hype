@@ -190,7 +190,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         });
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        labelValorTotal.setText("Valor Total: ");
+        labelValorTotal.setText("Valor Final: ");
 
         painelSelecionar.setBackground(new java.awt.Color(255, 255, 255));
         painelSelecionar.setBorder(javax.swing.BorderFactory.createTitledBorder("Selecionar Produtos"));
@@ -811,7 +811,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
 
                 try { 
-                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalLocacao, dateDataInicialContrato.getCalendar(),
+                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                             dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
 
