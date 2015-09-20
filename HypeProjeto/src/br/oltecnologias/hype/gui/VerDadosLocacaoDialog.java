@@ -10,6 +10,7 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.GeradorDeContrato;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoLocado;
 import java.awt.Desktop;
 import java.io.File;
 import javax.swing.JOptionPane;
@@ -69,7 +70,11 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         String descricaoProdutosLocados = "";
         try {
             for(Produto produto: GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId())) {
-                descricaoProdutosLocados += produto.getDescricao()+"\n";
+                for (ProdutoLocado pl: locacao.getProdutos()){
+                    if (pl.getCodigoProduto().toUpperCase().equals(produto.getCodigo().toUpperCase())){
+                        descricaoProdutosLocados += pl.getQuantidade() + " - " + produto.getDescricao()+"\n";
+                    }
+                }
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível exibir os produtos locado:\n"+e.getMessage(),

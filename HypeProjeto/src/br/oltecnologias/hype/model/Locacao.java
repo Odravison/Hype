@@ -272,7 +272,11 @@ public class Locacao implements Serializable {
     }
 
     public boolean isLocacaoPaga() {
-        return (this.jaPago == this.valorLocacao);
+        return (this.jaPago >= this.valorLocacao);
+    }
+    
+    public boolean isFinalizada(){
+        return !this.ativa;
     }
 
 }

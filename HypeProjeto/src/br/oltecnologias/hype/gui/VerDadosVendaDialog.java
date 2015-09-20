@@ -7,6 +7,7 @@ package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.model.Produto;
+import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import javax.swing.JOptionPane;
 
@@ -60,7 +61,13 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         String descricaoProdutosVendidos = "";
         try {
             for(Produto produto: GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId())) {
-                descricaoProdutosVendidos += produto.getDescricao()+"\n";
+                for (ProdutoVendido pv: venda.getProdutosVendidos()){
+                    if (pv.getCodigoProduto().toUpperCase().equals(produto.getCodigo().toUpperCase())){
+                        descricaoProdutosVendidos += pv.getQuantidade() + " - " + produto.getDescricao()+"\n";
+                    }
+
+                }
+
             }
         } catch(Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível exibir os produtos vendidos:\n"+e.getMessage(),

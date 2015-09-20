@@ -319,4 +319,8 @@ public class GerenciadorDeLocacao {
             emf.close();
         }
     }
+    
+    public boolean isFinalizada(long idLocacao) throws LocacaoInexistenteException{
+        return this.pesquisarLocacaoPorId(idLocacao).isFinalizada();
+    }
 }
