@@ -1179,7 +1179,20 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if (campoEntrada.getText().length() > 0) {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
+        
         labelValorLocacao.setText("R$ " + valorTotalLocacao);
+        
+        if (campoParcelas.getText().length() <= 0) {
+            labelValorParcelas.setText("");
+
+        } else {
+            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
+                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+
+        }
+        
+        
+        
     }
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
