@@ -462,13 +462,14 @@ public class GeradorDeRecibo {
                     + "Pago neste dia: " + valorDessePagamento + "\n"
                     + "Resta: " + valorResta + "\n"
                     + "Para dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
-            textoRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+            textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
             linhaAssinatura = new Paragraph("\n"
                     + "\n"
                     + "________________________________________________________________________ \n"
-                    + conf.getEmpresa().getNome() + "\n",
+                    + conf.getEmpresa().getNome() + "\n"
+                    + "\n",
                     timesNewRoman12);
             linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
 
@@ -478,9 +479,11 @@ public class GeradorDeRecibo {
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
             Paragraph linhaDeCorte;
-            linhaDeCorte = new Paragraph("==============================================================",
+            linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
                     timesNewRoman12);
             linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
+            linhaDeCorte.setSpacingAfter(10);
+            linhaDeCorte.setSpacingBefore(10);
 
             pdf.add(tabelaCabecalho);
             pdf.add(tituloDeRecibo);
@@ -778,7 +781,7 @@ public class GeradorDeRecibo {
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
             Paragraph linhaDeCorte;
-            linhaDeCorte = new Paragraph("==============================================================",
+            linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
                     timesNewRoman12);
             linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
 
