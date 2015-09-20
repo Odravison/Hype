@@ -50,15 +50,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
         try {
-                percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
-            } catch (TemporadaInexistenteException e) {
-                pane.setMessage("Não foi possível atualizar o valor da temporada de desconto\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }
+            percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
+        } catch (TemporadaInexistenteException e) {
+            pane.setMessage("Não foi possível atualizar o valor da temporada de desconto\n" + e.getMessage());
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+        }
     }
 
 

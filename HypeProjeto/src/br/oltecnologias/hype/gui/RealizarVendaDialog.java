@@ -42,6 +42,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
         botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
+        try {
+            percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
+        } catch (TemporadaInexistenteException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar o valor da temporada de desconto\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -819,6 +824,40 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
     
+    public void aplicarDescontosAoValor() {
+        try {
+            valorTotalVenda = valorGeral;
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+                valorTotalVenda = new BigDecimal(valorTotalVenda
+                        - ((valorTotalVenda * percentualDescontoTemporada) / 100)
+                ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            } 
+          
+        } catch (Exception e) {
+            valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        } 
+        
+        if (campoPercentualDesconto.getText().length() > 0) {
+            valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        }
+        if (campoEntrada.getText().length() > 0) {
+            valorTotalVenda -= Double.parseDouble(campoEntrada.getText());
+        }
+        
+        labelValorVenda.setText("R$ " + valorTotalVenda);
+        
+        if (campoParcelas.getText().length() <= 0) {
+            labelValorParcelas.setText("");
+
+        } else {
+            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
+                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+
+        }
+ 
+    }
+    
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
@@ -1056,6 +1095,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private DefaultTableModel modeloTabelaProdutos;
     private DefaultTableModel modeloTabelaProdutosVendidos;
     private int maxParcelas = 6;
+    private double valorGeral;
+    private int percentualDescontoTemporada;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
