@@ -13,7 +13,9 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoLocado;
+import java.awt.print.PrinterException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -294,7 +296,7 @@ public class GerenciadorDeLocacao {
 
     }
 
-    public void gerarEImprimirPxReciboDeLocacao(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarEImprimirPxReciboDeLocacao(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException {
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
 
         locacao.gerarEImprimirPxRecibo(valorDessePagamento);

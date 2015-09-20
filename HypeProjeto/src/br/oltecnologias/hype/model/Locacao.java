@@ -106,9 +106,6 @@ public class Locacao implements Serializable {
             this.jaPago = valorLocacao;
         }
         this.parcelas = parcelas;
-        if (formaDePagamento.equals("À VISTA")) {
-            this.valorLocacao = valorLocacao - (valorLocacao * Configuracao.getInstance().getDescontoAVista());
-        }
         this.ativa = true;
     }
 
@@ -121,7 +118,7 @@ public class Locacao implements Serializable {
         GeradorDeContrato.getInstance().gerarEImprimirContrato(this);
     }
 
-    public void gerarRecibo() throws LocacaoInexistenteException, ProdutoInexistenteException {
+    public void gerarRecibo() throws LocacaoInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException {
         GeradorDeRecibo.getInstance().gerarReciboDeLocacao(this);
     }
 
@@ -131,7 +128,7 @@ public class Locacao implements Serializable {
     }
 
     public void gerarEImprimirPxRecibo(double valorDessePagamento)
-            throws LocacaoInexistenteException, ProdutoInexistenteException {
+            throws LocacaoInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException {
         GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(this, valorDessePagamento);
     }
 

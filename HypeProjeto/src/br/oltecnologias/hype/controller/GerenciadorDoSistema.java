@@ -694,6 +694,7 @@ public class GerenciadorDoSistema {
         Movimentacao mov;
 
         try {
+            
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNome(),
                     conf.getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
             mjp.create(mov);

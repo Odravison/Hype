@@ -6,6 +6,9 @@ import br.oltecnologias.hype.exception.VendaInexistenteException;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
+import java.awt.print.PrinterException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -28,7 +31,7 @@ public class GerenciadorDeVenda {
         return singleton;
     }
 
-    public void realizarVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException {
+    public Venda realizarVenda(Venda venda) throws ProdutoInexistenteException, VendaInexistenteException, IOException, FileNotFoundException, PrinterException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         VendaJpaRepository vjp = new VendaJpaRepository(emf);
         try {
@@ -37,6 +40,8 @@ public class GerenciadorDeVenda {
             }
             vjp.create(venda);
             venda.gerarEImprimirRecibo();
+            System.out.println("==========>>>>>>>>>>>>>> O ID DA VENDA É: " + venda.getId());
+            return venda;
             
         } finally {
             if (emf != null){
@@ -164,7 +169,7 @@ public class GerenciadorDeVenda {
         }
     }
     
-    public void gerarEImprimirPxRecibo(long idVenda, double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException{
+    public void gerarEImprimirPxRecibo(long idVenda, double valorDessePagamento) throws VendaInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException{
         this.pesquisarVendaPorId(idVenda).gerarEImprimirPxRecibo(valorDessePagamento);
     }
     

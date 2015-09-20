@@ -390,7 +390,7 @@ public class GeradorDeRecibo {
         try {
 
             logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(307, 91);
+            logo.scaleToFit(270, 54);
 
         } catch (BadElementException | IOException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
@@ -549,6 +549,7 @@ public class GeradorDeRecibo {
 
         if (venda.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
             if (venda.getEntrada() > 0) {
+
                 valorDaOperacao = venda.getEntrada();
                 venda.addValorJaPago(valorDaOperacao);
                 valorResta = venda.getValor() - venda.getEntrada();
@@ -559,7 +560,6 @@ public class GeradorDeRecibo {
 
             valorDaOperacao = venda.getValor();
             venda.addValorJaPago(valorDaOperacao);
-
         }
 
         GerenciadorDeVenda.getInstance().editarVenda(venda);
@@ -686,7 +686,7 @@ public class GeradorDeRecibo {
         try {
 
             logo = Image.getInstance("C:\\Projeto\\HypeProjeto\\HypeProjeto\\Imagens\\SmallLogo-wide.png");
-            logo.scaleToFit(307, 91);
+            logo.scaleToFit(270, 54);
 
         } catch (BadElementException | IOException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);

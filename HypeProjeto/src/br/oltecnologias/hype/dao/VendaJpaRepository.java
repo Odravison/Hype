@@ -67,7 +67,7 @@ public class VendaJpaRepository implements VendaRepository {
                 em.close();
             }
         }
-
+        
         return result;
         
     }
@@ -121,7 +121,21 @@ public class VendaJpaRepository implements VendaRepository {
 
     @Override
     public void editarVenda(Venda venda) throws VendaInexistenteException {
+        EntityManager em = null;
         
+        try{
+            em = getEntityManager();
+            em.getTransaction().begin();
+            if (existsVenda(venda.getId())){
+                em.merge(venda);
+            }
+            em.getTransaction().commit();
+            
+        } finally {
+            if (em != null){
+                em.close();
+            }
+        }
     }
 
     @Override
