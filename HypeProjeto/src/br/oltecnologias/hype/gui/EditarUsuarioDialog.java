@@ -36,10 +36,13 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         radioAdm = new javax.swing.JRadioButton();
         radioFuncionario = new javax.swing.JRadioButton();
         labelCategoria = new javax.swing.JLabel();
+        labelSenha = new javax.swing.JLabel();
+        campoSenha = new javax.swing.JPasswordField();
         botaoCancelar = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
+        setPreferredSize(new java.awt.Dimension(598, 288));
         setResizable(false);
         setTitle("Editar Usuário");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -95,6 +98,21 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         labelCategoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelCategoria.setText("Categoria:*");
 
+        labelSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelSenha.setText("Senha:*");
+
+        campoSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                campoSenhaKeyTyped(evt);
+            }
+        });
+        campoSenha.setText(usuario.getSenha());
+        if(!usuario.isAdministrador()) {
+            labelSenha.setVisible(false);
+            campoSenha.setVisible(false);
+        }
+
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
         painelDadosGeraisLayout.setHorizontalGroup(
@@ -107,16 +125,22 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(labelNickName)
+                        .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDadosGeraisLayout.createSequentialGroup()
+                                .addComponent(labelNickName)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(campoNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(labelSenha))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelDadosGeraisLayout.createSequentialGroup()
+                                .addComponent(labelCategoria)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radioAdm)
+                                .addGap(18, 18, 18)
+                                .addComponent(radioFuncionario)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoNickName, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(labelCategoria)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(radioAdm)
-                        .addGap(18, 18, 18)
-                        .addComponent(radioFuncionario)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                        .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelDadosGeraisLayout.setVerticalGroup(
             painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +152,9 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelNickName)
-                    .addComponent(campoNickName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(campoNickName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelSenha)
+                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(painelDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioAdm)
@@ -167,14 +193,15 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(323, 323, 323)
+                .addComponent(botaoSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(botaoCancelar)
+                .addGap(23, 36, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoSalvar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
-                    .addComponent(painelDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(painelDadosGerais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
@@ -225,6 +252,8 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
             // Validar campos para cadastro
             if(campoNome.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe o nome do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if(new String(campoSenha.getPassword()).length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(!radioAdm.isSelected() && !radioFuncionario.isSelected()) {
                 JOptionPane.showMessageDialog(null, "Informe a categoria do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
@@ -232,7 +261,10 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                 try {
                     usuario.setNome(campoNome.getText());
                     usuario.setIsAdministrador(radioAdm.isSelected());
-
+                    if(!(new String(campoSenha.getPassword()).equals(usuario.getSenha()))) {
+                        //dialog
+                        usuario.setSenha(new String(campoSenha.getPassword()));
+                    }
                     GerenciadorDePessoas.getInstance().editarUsuario(usuario);
 
                     JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
@@ -247,6 +279,12 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
+
+    private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
+        if(new String(campoSenha.getPassword()).length() >= maxCaracteresSenha){ 
+            evt.consume(); 
+        }
+    }//GEN-LAST:event_campoSenhaKeyTyped
 
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
         if(numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento estiver na lista 
@@ -279,9 +317,11 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoNickName;
     private javax.swing.JTextField campoNome;
+    private javax.swing.JPasswordField campoSenha;
     private javax.swing.JLabel labelCategoria;
     private javax.swing.JLabel labelNickName;
     private javax.swing.JLabel labelNome;
+    private javax.swing.JLabel labelSenha;
     private javax.swing.JPanel painelDadosGerais;
     private javax.swing.JRadioButton radioAdm;
     private javax.swing.JRadioButton radioFuncionario;

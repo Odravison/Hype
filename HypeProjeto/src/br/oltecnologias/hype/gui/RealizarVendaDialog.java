@@ -661,7 +661,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 
             } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (campoEntrada.getText().length() < 0) {
+            } else if (campoEntrada.getText().length() > 0) {
                 if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
                     JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
@@ -671,13 +671,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    try {
-                        valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                    valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
                                 campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Não foi possível calcar o valor da venda corretamente. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-
-                    }
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {

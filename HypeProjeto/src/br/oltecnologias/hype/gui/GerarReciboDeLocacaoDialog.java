@@ -71,14 +71,13 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
 
         labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
-        this.valorRecibo = locacao.getValorLocacao()-locacao.getValorDeEntrada()/locacao.getParcelas();
-        labelValorRecibo.setText("R$ "+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        this.valorParcela = (locacao.getValorLocacao()-locacao.getValorDeEntrada())/locacao.getParcelas();
+        labelValorRecibo.setText("R$ "+new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQtdParcelas.setText("Quantas parcelas serão pagas?");
 
-        comboQuantidadeParcelas.setMaximumRowCount(6);
-        comboQuantidadeParcelas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "  1  ", "  2  ", "  3  ", "  4  ", "  5  ", "  6  " }));
+        comboQuantidadeParcelas.setMaximumRowCount(0);
         comboQuantidadeParcelas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 comboQuantidadeParcelasActionPerformed(evt);
@@ -173,7 +172,6 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
             GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
             
             JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
-            //gerarSelecionado = true; //O botão gerar foi selecionado
             setVisible(false);
             dispose();
         } catch (Exception e) {
@@ -182,7 +180,7 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoGerarActionPerformed
 
     private void comboQuantidadeParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboQuantidadeParcelasActionPerformed
-        valorRecibo = valorQueResta/((comboQuantidadeParcelas.getItemCount()+1)-(comboQuantidadeParcelas.getSelectedIndex()+1));
+        valorRecibo = valorParcela * comboQuantidadeParcelas.getSelectedIndex()+1;
         labelValorRecibo.setText("R$ "+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         labelValorResta.setText("Resta a ser pago: R$ "+new BigDecimal(valorQueResta-valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
     }//GEN-LAST:event_comboQuantidadeParcelasActionPerformed
@@ -199,24 +197,13 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
         comboQuantidadeParcelas.setMaximumRowCount(quantParcelas);
         comboQuantidadeParcelas.setModel(new javax.swing.DefaultComboBoxModel(valores));
     }
-    
-    /*
-    public boolean alterarDados() {        
-        gerarSelecionado = false;  //Marcamos que o salvar não foi selecionado
-        setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible após ficar invisível.
-        setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
-        return gerarSelecionado;   //Retornamos true, se ele pressionou ok.
-    } 
-    
-    public double getValorRecibo() {
-        return valorRecibo;
-    } */
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresPreco = 10;
     //protected boolean gerarSelecionado;
     private Locacao locacao;
     private double valorRecibo;
+    private double valorParcela;
     private double valorQueResta;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoGerar;

@@ -200,6 +200,10 @@ public class TrocarUsuarioDialog extends java.awt.Dialog {
         return usuarioLogado.isAdministrador();
     }
     
+    public Usuario getNovoUsuarioLogado() {
+        return usuarioLogado;
+    }
+    
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
     protected boolean concluirSelecionado;

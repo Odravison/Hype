@@ -2018,7 +2018,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelFornecedoresMouseClicked
 
     private void botaoNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaLocacaoActionPerformed
-        SwingWorker sw = new SwingWorker() {
+        new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
                 RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
@@ -2033,8 +2033,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 dialog.dispose();
                 return null;
             }
-        };
-        sw.execute();
+        }.execute();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
 
     private void campoPesquisarLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarLocacoesMouseClicked
@@ -2065,9 +2064,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelLocacoesMouseClicked
 
     private void botaoNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaVendaActionPerformed
-        new SwingWorker() {
+        /*new SwingWorker() {
             @Override
-            protected Object doInBackground() throws Exception {
+            protected Object doInBackground() throws Exception {*/
                 RealizarVendaDialog dialog = new RealizarVendaDialog(null);
                 dialog.setLocationRelativeTo(null);
                 if (dialog.alterarDados()) {
@@ -2076,9 +2075,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     atualizarValorEmCaixa();
                 }
                 dialog.dispose();
-                return null;
+               /* return null;
             }
-        }.execute();
+        }.execute();*/
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
 
     private void campoPesquisarVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarVendasMouseClicked
@@ -2234,6 +2233,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarClienteActionPerformed
 
     private void comboFiltrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarClientesActionPerformed
+        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
         if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             pesquisarClientesPorFiltro();
@@ -2261,7 +2261,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiltrarClientesActionPerformed
 
     public void pesquisarClientesPorNomeEFiltro(String nome) {
-
+        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Limpa a tabela de clientes
         modeloTabelaClientes.setRowCount(0);
         new SwingWorker() {
@@ -2471,18 +2471,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirUsuarioActionPerformed
         if (tabelaUsuarios.getSelectedRow() >= 0) {
-            String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
-            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
-            //Sim = 0
-            if (escolha == 0) {
-                try {
-                    //Remove o usuário selecionado através do seu login
-                    GerenciadorDePessoas.getInstance().removerUsuario(login);
-                    removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
-                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
-                } catch (UsuarioInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            if (!((String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)).equals(
+                    GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName())) {
+
+                String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
+                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                //Sim = 0
+                if (escolha == 0) {
+                    try {
+                        //Remove o usuário selecionado através do seu login
+                        GerenciadorDePessoas.getInstance().removerUsuario(login);
+                        removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
+                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                    } catch (UsuarioInexistenteException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Você não pode se excluir do sistema", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2589,12 +2595,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabelaMovimentacoesMouseClicked
 
     private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
-        if (evt.getClickCount() == 1 && (!((String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)).equals(
-                GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName()))) {
-
-            botaoEditarUsuario.setVisible(true);
-            botaoExcluirUsuario.setVisible(true);
-        }
+        botaoExcluirUsuario.setVisible(true);
+        botaoEditarUsuario.setVisible(true);
     }//GEN-LAST:event_tabelaUsuariosMouseClicked
 
     private void tabelaLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaLocacoesMouseClicked
@@ -2859,7 +2861,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         + "\\Vendas\\" + tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount() - 1) + ".pdf"));
 
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo de recibo da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma venda na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2872,7 +2874,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
                         (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
 
-                if (!locacao.isLocacaoPaga()) {
+                if (locacao.isLocacaoPaga()) {
                     if (!locacao.isFinalizada()) {
                         int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
                         //Sim = 0
@@ -2927,6 +2929,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarProdutoActionPerformed
 
     private void comboFiltrarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarProdutosActionPerformed
+        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
         if (campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
             pesquisarProdutosPorFiltro();
@@ -3120,7 +3123,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarLocacaoActionPerformed
 
     private void comboFiltrarLocacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarLocacoesActionPerformed
-
+        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         // Atualiza o model da lista de locações
         modeloTabelaLocacoes.setRowCount(0);
         new SwingWorker() {
@@ -3191,36 +3194,36 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarVendasActionPerformed
 
     private void comboFiltrarMovimentacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarMovimentacoesActionPerformed
-
+        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         // Atualiza o model da lista de movimentações
         modeloTabelaMovimentacoes.setRowCount(0);
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
                 List<Movimentacao> movimentacoes = null;
-                switch (comboFiltrarVendas.getSelectedItem().toString()) {
+                switch (comboFiltrarVendas.getSelectedItem().toString().toUpperCase()) {
 
-                    case "Todas":
+                    case "TODAS":
                         movimentacoes = GerenciadorDoSistema.getInstance().getMovimentacoes();
 
                         break;
 
-                    case "Vendas":
+                    case "VENDAS":
                         movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("VENDA");
 
                         break;
 
-                    case "Locações":
+                    case "LOCAÇÕES":
                         movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("LOCAÇÃO");
 
                         break;
 
-                    case "Despesas":
+                    case "DESPESAS":
                         movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("DESPESA");
 
                         break;
 
-                    case "Pendências":
+                    case "PENDÊNCIAS":
                         movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesPendentes();
 
                         break;
@@ -3256,7 +3259,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_radioPesquisarProdutoNomeActionPerformed
 
     private void comboFiltrarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarVendasActionPerformed
-
+        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         // Atualiza o model da lista de locações
         modeloTabelaVendas.setRowCount(0);
         new SwingWorker() {
@@ -3354,15 +3357,18 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void labelLogoClosetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoClosetMouseClicked
         TrocarUsuarioDialog dialog = new TrocarUsuarioDialog(null);
         dialog.setLocationRelativeTo(null);
-
         if (dialog.alterarDados()) {
-            if (!dialog.isUsuarioAdministrador()) {
-                painelConfiguracoes.setVisible(false);
-                painelAdministrador.setVisible(false);
+            if (!dialog.getNovoUsuarioLogado().isAdministrador()) {
+                abas.remove(painelConfiguracoes);
+                abas.remove(painelAdministrador);
+            } else {
+                //E se for um adm trocando para outro adm, vai ficar repetida?
+                abas.addTab("Configurações", painelConfiguracoes);
+                abas.addTab("Administrador", painelAdministrador);
             }
         }
+        labelLoginUsuario.setText("Logado com " + dialog.getNovoUsuarioLogado().getNickName());
         dialog.dispose();
-        labelLoginUsuario.setText("Logado com " + GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName());
     }//GEN-LAST:event_labelLogoClosetMouseClicked
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
