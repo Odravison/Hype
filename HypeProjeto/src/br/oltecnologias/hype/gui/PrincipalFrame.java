@@ -2205,6 +2205,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelAdministradorMouseClicked
 
     private void botaoPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarClienteActionPerformed
+        AguardeDialog aguarde = new AguardeDialog(null, "Realizando a pesquisa de clientes.");
+        aguarde.executarProgresso();
+        aguarde.setLocationRelativeTo(null);
+        aguarde.setVisible(true);
+        
+        
+        
         if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -2225,7 +2232,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 } else {
                     pesquisarClientesPorNomeEFiltro(textoPesquisado);
                 }
-
+                while (true) {
+                }
+                //aguarde.interromperProgresso();
+                //aguarde.setVisible(false);
+                //aguarde.dispose();
             } catch (ClienteInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2233,7 +2244,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarClienteActionPerformed
 
     private void comboFiltrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarClientesActionPerformed
-        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
+        //JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
         if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             pesquisarClientesPorFiltro();
@@ -2261,7 +2272,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiltrarClientesActionPerformed
 
     public void pesquisarClientesPorNomeEFiltro(String nome) {
-        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
+        //JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Limpa a tabela de clientes
         modeloTabelaClientes.setRowCount(0);
         new SwingWorker() {
@@ -2726,10 +2737,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
         if (tabelaClientes.getSelectedRow() >= 0) {
-            JOptionPane.showMessageDialog(null, "Esta busca pode demorar alguns segundos. Por favor, aguarde...");
-            new SwingWorker() {
+            //JOptionPane.showMessageDialog(null, "Esta busca pode demorar alguns segundos. Por favor, aguarde...");
+            AguardeDialog aguarde = new AguardeDialog(null, "Pesquisando as locações do cliente.");
+            aguarde.executarProgresso();
+            aguarde.setLocationRelativeTo(null);
+            aguarde.setVisible(true);
+            
+            /*SwingWorker sw = new SwingWorker() {
                 @Override
-                protected Object doInBackground() throws Exception {
+                protected Object doInBackground() throws Exception {*/
                     try {
                         //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
                         VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
@@ -2741,10 +2757,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     } catch (ClienteInexistenteException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                    return null;
+                   /* return null;
                 }
-            }.execute();
-
+            }; 
+            
+            sw.execute();
+            while(!sw.isDone()){
+            }*/
+            for(int i=0; i < 9000; i++) {
+            }
+            //aguarde.interromperProgresso();
+            aguarde.setVisible(false);
+            aguarde.dispose();
+            
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -3362,7 +3387,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 abas.remove(painelConfiguracoes);
                 abas.remove(painelAdministrador);
             } else {
-                //E se for um adm trocando para outro adm, vai ficar repetida?
                 abas.addTab("Configurações", painelConfiguracoes);
                 abas.addTab("Administrador", painelAdministrador);
             }
