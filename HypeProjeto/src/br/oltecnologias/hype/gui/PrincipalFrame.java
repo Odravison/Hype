@@ -886,14 +886,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Altura das linhas
     tabelaLocacoes.setRowHeight(25);
 
-    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Vencimento", "Status", ""};
+    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Início","Devolução", "Status", ""};
     //Essa lista terá as linhas da tabela
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
     //Adicionando valores nas linhas
     for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
         try {
             listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Ocorreu um erro na hora de buscar os dados da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
@@ -902,7 +902,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false, false, false, false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -914,19 +914,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
     // Redimensionando a largura da coluna de CPF do cliente
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(120);
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(115);
     // Redimensionando a largura da coluna de nome do cliente
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(280);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(250);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(620);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(585);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(95);
-    // Redimensionando a largura da coluna de data do vencimento
-    tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(100);
+    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(82);
+    // Redimensionando a largura da coluna de data de início
+    tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(85);
+    // Redimensionando a largura da coluna de data de devolução
+    tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(85);
+    // Redimensionando a largura da coluna status
+    tabelaLocacoes.getColumnModel().getColumn(6).setPreferredWidth(80);
     // Redimensionando a largura da coluna id da locação
-    tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(65);
-    // Redimensionando a largura da coluna id da locação
-    tabelaLocacoes.getColumnModel().getColumn(6).setPreferredWidth(0);
+    tabelaLocacoes.getColumnModel().getColumn(7).setPreferredWidth(0);
     tabelaLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaLocacoesMouseClicked(evt);
@@ -3066,7 +3068,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         //Adiciona os dados da nova locação na tabela
                         modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                             GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                            "R$ " + locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
+                            "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     } 
@@ -3078,7 +3080,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         //Adiciona os dados da locação na tabela
                         modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                             GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                            "R$ " + locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
+                            "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     } 
@@ -3331,9 +3333,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         try {
             //Adiciona os dados da nova locação na tabela
-            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
+            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), 
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), 
+                "R$ "+locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n"+e.getMessage(), 
                     "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3580,7 +3582,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             for(Locacao locacao: locacoes) {
                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                    "R$ "+locacao.getValorLocacaoInString(), locacao.getVencimento(), locacao.getStatus(), Long.toString(locacao.getId())});
+                    "R$ "+locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);

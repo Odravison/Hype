@@ -234,7 +234,7 @@ public class LoginFrame extends javax.swing.JFrame {
                         }
                     });*/
                     
-                    Executors.newFixedThreadPool(5).execute(new Runnable() {
+                    Executors.newFixedThreadPool(7).execute(new Runnable() {
                         public void run() {
                             new PrincipalFrame(campoLogin.getText(), loginFrame).setVisible(true);
                         }

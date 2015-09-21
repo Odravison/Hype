@@ -812,13 +812,23 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
 
                 try { 
+                    /*BarraDeProgressoDialog barraDeProgresso = new BarraDeProgressoDialog(null, "Realizando a locação.");
+                    barraDeProgresso.setLocationRelativeTo(null);
+                    barraDeProgresso.setAlwaysOnTop(true);
+                    barraDeProgresso.setVisible(true);
+                    barraDeProgresso.exibirProgresso();*/
+                    
                     novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                             dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
 
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
-
-                    pane.setMessage("Locação realizada com sucesso!\n\nImprimindo contrato...");
+                    
+                    /*barraDeProgresso.fecharThreadDeCarregamento();
+                    barraDeProgresso.setVisible(false);
+                    barraDeProgresso.dispose();*/
+                    
+                    pane.setMessage("Locação realizada com sucesso!");
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                     dialog = pane.createDialog("Mensagem");
                     dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());

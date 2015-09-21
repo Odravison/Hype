@@ -201,10 +201,6 @@ public class Locacao implements Serializable {
         this.jaPago = jaPago;
     }
 
-    public String getVencimento() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
-    }
-
     public String getContato() {
         return this.cliente.getCelular();
     }
@@ -276,7 +272,7 @@ public class Locacao implements Serializable {
         return !this.ativa;
     }
 
-    String getDataDevolucaoInString() {
+    public String getDataDevolucaoInString() {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
     }
 
