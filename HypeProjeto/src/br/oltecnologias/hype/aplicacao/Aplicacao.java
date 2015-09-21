@@ -21,6 +21,7 @@ import br.oltecnologias.hype.gui.LoginFrame;
 import br.oltecnologias.hype.gui.PrincipalFrame;
 import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
+import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Fornecedor;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -55,191 +57,47 @@ public class Aplicacao {
      *
      * @param args
      */
+    public static String gerar() {
+        Random geradorAux = new Random();
+        int i = geradorAux.nextInt();
+        Random gerador;
+        gerador = new Random(i);
+        Long l = gerador.nextLong();
+        while (l < 0) {
+            l = gerador.nextLong();
+        }
+        return Long.toString(l).substring(0, 11);
+    }
+
+    public static String gerarCodigoProduto() {
+        Random geradorAux = new Random();
+        int i = geradorAux.nextInt();
+        Random gerador;
+        gerador = new Random(i);
+        Long l = gerador.nextLong();
+        while (l < 0) {
+            l = gerador.nextLong();
+        }
+        return Long.toString(l).substring(0, 8);
+    }
+
     public static void main(String[] args) throws DocumentException, IOException, Exception {
-        
-        //GerenciadorDoSistema.getInstance().adicionarUsuarioAdmin();
-        
-        Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
-        if(configuracao.getDiretorioDeBackup() == null || configuracao.getDiretorioDeDocumentos() == null
-                || configuracao.getDiretorioDeRelatorios() == null) {
+        Random gerador = new Random();
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println(gerar());
+            GerenciadorDePessoas.getInstance().cadastrarCliiente(new Cliente(gerar(), "Tesste " + i,
+                    new Endereco("Rua fulano de tal " + i, "Bairro do teste", "PB", i, "JAMPA"),
+                    new Medidas(i, i, i, i, i, i, i, "asdfasdfasdf"), null, "(83)99658-6798"));
+
+            GerenciadorDeProduto.getInstance().cadastrarProduto(new Produto(gerarCodigoProduto(), "nome do produto " + i, (30 * i) + 1, i + 1,
+                    null, "PRETO", i, gerador.nextBoolean()));
             
-            CadastrarDiretoriosDialog dialogDiretorios = new CadastrarDiretoriosDialog(null);
-            dialogDiretorios.setLocationRelativeTo(null);
-            dialogDiretorios.setAlwaysOnTop(true);
-            dialogDiretorios.setVisible(true);
-        }
-        if(configuracao.getEmpresa() == null) {
-            CadastrarEmpresaDialog dialogEmpresa = new CadastrarEmpresaDialog(null);
-            dialogEmpresa.setLocationRelativeTo(null);
-            dialogEmpresa.setAlwaysOnTop(true);
-            dialogEmpresa.setVisible(true);
-        }
+            GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa("Pagamento " + i+1, "Blá Blá Blá", Calendar.getInstance(), (1+i)*40, "Doido " + i, "O governo"));
+            
+            System.out.println(i);
         
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginFrame().setVisible(true);
-            }
-        });
-
-//        System.out.println("####################### Realizando os seguintes testes: ########################### \n"
-//                + "Teste de cadastro/edição/remoção de produto; \n"
-//                + "Teste de cadastro/edição/remoção de locações \n"
-//                + "Teste de cadastro/edição/remoção de cliente \n"
-//                + "SIMULAÇÃO DE UMA LOCAÇÃO");
-//
-//        System.out.println(" ================== Criação das entidades ======================");
-//
-//        Endereco endereco = new Endereco("Rua Onde Judas Perdeu as Botas", "Bairro de Canto Nenhum", "OZ", 40, "Cidade Fantasma");
-//        Medidas medidas = new Medidas(10, 10, 10, 10, 10, 10, 10, "Se liga Luender, a gente vai ganhar muito dinheiro");
-//
-//        Cliente cliente = new Cliente("123456789012", "José Luender", endereco, medidas, "3224-2424", "8888-8888");
-//
-//        List<ProdutoLocado> produtosDeLocacao = new ArrayList<ProdutoLocado>();
-//        List<Produto> produtosDeEstoque = new ArrayList<Produto>();
-//
-//        for (int i = 0; i < 10; i++) {
-//            Produto p = new Produto("AAAAAAA" + i, "Roupa de Varal", 40.00, i, "Envio de Roupas.com", "Branca", 38, true);
-//            GerenciadorDeProduto.getInstance().cadastrarProduto(p);
-//
-//        }
-//
-//        for (Produto p : produtosDeEstoque) {
-//            if (p.getQuantidade() > 0) {
-//
-//                produtosDeLocacao.add(new ProdutoLocado(p.getCodigo(), p.getQuantidade() - 1));
-//                p.removerQuant(1);
-//
-//            }
-//        }
-//
-//        Locacao locacao = new Locacao(cliente, produtosDeLocacao, 400.00, Calendar.getInstance(), Calendar.getInstance(), "À VISTA", 0, 0, 0);
-//        List<Locacao> locacoes = new ArrayList<Locacao>();
-//        locacoes.add(locacao);
-//
-//        cliente.setLocacoes(locacoes);
-//
-//        try {
-//            System.out.println("COMEÇANDO OS TESTES DAS FUNÇÕES DE GERENCIADOR DE PESSOAS");
-//
-//            GerenciadorDePessoas.getInstance().cadastrarCliiente(cliente);
-//            System.out.println("CADASTRAR CLIENTE: ==================> OK");
-//
-//            cliente.setCelular("9999999999");
-//            GerenciadorDePessoas.getInstance().editarCliente(cliente);
-//            System.out.println("EDITAR CLIENTE: ==================> OK");
-//
-//            if (GerenciadorDePessoas.getInstance().getClientes().size() > 0) {
-//                System.out.println("GETCLIENTES: ==================> OK");
-//            }
-//
-//            if (GerenciadorDePessoas.getInstance().getLocacoesMaisRecentsPorCliente().size() > 0) {
-//                System.out.println("LISTAR LOCAÇÕES MAIS RECENTES: ==================> OK");
-//            }
-//
-//            if (GerenciadorDePessoas.getInstance().pesquisarCliente("123456789012").equals(cliente)) {
-//                System.out.println("PESQUISAR CLIENTE: ==================> OK");
-//            }
-//
-//            int quantidade = 0;
-//            int comNomes = 0;
-//            for (Cliente c : GerenciadorDePessoas.getInstance().pesquisarClientesPorNome("JOSÉ")) {
-//                quantidade++;
-//                if (c.getNome().toUpperCase().contains("JOSÉ")) {
-//                    comNomes++;
-//
-//                }
-//            }
-//            System.out.println("Clientes cadastrados: " + quantidade + " Com nome que tenha o que foi pesquisado: " + comNomes);
-//
-//            System.out.println("============ANTES=====>>>>>>>>>>>>>>>> Tamanho da lista de Pessoas: " + GerenciadorDePessoas.getInstance().getClientes().size());
-//            System.out.println("=============ANTES====>>>>>>>>>>>>>>>> Tamanho da lista de Locacao: " + GerenciadorDeLocacao.getInstance().getLocacoes().size());
-//            GerenciadorDePessoas.getInstance().removerCliente(cliente.getCpf());
-//
-//            System.out.println("=======DEPOIS==========>>>>>>>>>>>>>>>> Tamanho da lista de Pessoas: " + GerenciadorDePessoas.getInstance().getClientes().size());
-//            System.out.println("=======DEPOIS==========>>>>>>>>>>>>>>>> Tamanho da lista de Locacao: " + GerenciadorDeLocacao.getInstance().getLocacoes().size());
-//
-//            if (GerenciadorDePessoas.getInstance().getClientes().size() == 0) {
-//                System.out.println("REMOVER CLIENTE: ==================> OK");
-//            } else {
-//                System.out.println("REMOVER CLIENTE: ==================> FALHOU");
-//            }
-//
-//            System.out.println("TODOS OS TESTES FORAM EXECUTADOS");
-//
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//
-//        }
-
-               // Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
-//                conf.setDiretorioDeRelatorios("C:\\ProjetoCloset");
-//                conf.setDiretorioDeDocumentos("C:\\ProjetoCloset");
-//                List<Venda> movimentacoes = new ArrayList<Venda>();
-//                List<ProdutoVendido> lista = new ArrayList<ProdutoVendido>();
-//                
-//                Usuario u = new Usuario("Luender", "Luendinho", "1234", true);
-//                Endereco end = new Endereco("Rua fulano de tal", "Bairro do 13", "PB", 49, "João Pessoa");
-//                Empresa empresa = new Empresa("1234556788", "Luender Roupas", "1234-1234", end);
-//                conf.setEmpresa(empresa);
-//                GerenciadorDoSistema.getInstance().salvarEstadoDeConfiguracao(conf);
-//                GerenciadorDoSistema.getInstance().setUsuarioLogado(u);
-//                
-//                
-//                
-                //Calendar dataInicial = Calendar.getInstance();
-//                
-//                for (int i = 0; i < 10; i++){
-//                    movimentacoes.add(new Venda(lista, i, "À VISTA", Calendar.getInstance(), i, i, 10));
-//                }
-//                for (Venda m: movimentacoes){
-//                    GerenciadorDoSistema.getInstance().adicionarMovimentacao(m, "VENDA");
-//                }
-//                
-                //Calendar dataFinal = Calendar.getInstance();
-//                
-                //GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dataInicial, dataFinal);
-                
-                //System.out.println("RODOU");
-//        
-//        for (Locacao l: GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes()){
-//            System.out.println(l.getId());
-//            System.out.println("O cliente tem locações de quantidade: " 
-//                    + GerenciadorDePessoas.getInstance().pesquisarCliente("096.961.514-03").getLocacoes().size());
-//            
-//            
-//        }
-//            java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-//
-//            desktop.open(new File("C:\\"));
-                
-                /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginFrame().setVisible(true);
-            }
-        });
     }
 }
