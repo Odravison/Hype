@@ -200,7 +200,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDataFinal.setText(&quot;Data Final: &quot;+locacao.getVencimento());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDataFinal.setText(&quot;Data Final: &quot;+locacao.getDataDevolucaoInString());"/>
               </AuxValues>
             </Component>
           </SubComponents>

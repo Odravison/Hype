@@ -182,6 +182,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
             pane.setMessage("É preciso selecionar um cliente na lista antes de continuar");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             JDialog dialog = pane.createDialog("Aviso");
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
             
@@ -203,6 +204,7 @@ public class PesquisarClienteDialog extends java.awt.Dialog {
             pane.setMessage("É preciso informar um nome para a pesquisa de clientes");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             JDialog dialog = pane.createDialog("Aviso");
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {

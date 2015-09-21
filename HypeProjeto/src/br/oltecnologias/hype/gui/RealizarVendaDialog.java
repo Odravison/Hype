@@ -116,6 +116,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         campoPesquisar.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisar.setForeground(new java.awt.Color(204, 204, 255));
         campoPesquisar.setText("Pesquisar Produto");
+        campoPesquisar.setToolTipText("Pesquise o produto pelo nome");
         campoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 campoPesquisarMouseClicked(evt);
@@ -574,6 +575,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 
                 calcularValorTotal(); 
                 campoPercentualDesconto.setEnabled(true);
+                campoParcelas.setEnabled(true);
+                campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             } 
@@ -597,6 +600,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             //Limpar o model dos produtos antes de acrescentar os objetos da pesquisa
+            modeloTabelaProdutos.setRowCount(0);
             for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
@@ -620,7 +624,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) tabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
             calcularValorTotal(); 
             //calcularValorTotalVenda();
-            campoPercentualDesconto.setEnabled(true);
+            campoPercentualDesconto.setEnabled(false);
+            campoParcelas.setEnabled(false);
+            campoEntrada.setEnabled(false);
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
@@ -645,21 +651,33 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             if(produtosVendidos.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if(campoPercentualDesconto.getText().length() > 0) { 
-                if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
-                    JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                try {
+                    if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                        JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch(Exception e) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível verificar o percentual de desconto. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } else if (radioCredito.isSelected() && campoParcelas.getText().length() <= 0) {
+                
+            } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda/2)) {
-                JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if (campoEntrada.getText().length() < 0) {
+                if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
+                    JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             } else {
                 
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    try {
+                        valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                                campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Não foi possível calcar o valor da venda corretamente. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                    }
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -683,13 +701,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 }
 
                 try {
+                    JOptionPane.showMessageDialog(null, "A venda será efetuada no sistema. Por favor, aguarde...");
+                    
                     novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalComDescontos, formaPagamento,
                             Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
                             Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
 
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
                     
-                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!\n\nImprimindo recibo...");
+                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
 
                     //O botão concluir foi selecionado
                     concluirSelecionado = true;
@@ -697,7 +717,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     setVisible(false);
 
                 } catch (Exception e) {
-                    System.out.println("DEU PAU! ERRO: "+e.getMessage());
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             }
@@ -809,7 +828,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
                 
-            calcularValorTotal();
+            calcularValorTotalComDesconto();
         }
         /*
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
@@ -846,7 +865,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
-            calcularValorTotalComDesconto();
+            
+            calcularValorTotal();
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
     
@@ -870,7 +890,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             valorTotalVenda -= Double.parseDouble(campoEntrada.getText());
         }
         
-        labelValorVenda.setText("R$ " + valorTotalVenda);
+        labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda
+                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");

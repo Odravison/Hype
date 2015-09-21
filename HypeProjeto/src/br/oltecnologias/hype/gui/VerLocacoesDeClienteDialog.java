@@ -36,7 +36,6 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         botaoOk = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
-        setPreferredSize(new java.awt.Dimension(1360, 725));
         setResizable(false);
         setTitle("Ver Locações Feitas");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -49,6 +48,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações Feitas"));
 
         scPnLocacoes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scPnLocacoes.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -57,7 +57,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         // Altura das linhas
         tabelaLocacoes.setRowHeight(25);
 
-        String[] nomesColunasTabelaLocacoes = {"Data", "Produtos Locados", "Valor Total", ""};
+        String[] nomesColunasTabelaLocacoes = {"Data da Locação", "Produtos Locados", "Valor Total", ""};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
         //Adicionando valores nas linhas
@@ -73,7 +73,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -85,11 +85,11 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
     // Redimensionando a largura da coluna de data
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(150);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1077);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(957);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(110);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(160);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
     tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -102,15 +102,15 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     painelLocacoesFeitasLayout.setHorizontalGroup(
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
-            .addContainerGap()
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 1297, Short.MAX_VALUE)
-            .addContainerGap())
+            .addGap(18, 18, 18)
+            .addComponent(scPnLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 1223, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(18, 18, 18))
     );
     painelLocacoesFeitasLayout.setVerticalGroup(
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
+        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLocacoesFeitasLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
             .addContainerGap())
     );
 
@@ -128,20 +128,20 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
-            .addContainerGap()
+            .addGap(23, 23, 23)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(botaoOk)
-                .addComponent(painelLocacoesFeitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(painelLocacoesFeitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoOk))
             .addGap(23, 23, 23))
     );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-            .addContainerGap()
+            .addGap(23, 23, 23)
             .addComponent(painelLocacoesFeitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(botaoOk)
-            .addContainerGap(53, Short.MAX_VALUE))
+            .addGap(25, 25, 25))
     );
 
     pack();
