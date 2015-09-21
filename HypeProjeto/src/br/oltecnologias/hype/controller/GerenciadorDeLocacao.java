@@ -66,8 +66,8 @@ public class GerenciadorDeLocacao {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
 
-            locacao.imprimirContrato();
-            locacao.gerarRecibo();
+//            locacao.imprimirContrato();
+//            locacao.gerarRecibo();
             
 
             return locacao;

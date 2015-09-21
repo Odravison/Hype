@@ -2736,40 +2736,35 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarUsuarioActionPerformed
 
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
-        if (tabelaClientes.getSelectedRow() >= 0) {
-            //JOptionPane.showMessageDialog(null, "Esta busca pode demorar alguns segundos. Por favor, aguarde...");
-            AguardeDialog aguarde = new AguardeDialog(null, "Pesquisando as locações do cliente.");
-            aguarde.executarProgresso();
-            aguarde.setLocationRelativeTo(null);
+                if (tabelaClientes.getSelectedRow() >= 0) {
+            final ProgressoBar aguarde;
+            aguarde = new ProgressoBar();
             aguarde.setVisible(true);
-            
-            /*SwingWorker sw = new SwingWorker() {
-                @Override
-                protected Object doInBackground() throws Exception {*/
-                    try {
+
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        aguarde.setIndeterminate(true);
                         //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
-                        VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
-                                (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
-
-                        dialog.setLocationRelativeTo(null);
-                        dialog.setVisible(true);
-
-                    } catch (ClienteInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        try {
+                            VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
+                                    (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                            dialog.setLocationRelativeTo(null);
+                            dialog.setVisible(true);
+                        } catch (ClienteInexistenteException e) {
+                            aguarde.setIndeterminate(false);
+                            aguarde.dispose();
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+                        return null;
                     }
-                   /* return null;
-                }
-            }; 
-            
-            sw.execute();
-            while(!sw.isDone()){
-            }*/
-            for(int i=0; i < 9000; i++) {
-            }
-            //aguarde.interromperProgresso();
-            aguarde.setVisible(false);
-            aguarde.dispose();
-            
+                    @Override
+                    protected void done() {
+                        aguarde.setIndeterminate(false);
+                        aguarde.dispose();
+
+                    }
+                }.execute();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
