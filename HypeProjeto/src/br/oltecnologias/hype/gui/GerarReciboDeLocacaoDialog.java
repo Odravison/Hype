@@ -71,8 +71,8 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
 
         labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
-        this.valorRecibo = new BigDecimal(locacao.getValorLocacao()/locacao.getParcelas()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-        labelValorRecibo.setText("R$ "+valorRecibo);
+        this.valorRecibo = locacao.getValorLocacao()-locacao.getValorDeEntrada()/locacao.getParcelas();
+        labelValorRecibo.setText("R$ "+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQtdParcelas.setText("Quantas parcelas serão pagas?");

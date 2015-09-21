@@ -352,7 +352,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void campoPrecoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPrecoKeyTyped
-        if((campoPreco.getText().length() > 3 && !campoPreco.getText().contains(".")) || 
+        if((campoPreco.getText().length() >= 3 && !campoPreco.getText().contains(".")) || 
                 (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
                 || campoPreco.getText().length() >= maxCaracteresPreco) {
             

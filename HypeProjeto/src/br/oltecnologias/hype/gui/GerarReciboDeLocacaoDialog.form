@@ -166,7 +166,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="this.valorRecibo = new BigDecimal(locacao.getValorLocacao()/locacao.getParcelas()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();&#xa;labelValorRecibo.setText(&quot;R$ &quot;+valorRecibo);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="this.valorRecibo = locacao.getValorLocacao()-locacao.getValorDeEntrada()/locacao.getParcelas();&#xa;labelValorRecibo.setText(&quot;R$ &quot;+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelQtdParcelas">

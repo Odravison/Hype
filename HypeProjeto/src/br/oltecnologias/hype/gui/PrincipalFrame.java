@@ -76,6 +76,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         labelLogoEmpresa = new javax.swing.JLabel();
         labelLoginUsuario = new javax.swing.JLabel();
         botaoSair = new javax.swing.JLabel();
+        labelLogoCloset = new javax.swing.JLabel();
         abas = new javax.swing.JTabbedPane();
         painelClientes = new javax.swing.JPanel();
         botaoNovoCliente = new javax.swing.JButton();
@@ -133,7 +134,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoVerRecibosVenda = new javax.swing.JButton();
         painelCaixaERelatorios = new javax.swing.JPanel();
         botaoGerarRelatorio = new javax.swing.JButton();
-        botaoFecharCaixa = new javax.swing.JButton();
         pnRlCaixaERelatorios = new javax.swing.JScrollPane();
         tabelaMovimentacoes = new javax.swing.JTable();
         labelFiltrarMovimentacao = new javax.swing.JLabel();
@@ -199,6 +199,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
 
+        labelLogoCloset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Mini logo Closet.png"))); // NOI18N
+
         javax.swing.GroupLayout painelTopoLayout = new javax.swing.GroupLayout(painelTopo);
         painelTopo.setLayout(painelTopoLayout);
         painelTopoLayout.setHorizontalGroup(
@@ -207,18 +209,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(labelLogoEmpresa)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelLoginUsuario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(botaoSair)
-                .addGap(16, 16, 16))
+                .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
+                        .addComponent(labelLoginUsuario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoSair)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
+                        .addComponent(labelLogoCloset)
+                        .addGap(39, 39, 39))))
         );
         painelTopoLayout.setVerticalGroup(
             painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(painelTopoLayout.createSequentialGroup()
+                .addComponent(labelLogoEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                 .addGap(8, 8, 8))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(painelTopoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelLogoCloset, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelLoginUsuario, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(botaoSair, javax.swing.GroupLayout.Alignment.TRAILING)))
@@ -289,7 +298,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnRlCliente.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        pnRlCliente.setPreferredSize(new java.awt.Dimension(806, 340));
+        pnRlCliente.setPreferredSize(new java.awt.Dimension(826, 340));
 
         tabelaClientes.setAutoCreateRowSorter(true);
         tabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -328,11 +337,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         // Redimensionando a largura da coluna de CPF
         tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);
         // Redimensionando a largura da coluna de nome
-        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(380);
+        tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(390);
         // Redimensionando a largura da coluna de número do celular
         tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);
         // Redimensionando a largura da coluna de data de cadastro
-        tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(130);
+        tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(140);
 
         tabelaClientes.getRowSorter().toggleSortOrder(3);
         tabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -399,7 +408,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addGap(4, 4, 4)
                             .addComponent(botaoExcluirCliente))
                         .addComponent(pnRlCliente, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(499, Short.MAX_VALUE))
+                .addContainerGap(479, Short.MAX_VALUE))
         );
         painelClientesLayout.setVerticalGroup(
             painelClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,7 +466,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarProdutos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisarProdutos.setForeground(new java.awt.Color(153, 153, 153));
         campoPesquisarProdutos.setText("Pesquisar Produto");
-        campoPesquisarProdutos.setToolTipText("Informe o nome do produto");
+        campoPesquisarProdutos.setToolTipText("Informe o nome ou o código produto");
         campoPesquisarProdutos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoPesquisarProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -519,8 +528,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaProdutos.getColumnModel().getColumn(3).setPreferredWidth(110);
     // Redimensionando a largura da coluna de finalidade
     tabelaProdutos.getColumnModel().getColumn(4).setPreferredWidth(110);
-
-    tabelaProdutos.getRowSorter().toggleSortOrder(1);
     tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaProdutosMouseClicked(evt);
@@ -852,7 +859,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarLocacoes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarLocacoes.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarLocacoes.setText("Pesquisar Locação");
-    campoPesquisarLocacoes.setToolTipText("");
     campoPesquisarLocacoes.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -921,8 +927,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(65);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(6).setPreferredWidth(0);
-
-    tabelaLocacoes.getRowSorter().toggleSortOrder(4);
     tabelaLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaLocacoesMouseClicked(evt);
@@ -934,8 +938,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelFiltrarLocacoes.setText("Filtrar por:");
 
     comboFiltrarLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    comboFiltrarLocacoes.setMaximumRowCount(3);
-    comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Atrasadas", "Extraviadas" }));
+    comboFiltrarLocacoes.setMaximumRowCount(5);
+    comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
     comboFiltrarLocacoes.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarLocacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -1085,8 +1089,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     });
 
     comboFiltrarVendas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    comboFiltrarVendas.setMaximumRowCount(1);
-    comboFiltrarVendas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas" }));
+    comboFiltrarVendas.setMaximumRowCount(2);
+    comboFiltrarVendas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Mais Recentes" }));
     comboFiltrarVendas.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarVendas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarVendas.addActionListener(new java.awt.event.ActionListener() {
@@ -1147,8 +1151,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(165);
     // Redimensionando a largura da coluna id da venda
     tabelaVendas.getColumnModel().getColumn(4).setPreferredWidth(0);
-
-    tabelaVendas.getRowSorter().toggleSortOrder(0);
     tabelaVendas.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaVendasMouseClicked(evt);
@@ -1231,12 +1233,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
-    botaoFecharCaixa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoFecharCaixa.setText("Fechar Caixa");
-    botaoFecharCaixa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
     pnRlCaixaERelatorios.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-    pnRlCaixaERelatorios.setPreferredSize(new java.awt.Dimension(916, 359));
+    pnRlCaixaERelatorios.setPreferredSize(new java.awt.Dimension(947, 359));
 
     tabelaMovimentacoes.setAutoCreateRowSorter(true);
     tabelaMovimentacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1276,7 +1274,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     tabelaMovimentacoes.setModel(modeloTabelaMovimentacoes);
 
     // Redimensionando a largura da coluna de movimento
-    tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(110);
+    tabelaMovimentacoes.getColumnModel().getColumn(0).setPreferredWidth(130);
     // Redimensionando a largura da coluna de valor
     tabelaMovimentacoes.getColumnModel().getColumn(1).setPreferredWidth(110);
     // Redimensionando a largura da coluna de data
@@ -1284,11 +1282,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de responsável
     tabelaMovimentacoes.getColumnModel().getColumn(3).setPreferredWidth(340);
     // Redimensionando a largura da coluna de beneficiário
-    tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(240);
+    tabelaMovimentacoes.getColumnModel().getColumn(4).setPreferredWidth(250);
     // Redimensionando a largura da coluna de id
     tabelaMovimentacoes.getColumnModel().getColumn(5).setPreferredWidth(0);
-
-    tabelaMovimentacoes.getRowSorter().toggleSortOrder(2);
     tabelaMovimentacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
             tabelaMovimentacoesMouseClicked(evt);
@@ -1363,11 +1359,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(botaoExcluirDespesa))
                         .addComponent(pnRlCaixaERelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(389, Short.MAX_VALUE))
+                    .addContainerGap(358, Short.MAX_VALUE))
                 .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
                     .addComponent(botaoGerarRelatorio)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoFecharCaixa)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(botaoRegistrarDespesa)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1384,7 +1378,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGap(23, 23, 23)
                     .addGroup(painelCaixaERelatoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoGerarRelatorio)
-                        .addComponent(botaoFecharCaixa)
                         .addComponent(botaoRegistrarDespesa)))
                 .addGroup(painelCaixaERelatoriosLayout.createSequentialGroup()
                     .addGap(37, 37, 37)
@@ -1889,7 +1882,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     painelGeralLayout.setVerticalGroup(
                         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelGeralLayout.createSequentialGroup()
-                            .addContainerGap(16, Short.MAX_VALUE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -3099,23 +3092,33 @@ public class PrincipalFrame extends javax.swing.JFrame {
         List<Locacao> locacoes = null;
         // Atualiza o model da lista de locações
         modeloTabelaLocacoes.setRowCount(0);
-        switch (comboFiltrarLocacoes.getSelectedItem().toString()) {
+        switch (comboFiltrarLocacoes.getSelectedItem().toString().toUpperCase()) {
 
-            case "Todas":
+            case "TODAS":
                 locacoes = GerenciadorDeLocacao.getInstance().getLocacoes();
 
                 break;
 
-            case "Atrasadas":
+            case "ATRASADAS":
                 locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesEmAtraso();
 
                 break;
             
-            case "Extraviadas":
+            case "EXTRAVIADAS":
                 locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesExtraviadas();
                
                 break;
-
+                
+            case "MAIS RECENTES":
+                locacoes = GerenciadorDeLocacao.getInstance().getMostRecentLocation();
+               
+                break;
+            
+            case "MAIS ANTIGAS":
+                locacoes = GerenciadorDeLocacao.getInstance().getLocacoes();
+               
+                break;
+                
             default:
                 JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
                 break;
@@ -3208,11 +3211,29 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_radioPesquisarProdutoNomeActionPerformed
 
     private void comboFiltrarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarVendasActionPerformed
-        if(comboFiltrarVendas.getSelectedItem().toString().toUpperCase().equals("TODOS")) {
-            // Limpa a tabela de vendas
-            modeloTabelaVendas.setRowCount(0);
+        List<Venda> vendas = null;
+        // Atualiza o model da lista de locações
+        modeloTabelaVendas.setRowCount(0);
+        switch (comboFiltrarVendas.getSelectedItem().toString().toUpperCase()) {
+
+            case "TODAS":
+                vendas = GerenciadorDeVenda.getInstance().getVendas();
+
+                break;
+
+            case "MAIS RECENTES":
+                vendas = GerenciadorDeVenda.getInstance().getMostRecentsSales();
+
+                break;
+                
+            default:
+                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                break;
+        }
+        if(vendas != null) {
             adicionarVendasNaTabela(GerenciadorDeVenda.getInstance().getVendas());
         }
+        
     }//GEN-LAST:event_comboFiltrarVendasActionPerformed
 
     private void comboFiltrarFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarFornecedoresActionPerformed
@@ -3647,7 +3668,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoExcluirFornecedor;
     private javax.swing.JButton botaoExcluirProduto;
     private javax.swing.JButton botaoExcluirUsuario;
-    private javax.swing.JButton botaoFecharCaixa;
     private javax.swing.JButton botaoFinalizarLocacao;
     private javax.swing.JButton botaoGerarReciboLocacao;
     private javax.swing.JButton botaoGerarRelatorio;
@@ -3701,6 +3721,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelFiltrarUsuarios;
     private javax.swing.JLabel labelFiltrarVenda;
     private javax.swing.JLabel labelLoginUsuario;
+    private javax.swing.JLabel labelLogoCloset;
     private javax.swing.JLabel labelLogoEmpresa;
     private javax.swing.JLabel labelNomeImpressora;
     private javax.swing.JLabel labelValorCaixa;

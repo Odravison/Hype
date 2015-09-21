@@ -213,6 +213,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campoPesquisar.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisar.setForeground(new java.awt.Color(204, 204, 255));
         campoPesquisar.setText("Pesquisar Produto");
+        campoPesquisar.setToolTipText("Pesquise pelo nome do produto");
         campoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 campoPesquisarMouseClicked(evt);
@@ -781,8 +782,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    //valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                      //      campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -901,6 +902,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
+            modeloTabelaProdutos.setRowCount(0);
             for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
                 modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
             }
@@ -1091,7 +1093,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
                 
-            calcularValorTotal();
+            calcularValorTotalComDesconto();
             /*try {
                 if (campoPercentualDesconto.getText().length() > 0) {
                     labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
@@ -1185,7 +1187,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
         
-        labelValorLocacao.setText("R$ " + valorTotalLocacao);
+        labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
@@ -1194,6 +1196,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
                     ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
+        }
+    }
+    
+    public void calcularValorTotalComDesconto() { 
+        if (campoPercentualDesconto.getText().length() > 0) {            
+            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        } else {
+            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).doubleValue());
         }
     }
     

@@ -45,7 +45,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Cancelar.png")));
         try {
-            percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("LOCAÇÃO");
+            percentualDescontoTemporada = GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA");
         } catch (TemporadaInexistenteException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar o valor da temporada de desconto\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -68,7 +68,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         painelFormaPagamento = new javax.swing.JPanel();
         radioAVista = new javax.swing.JRadioButton();
         radioCartao = new javax.swing.JRadioButton();
-        radioPromissoria = new javax.swing.JRadioButton();
         labelEntrada = new javax.swing.JLabel();
         campoEntrada = new javax.swing.JTextField();
         labelParcelas = new javax.swing.JLabel();
@@ -87,6 +86,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         labelStatusTemporada = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(885, 730));
         setResizable(false);
         setTitle("Realizar Venda");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -329,16 +329,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             }
         });
 
-        radioPromissoria.setBackground(new java.awt.Color(255, 255, 255));
-        radioPromissoria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        radioPromissoria.setText("Promissória");
-        radioPromissoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        radioPromissoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                radioPromissoriaActionPerformed(evt);
-            }
-        });
-
         labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelEntrada.setText("Entrada: R$");
 
@@ -393,28 +383,26 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         painelFormaPagamentoLayout.setHorizontalGroup(
             painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                        .addGap(311, 311, 311)
+                        .addComponent(radioAVista)
+                        .addGap(18, 18, 18)
+                        .addComponent(radioCartao))
+                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                        .addGap(282, 282, 282)
+                        .addComponent(radioCredito)
+                        .addGap(77, 77, 77)
+                        .addComponent(radioDebito))
+                    .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
+                        .addGap(203, 203, 203)
                         .addComponent(labelEntrada)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(campoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79)
-                        .addComponent(labelParcelas))
-                    .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(radioCredito)
-                            .addGap(77, 77, 77)
-                            .addComponent(radioDebito))
-                        .addGroup(painelFormaPagamentoLayout.createSequentialGroup()
-                            .addComponent(radioAVista)
-                            .addGap(18, 18, 18)
-                            .addComponent(radioCartao)
-                            .addGap(18, 18, 18)
-                            .addComponent(radioPromissoria))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelParcelas)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(campoParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelFormaPagamentoLayout.setVerticalGroup(
@@ -423,8 +411,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioAVista)
-                    .addComponent(radioCartao)
-                    .addComponent(radioPromissoria))
+                    .addComponent(radioCartao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelFormaPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioCredito)
@@ -586,7 +573,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotal(); 
-                //calcularValorTotalVenda();
                 campoPercentualDesconto.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -662,16 +648,18 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
                     JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
+            } else if (radioCredito.isSelected() && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda/2)) {
+                JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    //valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-                      //      campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -688,8 +676,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     } else {
                         formaPagamento = "Cartão - Débito";
                     }
-                } else if (radioPromissoria.isSelected()) {
-                    formaPagamento = "Promissória";
                 } else {
                     formaPagamento = "À Vista";
                     campoEntrada.setText("0");
@@ -730,24 +716,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
         radioCartao.setSelected(false);
-        radioPromissoria.setSelected(false);
         desabilitarCampos();
         desabilitarRadios();
     }//GEN-LAST:event_radioAVistaActionPerformed
 
     private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
         radioAVista.setSelected(false);
-        radioPromissoria.setSelected(false);
         habilitarRadios();
         desabilitarCampos();
     }//GEN-LAST:event_radioCartaoActionPerformed
-
-    private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
-        radioCartao.setSelected(false);
-        radioAVista.setSelected(false);
-        habilitarCampos();
-        desabilitarRadios();
-    }//GEN-LAST:event_radioPromissoriaActionPerformed
 
     private void radioCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreditoActionPerformed
         radioDebito.setSelected(false);
@@ -854,6 +831,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
+        //double metadeValor = valorTotal;
         if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoEntrada.getText().length() >= maxCaracteresEntrada
                 || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) >= valorTotalComDescontos
                 || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) == 0) { 
@@ -868,14 +846,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
-            calcularValorTotal();
+            calcularValorTotalComDesconto();
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
     
     public void calcularValorTotal() {
         try {
             valorTotalVenda = valorGeral;
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 valorTotalVenda = valorTotalVenda
                         - ((valorTotalVenda * percentualDescontoTemporada) / 100);
             } 
@@ -901,6 +879,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
             labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
                     ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
+        }
+    }
+    
+    public void calcularValorTotalComDesconto() { 
+        if (campoPercentualDesconto.getText().length() > 0) {            
+            labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        } else {
+            labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda).doubleValue());
         }
     }
     
@@ -1173,7 +1160,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private javax.swing.JRadioButton radioCartao;
     private javax.swing.JRadioButton radioCredito;
     private javax.swing.JRadioButton radioDebito;
-    private javax.swing.JRadioButton radioPromissoria;
     private javax.swing.JScrollPane scPnTabelaProdutos;
     private javax.swing.JScrollPane scPnTabelaProdutosLocados;
     private javax.swing.JTable tabelaProdutos;
