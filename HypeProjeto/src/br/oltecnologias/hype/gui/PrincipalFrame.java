@@ -2707,8 +2707,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
         if(tabelaClientes.getSelectedRow() >= 0) {
             
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
-                public void run() {
+            new SwingWorker(){
+
+                @Override
+                protected Object doInBackground() throws Exception {
                     try {
                         //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
                         VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
@@ -2720,8 +2722,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     } catch (ClienteInexistenteException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                }
-            });
+                    return null;
+                }                
+            }.execute();
+            
+            
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
