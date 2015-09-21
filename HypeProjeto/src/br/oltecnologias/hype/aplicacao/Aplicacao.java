@@ -85,7 +85,7 @@ public class Aplicacao {
     public static void main(String[] args) throws DocumentException, IOException, Exception {
         Random gerador = new Random();
 
-//        for (int i = 0; i < 100; i++) {
+//        for (int i = 0; i < 20; i++) {
 //            System.out.println(gerar());
 //            GerenciadorDePessoas.getInstance().cadastrarCliiente(new Cliente(gerar(), "Tesste " + i,
 //                    new Endereco("Rua fulano de tal " + i, "Bairro do teste", "PB", i, "JAMPA"),
@@ -98,10 +98,10 @@ public class Aplicacao {
 //            
 //            System.out.println(i);
 
-            for (Cliente c : GerenciadorDePessoas.getInstance().getClientes()) {
-                List<ProdutoLocado> produtosLocados = new ArrayList<ProdutoLocado>();
-                List<ProdutoVendido> produtosVendidos = new ArrayList<ProdutoVendido>();
-
+//            for (Cliente c : GerenciadorDePessoas.getInstance().getClientes()) {
+//                List<ProdutoLocado> produtosLocados = new ArrayList<ProdutoLocado>();
+//                List<ProdutoVendido> produtosVendidos = new ArrayList<ProdutoVendido>();
+//
 //                for (Produto p : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
 //                    for (int k = 0; k < 5; k++) {
 //                        ProdutoLocado p1 = new ProdutoLocado(p.getCodigo(), k+1);
@@ -124,9 +124,9 @@ public class Aplicacao {
 //                        produtosVendidos.clear();
 //                    }
 //                }
-
-            }
-
+//
+//            }
+//
 //        }
 
     }
