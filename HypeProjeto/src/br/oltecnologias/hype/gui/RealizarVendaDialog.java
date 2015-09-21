@@ -757,7 +757,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 
                 calcularValorTotal(); 
-                //calcularValorTotalVenda();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
             campoEntrada.setEnabled(true);
@@ -771,7 +770,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if(evt.getClickCount() == 2){            
             removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) tabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
             calcularValorTotal(); 
-            //calcularValorTotalVenda();
         }
         if(produtosVendidos.size() <= 0) {
             campoPercentualDesconto.setEnabled(false);
