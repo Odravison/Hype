@@ -39,8 +39,8 @@ public class GerenciadorDeVenda {
                 GerenciadorDeProduto.getInstance().removerQuantidade(pv.getCodigoProduto(), pv.getQuantidade());
             }
             vjp.create(venda);
-            venda.gerarEImprimirRecibo();
-            System.out.println("==========>>>>>>>>>>>>>> O ID DA VENDA É: " + venda.getId());
+//            venda.gerarEImprimirRecibo();
+            
             return venda;
             
         } finally {

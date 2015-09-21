@@ -10,6 +10,7 @@ package br.oltecnologias.hype.aplicacao;
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
+import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.dao.ClienteJpaRepository;
 import br.oltecnologias.hype.dao.LocacaoJpaRepository;
@@ -84,20 +85,49 @@ public class Aplicacao {
     public static void main(String[] args) throws DocumentException, IOException, Exception {
         Random gerador = new Random();
 
-        for (int i = 0; i < 100; i++) {
-            System.out.println(gerar());
-            GerenciadorDePessoas.getInstance().cadastrarCliiente(new Cliente(gerar(), "Tesste " + i,
-                    new Endereco("Rua fulano de tal " + i, "Bairro do teste", "PB", i, "JAMPA"),
-                    new Medidas(i, i, i, i, i, i, i, "asdfasdfasdf"), null, "(83)99658-6798"));
+//        for (int i = 0; i < 100; i++) {
+//            System.out.println(gerar());
+//            GerenciadorDePessoas.getInstance().cadastrarCliiente(new Cliente(gerar(), "Tesste " + i,
+//                    new Endereco("Rua fulano de tal " + i, "Bairro do teste", "PB", i, "JAMPA"),
+//                    new Medidas(i, i, i, i, i, i, i, "asdfasdfasdf"), null, "(83)99658-6798"));
+//
+//            GerenciadorDeProduto.getInstance().cadastrarProduto(new Produto(gerarCodigoProduto(), "nome do produto " + i, (30 * i) + 1, i + 1,
+//                    null, "PRETO", i, gerador.nextBoolean()));
+//            
+//            GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa("Pagamento " + i+1, "Blá Blá Blá", Calendar.getInstance(), (1+i)*40, "Doido " + i, "O governo"));
+//            
+//            System.out.println(i);
 
-            GerenciadorDeProduto.getInstance().cadastrarProduto(new Produto(gerarCodigoProduto(), "nome do produto " + i, (30 * i) + 1, i + 1,
-                    null, "PRETO", i, gerador.nextBoolean()));
-            
-            GerenciadorDoSistema.getInstance().cadastrarDespesa(new Despesa("Pagamento " + i+1, "Blá Blá Blá", Calendar.getInstance(), (1+i)*40, "Doido " + i, "O governo"));
-            
-            System.out.println(i);
-        
-        }
+            for (Cliente c : GerenciadorDePessoas.getInstance().getClientes()) {
+                List<ProdutoLocado> produtosLocados = new ArrayList<ProdutoLocado>();
+                List<ProdutoVendido> produtosVendidos = new ArrayList<ProdutoVendido>();
+
+//                for (Produto p : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {
+//                    for (int k = 0; k < 5; k++) {
+//                        ProdutoLocado p1 = new ProdutoLocado(p.getCodigo(), k+1);
+//                        produtosLocados.add(p1);
+//                        Thread.sleep(2000);
+//                        GerenciadorDeLocacao.getInstance().realizarLocacao(c, produtosLocados, k+1, Calendar.getInstance(), Calendar.getInstance(), "À VISTA", 0, 0, 0);
+//                        p1 = null;
+//                        produtosLocados.clear();
+//                    }
+//                }
+//                for (Produto p: GerenciadorDeProduto.getInstance().getProdutosDeVenda()){
+//                    for (int j = 0; j<5; j++){
+//                        ProdutoVendido p2 = new ProdutoVendido(p.getCodigo(), j+1);
+//                        produtosVendidos.add(p2);
+//                        Venda venda = new Venda(produtosVendidos, j+1, "À VISTA", Calendar.getInstance(), 0, 0, 0);
+//                        Thread.sleep(2000);
+//                        GerenciadorDeVenda.getInstance().realizarVenda(venda);
+//                        venda = null;
+//                        p2 = null;
+//                        produtosVendidos.clear();
+//                    }
+//                }
+
+            }
+
+//        }
 
     }
 }
