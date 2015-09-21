@@ -19,6 +19,7 @@ public class TrocarUsuarioDialog extends java.awt.Dialog {
     public TrocarUsuarioDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

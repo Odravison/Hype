@@ -247,7 +247,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     threadCarregandoSistema = new Thread() {
                         public void run() {
                             String pontosTxt = "";
-                            while(loginFrame.isVisible()) { 
+                            while (loginFrame.isVisible()) {
                                 for (int i = 0; i < 100; i++) {
                                     try {
                                         sleep(30);
@@ -263,8 +263,8 @@ public class LoginFrame extends javax.swing.JFrame {
                                 }
                             }
 
-                                }
-                    }; 
+                        }
+                    };
                     threadCarregandoSistema.start();
                 } else {
                     JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
