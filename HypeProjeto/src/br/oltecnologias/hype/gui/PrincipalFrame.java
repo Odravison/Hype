@@ -2736,9 +2736,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarUsuarioActionPerformed
 
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
-                if (tabelaClientes.getSelectedRow() >= 0) {
+        if (tabelaClientes.getSelectedRow() >= 0) {
             final ProgressoBar aguarde;
-            aguarde = new ProgressoBar();
+            aguarde = new ProgressoBar("Pesquisando as locações do cliente. Por favor, Aguarde...");
+            aguarde.setLocationRelativeTo(null);
             aguarde.setVisible(true);
 
                 new SwingWorker() {
