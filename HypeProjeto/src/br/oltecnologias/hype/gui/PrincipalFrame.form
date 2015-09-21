@@ -167,7 +167,14 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/br/oltecnologias/hype/imagens/Mini logo Closet.png"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Trocar de usu&#xe1;rio"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Cursor em Forma de M&#xe3;o"/>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="labelLogoClosetMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -322,7 +329,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Cliente"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Informe o nome do cliente"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise clientes pelo CPF ou pelo nome"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
@@ -390,7 +397,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaClientesMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;Contato&quot;, &quot;Cadastrado em&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(390);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de data de cadastro&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(140);&#xa; &#xa;tabelaClientes.getRowSorter().toggleSortOrder(3);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String[] nomesColunasTabelaClientes = {&quot;CPF&quot;, &quot;Nome do Cliente&quot;, &quot;Contato&quot;, &quot;Cadastrado em&quot;};&#xa;//Define a fonte do cabe&#xe7;alho da tabela clientes&#xa;tabelaClientes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;//Altura da linha&#xa;tabelaClientes.setRowHeight(25); &#xa;&#xa;//Lista que ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhas = new ArrayList&lt;&gt;();&#xa;            &#xa;//Adicionando valores nas linhas&#xa;for (Cliente cliente : GerenciadorDePessoas.getInstance().getClientes()) {&#xa;    listaLinhas.add(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaClientes = new DefaultTableModel(&#xa;                    listaLinhas.toArray(new Object[listaLinhas.size()][]), nomesColunasTabelaClientes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaClientes.setModel(modeloTabelaClientes);&#xa;// Redimensionando a largura da coluna de CPF &#xa;tabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(140);&#xa;// Redimensionando a largura da coluna de nome&#xa;tabelaClientes.getColumnModel().getColumn(1).setPreferredWidth(390);&#xa;// Redimensionando a largura da coluna de n&#xfa;mero do celular&#xa;tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);&#xa;// Redimensionando a largura da coluna de data de cadastro&#xa;tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(140);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -581,7 +588,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Produto"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Informe o nome ou o c&#xf3;digo produto"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise produtos pelo c&#xf3;digo ou pelo nome"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
@@ -847,7 +854,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Fornecedor"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Informe o nome do fornecedor"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise fornecedores pelo CNPJ ou pelo nome"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
@@ -1086,6 +1093,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Loca&#xe7;&#xe3;o"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise loca&#xe7;&#xf5;es pela data no formato: dd/mm/aaa"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
@@ -1126,7 +1134,7 @@
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaLocacoesMouseClicked"/>
                       </Events>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;CPF Cliente&quot;, &quot;Cliente&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;In&#xed;cio&quot;,&quot;Devolu&#xe7;&#xe3;o&quot;, &quot;Status&quot;, &quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {&#xa;    try {   &#xa;        listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), &#xa;                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), &quot;R$ &quot;+locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});&#xa;    } catch (Exception e) { &#xa;        JOptionPane.showMessageDialog(null, &quot;Ocorreu um erro na hora de buscar os dados da loca&#xe7;&#xe3;o&quot;, &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;    }&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de CPF do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(115); &#xa;// Redimensionando a largura da coluna de nome do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(250); &#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(585); &#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(82);&#xa;// Redimensionando a largura da coluna de data de in&#xed;cio&#xa;tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(85);&#xa;// Redimensionando a largura da coluna de data de devolu&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(85);&#xa;// Redimensionando a largura da coluna status&#xa;tabelaLocacoes.getColumnModel().getColumn(6).setPreferredWidth(80);&#xa;// Redimensionando a largura da coluna id da loca&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(7).setPreferredWidth(0);"/>
+                        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;CPF Cliente&quot;, &quot;Cliente&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;In&#xed;cio&quot;,&quot;Devolu&#xe7;&#xe3;o&quot;, &quot;Status&quot;, &quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {&#xa;    try {   &#xa;        listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),&#xa;                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),&#xa;                &quot;R$ &quot; + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});&#xa;    } catch (Exception e) { &#xa;        JOptionPane.showMessageDialog(null, &quot;Ocorreu um erro na hora de buscar os dados da loca&#xe7;&#xe3;o&quot;, &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;    }&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false, false, false, false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de CPF do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(115); &#xa;// Redimensionando a largura da coluna de nome do cliente&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(250); &#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(585); &#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(82);&#xa;// Redimensionando a largura da coluna de data de in&#xed;cio&#xa;tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(85);&#xa;// Redimensionando a largura da coluna de data de devolu&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(5).setPreferredWidth(85);&#xa;// Redimensionando a largura da coluna status&#xa;tabelaLocacoes.getColumnModel().getColumn(6).setPreferredWidth(80);&#xa;// Redimensionando a largura da coluna id da loca&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(7).setPreferredWidth(0);"/>
                       </AuxValues>
                     </Component>
                   </SubComponents>
@@ -1344,6 +1352,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Venda"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise vendas pela data no formato: dd/mm/aaaa"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>
@@ -2141,7 +2150,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Usu&#xe1;rio"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Informe o nome do usu&#xe1;rio"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise usu&#xe1;rios pelo nome"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>

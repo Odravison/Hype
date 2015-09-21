@@ -812,11 +812,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
 
                 try { 
-                    /*BarraDeProgressoDialog barraDeProgresso = new BarraDeProgressoDialog(null, "Realizando a locação.");
-                    barraDeProgresso.setLocationRelativeTo(null);
-                    barraDeProgresso.setAlwaysOnTop(true);
-                    barraDeProgresso.setVisible(true);
-                    barraDeProgresso.exibirProgresso();*/
+                    pane.setMessage("A locação será efetuada no sistema. Por favor, aguarde...");
+                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                    dialog = pane.createDialog("Mensagem");
+                    dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
                     
                     novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                             dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
@@ -824,13 +825,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
                     novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
                     
-                    /*barraDeProgresso.fecharThreadDeCarregamento();
-                    barraDeProgresso.setVisible(false);
-                    barraDeProgresso.dispose();*/
+                    //fechando o dialog de aguarde...
+                    dialog.setVisible(false);
                     
                     pane.setMessage("Locação realizada com sucesso!");
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                    dialog = pane.createDialog("Mensagem");
+                    dialog = pane.createDialog("Mensagem");                   
                     dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
@@ -841,7 +841,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     setVisible(false);
 
                 } catch (Exception e) {
-                    System.out.println("DEU PAU! erro: "+e.getMessage());
                     pane.setMessage(e.getMessage());
                     pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                     dialog = pane.createDialog("Erro");
@@ -934,6 +933,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 calcularValorTotal(); 
                 campoPercentualDesconto.setEnabled(true);
+                campoParcelas.setEnabled(true);
+                campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
@@ -957,7 +958,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotal(); 
             calcularValorTotalLocacao();
-            campoPercentualDesconto.setEnabled(true);
+            campoPercentualDesconto.setEnabled(false);
+            campoParcelas.setEnabled(false);
+            campoEntrada.setEnabled(false);
         }
     }//GEN-LAST:event_botaoRemoverActionPerformed
 

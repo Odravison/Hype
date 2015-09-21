@@ -211,9 +211,9 @@ public class LoginFrame extends javax.swing.JFrame {
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
                     
         if(campoLogin.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe o login do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informe o login", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else if(campoSenha.getPassword().length <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe a senha do usuário", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Informe a senha", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 

@@ -145,6 +145,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
             if(dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
                 JOptionPane.showMessageDialog(null, "A data final do contrato não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
+                JOptionPane.showMessageDialog(null, "O relatório será gerado em instantes. Por favor, aguarde...");
                 GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dateDataInicial.getCalendar(), dateDataFinal.getCalendar());
             }
             setVisible(false);

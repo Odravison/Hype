@@ -48,6 +48,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações Feitas"));
 
         scPnLocacoes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scPnLocacoes.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
@@ -72,7 +73,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     modeloTabelaLocacoes = new DefaultTableModel(
         listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){
 
-        boolean[] canEdit = new boolean [] {false, false, false, false};
+        boolean[] canEdit = new boolean [] {false, false, false};
 
         @Override
         public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -84,11 +85,11 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
     // Redimensionando a largura da coluna de data
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(120);
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(150);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1987);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(957);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(130);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(160);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
     tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

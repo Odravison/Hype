@@ -37,12 +37,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -56,8 +58,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         loginUsuario = login;
         initComponents();
         setIconImage(new ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-    }  
-    
+    }
+
     public PrincipalFrame(String login, LoginFrame loginFrame) {
         loginUsuario = login;
         initComponents();
@@ -65,7 +67,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         loginFrame.fecharThreadDeCarregamento();
         loginFrame.setVisible(false);
         loginFrame.dispose();
-    }   
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -200,6 +202,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
 
         labelLogoCloset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Mini logo Closet.png"))); // NOI18N
+        labelLogoCloset.setToolTipText("Trocar de usuário");
+        labelLogoCloset.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelLogoCloset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelLogoClosetMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout painelTopoLayout = new javax.swing.GroupLayout(painelTopo);
         painelTopo.setLayout(painelTopoLayout);
@@ -271,7 +280,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarClientes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisarClientes.setForeground(new java.awt.Color(153, 153, 153));
         campoPesquisarClientes.setText("Pesquisar Cliente");
-        campoPesquisarClientes.setToolTipText("Informe o nome do cliente");
+        campoPesquisarClientes.setToolTipText("Pesquise clientes pelo CPF ou pelo nome");
         campoPesquisarClientes.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoPesquisarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -342,8 +351,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tabelaClientes.getColumnModel().getColumn(2).setPreferredWidth(150);
         // Redimensionando a largura da coluna de data de cadastro
         tabelaClientes.getColumnModel().getColumn(3).setPreferredWidth(140);
-
-        tabelaClientes.getRowSorter().toggleSortOrder(3);
         tabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaClientesMouseClicked(evt);
@@ -466,7 +473,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         campoPesquisarProdutos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
         campoPesquisarProdutos.setForeground(new java.awt.Color(153, 153, 153));
         campoPesquisarProdutos.setText("Pesquisar Produto");
-        campoPesquisarProdutos.setToolTipText("Informe o nome ou o código produto");
+        campoPesquisarProdutos.setToolTipText("Pesquise produtos pelo código ou pelo nome");
         campoPesquisarProdutos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoPesquisarProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -675,7 +682,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarFornecedores.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarFornecedores.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarFornecedores.setText("Pesquisar Fornecedor");
-    campoPesquisarFornecedores.setToolTipText("Informe o nome do fornecedor");
+    campoPesquisarFornecedores.setToolTipText("Pesquise fornecedores pelo CNPJ ou pelo nome");
     campoPesquisarFornecedores.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarFornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -859,6 +866,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarLocacoes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarLocacoes.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarLocacoes.setText("Pesquisar Locação");
+    campoPesquisarLocacoes.setToolTipText("Pesquise locações pela data no formato: dd/mm/aaa");
     campoPesquisarLocacoes.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -893,7 +901,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
         try {
             listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Ocorreu um erro na hora de buscar os dados da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
@@ -1078,6 +1087,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarVendas.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarVendas.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarVendas.setText("Pesquisar Venda");
+    campoPesquisarVendas.setToolTipText("Pesquise vendas pela data no formato: dd/mm/aaaa");
     campoPesquisarVendas.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarVendas.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1165,7 +1175,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     botaoVerRecibosVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     botaoVerRecibosVenda.setText("Ver Recibo");
-    botaoVerRecibosVenda.setActionCommand("Ver Recibo");
     botaoVerRecibosVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     botaoVerRecibosVenda.setVisible(false);
     botaoVerRecibosVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -1688,7 +1697,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     campoPesquisarUsuarios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
                     campoPesquisarUsuarios.setForeground(new java.awt.Color(153, 153, 153));
                     campoPesquisarUsuarios.setText("Pesquisar Usuário");
-                    campoPesquisarUsuarios.setToolTipText("Informe o nome do usuário");
+                    campoPesquisarUsuarios.setToolTipText("Pesquise usuários pelo nome");
                     campoPesquisarUsuarios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
                     campoPesquisarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1917,24 +1926,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoClienteActionPerformed
 
     private void campoPesquisarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarClientesMouseClicked
-        if(campoPesquisarClientes.getText().equals("Pesquisar Cliente")) {
+        if (campoPesquisarClientes.getText().equals("Pesquisar Cliente")) {
             eliminarTextoDeCampo(campoPesquisarClientes);
         }
     }//GEN-LAST:event_campoPesquisarClientesMouseClicked
 
     private void campoPesquisarClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarClientesKeyTyped
-        if(campoPesquisarClientes.getText().equals("Pesquisar Cliente")) {
+        if (campoPesquisarClientes.getText().equals("Pesquisar Cliente")) {
             eliminarTextoDeCampo(campoPesquisarClientes);
-        } 
+        }
     }//GEN-LAST:event_campoPesquisarClientesKeyTyped
 
     private void painelClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelClientesMouseClicked
-        if(campoPesquisarClientes.getText().length() <= 0) {
+        if (campoPesquisarClientes.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarClientes, "Pesquisar Cliente");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaClientes.getSelectedRow() >= 0 || (botaoEditarCliente.isVisible() || botaoExcluirCliente.isVisible() || 
-                botaoVerLocacoesCliente.isVisible())) {
+        if (tabelaClientes.getSelectedRow() >= 0 || (botaoEditarCliente.isVisible() || botaoExcluirCliente.isVisible()
+                || botaoVerLocacoesCliente.isVisible())) {
             botaoEditarCliente.setVisible(false);
             botaoExcluirCliente.setVisible(false);
             botaoVerLocacoesCliente.setVisible(false);
@@ -1952,23 +1961,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoProdutoActionPerformed
 
     private void campoPesquisarProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarProdutosMouseClicked
-        if(campoPesquisarProdutos.getText().equals("Pesquisar Produto")) {
+        if (campoPesquisarProdutos.getText().equals("Pesquisar Produto")) {
             eliminarTextoDeCampo(campoPesquisarProdutos);
         }
     }//GEN-LAST:event_campoPesquisarProdutosMouseClicked
 
     private void campoPesquisarProdutosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarProdutosKeyTyped
-        if(campoPesquisarProdutos.getText().equals("Pesquisar Produto")) {
+        if (campoPesquisarProdutos.getText().equals("Pesquisar Produto")) {
             eliminarTextoDeCampo(campoPesquisarProdutos);
-        } 
+        }
     }//GEN-LAST:event_campoPesquisarProdutosKeyTyped
-    
+
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
-        if(campoPesquisarProdutos.getText().length() <= 0) {
+        if (campoPesquisarProdutos.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarProdutos, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())) {
+        if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())) {
             botaoEditarProduto.setVisible(false);
             botaoExcluirProduto.setVisible(false);
             tabelaProdutos.clearSelection();
@@ -1985,23 +1994,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoFornecedorActionPerformed
 
     private void campoPesquisarFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarFornecedoresMouseClicked
-        if(campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor")) {
+        if (campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor")) {
             eliminarTextoDeCampo(campoPesquisarFornecedores);
         }
     }//GEN-LAST:event_campoPesquisarFornecedoresMouseClicked
 
     private void campoPesquisarFornecedoresKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarFornecedoresKeyTyped
-        if(campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor")) {
+        if (campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor")) {
             eliminarTextoDeCampo(campoPesquisarFornecedores);
-        } 
+        }
     }//GEN-LAST:event_campoPesquisarFornecedoresKeyTyped
 
     private void painelFornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelFornecedoresMouseClicked
-        if(campoPesquisarFornecedores.getText().length() <= 0) {
+        if (campoPesquisarFornecedores.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarFornecedores, "Pesquisar Fornecedor");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaFornecedores.getSelectedRow() >= 0 || (botaoEditarFornecedor.isVisible() || botaoExcluirFornecedor.isVisible())) {
+        if (tabelaFornecedores.getSelectedRow() >= 0 || (botaoEditarFornecedor.isVisible() || botaoExcluirFornecedor.isVisible())) {
             botaoEditarFornecedor.setVisible(false);
             botaoExcluirFornecedor.setVisible(false);
             tabelaFornecedores.clearSelection();
@@ -2029,24 +2038,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
 
     private void campoPesquisarLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarLocacoesMouseClicked
-        if(campoPesquisarLocacoes.getText().equals("Pesquisar Locação")) {
+        if (campoPesquisarLocacoes.getText().equals("Pesquisar Locação")) {
             eliminarTextoDeCampo(campoPesquisarLocacoes);
         }
     }//GEN-LAST:event_campoPesquisarLocacoesMouseClicked
 
     private void campoPesquisarLocacoesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarLocacoesKeyTyped
-        if(campoPesquisarLocacoes.getText().equals("Pesquisar Locação")) {
+        if (campoPesquisarLocacoes.getText().equals("Pesquisar Locação")) {
             eliminarTextoDeCampo(campoPesquisarLocacoes);
         }
     }//GEN-LAST:event_campoPesquisarLocacoesKeyTyped
 
     private void painelLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocacoesMouseClicked
-        if(campoPesquisarLocacoes.getText().length() <= 0) {
+        if (campoPesquisarLocacoes.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarLocacoes, "Pesquisar Locação");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaLocacoes.getSelectedRow() >= 0 || (botaoVerRecibosLocacao.isVisible() || botaoGerarReciboLocacao.isVisible() ||
-                botaoVerContrato.isVisible() || botaoFinalizarLocacao.isVisible())) {
+        if (tabelaLocacoes.getSelectedRow() >= 0 || (botaoVerRecibosLocacao.isVisible() || botaoGerarReciboLocacao.isVisible()
+                || botaoVerContrato.isVisible() || botaoFinalizarLocacao.isVisible())) {
             botaoVerRecibosLocacao.setVisible(false);
             botaoGerarReciboLocacao.setVisible(false);
             botaoVerContrato.setVisible(false);
@@ -2056,34 +2065,40 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelLocacoesMouseClicked
 
     private void botaoNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaVendaActionPerformed
-        RealizarVendaDialog dialog = new RealizarVendaDialog(null);
-        dialog.setLocationRelativeTo(null);
-        if (dialog.alterarDados()) {
-            adicionarNovaVendaNaTabela(dialog.getNovaVenda());
-            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            atualizarValorEmCaixa();
-        }
-        dialog.dispose();
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                RealizarVendaDialog dialog = new RealizarVendaDialog(null);
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    adicionarNovaVendaNaTabela(dialog.getNovaVenda());
+                    adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+                    atualizarValorEmCaixa();
+                }
+                dialog.dispose();
+                return null;
+            }
+        }.execute();
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
 
     private void campoPesquisarVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarVendasMouseClicked
-        if(campoPesquisarVendas.getText().equals("Pesquisar Venda")) {
+        if (campoPesquisarVendas.getText().equals("Pesquisar Venda")) {
             eliminarTextoDeCampo(campoPesquisarVendas);
         }
     }//GEN-LAST:event_campoPesquisarVendasMouseClicked
 
     private void campoPesquisarVendasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarVendasKeyTyped
-        if(campoPesquisarVendas.getText().equals("Pesquisar Venda")) {
+        if (campoPesquisarVendas.getText().equals("Pesquisar Venda")) {
             eliminarTextoDeCampo(campoPesquisarVendas);
         }
     }//GEN-LAST:event_campoPesquisarVendasKeyTyped
 
     private void painelVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelVendasMouseClicked
-        if(campoPesquisarVendas.getText().length() <= 0) {
+        if (campoPesquisarVendas.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarVendas, "Pesquisar Venda");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaVendas.getSelectedRow() >= 0 || botaoVerRecibosVenda.isVisible()) {
+        if (tabelaVendas.getSelectedRow() >= 0 || botaoVerRecibosVenda.isVisible()) {
             botaoVerRecibosVenda.setVisible(false);
             tabelaVendas.clearSelection();
         }
@@ -2096,8 +2111,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoGerarRelatorioActionPerformed
 
     private void botaoSalvarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioBackupActionPerformed
-        if(campoDiretorioBackup.getText().length() <= 0) {
-           JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if (campoDiretorioBackup.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
@@ -2107,26 +2122,26 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 campoDiretorioBackup.setEditable(false);
                 botaoSalvarDiretorioBackup.setEnabled(false);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_botaoSalvarDiretorioBackupActionPerformed
 
     private void campoDiretorioBackupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioBackupMouseClicked
-        if(campoDiretorioBackup.getText().equals("Caminho do diretório")) {
+        if (campoDiretorioBackup.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioBackup);
         }
     }//GEN-LAST:event_campoDiretorioBackupMouseClicked
 
     private void campoDiretorioBackupKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioBackupKeyTyped
-        if(campoDiretorioBackup.getText().equals("Caminho do diretório")) {
+        if (campoDiretorioBackup.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioBackup);
         }
     }//GEN-LAST:event_campoDiretorioBackupKeyTyped
 
     private void botaoSalvarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioDocumentosActionPerformed
-        if(campoDiretorioDocumentos.getText().length() <= 0) {
-           JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if (campoDiretorioDocumentos.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de documentos corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
@@ -2136,19 +2151,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 campoDiretorioRelatorios.setEditable(false);
                 botaoSalvarDiretorioDocumentos.setEnabled(false);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_botaoSalvarDiretorioDocumentosActionPerformed
 
     private void campoDiretorioDocumentosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioDocumentosMouseClicked
-        if(campoDiretorioDocumentos.getText().equals("Caminho do diretório")) {
+        if (campoDiretorioDocumentos.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioDocumentos);
         }
     }//GEN-LAST:event_campoDiretorioDocumentosMouseClicked
 
     private void campoDiretorioDocumentosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioDocumentosKeyTyped
-        if(campoDiretorioDocumentos.getText().equals("Caminho do diretório")) {
+        if (campoDiretorioDocumentos.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioDocumentos);
         }
     }//GEN-LAST:event_campoDiretorioDocumentosKeyTyped
@@ -2167,23 +2182,23 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
 
     private void campoPesquisarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarUsuariosMouseClicked
-        if(campoPesquisarUsuarios.getText().equals("Pesquisar Usuário")) {
+        if (campoPesquisarUsuarios.getText().equals("Pesquisar Usuário")) {
             eliminarTextoDeCampo(campoPesquisarUsuarios);
         }
     }//GEN-LAST:event_campoPesquisarUsuariosMouseClicked
 
     private void campoPesquisarUsuariosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarUsuariosKeyTyped
-        if(campoPesquisarUsuarios.getText().equals("Pesquisar Usuário")) {
+        if (campoPesquisarUsuarios.getText().equals("Pesquisar Usuário")) {
             eliminarTextoDeCampo(campoPesquisarUsuarios);
         }
     }//GEN-LAST:event_campoPesquisarUsuariosKeyTyped
 
     private void painelAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelAdministradorMouseClicked
-        if(campoPesquisarUsuarios.getText().length() <= 0) {
+        if (campoPesquisarUsuarios.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisarUsuarios, "Pesquisar Usuário");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaUsuarios.getSelectedRow() >= 0 || (botaoEditarUsuario.isVisible() || botaoExcluirUsuario.isVisible())) {
+        if (tabelaUsuarios.getSelectedRow() >= 0 || (botaoEditarUsuario.isVisible() || botaoExcluirUsuario.isVisible())) {
             botaoEditarUsuario.setVisible(false);
             botaoExcluirUsuario.setVisible(false);
             tabelaUsuarios.clearSelection();
@@ -2191,27 +2206,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelAdministradorMouseClicked
 
     private void botaoPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarClienteActionPerformed
-        if(campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
+        if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 String textoPesquisado = campoPesquisarClientes.getText();
-                
+
                 //Verifica se o que foi digitado para a pesquisa é um CPF
-                if(textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.') 
+                if (textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.')
                         && textoPesquisado.charAt(11) == '-') {
-                    
+
                     // Atualiza o model da lista de clientes
                     modeloTabelaClientes.setRowCount(0);
+
                     Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente(textoPesquisado);
                     modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
                     comboFiltrarClientes.setSelectedIndex(0);
-                    
+
                 } else {
                     pesquisarClientesPorNomeEFiltro(textoPesquisado);
-                } 
+                }
 
-            } catch (ClienteInexistenteException e) { 
+            } catch (ClienteInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
@@ -2219,76 +2235,96 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void comboFiltrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarClientesActionPerformed
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
-        if(campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
+        if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             pesquisarClientesPorFiltro();
         } else {
             try {
                 String textoPesquisado = campoPesquisarClientes.getText();
-                
+
                 //Verifica se o que foi digitado para a pesquisa é um CPF
-                if(textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.') && textoPesquisado.charAt(11) == '-') {
-                    
+                if (textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.') && textoPesquisado.charAt(11) == '-') {
+
                     // Atualiza o model da lista de clientes
                     modeloTabelaClientes.setRowCount(0);
                     Cliente cliente = GerenciadorDePessoas.getInstance().pesquisarCliente(textoPesquisado);
                     modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
                     comboFiltrarClientes.setSelectedIndex(0);
-                    
+
                 } else {
                     pesquisarClientesPorNomeEFiltro(textoPesquisado);
-                } 
+                }
 
-            } catch (ClienteInexistenteException e) { 
+            } catch (ClienteInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_comboFiltrarClientesActionPerformed
 
     public void pesquisarClientesPorNomeEFiltro(String nome) {
-        List<Cliente> clientes = null;
+
         //Limpa a tabela de clientes
         modeloTabelaClientes.setRowCount(0);
-        switch (comboFiltrarClientes.getSelectedItem().toString()) {
-            
-            case "Todos":
-                clientes = GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(nome);
-                break;
-            
-            case "Últimos locatários":
-                clientes = GerenciadorDePessoas.getInstance().pesquisarUltimosLocatariosPorNome(nome);
-                break;
-            
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-            
-        }
-        if(clientes != null) {
-            adicionarClientesNaTabela(clientes);
-        }
-    }
-    
-    public void pesquisarClientesPorFiltro() {
-        List<Cliente> clientes = null;
-        modeloTabelaClientes.setRowCount(0);
-        switch (comboFiltrarClientes.getSelectedItem().toString()) {
-            case "Todos":
-                clientes = GerenciadorDePessoas.getInstance().getClientes();
-                break;
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Cliente> clientes = null;
 
-            case "Últimos locatários":
-                clientes = GerenciadorDePessoas.getInstance().getLocacoesMaisRecentsPorCliente();
-                break;
-            
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-        }
-        if(clientes != null) {
-            adicionarClientesNaTabela(clientes);
-        }
+                switch (comboFiltrarClientes.getSelectedItem().toString()) {
+
+                    case "Todos":
+
+                        clientes = GerenciadorDePessoas.getInstance().pesquisarClientesPorNome(nome);
+
+                        break;
+
+                    case "Últimos locatários":
+                        clientes = GerenciadorDePessoas.getInstance().pesquisarUltimosLocatariosPorNome(nome);
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
+
+                }
+                if (clientes != null) {
+                    adicionarClientesNaTabela(clientes);
+                }
+                return null;
+            }
+
+        }.execute();
+
     }
-            
+
+    public void pesquisarClientesPorFiltro() {
+
+        modeloTabelaClientes.setRowCount(0);
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Cliente> clientes = null;
+                switch (comboFiltrarClientes.getSelectedItem().toString()) {
+                    case "Todos":
+                        clientes = GerenciadorDePessoas.getInstance().getClientes();
+                        break;
+
+                    case "Últimos locatários":
+                        clientes = GerenciadorDePessoas.getInstance().getLocacoesMaisRecentsPorCliente();
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
+                }
+                if (clientes != null) {
+                    adicionarClientesNaTabela(clientes);
+                }
+                return null;
+            }
+
+        }.execute();
+    }
+
     private void botaoAtivarTemporadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAtivarTemporadaActionPerformed
         AtivarTemporadaDialog dialog = new AtivarTemporadaDialog(new java.awt.Frame(), true);
         dialog.setLocationRelativeTo(null);
@@ -2296,13 +2332,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAtivarTemporadaActionPerformed
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
-        if(evt.getClickCount() == 1) {
+        if (evt.getClickCount() == 1) {
             botaoEditarProduto.setVisible(true);
             botaoExcluirProduto.setVisible(true);
         }
-        if(evt.getClickCount() == 2) {
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
-                public void run() {
+        if (evt.getClickCount() == 2) {
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
                     try {
                         //Passa, como parâmetro, o produto pesquisado pelo código 
                         VerDadosProdutoDialog dialog = new VerDadosProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
@@ -2313,8 +2350,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     } catch (ProdutoInexistenteException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
+                    return null;
                 }
-            });
+            }.execute();
         }
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
@@ -2325,9 +2363,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoVerLocacoesCliente.setVisible(true);
         }
         if (evt.getClickCount() == 2) {
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
-                public void run() {
-                    try {                        
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+
+                    try {
                         VerDadosClienteDialog dialog = new VerDadosClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
                                 (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
                         dialog.setLocationRelativeTo(null);
@@ -2335,9 +2375,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     } catch (ClienteInexistenteException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-
+                    return null;
                 }
-            });
+            }.execute();
 
         }
     }//GEN-LAST:event_tabelaClientesMouseClicked
@@ -2345,61 +2385,57 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void painelCaixaERelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelCaixaERelatoriosMouseClicked
         botaoExcluirDespesa.setVisible(false);
         botaoEditarDespesa.setVisible(false);
-        if(tabelaMovimentacoes.getSelectedRow() >= 0 || tabelaMovimentacoes.isVisible()) {
+        if (tabelaMovimentacoes.getSelectedRow() >= 0 || tabelaMovimentacoes.isVisible()) {
             tabelaMovimentacoes.clearSelection();
         }
     }//GEN-LAST:event_painelCaixaERelatoriosMouseClicked
 
     private void botaoEditarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarClienteActionPerformed
-        if(tabelaClientes.getSelectedRow() >= 0) {
-            
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
-                public void run() {
-                    try {
-                        //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
-                        EditarClienteDialog dialog = new EditarClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
-                                (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+        if (tabelaClientes.getSelectedRow() >= 0) {
 
-                        dialog.setLocationRelativeTo(null);
-                        if (dialog.alterarDados()) {
-                            atualizarDadosClienteNaTabela(dialog.getCliente(), tabelaClientes.getSelectedRow());
-                        }
-                        dialog.dispose();
-                    } catch (ClienteInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
+            try {
+                //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
+                EditarClienteDialog dialog = new EditarClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
+                        (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
 
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    atualizarDadosClienteNaTabela(dialog.getCliente(), tabelaClientes.getSelectedRow());
                 }
-            });
+                dialog.dispose();
+            } catch (ClienteInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEditarClienteActionPerformed
 
     private void botaoExcluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirClienteActionPerformed
-        if(tabelaClientes.getSelectedRow() >= 0) {
+        if (tabelaClientes.getSelectedRow() >= 0) {
             int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir o cliente?", "Atenção!", JOptionPane.YES_NO_OPTION);
             //Sim = 0
-            if(escolha == 0) { 
+            if (escolha == 0) {
                 try {
-                    //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
-                    GerenciadorDePessoas.getInstance().removerCliente((String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0));
+                    String idCliente = (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0);
+                    GerenciadorDePessoas.getInstance().removerCliente(idCliente);
                     removerClienteDaTabela(tabelaClientes.getSelectedRow());
                     JOptionPane.showMessageDialog(null, "Cliente removido com sucesso!");
                 } catch (ClienteInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } 
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoExcluirClienteActionPerformed
 
     private void botaoExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirProdutoActionPerformed
-        if(tabelaProdutos.getSelectedRow() >= 0) {
+        if (tabelaProdutos.getSelectedRow() >= 0) {
             int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este produto?", "Atenção!", JOptionPane.YES_NO_OPTION);
             //Sim = 0
-            if(escolha == 0) { 
+            if (escolha == 0) {
                 try {
                     //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
                     GerenciadorDeProduto.getInstance().removerProduto((String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
@@ -2408,17 +2444,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 } catch (ProdutoInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } 
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um produto na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoExcluirProdutoActionPerformed
 
     private void botaoExcluirFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirFornecedorActionPerformed
-        if(tabelaFornecedores.getSelectedRow() >= 0) {
+        if (tabelaFornecedores.getSelectedRow() >= 0) {
             int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este fornecedor?", "Atenção!", JOptionPane.YES_NO_OPTION);
             //Sim = 0
-            if(escolha == 0) { 
+            if (escolha == 0) {
                 try {
                     //Pesquisa o produto selecionado através do seu CNPJ (0 = primeira coluna da tabela)
                     GerenciadorDePessoas.getInstance().removerFornecedor((String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0));
@@ -2427,14 +2463,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 } catch (FornecedorInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } 
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um fornecedor na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoExcluirFornecedorActionPerformed
 
     private void botaoExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirUsuarioActionPerformed
-        if(tabelaUsuarios.getSelectedRow() >= 0) {
+        if (tabelaUsuarios.getSelectedRow() >= 0) {
             String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
             int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
             //Sim = 0
@@ -2454,22 +2490,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoExcluirUsuarioActionPerformed
 
     private void botaoExcluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirDespesaActionPerformed
-        if(tabelaMovimentacoes.getSelectedRow() >= 0) {
-            if(((String )tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
+        if (tabelaMovimentacoes.getSelectedRow() >= 0) {
+            if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
                 int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta despesa?", "Atenção!", JOptionPane.YES_NO_OPTION);
                 //Sim = 0
-                if(escolha == 0) { 
+                if (escolha == 0) {
                     try {
                         //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
                         GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
-                                tabelaLocacoes.getColumnCount()-1)));
-                        
+                                tabelaLocacoes.getColumnCount() - 1)));
+
                         removerMovimentacaoDaTabela(tabelaMovimentacoes.getSelectedRow());
                         JOptionPane.showMessageDialog(null, "Despesa removida com sucesso!");
                     } catch (DespesaInexistenteException e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                } 
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "Nao é possível excluir este tipo de movimentaçao", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2483,23 +2519,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoEditarFornecedor.setVisible(true);
             botaoExcluirFornecedor.setVisible(true);
         }
-        if(evt.getClickCount() == 2) {
-            
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
-                public void run() {
-                    //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
-                    try {
-                        VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
-                                (String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
+        if (evt.getClickCount() == 2) {
 
-                        dialog.setLocationRelativeTo(null);
-                        dialog.setVisible(true);
-                    } catch (FornecedorInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            });
-            
+            //Passa, como parâmetro, o fornecedor pesquisado pelo CNPJ
+            try {
+                VerDadosFornecedorDialog dialog = new VerDadosFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
+                        (String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
+
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (FornecedorInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_tabelaFornecedoresMouseClicked
 
@@ -2507,22 +2539,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             botaoVerRecibosVenda.setVisible(true);
         }
-        if(evt.getClickCount() == 2) {
-            
-            Executors.newFixedThreadPool(5).execute(new Runnable() {
-                public void run() {
-                    try {
-                        //Passa, como parâmetro, a venda pesquisada pelo seu código 
-                        VerDadosVendaDialog dialog = new VerDadosVendaDialog(null, GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
-                                Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1))));
+        if (evt.getClickCount() == 2) {
 
-                        dialog.setLocationRelativeTo(null);
-                        dialog.setVisible(true);
-                    } catch (VendaInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            });
+            try {
+                //Passa, como parâmetro, a venda pesquisada pelo seu código 
+                VerDadosVendaDialog dialog = new VerDadosVendaDialog(null, GerenciadorDeVenda.getInstance().pesquisarVendaPorId(
+                        Long.parseLong((String) tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount() - 1))));
+
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (VendaInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_tabelaVendasMouseClicked
 
@@ -2533,38 +2562,36 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 botaoEditarDespesa.setVisible(true);
             }
         }
-        if(evt.getClickCount() == 2) {
-            Executors.newFixedThreadPool(10).execute(new Runnable() {
-                public void run() {
-                    //Passa, como parâmetro, a movimentacao pesquisada pelo id
-                    try {
-                        if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-                            
-                            VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                                    Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
+        if (evt.getClickCount() == 2) {
 
-                            dialog.setLocationRelativeTo(null);
-                            dialog.setVisible(true);
-                        } else {
-                            VerDadosMovimentacaoDialog dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
-                                    Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
+            //Passa, como parâmetro, a movimentacao pesquisada pelo id
+            try {
+                if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
 
-                            dialog.setLocationRelativeTo(null);
-                            dialog.setVisible(true);
-                        }
+                    VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                            Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))));
 
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
+                } else {
+                    VerDadosMovimentacaoDialog dialog = new VerDadosMovimentacaoDialog(null, GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
+                            Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))));
+
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
                 }
-            });
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_tabelaMovimentacoesMouseClicked
 
     private void tabelaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaUsuariosMouseClicked
         if (evt.getClickCount() == 1 && (!((String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)).equals(
-                    GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName()))) {
-            
+                GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName()))) {
+
             botaoEditarUsuario.setVisible(true);
             botaoExcluirUsuario.setVisible(true);
         }
@@ -2577,22 +2604,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
             botaoGerarReciboLocacao.setVisible(true);
             botaoFinalizarLocacao.setVisible(true);
         }
-        if(evt.getClickCount() == 2) {
-            
-            Executors.newFixedThreadPool(5).execute(new Runnable() {
-                public void run() {
-                    try {
-                        //Passa, como parâmetro, a locação pesquisada pelo id
-                        VerDadosLocacaoDialog dialog = new VerDadosLocacaoDialog(null, GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                                Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1))));
+        if (evt.getClickCount() == 2) {
 
-                        dialog.setLocationRelativeTo(null);
-                        dialog.setVisible(true);
-                    } catch (LocacaoInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                }
-            });
+            try {
+                //Passa, como parâmetro, a locação pesquisada pelo id
+                VerDadosLocacaoDialog dialog = new VerDadosLocacaoDialog(null, GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
+                        Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1))));
+
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (LocacaoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         }
     }//GEN-LAST:event_tabelaLocacoesMouseClicked
 
@@ -2603,43 +2627,41 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairMouseClicked
 
     private void botaoEditarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarProdutoActionPerformed
-        if(tabelaProdutos.getSelectedRow() >= 0) {
-            Executors.newFixedThreadPool(5).execute(new Runnable() {
-                public void run() {
-                    try {
-                        //Pesquisa o produto selecionado através do seucódigo
-                        EditarProdutoDialog dialog = new EditarProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                                (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+        if (tabelaProdutos.getSelectedRow() >= 0) {
 
-                        dialog.setLocationRelativeTo(null);
-                        if (dialog.alterarDados()) {
-                            atualizarDadosProdutoNaTabela(dialog.getProduto(), tabelaProdutos.getSelectedRow());
-                        }
-                        dialog.dispose();
-                        
-                    } catch (ProdutoInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
+            try {
+                //Pesquisa o produto selecionado através do seucódigo
+                EditarProdutoDialog dialog = new EditarProdutoDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    atualizarDadosProdutoNaTabela(dialog.getProduto(), tabelaProdutos.getSelectedRow());
                 }
-            });
+                dialog.dispose();
+
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar produto na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEditarProdutoActionPerformed
 
     private void botaoEditarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarFornecedorActionPerformed
-        if(tabelaFornecedores.getSelectedRow() >= 0) {
+        if (tabelaFornecedores.getSelectedRow() >= 0) {
             try {
                 //Pesquisa o produto selecionado através do seu CPF (0 = primeira coluna da tabela)
                 EditarFornecedorDialog dialog = new EditarFornecedorDialog(null, GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(
                         (String) tabelaFornecedores.getValueAt(tabelaFornecedores.getSelectedRow(), 0)));
-                
+
                 dialog.setLocationRelativeTo(null);
                 if (dialog.alterarDados()) {
                     atualizarDadosFornecedorNaTabela(dialog.getFornecedor(), tabelaFornecedores.getSelectedRow());
                 }
                 dialog.dispose();
-                
+
             } catch (FornecedorInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2649,68 +2671,61 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarFornecedorActionPerformed
 
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
-        if(tabelaMovimentacoes.getSelectedRow() >= 0) {
-            if(((String )tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-                Executors.newFixedThreadPool(5).execute(new Runnable() {
-                    public void run() {
-                        try {
-                            //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
-                            EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                                    Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount()-1))));
+        if (tabelaMovimentacoes.getSelectedRow() >= 0) {
+            if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
 
-                            dialog.setLocationRelativeTo(null);
-                            if (dialog.alterarDados()) {
-                                atualizarDadosDespesaNaTabela(dialog.getMovimentacao(), tabelaMovimentacoes.getSelectedRow());
-                            }
-                            dialog.dispose();
+                try {
+                    //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
+                    EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                            Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))));
 
-                        } catch (DespesaInexistenteException e) {
-                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
+                    dialog.setLocationRelativeTo(null);
+                    if (dialog.alterarDados()) {
+                        atualizarDadosDespesaNaTabela(dialog.getMovimentacao(), tabelaMovimentacoes.getSelectedRow());
                     }
-                });
+                    dialog.dispose();
+
+                } catch (DespesaInexistenteException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(null, "Não é possível editar este tipo de movimentação", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma despesa na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-      
+
     }//GEN-LAST:event_botaoEditarDespesaActionPerformed
 
     private void botaoEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarUsuarioActionPerformed
-        if(tabelaUsuarios.getSelectedRow() >= 0) {
-            
-            Executors.newFixedThreadPool(5).execute(new Runnable() {
-                public void run() {
-                    try {
-                        //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
-                        EditarUsuarioDialog dialog = new EditarUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
-                                (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
+        if (tabelaUsuarios.getSelectedRow() >= 0) {
 
-                        dialog.setLocationRelativeTo(null);
+            try {
+                //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
+                EditarUsuarioDialog dialog = new EditarUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
+                        (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
 
-                        if (dialog.alterarDados()) {
-                            atualizarDadosUsuarioNaTabela(dialog.getUsuario(), tabelaUsuarios.getSelectedRow());
-                        }
-                        dialog.dispose();
+                dialog.setLocationRelativeTo(null);
 
-                    } catch (UsuarioInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-
+                if (dialog.alterarDados()) {
+                    atualizarDadosUsuarioNaTabela(dialog.getUsuario(), tabelaUsuarios.getSelectedRow());
                 }
-            });
+                dialog.dispose();
+
+            } catch (UsuarioInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEditarUsuarioActionPerformed
 
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
-        if(tabelaClientes.getSelectedRow() >= 0) {
-            
-            new SwingWorker(){
-
+        if (tabelaClientes.getSelectedRow() >= 0) {
+            JOptionPane.showMessageDialog(null, "Esta busca pode demorar alguns segundos. Por favor, aguarde...");
+            new SwingWorker() {
                 @Override
                 protected Object doInBackground() throws Exception {
                     try {
@@ -2725,17 +2740,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                     return null;
-                }                
+                }
             }.execute();
-            
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoVerLocacoesClienteActionPerformed
 
     private void botaoEditarEmpresaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarEmpresaActionPerformed
-        Empresa empresa = GerenciadorDoSistema.getInstance().getConfiguracao().getEmpresa(); 
+        Empresa empresa = GerenciadorDoSistema.getInstance().getConfiguracao().getEmpresa();
         EditarEmpresaDialog dialog = new EditarEmpresaDialog(null, empresa);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
@@ -2757,8 +2771,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
 
     private void botaoSalvarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioRelatoriosActionPerformed
-        if(campoDiretorioRelatorios.getText().length() <= 0) {
-           JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de relátorios corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if (campoDiretorioRelatorios.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o caminho do diretório de relátorios corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
@@ -2768,28 +2782,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 campoDiretorioRelatorios.setEditable(false);
                 botaoSalvarDiretorioRelatorios.setEnabled(false);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_botaoSalvarDiretorioRelatoriosActionPerformed
 
     private void campoDiretorioRelatoriosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoDiretorioRelatoriosMouseClicked
-        if(campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
+        if (campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioRelatorios);
         }
     }//GEN-LAST:event_campoDiretorioRelatoriosMouseClicked
 
     private void campoDiretorioRelatoriosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoDiretorioRelatoriosKeyTyped
-        if(campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
+        if (campoDiretorioRelatorios.getText().equals("Caminho do diretório")) {
             eliminarTextoDeCampo(campoDiretorioRelatorios);
         }
     }//GEN-LAST:event_campoDiretorioRelatoriosKeyTyped
 
     private void botaoVerContratoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerContratoActionPerformed
-        if(tabelaLocacoes.getSelectedRow() >= 0) {
+        if (tabelaLocacoes.getSelectedRow() >= 0) {
             try {
                 GerenciadorDeLocacao.getInstance().verUltimoContratoGerado(
-                    Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
+                        Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível abrir o contrato da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2799,14 +2813,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerContratoActionPerformed
 
     private void botaoVerRecibosLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosLocacaoActionPerformed
-        if(tabelaLocacoes.getSelectedRow() >= 0) {
+        if (tabelaLocacoes.getSelectedRow() >= 0) {
             try {
 
                 String nomeCliente = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(
-                    Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)))
+                        Long.parseLong((String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)))
                         .getCliente().getNome();
                 Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                        +"\\"+nomeCliente+"\\Recibos"));
+                        + "\\" + nomeCliente + "\\Recibos"));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2817,12 +2831,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerRecibosLocacaoActionPerformed
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
-        if(tabelaLocacoes.getSelectedRow() >= 0) {
+        if (tabelaLocacoes.getSelectedRow() >= 0) {
             try {
                 long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
-                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1));
-                
-                if(!GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
+                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
+
+                if (!GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
                     Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
                     GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
                     dialog.setLocationRelativeTo(null);
@@ -2839,10 +2853,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoGerarReciboLocacaoActionPerformed
 
     private void botaoVerRecibosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerRecibosVendaActionPerformed
-        if(tabelaVendas.getSelectedRow() >= 0) {
+        if (tabelaVendas.getSelectedRow() >= 0) {
             try {
                 Desktop.getDesktop().open(new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
-                        +"\\Vendas\\"+tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount()-1)+".pdf"));
+                        + "\\Vendas\\" + tabelaVendas.getValueAt(tabelaVendas.getSelectedRow(), tabelaVendas.getColumnCount() - 1) + ".pdf"));
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, "Não foi possível abrir a pasta com os recibos da venda", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2853,13 +2867,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoVerRecibosVendaActionPerformed
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
-        if(tabelaLocacoes.getSelectedRow() >= 0) {
+        if (tabelaLocacoes.getSelectedRow() >= 0) {
             try {
                 Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
-                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount()-1)));
-                
-                if(!locacao.isLocacaoPaga()) {
-                    if(!locacao.isFinalizada()) {
+                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
+
+                if (!locacao.isLocacaoPaga()) {
+                    if (!locacao.isFinalizada()) {
                         int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
                         //Sim = 0
                         if (escolha == 0) {
@@ -2889,154 +2903,164 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoFinalizarLocacaoActionPerformed
 
     private void botaoPesquisarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarProdutoActionPerformed
-        if(campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
+        if (campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o código ou o nome para pesquisar um produto", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
-                if(radioPesquisarProdutoCodigo.isSelected()) {
+                if (radioPesquisarProdutoCodigo.isSelected()) {
                     Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(campoPesquisarProdutos.getText());
                     //Limpa a tabela para adicionar o dado da pesquisa
                     modeloTabelaProdutos.setRowCount(0);
-                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
-                            produto.getQuantidade(), produto.getFinalidade()});
-                } else if(radioPesquisarProdutoNome.isSelected()) {
+                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
+                        produto.getQuantidade(), produto.getFinalidade()});
+                } else if (radioPesquisarProdutoNome.isSelected()) {
                     pesquisarProdutosPorNomeEFiltro(campoPesquisarProdutos.getText());
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível realizar a busca de produtos. \n\nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-                             
-            } catch (ProdutoInexistenteException e) { 
+
+            } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-                
+
         }
     }//GEN-LAST:event_botaoPesquisarProdutoActionPerformed
 
     private void comboFiltrarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarProdutosActionPerformed
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
-        if(campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
+        if (campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
             pesquisarProdutosPorFiltro();
         } else {
             try {
-                if(radioPesquisarProdutoCodigo.isSelected()) {
+                if (radioPesquisarProdutoCodigo.isSelected()) {
                     Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(campoPesquisarProdutos.getText());
                     //Limpa a tabela para adicionar o dado da pesquisa
                     modeloTabelaProdutos.setRowCount(0);
-                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
-                            produto.getQuantidade(), produto.getFinalidade()});
-                } else if(radioPesquisarProdutoNome.isSelected()) {
-                   pesquisarProdutosPorNomeEFiltro(campoPesquisarProdutos.getText());
+                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
+                        produto.getQuantidade(), produto.getFinalidade()});
+                } else if (radioPesquisarProdutoNome.isSelected()) {
+                    pesquisarProdutosPorNomeEFiltro(campoPesquisarProdutos.getText());
                 } else {
                     JOptionPane.showMessageDialog(null, "Não foi possível realizar a busca de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-                             
-            } catch (ProdutoInexistenteException e) { 
+
+            } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_comboFiltrarProdutosActionPerformed
 
     public void pesquisarProdutosPorNomeEFiltro(String nome) {
-        List<Produto> produtos = null;
+
         //Limpa a tabela de produtos
         modeloTabelaProdutos.setRowCount(0);
+
+        List<Produto> produtos = null;
         switch (comboFiltrarProdutos.getSelectedItem().toString()) {
             case "Todos":
                 produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(nome);
                 break;
-            
+
             case "Produtos de locação":
                 produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(nome);
                 break;
-            
+
             case "Produtos de venda":
                 produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(nome);
                 break;
-            
+
             case "Últimos locados":
-                
+
                 try {
                     produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocadosPorNome(nome);
                 } catch (ProdutoInexistenteException e) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-                
+
                 break;
-            
+
             case "Últimos vendidos":
-                
+
                 try {
                     produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidosPorNome(nome);
                 } catch (ProdutoInexistenteException e) {
                     JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-               
-                break;
-                
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-        }
-        if(produtos != null) {
-            adicionarProdutosNaTabela(produtos);
-        }
-    }
-                
-    public void pesquisarProdutosPorFiltro() {
-        List<Produto> produtos = null;
-        //Limpa a tabela de produtos
-        modeloTabelaProdutos.setRowCount(0);
-        switch (comboFiltrarProdutos.getSelectedItem().toString()) {
-            case "Todos":
-                produtos = GerenciadorDeProduto.getInstance().getProdutos();
-                break;
-            
-            case "Produtos de locação":
-                produtos = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
-                break;
-            
-            case "Produtos de venda":
-                produtos = GerenciadorDeProduto.getInstance().getProdutosDeVenda();
-                break;
-            
-            case "Últimos locados":
-                try {
-                    produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocados();
-                } catch (ProdutoInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-                
-                break;
-            
-            case "Últimos vendidos":
-                try {
-                    produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidos();
-                } catch (ProdutoInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
 
                 break;
-                
+
             default:
                 JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
                 break;
         }
-        if(produtos != null) {
+        if (produtos != null) {
             adicionarProdutosNaTabela(produtos);
         }
+
     }
-    
+
+    public void pesquisarProdutosPorFiltro() {
+
+        //Limpa a tabela de produtos
+        modeloTabelaProdutos.setRowCount(0);
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Produto> produtos = null;
+                switch (comboFiltrarProdutos.getSelectedItem().toString()) {
+                    case "Todos":
+                        produtos = GerenciadorDeProduto.getInstance().getProdutos();
+                        break;
+
+                    case "Produtos de locação":
+                        produtos = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
+                        break;
+
+                    case "Produtos de venda":
+                        produtos = GerenciadorDeProduto.getInstance().getProdutosDeVenda();
+                        break;
+
+                    case "Últimos locados":
+                        try {
+                            produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocados();
+                        } catch (ProdutoInexistenteException e) {
+                            JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                        break;
+
+                    case "Últimos vendidos":
+                        try {
+                            produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidos();
+                        } catch (ProdutoInexistenteException e) {
+                            JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
+                }
+                if (produtos != null) {
+                    adicionarProdutosNaTabela(produtos);
+                }
+                return null;
+            }
+        }.execute();
+    }
+
     private void botaoPesquisarFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarFornecedorActionPerformed
-        if(campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor") || campoPesquisarFornecedores.getText().length() <= 0) {
+        if (campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor") || campoPesquisarFornecedores.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de fornecedor", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 String textoPesquisado = campoPesquisarFornecedores.getText();
-                
+
                 //Verifica se o que foi digitado para a pesquisa é um CPF
-                if(textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.') 
+                if (textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.')
                         && textoPesquisado.charAt(11) == '-') {
-                    
+
                     Fornecedor fornecedor = GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(textoPesquisado);
                     // Atualiza o model da lista de fornecedores
                     modeloTabelaFornecedores.setRowCount(0);
@@ -3046,28 +3070,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     modeloTabelaFornecedores.setRowCount(0);
                     adicionarFornecedoresNaTabela(GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloNome(textoPesquisado));
 
-                } 
+                }
 
-            } catch (FornecedorInexistenteException e) { 
+            } catch (FornecedorInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_botaoPesquisarFornecedorActionPerformed
-  
+
     private void botaoPesquisarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarLocacaoActionPerformed
-        if(campoPesquisarLocacoes.getText().equals("Pesquisar Locação") || campoPesquisarLocacoes.getText().length() <= 0) {
+        if (campoPesquisarLocacoes.getText().equals("Pesquisar Locação") || campoPesquisarLocacoes.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o nome do cliente ou uma data para a pesquisa de locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 // Limpa o model da lista de locações
                 modeloTabelaLocacoes.setRowCount(0);
-                
+
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 df.setLenient(false); // O date format não vai aceitar datas inválidas
-                Calendar dataPesquisada = Calendar.getInstance(); 
+                Calendar dataPesquisada = Calendar.getInstance();
                 // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
                 dataPesquisada.setTime(df.parse(campoPesquisarLocacoes.getText()));
-                
+
                 for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
                     try {
                         //Adiciona os dados da nova locação na tabela
@@ -3076,9 +3100,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                     } catch (Exception e) {
                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } 
-                } 
-             
+                    }
+                }
+
             } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
                 for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(campoPesquisarLocacoes.getText())) {
                     try {
@@ -3088,119 +3112,133 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } 
+                    }
                 }
             }
-                
+
         }
     }//GEN-LAST:event_botaoPesquisarLocacaoActionPerformed
 
     private void comboFiltrarLocacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarLocacoesActionPerformed
-        List<Locacao> locacoes = null;
+
         // Atualiza o model da lista de locações
         modeloTabelaLocacoes.setRowCount(0);
-        switch (comboFiltrarLocacoes.getSelectedItem().toString().toUpperCase()) {
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Locacao> locacoes = null;
+                switch (comboFiltrarLocacoes.getSelectedItem().toString().toUpperCase()) {
 
-            case "TODAS":
-                locacoes = GerenciadorDeLocacao.getInstance().getLocacoes();
+                    case "TODAS":
+                        locacoes = GerenciadorDeLocacao.getInstance().getLocacoes();
 
-                break;
+                        break;
 
-            case "ATRASADAS":
-                locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesEmAtraso();
+                    case "ATRASADAS":
+                        locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesEmAtraso();
 
-                break;
-            
-            case "EXTRAVIADAS":
-                locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesExtraviadas();
-               
-                break;
-                
-            case "MAIS RECENTES":
-                locacoes = GerenciadorDeLocacao.getInstance().getMostRecentLocation();
-               
-                break;
-            
-            case "MAIS ANTIGAS":
-                locacoes = GerenciadorDeLocacao.getInstance().getLocacoes();
-               
-                break;
-                
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-        }
-        if(locacoes != null) {
-            adicionarLocacoesNaTabela(locacoes);
-        }
+                        break;
+
+                    case "EXTRAVIADAS":
+                        locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesExtraviadas();
+
+                        break;
+
+                    case "MAIS RECENTES":
+                        locacoes = GerenciadorDeLocacao.getInstance().getMostRecentLocation();
+
+                        break;
+
+                    case "MAIS ANTIGAS":
+                        locacoes = GerenciadorDeLocacao.getInstance().getLocacoes();
+
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
+                }
+                if (locacoes != null) {
+                    adicionarLocacoesNaTabela(locacoes);
+                }
+                return null;
+            }
+        }.execute();
     }//GEN-LAST:event_comboFiltrarLocacoesActionPerformed
 
     private void botaoPesquisarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarVendasActionPerformed
-        if(campoPesquisarVendas.getText().equals("Pesquisar Venda") || campoPesquisarVendas.getText().length() <= 0) {
+        if (campoPesquisarVendas.getText().equals("Pesquisar Venda") || campoPesquisarVendas.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe uma data para a pesquisa de venda", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
                 df.setLenient(false); // O date format não vai aceitar datas inválidas
-                Calendar dataPesquisada = Calendar.getInstance(); 
+                Calendar dataPesquisada = Calendar.getInstance();
                 // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
                 dataPesquisada.setTime(df.parse(campoPesquisarVendas.getText()));
                 // Limpa o model da lista de movimentacoes
                 modeloTabelaVendas.setRowCount(0);
-                
+
                 for (Venda venda : GerenciadorDeVenda.getInstance().pesquisarVendasPorData(dataPesquisada)) {
-                    modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
-                } 
-                
+                    modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+                }
+
             } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
                 JOptionPane.showMessageDialog(null, "Informe uma data válida para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-                
+
         }
     }//GEN-LAST:event_botaoPesquisarVendasActionPerformed
 
     private void comboFiltrarMovimentacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarMovimentacoesActionPerformed
-        List<Movimentacao> movimentacoes = null;
+
         // Atualiza o model da lista de movimentações
-        modeloTabelaVendas.setRowCount(0);
-        switch (comboFiltrarVendas.getSelectedItem().toString()) {
+        modeloTabelaMovimentacoes.setRowCount(0);
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Movimentacao> movimentacoes = null;
+                switch (comboFiltrarVendas.getSelectedItem().toString()) {
 
-            case "Todas":
-                movimentacoes = GerenciadorDoSistema.getInstance().getMovimentacoes();
+                    case "Todas":
+                        movimentacoes = GerenciadorDoSistema.getInstance().getMovimentacoes();
 
-                break;
+                        break;
 
-            case "Vendas":
-                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("VENDA");
+                    case "Vendas":
+                        movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("VENDA");
 
-                break;
- 
-            case "Locações":
-                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("LOCAÇÃO");
+                        break;
 
-                break;
-            
-            case "Despesas":
-                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("DESPESA");
-               
-                break;
-                
-            case "Pendências":
-                movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesPendentes();
-               
-                break;
+                    case "Locações":
+                        movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("LOCAÇÃO");
 
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-        }
-        if(movimentacoes != null) {
-            adicionarMovimentacoesNaTabela(movimentacoes);
-        }
+                        break;
+
+                    case "Despesas":
+                        movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesEspecificas("DESPESA");
+
+                        break;
+
+                    case "Pendências":
+                        movimentacoes = GerenciadorDoSistema.getInstance().pesquisarMovimentacoesPendentes();
+
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
+                }
+                if (movimentacoes != null) {
+                    adicionarMovimentacoesNaTabela(movimentacoes);
+                }
+                return null;
+            }
+        }.execute();
     }//GEN-LAST:event_comboFiltrarMovimentacoesActionPerformed
 
     private void botaoPesquisarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarUsuarioActionPerformed
-        if(campoPesquisarUsuarios.getText().equals("Pesquisar Usuário") || campoPesquisarUsuarios.getText().length() <= 0) {
+        if (campoPesquisarUsuarios.getText().equals("Pesquisar Usuário") || campoPesquisarUsuarios.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuarios", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             adicionarUsuariosNaTabela(GerenciadorDePessoas.getInstance().pesquisarUsuarioPorNome(campoPesquisarUsuarios.getText()));
@@ -3218,33 +3256,39 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_radioPesquisarProdutoNomeActionPerformed
 
     private void comboFiltrarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarVendasActionPerformed
-        List<Venda> vendas = null;
+
         // Atualiza o model da lista de locações
         modeloTabelaVendas.setRowCount(0);
-        switch (comboFiltrarVendas.getSelectedItem().toString().toUpperCase()) {
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Venda> vendas = null;
+                switch (comboFiltrarVendas.getSelectedItem().toString().toUpperCase()) {
 
-            case "TODAS":
-                vendas = GerenciadorDeVenda.getInstance().getVendas();
+                    case "TODAS":
+                        vendas = GerenciadorDeVenda.getInstance().getVendas();
 
-                break;
+                        break;
 
-            case "MAIS RECENTES":
-                vendas = GerenciadorDeVenda.getInstance().getMostRecentsSales();
+                    case "MAIS RECENTES":
+                        vendas = GerenciadorDeVenda.getInstance().getMostRecentsSales();
 
-                break;
-                
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-        }
-        if(vendas != null) {
-            adicionarVendasNaTabela(GerenciadorDeVenda.getInstance().getVendas());
-        }
-        
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
+                }
+                if (vendas != null) {
+                    adicionarVendasNaTabela(GerenciadorDeVenda.getInstance().getVendas());
+                }
+                return null;
+            }
+        }.execute();
     }//GEN-LAST:event_comboFiltrarVendasActionPerformed
 
     private void comboFiltrarFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarFornecedoresActionPerformed
-        if(comboFiltrarFornecedores.getSelectedItem().toString().toUpperCase().equals("TODOS")) {
+        if (comboFiltrarFornecedores.getSelectedItem().toString().toUpperCase().equals("TODOS")) {
             // Atualiza o model da lista de fornecedores
             modeloTabelaFornecedores.setRowCount(0);
             try {
@@ -3256,7 +3300,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiltrarFornecedoresActionPerformed
 
     private void comboFiltrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarUsuariosActionPerformed
-        if(comboFiltrarUsuarios.getSelectedItem().toString().toUpperCase().equals("TODOS")) {
+        if (comboFiltrarUsuarios.getSelectedItem().toString().toUpperCase().equals("TODOS")) {
             // Atualiza o model da lista de usuarios
             modeloTabelaUsuarios.setRowCount(0);
             adicionarUsuariosNaTabela(GerenciadorDePessoas.getInstance().getUsuarios());
@@ -3264,13 +3308,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiltrarUsuariosActionPerformed
 
     private void campoNomeImpressoraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoNomeImpressoraMouseClicked
-        if(campoNomeImpressora.getText().equals("Informe o nome")) {
+        if (campoNomeImpressora.getText().equals("Informe o nome")) {
             eliminarTextoDeCampo(campoNomeImpressora);
         }
     }//GEN-LAST:event_campoNomeImpressoraMouseClicked
 
     private void campoNomeImpressoraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeImpressoraKeyTyped
-        if(campoNomeImpressora.getText().equals("Informe o nome")) {
+        if (campoNomeImpressora.getText().equals("Informe o nome")) {
             eliminarTextoDeCampo(campoNomeImpressora);
         }
     }//GEN-LAST:event_campoNomeImpressoraKeyTyped
@@ -3281,8 +3325,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAlterarNomeImpressoraActionPerformed
 
     private void botaoSalvarNomeImpressoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarNomeImpressoraActionPerformed
-        if(campoNomeImpressora.getText().length() <= 0) {
-           JOptionPane.showMessageDialog(null, "Informe o nome da impressora corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+        if (campoNomeImpressora.getText().length() <= 0) {
+            JOptionPane.showMessageDialog(null, "Informe o nome da impressora corretamente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
@@ -3292,7 +3336,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 campoNomeImpressora.setEditable(false);
                 botaoSalvarNomeImpressora.setEnabled(false);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Não foi possível salvar a alteração feita\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
     }//GEN-LAST:event_botaoSalvarNomeImpressoraActionPerformed
@@ -3307,120 +3351,134 @@ public class PrincipalFrame extends javax.swing.JFrame {
         atualizarValorEmCaixa();
     }//GEN-LAST:event_botaoRegistrarDespesaActionPerformed
 
+    private void labelLogoClosetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelLogoClosetMouseClicked
+        TrocarUsuarioDialog dialog = new TrocarUsuarioDialog(null);
+        dialog.setLocationRelativeTo(null);
+
+        if (dialog.alterarDados()) {
+            if (!dialog.isUsuarioAdministrador()) {
+                painelConfiguracoes.setVisible(false);
+                painelAdministrador.setVisible(false);
+            }
+        }
+        dialog.dispose();
+        labelLoginUsuario.setText("Logado com " + GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName());
+    }//GEN-LAST:event_labelLogoClosetMouseClicked
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
-        campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        campo.setFont(new java.awt.Font("Tahoma", 0, 14));
         campo.setForeground(new java.awt.Color(0, 0, 0));
     }
-    
+
     public void criarTextoEmCampo(javax.swing.JTextField campo, String mensagem) {
         campo.setText(mensagem);
         campo.setForeground(new java.awt.Color(153, 153, 153));
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
-    
+
     public void adicionarNovoClienteNaTabela(Cliente cliente) {
         //Adiciona os dados do novo produto na tabela
         modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
     }
-    
+
     public void adicionarNovoProdutoNaTabela(Produto produto) {
         //Adiciona os dados do novo produto na tabela
-        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
+        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
             produto.getQuantidade(), produto.getFinalidade()});
     }
-    
+
     public void adicionarNovoFornecedorNaTabela(Fornecedor fornecedor) {
         //Adiciona os dados do novo fornecedor na tabela
         modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
     }
-    
+
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         try {
             //Adiciona os dados da nova locação na tabela
-            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(), 
-                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), 
-                "R$ "+locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n"+e.getMessage(), 
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n" + e.getMessage(),
                     "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     public void adicionarNovaVendaNaTabela(Venda venda) {
         try {
             //Adiciona os dadosa nova venda na tabela
             modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()),
-                "R$ "+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
+                "R$ " + venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da venda na tabela:\n"+e.getMessage(), 
+            JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da venda na tabela:\n" + e.getMessage(),
                     "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
-        modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
+        modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ " + movimentacao.getValorInString(),
             movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getIdDaOperacao()});
     }
-    
+
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
         //Adiciona os dados do novo usuário na tabela
         modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
     }
-    
+
     public void removerClienteDaTabela(int indice) {
         modeloTabelaClientes.removeRow(indice);
     }
-    
+
     public void removerProdutoDaTabela(int indice) {
         modeloTabelaProdutos.removeRow(indice);
     }
-    
+
     public void removerFornecedorDaTabela(int indice) {
         modeloTabelaFornecedores.removeRow(indice);
     }
-    
+
     public void removerLocaoDaTabela(int indice) {
         modeloTabelaLocacoes.removeRow(indice);
     }
-    
+
     public void removerVendaDaTabela(int indice) {
         modeloTabelaVendas.removeRow(indice);
     }
-    
+
     public void removerMovimentacaoDaTabela(int indice) {
         modeloTabelaMovimentacoes.removeRow(indice);
     }
-    
+
     public void removerUsuarioDaTabela(int indice) {
         modeloTabelaUsuarios.removeRow(indice);
     }
-    
+
     public void atualizarDadosClienteNaTabela(Cliente cliente, int linha) {
         String cpfSelecionado = cliente.getCpf();
-        if(cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(linha, 0))) {
+        if (cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(linha, 0))) {
             //Coluna de índice  1 = nome do cliente
             modeloTabelaClientes.setValueAt(cliente.getNome(), linha, 1);
             //Coluna de índice  2 = contado
             modeloTabelaClientes.setValueAt(cliente.getCelular(), linha, 2);
         } else {
-            for(int i=0; i < modeloTabelaClientes.getRowCount(); i++) {
-                if(cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(i, 0))) {
+            for (int i = 0; i < modeloTabelaClientes.getRowCount(); i++) {
+                if (cpfSelecionado.equals((String) modeloTabelaClientes.getValueAt(i, 0))) {
                     //Coluna de índice  1 = nome do cliente
                     modeloTabelaClientes.setValueAt(cliente.getNome(), i, 1);
                     //Coluna de índice  2 = contado
                     modeloTabelaClientes.setValueAt(cliente.getCelular(), i, 2);
-                    
+
                     break;
                 }
             }
         }
     }
-    
+
     public void atualizarDadosProdutoNaTabela(Produto produto, int linha) {
         String codigoProduto = produto.getCodigo();
-        if(codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(linha, 0))) {
+        if (codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(linha, 0))) {
             //Coluna de descrição
             modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
             //Coluna de descrição
@@ -3430,8 +3488,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Coluna de descrição
             modeloTabelaProdutos.setValueAt(produto.getFinalidade(), linha, 4);
         } else {
-            for(int i=0; i < modeloTabelaProdutos.getRowCount(); i++) {
-                if(codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(i, 0))) {
+            for (int i = 0; i < modeloTabelaProdutos.getRowCount(); i++) {
+                if (codigoProduto.equals((String) modeloTabelaProdutos.getValueAt(i, 0))) {
                     //Coluna de descrição
                     modeloTabelaProdutos.setValueAt(produto.getDescricao(), i, 1);
                     //Coluna de descrição
@@ -3440,17 +3498,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     modeloTabelaProdutos.setValueAt(produto.getQuantidade(), i, 3);
                     //Coluna de descrição
                     modeloTabelaProdutos.setValueAt(produto.getFinalidade(), i, 4);
-                    
+
                     break;
                 }
             }
         }
-        
+
     }
-    
+
     public void atualizarDadosFornecedorNaTabela(Fornecedor fornecedor, int linha) {
         String cnpjSelecionado = fornecedor.getCnpj();
-        if(cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(linha, 0))) {
+        if (cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(linha, 0))) {
             //Coluna de nome
             modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), linha, 1);
             //Coluna de endereo
@@ -3458,25 +3516,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Coluna de índice telefone
             modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), linha, 3);
         } else {
-            for(int i=0; i < modeloTabelaFornecedores.getRowCount(); i++) {
-                if(cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(i, 0))) {
+            for (int i = 0; i < modeloTabelaFornecedores.getRowCount(); i++) {
+                if (cnpjSelecionado.equals((String) modeloTabelaFornecedores.getValueAt(i, 0))) {
                     //Coluna de nome
                     modeloTabelaFornecedores.setValueAt(fornecedor.getNome(), i, 1);
                     //Coluna de endereo
                     modeloTabelaFornecedores.setValueAt(fornecedor.getEnderecoInString(), i, 2);
                     //Coluna de índice telefone
                     modeloTabelaFornecedores.setValueAt(fornecedor.getTelefone(), i, 3);
-                    
+
                     break;
                 }
             }
         }
-        
+
     }
-    
+
     public void atualizarDadosDespesaNaTabela(Movimentacao movimentacao, int linha) {
         String idSelecionado = Long.toString(movimentacao.getIdDaOperacao());
-        if(idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(linha, 0))) {
+        if (idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(linha, 0))) {
             //Coluna de valor
             modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), linha, 1);
             //Coluna de responsável
@@ -3484,73 +3542,73 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Coluna de beneficiário
             modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), linha, 4);
         } else {
-            for(int i=0; i < modeloTabelaMovimentacoes.getRowCount(); i++) {
-                if(idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(i, 0))) {
+            for (int i = 0; i < modeloTabelaMovimentacoes.getRowCount(); i++) {
+                if (idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(i, 0))) {
                     //Coluna de valor
                     modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), i, 1);
                     //Coluna de responsável
                     modeloTabelaMovimentacoes.setValueAt(movimentacao.getResponsavel(), i, 3);
                     //Coluna de beneficiário
                     modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), i, 4);
-                    
+
                     break;
                 }
             }
         }
-       
+
     }
-    
+
     public void atualizarDadosUsuarioNaTabela(Usuario usuario, int linha) {
         String loginSelecionado = usuario.getNickName();
-        if(loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(linha, 0))) {
+        if (loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(linha, 0))) {
             //Coluna de nome
             modeloTabelaUsuarios.setValueAt(usuario.getNome(), linha, 0);
             //Coluna de nome
             modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), linha, 2);
         } else {
-            for(int i=0; i < modeloTabelaUsuarios.getRowCount(); i++) {
-                if(loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(i, 0))) {
+            for (int i = 0; i < modeloTabelaUsuarios.getRowCount(); i++) {
+                if (loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(i, 0))) {
                     //Coluna de nome
                     modeloTabelaUsuarios.setValueAt(usuario.getNome(), i, 0);
                     //Coluna de nome
                     modeloTabelaUsuarios.setValueAt(usuario.getCategoria(), i, 2);
-                    
+
                     break;
                 }
             }
         }
-        
+
     }
-    
+
     public void atualizarStatusDeLocacao(String idLocacao, int linha) {
         int quantColunas = modeloTabelaLocacoes.getColumnCount();
-        if(idLocacao.equals((String) modeloTabelaLocacoes.getValueAt(linha, quantColunas-1))) {
+        if (idLocacao.equals((String) modeloTabelaLocacoes.getValueAt(linha, quantColunas - 1))) {
             //Atualiza a coluna de status
-            modeloTabelaLocacoes.setValueAt("Fechada", linha, quantColunas-2);
- 
+            modeloTabelaLocacoes.setValueAt("Fechada", linha, quantColunas - 2);
+
         } else {
             //Varre o model da tabela para atualizar o status na linha correta
-            for(int i=0; i < modeloTabelaLocacoes.getRowCount(); i++) {
-                if(idLocacao.equals((String) modeloTabelaLocacoes.getValueAt(i, quantColunas-1))) {
+            for (int i = 0; i < modeloTabelaLocacoes.getRowCount(); i++) {
+                if (idLocacao.equals((String) modeloTabelaLocacoes.getValueAt(i, quantColunas - 1))) {
                     //Coluna de nome
-                    modeloTabelaLocacoes.setValueAt("Fechada", i, quantColunas-2);
-                    
+                    modeloTabelaLocacoes.setValueAt("Fechada", i, quantColunas - 2);
+
                     break;
                 }
             }
         }
     }
-    
+
     public void atualizarValorEmCaixa() {
         double valorEmCaixa = GerenciadorDoSistema.getInstance().getValorCaixaDiario();
-        if(valorEmCaixa > 0) {
+        if (valorEmCaixa > 0) {
             labelValorEmCaixa.setForeground(new Color(0, 153, 0));
-        } else{
+        } else {
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
-        labelValorEmCaixa.setText("R$ "+new DecimalFormat("#.##").format(valorEmCaixa));
+        labelValorEmCaixa.setText("R$ " + new DecimalFormat("#.##").format(valorEmCaixa));
     }
-    
+
     public void desabilitarCamposDeDiretorios() {
         campoDiretorioBackup.setEditable(false);
         campoDiretorioDocumentos.setEditable(false);
@@ -3561,58 +3619,64 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSalvarDiretorioRelatorios.setEnabled(false);
         botaoSalvarNomeImpressora.setEnabled(false);
     }
-    
+
     public void adicionarClientesNaTabela(List<Cliente> clientes) {
-        for(Cliente cliente: clientes) {
+        for (Cliente cliente : clientes) {
             modeloTabelaClientes.addRow(new Object[]{cliente.getCpf(), cliente.getNome(), cliente.getCelular(), cliente.getDataCadastroInString()});
         }
     }
-    
+
     public void adicionarProdutosNaTabela(List<Produto> produtos) {
-        for(Produto produto: produtos) {
-            modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
+        for (Produto produto : produtos) {
+            modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
                 produto.getQuantidade(), produto.getFinalidade()});
         }
     }
-    
+
     public void adicionarFornecedoresNaTabela(List<Fornecedor> fornecedores) {
-        for(Fornecedor fornecedor: fornecedores) {
+        for (Fornecedor fornecedor : fornecedores) {
             modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
         }
     }
-    
+
     public void adicionarLocacoesNaTabela(List<Locacao> locacoes) {
         try {
             //Adiciona os dados das locação na tabela
-            for(Locacao locacao: locacoes) {
+            for (Locacao locacao : locacoes) {
                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                    "R$ "+locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     public void adicionarVendasNaTabela(List<Venda> vendas) {
-        for(Venda venda: vendas) {
-            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ "+venda.getValorInString(), venda.getFormaDePagamento()});
+        for (Venda venda : vendas) {
+            try {
+                modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            } catch (VendaInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }
-    
+
     public void adicionarMovimentacoesNaTabela(List<Movimentacao> movimentacoes) {
-        for(Movimentacao movimentacao: movimentacoes) {
-            modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(), 
+        for (Movimentacao movimentacao : movimentacoes) {
+            modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ " + movimentacao.getValorInString(),
                 movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
         }
     }
-    
+
     public void adicionarUsuariosNaTabela(List<Usuario> usuarios) {
-        for(Usuario usuario: usuarios) {
+        for (Usuario usuario : usuarios) {
             modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
         }
-    }       
-    
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -3627,16 +3691,21 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PrincipalFrame.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -3648,7 +3717,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
     }
-    
+
     private String loginUsuario;
     private DefaultTableModel modeloTabelaClientes;
     private DefaultTableModel modeloTabelaProdutos;
