@@ -649,38 +649,40 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        aguarde.setUndecorated(true);
-        aguarde.setResizable(false);
-        aguarde.setLocationRelativeTo(null);
-        aguarde.iniciar();
-        aguarde.setAlwaysOnTop(true);
-        aguarde.setVisible(true);
-        aguarde.toFront();
 
-        new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
+        try {
+            
+            if (produtosVendidos.size() <= 0) {
+                JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if (campoPercentualDesconto.getText().length() > 0) {
                 try {
-                    String formaPagamento = "";
-                    if (produtosVendidos.size() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else if (campoPercentualDesconto.getText().length() > 0) {
-                        try {
-                            if (Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
-                                JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
-                            }
-                        } catch (Exception e) {
-                            JOptionPane.showMessageDialog(null, "Não foi possível verificar o percentual de desconto. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
+                    if (Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                        JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível verificar o percentual de desconto. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
 
-                    } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
-                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    } else if (campoEntrada.getText().length() > 0) {
-                        if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
-                            JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
-                    } else {
+            } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
+                JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else if (campoEntrada.getText().length() > 0) {
+                if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
+                    JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+            } else {
+                
+                aguarde.setUndecorated(true);
+                aguarde.setResizable(false);
+                aguarde.setLocationRelativeTo(null);
+                aguarde.iniciar();
+                aguarde.setAlwaysOnTop(true);
+                aguarde.setVisible(true);
+                aguarde.toFront();
 
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        String formaPagamento = "";
                         //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                         if (campoPercentualDesconto.getText().length() <= 0) {
                             campoPercentualDesconto.setText("0");
@@ -719,26 +721,30 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
                             //O botão concluir foi selecionado
                             concluirSelecionado = true;
-                            //Fecha janela
-                            setVisible(false);
 
                         } catch (Exception e) {
                             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                         }
+                        
+                        return null;
                     }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-                return null;
-            }
 
-            @Override
-            protected void done() {
-                aguarde.dispose();
-                JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
+                    
 
+                @Override
+                    protected void done() {
+                        aguarde.dispose();
+                        JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
+                        //Fecha janela
+                        setVisible(false);
+
+                    }
+                }.execute();
             }
-        }.execute();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
