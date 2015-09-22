@@ -124,10 +124,10 @@
                               <Component id="labelParcelas" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelDesconto" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="labelValorTotal" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
                               <Component id="labelData" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                              <Component id="labelDesconto" min="-2" pref="17" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>

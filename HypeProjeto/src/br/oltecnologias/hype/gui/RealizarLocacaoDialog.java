@@ -867,6 +867,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setVisible(true);
         }
 
+
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void botaoSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarClienteActionPerformed

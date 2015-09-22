@@ -69,27 +69,35 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="scPnLocacoes" min="-2" pref="1223" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="pnRlCliente" pref="1239" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="scPnLocacoes" pref="525" max="32767" attributes="0"/>
+                  <Component id="pnRlCliente" pref="525" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="scPnLocacoes">
+        <Container class="javax.swing.JScrollPane" name="pnRlCliente">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-            <Property name="verticalScrollBarPolicy" type="int" value="22"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[826, 340]"/>
+            </Property>
           </Properties>
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -99,15 +107,17 @@
           <SubComponents>
             <Component class="javax.swing.JTable" name="tabelaLocacoes">
               <Properties>
+                <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
+                <Property name="autoResizeMode" type="int" value="0"/>
                 <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                   <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15)); &#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25); &#xa;&#xa;String[] nomesColunasTabelaLocacoes = {&quot;Data da Loca&#xe7;&#xe3;o&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(cliente.getCpf())) {&#xa;    try {   &#xa;        listaLinhasLocacoes.add(new Object[]{locacao.getDataLocacaoInString(), &#xa;                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), &quot;R$ &quot;+locacao.getValorLocacaoInString(), Long.toString(locacao.getId())});&#xa;    } catch (Exception e) { &#xa;        JOptionPane.showMessageDialog(null, &quot;Ocorreu um erro na hora de buscar os dados da loca&#xe7;&#xe3;o&quot;, &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;    }&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;                    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de data&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(150); &#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(957); &#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(160); &#xa;// Redimensionando a largura da coluna id da loca&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;//Define a fonte do cabe&#xe7;alho da tabela fornecedores&#xa;tabelaLocacoes.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 15));&#xa;// Altura das linhas&#xa;tabelaLocacoes.setRowHeight(25);&#xa;String[] nomesColunasTabelaLocacoes = {&quot;Data da Loca&#xe7;&#xe3;o&quot;, &quot;Produtos Locados&quot;, &quot;Valor Total&quot;, &quot;&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasLocacoes = new ArrayList&lt;&gt;();&#xa;//Adicionando valores nas linhas&#xa;for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(cliente.getCpf())) {&#xa;        try {&#xa;            listaLinhasLocacoes.add(new Object[]{locacao.getDataLocacaoInString(),&#xa;                GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), &quot;R$ &quot;+locacao.getValorLocacaoInString(), Long.toString(locacao.getId())});&#xa;    } catch (Exception e) {&#xa;        JOptionPane.showMessageDialog(null, &quot;Ocorreu um erro na hora de buscar os dados da loca&#xe7;&#xe3;o&quot;, &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;    }&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaLocacoes = new DefaultTableModel(&#xa;    listaLinhasLocacoes.toArray(new Object[listaLinhasLocacoes.size()][]), nomesColunasTabelaLocacoes){&#xa;&#xa;    boolean[] canEdit = new boolean [] {false, false, false};&#xa;&#xa;    @Override&#xa;    public boolean isCellEditable(int rowIndex, int columnIndex){&#xa;        return canEdit [columnIndex];&#xa;    }&#xa;&#xa;};&#xa;&#xa;//define o model da tabela&#xa;tabelaLocacoes.setModel(modeloTabelaLocacoes);&#xa;// Redimensionando a largura da coluna de data&#xa;tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(140);&#xa;// Redimensionando a largura da coluna de produtos locados&#xa;tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(997);&#xa;// Redimensionando a largura da coluna de valor total&#xa;tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(130);&#xa;// Redimensionando a largura da coluna id da loca&#xe7;&#xe3;o&#xa;tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);"/>
               </AuxValues>
             </Component>
           </SubComponents>

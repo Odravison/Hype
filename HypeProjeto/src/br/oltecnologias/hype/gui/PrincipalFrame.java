@@ -2220,7 +2220,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarClienteActionPerformed
 
     private void comboFiltrarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarClientesActionPerformed
-        //JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
         if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             pesquisarClientesPorFiltro();
