@@ -31,7 +31,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     private void initComponents() {
 
         painelLocacoesFeitas = new javax.swing.JPanel();
-        scPnLocacoes = new javax.swing.JScrollPane();
+        pnRlCliente = new javax.swing.JScrollPane();
         tabelaLocacoes = new javax.swing.JTable();
         botaoOk = new javax.swing.JButton();
 
@@ -47,16 +47,22 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         painelLocacoesFeitas.setBackground(new java.awt.Color(255, 255, 255));
         painelLocacoesFeitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações Feitas"));
 
-        scPnLocacoes.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scPnLocacoes.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
+        pnRlCliente.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        pnRlCliente.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        pnRlCliente.setPreferredSize(new java.awt.Dimension(826, 340));
 
+        tabelaLocacoes.setAutoCreateRowSorter(true);
+        tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tabelaLocacoes.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tabelaLocacoes.getTableHeader().setResizingAllowed(false);
+        tabelaLocacoes.getTableHeader().setReorderingAllowed(false);
         tabelaLocacoes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
         //Define a fonte do cabeçalho da tabela fornecedores
         tabelaLocacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
         // Altura das linhas
         tabelaLocacoes.setRowHeight(25);
-
         String[] nomesColunasTabelaLocacoes = {"Data da Locação", "Produtos Locados", "Valor Total", ""};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
@@ -92,25 +98,22 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(160);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
-    tabelaLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    tabelaLocacoes.getTableHeader().setResizingAllowed(false);
-    tabelaLocacoes.getTableHeader().setReorderingAllowed(false);
-    scPnLocacoes.setViewportView(tabelaLocacoes);
+    pnRlCliente.setViewportView(tabelaLocacoes);
 
     javax.swing.GroupLayout painelLocacoesFeitasLayout = new javax.swing.GroupLayout(painelLocacoesFeitas);
     painelLocacoesFeitas.setLayout(painelLocacoesFeitasLayout);
     painelLocacoesFeitasLayout.setHorizontalGroup(
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
-            .addGap(18, 18, 18)
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 1223, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGap(18, 18, 18))
+            .addContainerGap()
+            .addComponent(pnRlCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 1239, Short.MAX_VALUE)
+            .addContainerGap())
     );
     painelLocacoesFeitasLayout.setVerticalGroup(
         painelLocacoesFeitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelLocacoesFeitasLayout.createSequentialGroup()
+        .addGroup(painelLocacoesFeitasLayout.createSequentialGroup()
             .addContainerGap()
-            .addComponent(scPnLocacoes, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
+            .addComponent(pnRlCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
             .addContainerGap())
     );
 
@@ -162,7 +165,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoOk;
     private javax.swing.JPanel painelLocacoesFeitas;
-    private javax.swing.JScrollPane scPnLocacoes;
+    private javax.swing.JScrollPane pnRlCliente;
     private javax.swing.JTable tabelaLocacoes;
     // End of variables declaration//GEN-END:variables
 }
