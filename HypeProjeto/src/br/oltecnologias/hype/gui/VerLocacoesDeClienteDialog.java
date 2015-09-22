@@ -91,11 +91,11 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
     // Redimensionando a largura da coluna de data
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(150);
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(140);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(957);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(997);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(160);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(130);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
     pnRlCliente.setViewportView(tabelaLocacoes);

@@ -5,9 +5,6 @@
  */
 package br.oltecnologias.hype.gui;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Odravison
@@ -34,24 +31,26 @@ public class ProgressoBar extends javax.swing.JDialog {
         setResizable(false);
 
         painelGeral.setBackground(new java.awt.Color(255, 255, 255));
+        painelGeral.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 153), null));
 
         labelAguarde.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelAguarde.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Aguarde.gif"))); // NOI18N
 
         javax.swing.GroupLayout painelGeralLayout = new javax.swing.GroupLayout(painelGeral);
         painelGeral.setLayout(painelGeralLayout);
         painelGeralLayout.setHorizontalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(79, 79, 79)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
                 .addComponent(labelAguarde)
-                .addContainerGap(346, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
         painelGeralLayout.setVerticalGroup(
             painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelGeralLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(labelAguarde)
-                .addContainerGap(102, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelGeralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelAguarde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -723,112 +723,105 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         aguarde.setUndecorated(true);
         aguarde.setResizable(false);
         aguarde.setLocationRelativeTo(null);
-        aguarde.iniciar();
         aguarde.setAlwaysOnTop(true);
+        aguarde.iniciar();
         aguarde.setVisible(true);
 
-        new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
-                try {
-                    if (labelNomeCliente.getText().length() <= 0) {
-                        pane.setMessage("Selecione o cliente que irá realizar a locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
+        try {
+            if (labelNomeCliente.getText().length() <= 0) {
+                pane.setMessage("Selecione o cliente que irá realizar a locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
-                    } else if (produtosLocados.size() <= 0) {
-                        pane.setMessage("Selecione os produtos para a locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
+            } else if (produtosLocados.size() <= 0) {
+                pane.setMessage("Selecione os produtos para a locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
-                    } else if (campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
-                        pane.setMessage("O percentual de desconto não pode estar acima de 100%");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
+            } else if (campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                pane.setMessage("O percentual de desconto não pode estar acima de 100%");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
-                    } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
-                        pane.setMessage("Informe a forma de pagamento da locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
+            } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
+                pane.setMessage("Informe a forma de pagamento da locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
-                    } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
-                        pane.setMessage("Informe a forma de pagamento da locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
-                    } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
-                        pane.setMessage("Informe a quantidade de parcelas da locação");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
+            } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
+                pane.setMessage("Informe a forma de pagamento da locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+            } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
+                pane.setMessage("Informe a quantidade de parcelas da locação");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
-                    } else if (dateDataFinalContrato.getCalendar().before(dateDataInicialContrato.getCalendar())) {
-                        pane.setMessage("A data final do contrato não pode ser anterior a data inicial");
-                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                        dialog = pane.createDialog("Aviso");
-                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                        dialog.setAlwaysOnTop(true);
-                        dialog.setVisible(true);
+            } else if (dateDataFinalContrato.getCalendar().before(dateDataInicialContrato.getCalendar())) {
+                pane.setMessage("A data final do contrato não pode ser anterior a data inicial");
+                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                dialog = pane.createDialog("Aviso");
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
 
-                    } else {
-                        String formaPagamento = "";
-
-                        //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                        if (campoPercentualDesconto.getText().length() <= 0) {
-                            campoPercentualDesconto.setText("0");
-                        } else {
-                            valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                        }
-                        //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
-                        if (campoEntrada.getText().length() <= 0) {
-                            campoEntrada.setText("0");
-                        } else {
-                            //Apenas se nao estiver alterando o valor da variável valor total
-                            //valorTotalLocacao = new BigDecimal(valorTotalLocacao - Double.parseDouble(campoEntrada.getText())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                        }
-                        //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
-                        if (campoParcelas.getText().length() <= 0) {
-                            campoParcelas.setText("0");
-                        }
-
-                        if (radioCartao.isSelected()) {
-                            if (radioCartao.isSelected()) {
-                                formaPagamento = "Cartão - Crédito";
-                            } else {
-                                formaPagamento = "Cartão - Débito";
-                            }
-                        } else if (radioPromissoria.isSelected()) {
-                            formaPagamento = "Promissória";
-                        } else {
-                            formaPagamento = "À Vista";
-                            campoEntrada.setText("0");
-                            campoParcelas.setText("0");
-                        }
-
+            } else { 
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
                         try {
-                            pane.setMessage("A locação será efetuada no sistema. Por favor, aguarde...");
-                            pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                            dialog = pane.createDialog("Mensagem");
-                            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                            dialog.setAlwaysOnTop(true);
-                            dialog.setVisible(true);
+                            String formaPagamento = "";
+
+                            //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
+                            if (campoPercentualDesconto.getText().length() <= 0) {
+                                campoPercentualDesconto.setText("0");
+                            } else {
+                                valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                                        campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                            }
+                            //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
+                            if (campoEntrada.getText().length() <= 0) {
+                                campoEntrada.setText("0");
+                            } else {
+                            //Apenas se nao estiver alterando o valor da variável valor total
+                                //valorTotalLocacao = new BigDecimal(valorTotalLocacao - Double.parseDouble(campoEntrada.getText())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                            }
+                            //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
+                            if (campoParcelas.getText().length() <= 0) {
+                                campoParcelas.setText("0");
+                            }
+
+                            if (radioCartao.isSelected()) {
+                                if (radioCartao.isSelected()) {
+                                    formaPagamento = "Cartão - Crédito";
+                                } else {
+                                    formaPagamento = "Cartão - Débito";
+                                }
+                            } else if (radioPromissoria.isSelected()) {
+                                formaPagamento = "Promissória";
+                            } else {
+                                formaPagamento = "À Vista";
+                                campoEntrada.setText("0");
+                                campoParcelas.setText("0");
+                            }
 
                             novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                                     dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
@@ -849,26 +842,31 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             dialog.setAlwaysOnTop(true);
                             dialog.setVisible(true);
                         }
-
+                        return null;
                     }
-                } catch (Exception e) {
-                    pane.setMessage("Informe corretamente todos os dados necessários");
-                    pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                    dialog = pane.createDialog("Aviso");
-                    dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
-                }
-                return null;
+
+                    @Override
+                    protected void done() {
+                        aguarde.dispose();
+                        pane.setMessage("Locação realizada com sucesso!");
+                        pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                        dialog = pane.createDialog("Mensagem");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    }
+                }.execute();
             }
 
-            @Override
-            protected void done() {
-                aguarde.dispose();
-                JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!");
+        } catch (Exception e) {
+            pane.setMessage("Informe corretamente todos os dados necessários");
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+        }
 
-            }
-        }.execute();
 
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
