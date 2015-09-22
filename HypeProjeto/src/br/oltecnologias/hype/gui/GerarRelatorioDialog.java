@@ -8,6 +8,7 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -141,18 +142,35 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
-        try {
-            if(dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
-                JOptionPane.showMessageDialog(null, "A data final do contrato não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "O relatório será gerado em instantes. Por favor, aguarde...");
-                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dateDataInicial.getCalendar(), dateDataFinal.getCalendar());
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
+
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                try {
+                    if (dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
+                        JOptionPane.showMessageDialog(null, "A data final do contrato não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dateDataInicial.getCalendar(), dateDataFinal.getCalendar());
+                    }
+                    setVisible(false);
+                    dispose();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Ocorreu algum problema na geração do relatório", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
+                return null;
             }
-            setVisible(false);
-            dispose();
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocorreu algum problema na geração do relatório", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
+            }
+        }.execute();
     }//GEN-LAST:event_botaoGerarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
@@ -160,6 +178,8 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
+    
+    private final ProgressoBar aguarde = new ProgressoBar();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoGerar;

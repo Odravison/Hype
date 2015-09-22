@@ -28,6 +28,7 @@ import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,7 +36,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Luender Lima
  */
 public class RealizarLocacaoDialog extends java.awt.Dialog {
-    
+
     public RealizarLocacaoDialog(Frame owner) {
         super(owner);
         initComponents();
@@ -719,146 +720,156 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        try {                    
-            if(labelNomeCliente.getText().length() <= 0) {
-                pane.setMessage("Selecione o cliente que irá realizar a locação");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-                
-            } else if(produtosLocados.size() <= 0) {                
-                pane.setMessage("Selecione os produtos para a locação");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-                
-            } else if(campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) { 
-                pane.setMessage("O percentual de desconto não pode estar acima de 100%");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-                
-            } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
-                pane.setMessage("Informe a forma de pagamento da locação");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-                
-            } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
-                pane.setMessage("Informe a forma de pagamento da locação");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
-                pane.setMessage("Informe a quantidade de parcelas da locação");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setAlwaysOnTop(true);
+        aguarde.setVisible(true);
 
-            } else if(dateDataFinalContrato.getCalendar().before(dateDataInicialContrato.getCalendar())) {
-                pane.setMessage("A data final do contrato não pode ser anterior a data inicial");
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-                
-            } else {
-                String formaPagamento = "";
-                
-                //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                if (campoPercentualDesconto.getText().length() <= 0) {
-                    campoPercentualDesconto.setText("0");
-                } else {
-                    valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                }
-                //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
-                if (campoEntrada.getText().length() <= 0) {
-                    campoEntrada.setText("0");
-                } else {
-                    //Apenas se nao estiver alterando o valor da variável valor total
-                    //valorTotalLocacao = new BigDecimal(valorTotalLocacao - Double.parseDouble(campoEntrada.getText())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                }
-                //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
-                if (campoParcelas.getText().length() <= 0) {
-                    campoParcelas.setText("0");
-                }
-                
-                if (radioCartao.isSelected()) {
-                    if(radioCartao.isSelected()) {
-                        formaPagamento = "Cartão - Crédito";
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                try {
+                    if (labelNomeCliente.getText().length() <= 0) {
+                        pane.setMessage("Selecione o cliente que irá realizar a locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
+                    } else if (produtosLocados.size() <= 0) {
+                        pane.setMessage("Selecione os produtos para a locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
+                    } else if (campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                        pane.setMessage("O percentual de desconto não pode estar acima de 100%");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
+                    } else if (!radioAVista.isSelected() && !radioCartao.isSelected() && !radioPromissoria.isSelected()) {
+                        pane.setMessage("Informe a forma de pagamento da locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
+                    } else if (radioCartao.isSelected() && !radioCredito.isSelected() && !radioDebito.isSelected()) {
+                        pane.setMessage("Informe a forma de pagamento da locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+                    } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
+                        pane.setMessage("Informe a quantidade de parcelas da locação");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
+                    } else if (dateDataFinalContrato.getCalendar().before(dateDataInicialContrato.getCalendar())) {
+                        pane.setMessage("A data final do contrato não pode ser anterior a data inicial");
+                        pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                        dialog = pane.createDialog("Aviso");
+                        dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                        dialog.setAlwaysOnTop(true);
+                        dialog.setVisible(true);
+
                     } else {
-                        formaPagamento = "Cartão - Débito";
+                        String formaPagamento = "";
+
+                        //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
+                        if (campoPercentualDesconto.getText().length() <= 0) {
+                            campoPercentualDesconto.setText("0");
+                        } else {
+                            valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                        }
+                        //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
+                        if (campoEntrada.getText().length() <= 0) {
+                            campoEntrada.setText("0");
+                        } else {
+                            //Apenas se nao estiver alterando o valor da variável valor total
+                            //valorTotalLocacao = new BigDecimal(valorTotalLocacao - Double.parseDouble(campoEntrada.getText())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                        }
+                        //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
+                        if (campoParcelas.getText().length() <= 0) {
+                            campoParcelas.setText("0");
+                        }
+
+                        if (radioCartao.isSelected()) {
+                            if (radioCartao.isSelected()) {
+                                formaPagamento = "Cartão - Crédito";
+                            } else {
+                                formaPagamento = "Cartão - Débito";
+                            }
+                        } else if (radioPromissoria.isSelected()) {
+                            formaPagamento = "Promissória";
+                        } else {
+                            formaPagamento = "À Vista";
+                            campoEntrada.setText("0");
+                            campoParcelas.setText("0");
+                        }
+
+                        try {
+                            pane.setMessage("A locação será efetuada no sistema. Por favor, aguarde...");
+                            pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+                            dialog = pane.createDialog("Mensagem");
+                            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                            dialog.setAlwaysOnTop(true);
+                            dialog.setVisible(true);
+
+                            novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
+                                    dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
+                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+
+                            novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
+
+                            //O botão concluir foi selecionado
+                            concluirSelecionado = true;
+                            //Fecha janela
+                            setVisible(false);
+
+                        } catch (Exception e) {
+                            pane.setMessage(e.getMessage());
+                            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+                            dialog = pane.createDialog("Erro");
+                            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                            dialog.setAlwaysOnTop(true);
+                            dialog.setVisible(true);
+                        }
+
                     }
-                } else if (radioPromissoria.isSelected()) {
-                    formaPagamento = "Promissória";
-                } else {
-                    formaPagamento = "À Vista";
-                    campoEntrada.setText("0");
-                    campoParcelas.setText("0");
-                }
-
-                try { 
-                    pane.setMessage("A locação será efetuada no sistema. Por favor, aguarde...");
-                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                    dialog = pane.createDialog("Mensagem");
-                    dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
-                    
-                    novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
-                            dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                            Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
-
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
-                    
-                    //fechando o dialog de aguarde...
-                    dialog.setVisible(false);
-                    
-                    pane.setMessage("Locação realizada com sucesso!");
-                    pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                    dialog = pane.createDialog("Mensagem");                   
-                    dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                    dialog.setAlwaysOnTop(true);
-                    dialog.setVisible(true);
-
-                    //O botão concluir foi selecionado
-                    concluirSelecionado = true;
-                    //Fecha janela
-                    setVisible(false);
-
                 } catch (Exception e) {
-                    pane.setMessage(e.getMessage());
+                    pane.setMessage("Informe corretamente todos os dados necessários");
                     pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                    dialog = pane.createDialog("Erro");
+                    dialog = pane.createDialog("Aviso");
                     dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                 }
-                                        
+                return null;
             }
-        } catch(Exception e) {
-            pane.setMessage("Informe corretamente todos os dados necessários");
-            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-            dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-            dialog.setAlwaysOnTop(true);
-            dialog.setVisible(true);
-        }
-        
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+                JOptionPane.showMessageDialog(null, "Locação realizada com sucesso!");
+
+            }
+        }.execute();
+
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void botaoSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarClienteActionPerformed
@@ -881,29 +892,31 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoSelecionarClienteActionPerformed
 
     private void campoPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarKeyTyped
-        if(campoPesquisar.getText().equals("Pesquisar Produto")) 
+        if (campoPesquisar.getText().equals("Pesquisar Produto")) {
             eliminarTextoDeCampo(campoPesquisar);
-        
+        }
+
     }//GEN-LAST:event_campoPesquisarKeyTyped
 
     private void campoPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarMouseClicked
-        if(campoPesquisar.getText().equals("Pesquisar Produto")) 
+        if (campoPesquisar.getText().equals("Pesquisar Produto")) {
             eliminarTextoDeCampo(campoPesquisar);
-        
+        }
+
     }//GEN-LAST:event_campoPesquisarMouseClicked
 
     private void painelSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelSelecionarMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if (campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaProdutos.getSelectedRow() >= 0) {
+        if (tabelaProdutos.getSelectedRow() >= 0) {
             tabelaProdutos.clearSelection();
         }
     }//GEN-LAST:event_painelSelecionarMouseClicked
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        if(campoPesquisar.getText().length() <= 0) {
+        if (campoPesquisar.getText().length() <= 0) {
             pane.setMessage("É preciso informar o nome ou o código do produto para a pesquisa");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
@@ -919,19 +932,19 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void botaoSelecionarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarProdutosActionPerformed
-        if(tabelaProdutos.getSelectedRow() < 0) {
+        if (tabelaProdutos.getSelectedRow() < 0) {
             pane.setMessage("Selecione um produto na lista para poder adicioná-lo aos produtos locados");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
-            
+
         } else {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
-                calcularValorTotal(); 
+                calcularValorTotal();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
                 campoEntrada.setEnabled(true);
@@ -942,12 +955,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
-            } 
+            }
         }
     }//GEN-LAST:event_botaoSelecionarProdutosActionPerformed
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        if(tabelaProdutosLocados.getSelectedRow() < 0) {
+        if (tabelaProdutosLocados.getSelectedRow() < 0) {
             pane.setMessage("Selecione um produto para remoção");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
@@ -956,7 +969,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setVisible(true);
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
-            calcularValorTotal(); 
+            calcularValorTotal();
             calcularValorTotalLocacao();
             campoPercentualDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
@@ -965,42 +978,44 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        if(campoPesquisar.getText().length() <= 0) 
+        if (campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-        
+        }
+
     }//GEN-LAST:event_formMouseClicked
 
     private void painelLocadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelLocadorMouseClicked
-        if(campoPesquisar.getText().length() <= 0) 
+        if (campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
-        
+        }
+
     }//GEN-LAST:event_painelLocadorMouseClicked
 
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if (campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaProdutosLocados.getSelectedRow() >= 0) {
+        if (tabelaProdutosLocados.getSelectedRow() >= 0) {
             tabelaProdutosLocados.clearSelection();
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
-        if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto 
-                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100
-                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) == 0) {
+        if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto
+                || Integer.parseInt(campoPercentualDesconto.getText() + evt.getKeyChar()) > 100
+                || Integer.parseInt(campoPercentualDesconto.getText() + evt.getKeyChar()) == 0) {
             evt.consume();
-        } 
+        }
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
-        if(evt.getClickCount() == 2) {            
+        if (evt.getClickCount() == 2) {
             try {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
-                
-                calcularValorTotal();                
+
+                calcularValorTotal();
                 //calcularValorTotalLocacao();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
@@ -1017,12 +1032,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
     private void tabelaProdutosLocadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosLocadosMouseClicked
-        if(evt.getClickCount() == 2){            
+        if (evt.getClickCount() == 2) {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
-            calcularValorTotal(); 
+            calcularValorTotal();
             //calcularValorTotalLocacao();
         }
-        if(produtosLocados.size() <= 0) {
+        if (produtosLocados.size() <= 0) {
             campoPercentualDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
             campoEntrada.setEnabled(false);
@@ -1064,119 +1079,118 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcelas
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > maxParcelas 
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) == 0) {
+                || Integer.parseInt(campoParcelas.getText() + evt.getKeyChar()) > maxParcelas
+                || Integer.parseInt(campoParcelas.getText() + evt.getKeyChar()) == 0) {
             evt.consume();
-        } 
+        }
     }//GEN-LAST:event_campoParcelasKeyTyped
 
     private void campoParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyReleased
-        if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
+        if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas
                 && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || Integer.parseInt(campoParcelas.getText()) > 0
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            
-            calcularValorTotal();
-            
-            /*try {
-                //Se o usuário estiver apagando o conteúdo do campo
-                if (campoParcelas.getText().length() <= 0) { 
-                    labelValorParcelas.setText("");
 
-                } else {
-                    labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            calcularValorTotal();
+
+            /*try {
+             //Se o usuário estiver apagando o conteúdo do campo
+             if (campoParcelas.getText().length() <= 0) { 
+             labelValorParcelas.setText("");
+
+             } else {
+             labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
+             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
                             
-                }
-            } catch(Exception e) {
-                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }  */
-            
+             }
+             } catch(Exception e) {
+             pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+             dialog = pane.createDialog("Aviso");
+             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+             dialog.setAlwaysOnTop(true);
+             dialog.setVisible(true);
+             }  */
         }
     }//GEN-LAST:event_campoParcelasKeyReleased
 
     private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-                && (Integer.parseInt(campoPercentualDesconto.getText()) <= 100 &&  Integer.parseInt(campoPercentualDesconto.getText()) > 0))
-                || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
-                || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
-                
+                && (Integer.parseInt(campoPercentualDesconto.getText()) <= 100 && Integer.parseInt(campoPercentualDesconto.getText()) > 0))
+                || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) {
+
             calcularValorTotalComDesconto();
             /*try {
-                if (campoPercentualDesconto.getText().length() > 0) {
-                    labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+             if (campoPercentualDesconto.getText().length() > 0) {
+             labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
    
-                } else {
-                    labelValorLocacao.setText("R$ " + valorTotalLocacao);
-                }
-            } catch(Exception e) {
-                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }  */
+             } else {
+             labelValorLocacao.setText("R$ " + valorTotalLocacao);
+             }
+             } catch(Exception e) {
+             pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+             dialog = pane.createDialog("Aviso");
+             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+             dialog.setAlwaysOnTop(true);
+             dialog.setVisible(true);
+             }  */
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
         if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoEntrada.getText().length() >= maxCaracteresEntrada
-                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) >= valorTotalComDescontos
-                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) == 0) { 
+                || Double.parseDouble(campoEntrada.getText() + evt.getKeyChar()) >= valorTotalComDescontos
+                || Double.parseDouble(campoEntrada.getText() + evt.getKeyChar()) == 0) {
 
             evt.consume();
-        } 
+        }
     }//GEN-LAST:event_campoEntradaKeyTyped
- 
+
     private void campoEntradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyReleased
-        if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.') 
-                && campoEntrada.getText().length() <= maxCaracteresEntrada && (Double.parseDouble(campoEntrada.getText()) > 0 && 
-                Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
+        if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.')
+                && campoEntrada.getText().length() <= maxCaracteresEntrada && (Double.parseDouble(campoEntrada.getText()) > 0
+                && Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) {
             calcularValorTotal();
             /*
-            try {
-                if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-                    if (campoEntrada.getText().length() > 0) {
-                        valorTotalLocacao += Double.parseDouble(campoEntrada.getText());
-                    } else {
-                        valorTotalLocacao += Double.parseDouble(evt.getKeyChar()+"");
-                    }
-                } else {
-                    valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
-                }
+             try {
+             if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+             if (campoEntrada.getText().length() > 0) {
+             valorTotalLocacao += Double.parseDouble(campoEntrada.getText());
+             } else {
+             valorTotalLocacao += Double.parseDouble(evt.getKeyChar()+"");
+             }
+             } else {
+             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
+             }
                 
-                //Atualiza o valor total da locação exibido ao cliente
-                calcularValorTotalLocacao();
+             //Atualiza o valor total da locação exibido ao cliente
+             calcularValorTotalLocacao();
                 
-                if (campoPercentualDesconto.getText().length() > 0) {
-                    labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+             if (campoPercentualDesconto.getText().length() > 0) {
+             labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
    
-                }
-                //Atualiza o valor das parcelas, caso tenha algum valor no campo de parcelas
-                if (campoParcelas.getText().length() > 0) {
-                    labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                }
+             }
+             //Atualiza o valor das parcelas, caso tenha algum valor no campo de parcelas
+             if (campoParcelas.getText().length() > 0) {
+             labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
+             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+             }
                                 
-            } catch(Exception e) {
-                pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-                pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-                dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-                dialog.setAlwaysOnTop(true);
-                dialog.setVisible(true);
-            }  
-            */
+             } catch(Exception e) {
+             pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
+             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+             dialog = pane.createDialog("Aviso");
+             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+             dialog.setAlwaysOnTop(true);
+             dialog.setVisible(true);
+             }  
+             */
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
 
@@ -1186,11 +1200,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
                 valorTotalLocacao = valorTotalLocacao
                         - ((valorTotalLocacao * percentualDescontoTemporada) / 100);
-            } 
-          
+            }
+
         } catch (Exception e) {
-        } 
-        
+        }
+
         if (campoPercentualDesconto.getText().length() > 0) {
             valorTotalLocacao = valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
                     campoPercentualDesconto.getText())) / 100);
@@ -1199,42 +1213,42 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if (campoEntrada.getText().length() > 0) {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
-        
+
         labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-        
+
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
 
         } else {
             labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
-                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         }
     }
-    
-    public void calcularValorTotalComDesconto() { 
-        if (campoPercentualDesconto.getText().length() > 0) {            
+
+    public void calcularValorTotalComDesconto() {
+        if (campoPercentualDesconto.getText().length() > 0) {
             labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
                     campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } else {
             labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).doubleValue());
         }
     }
-    
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
-        campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        campo.setFont(new java.awt.Font("Tahoma", 0, 14));
         campo.setForeground(new java.awt.Color(0, 0, 0));
     }
-    
+
     public void criarTextoEmCampo(javax.swing.JTextField campo, String mensagem) {
         campo.setText(mensagem);
         campo.setForeground(new java.awt.Color(153, 153, 153));
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
-    
+
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"") || campo.getText().length()>= maxCaracteres){// se o carácter que gerou o evento não estiver na lista 
+        if (!numeros.contains(evt.getKeyChar() + "") || campo.getText().length() >= maxCaracteres) {// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
         }
     }
@@ -1244,54 +1258,53 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setVisible(true);
         campoEntrada.setVisible(true);
         campoParcelas.setVisible(true);
-        if(produtosLocados.isEmpty()) {
+        if (produtosLocados.isEmpty()) {
             campoEntrada.setEnabled(false);
             campoParcelas.setEnabled(false);
         }
     }
-    
+
     public void desabilitarCampos() {
         labelEntrada.setVisible(false);
         labelParcelas.setVisible(false);
         campoEntrada.setVisible(false);
         campoParcelas.setVisible(false);
     }
-    
+
     public void habilitarRadios() {
         radioCredito.setSelected(false);
         radioDebito.setSelected(true);
         radioCredito.setVisible(true);
         radioDebito.setVisible(true);
     }
-    
+
     public void desabilitarRadios() {
         radioCredito.setVisible(false);
         radioDebito.setVisible(false);
     }
-    
-    public boolean alterarDados() {        
+
+    public boolean alterarDados() {
         concluirSelecionado = false;  //Marcamos que o salvar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
         return concluirSelecionado;   //Retornamos true, se ele pressionou concluir
     }
-    
+
     public void adicionarProdutoALocacao(Produto produto) {
         ProdutoLocado produtoLocado = getProdutoLocado(produto.getCodigo());
-        if(produtoLocado != null) {
-            if(getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
+        if (produtoLocado != null) {
+            if (getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
                 //Atualiza a quantidade do produto na locação
-                produtoLocado.setQuantidade(produtoLocado.getQuantidade()+1);
+                produtoLocado.setQuantidade(produtoLocado.getQuantidade() + 1);
                 //Atualiza a linha da tabela (2 = terceira coluna da tabela)
-                for(int i=0; i < modeloTabelaProdutosLocados.getRowCount(); i++) {
-                    if(modeloTabelaProdutosLocados.getValueAt(i, 0).equals(produto.getCodigo())) {
+                for (int i = 0; i < modeloTabelaProdutosLocados.getRowCount(); i++) {
+                    if (modeloTabelaProdutosLocados.getValueAt(i, 0).equals(produto.getCodigo())) {
                         modeloTabelaProdutosLocados.setValueAt(produtoLocado.getQuantidade(), i, 2);
                         //Atualiza a quantidade de produtos em estoque
                         removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
 
                         //Atualiza o valor total da locação
                         //valorTotalLocacao += produto.getValor();
-                        
                         valorGeral += produto.getValor(); //TESTAR
                     }
                 }
@@ -1304,7 +1317,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setVisible(true);
             }
         } else {
-            if(getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
+            if (getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
                 ProdutoLocado novoProdutoLocado = new ProdutoLocado(produto.getCodigo(), 1); //trocar para receber quant, código
                 produtosLocados.add(novoProdutoLocado);
                 //Adiciona os dados do novo produto na tabela
@@ -1314,7 +1327,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
                 //Atualiza o valor total da locação
                 //valorTotalLocacao += produto.getValor();
-                
                 valorGeral += produto.getValor(); //TESTAR
             } else {
                 pane.setMessage("Este produto não pode ser locado! \n\nQuantidade de produtos insuficiente no estoque");
@@ -1325,33 +1337,33 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setVisible(true);
             }
         }
-        
+
     }
-    
+
     public void removerProdutoDaLocacao(int linhaSelecionada, String codigo) {
         ProdutoLocado produtoLocado = getProdutoLocado(codigo);
-        if(produtoLocado != null) {
+        if (produtoLocado != null) {
             //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
-            int quantidade = produtoLocado.getQuantidade()-1;  
+            int quantidade = produtoLocado.getQuantidade() - 1;
             //Remove o produto selecionada da lista de locação
-            if(quantidade == 0) {
+            if (quantidade == 0) {
                 modeloTabelaProdutosLocados.removeRow(linhaSelecionada);
                 produtosLocados.remove(produtoLocado);
             } else {
                 //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
-                modeloTabelaProdutosLocados.setValueAt(quantidade+"", linhaSelecionada, 2);
+                modeloTabelaProdutosLocados.setValueAt(quantidade + "", linhaSelecionada, 2);
             }
             //Atualiza a quantidade do produto no estoque
             adicionarProdutoAoEstoque(codigo);
             //Atualiza a quantidade no produto referente
             produtoLocado.setQuantidade(quantidade);
-            
+
             try {
                 //Atualiza o valor total da locação
                 //valorTotalLocacao -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
-                
+
                 valorGeral -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor(); //TESTAR
-                
+
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
@@ -1368,33 +1380,33 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
-        
+
     }
-    
+
     public ProdutoLocado getProdutoLocado(String codigo) {
-        for(ProdutoLocado produto: this.produtosLocados) {
-            if(produto.getCodigoProduto().equals(codigo)) {
+        for (ProdutoLocado produto : this.produtosLocados) {
+            if (produto.getCodigoProduto().equals(codigo)) {
                 return produto;
             }
         }
         return null;
     }
-    
+
     public void removerProdutoDoEstoque(int linhaSelecionada, String codigo) {
-        int quantProdutoEmEstoque = ((Integer) modeloTabelaProdutos.getValueAt(linhaSelecionada, 2))-1;
+        int quantProdutoEmEstoque = ((Integer) modeloTabelaProdutos.getValueAt(linhaSelecionada, 2)) - 1;
         modeloTabelaProdutos.setValueAt(quantProdutoEmEstoque, linhaSelecionada, 2);
         //Atualiza a quantidade do produto na lista de produtos em estoque
         getProdutoEmEstoque(codigo).setQuantidade(quantProdutoEmEstoque);
     }
-    
+
     public void adicionarProdutoAoEstoque(String codigo) {
         boolean atualizou = false;
-        
+
         Produto produtoEmEstoque = getProdutoEmEstoque(codigo);
-        
+
         //Atualiza a quantidade em estoque do produto
-        produtoEmEstoque.setQuantidade(produtoEmEstoque.getQuantidade()+1);
-        
+        produtoEmEstoque.setQuantidade(produtoEmEstoque.getQuantidade() + 1);
+
         for (int i = 0; i < modeloTabelaProdutos.getRowCount(); i++) {
             if (modeloTabelaProdutos.getValueAt(i, 0).equals(codigo)) {
                 //Atualiza a linha da tabela (2 = coluna de quantidade da tabela)
@@ -1403,8 +1415,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 break;
             }
         }
-        
-        if(!atualizou) {
+
+        if (!atualizou) {
             pane.setMessage("Não foi possível atualizar a quantidade em estoque do produto");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
@@ -1413,47 +1425,47 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setVisible(true);
         }
     }
-    
+
     public Produto getProdutoEmEstoque(String codigo) {
-        for(Produto produto: this.produtosEmEstoque) {
-            if(produto.getCodigo().equals(codigo)) {
+        for (Produto produto : this.produtosEmEstoque) {
+            if (produto.getCodigo().equals(codigo)) {
                 return produto;
             }
         }
         return null;
     }
-    
+
     public void calcularValorTotalLocacao() {
         /*try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
-                valorTotalLocacao = new BigDecimal(valorTotalLocacao
-                        - ((valorTotalLocacao * percentualDescontoTemporada) / 100)
-                ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
+         valorTotalLocacao = new BigDecimal(valorTotalLocacao
+         - ((valorTotalLocacao * percentualDescontoTemporada) / 100)
+         ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
 
-                labelValorLocacao.setText("R$ " + valorTotalLocacao);
+         labelValorLocacao.setText("R$ " + valorTotalLocacao);
 
-            } else {
-                valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                labelValorLocacao.setText("R$ " + valorTotalLocacao);
-            }
+         } else {
+         valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         labelValorLocacao.setText("R$ " + valorTotalLocacao);
+         }
           
-        } catch (TemporadaInexistenteException e) {
-            valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-            labelValorLocacao.setText("R$ " + valorTotalLocacao);
-        } catch (Exception e) {
-            valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-            labelValorLocacao.setText("R$ " + valorTotalLocacao);
-        } */
+         } catch (TemporadaInexistenteException e) {
+         valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         labelValorLocacao.setText("R$ " + valorTotalLocacao);
+         } catch (Exception e) {
+         valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         labelValorLocacao.setText("R$ " + valorTotalLocacao);
+         } */
     }
-    
+
     public Locacao getNovaLocacao() {
         return novaLocacao;
     }
-    
+
     public Movimentacao getNovaMovimentacao() {
         return novaMovimentacao;
     }
- 
+
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
     private int maxCaracteresDesconto = 3;
     private int maxCaracteresParcelas = 2;
@@ -1473,6 +1485,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private int maxCaracteresEntrada = 7;
     private int percentualDescontoTemporada;
     private double valorTotalComDescontos;
+    private final ProgressoBar aguarde = new ProgressoBar();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
@@ -1515,6 +1528,5 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JTable tabelaProdutos;
     private javax.swing.JTable tabelaProdutosLocados;
     // End of variables declaration//GEN-END:variables
-
 
 }

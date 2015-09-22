@@ -39,7 +39,7 @@ public class GerenciadorDeVenda {
                 GerenciadorDeProduto.getInstance().removerQuantidade(pv.getCodigoProduto(), pv.getQuantidade());
             }
             vjp.create(venda);
-//            venda.gerarEImprimirRecibo();
+            venda.gerarEImprimirRecibo();
             
             return venda;
             

@@ -40,7 +40,6 @@ public class GerenciadorDeLocacao {
         return singleton;
     }
 
-    // FALTA TESTAR
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor,
             Calendar dataLocacao, Calendar dataDeDevolucao, String formaDePagamento, int parcelas,
             double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException,
@@ -66,8 +65,8 @@ public class GerenciadorDeLocacao {
                 GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
             }
 
-//            locacao.imprimirContrato();
-//            locacao.gerarRecibo();
+            locacao.imprimirContrato();
+            locacao.gerarRecibo();
             
 
             return locacao;
