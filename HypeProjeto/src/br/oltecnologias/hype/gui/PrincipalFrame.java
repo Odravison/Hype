@@ -2018,22 +2018,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelFornecedoresMouseClicked
 
     private void botaoNovaLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaLocacaoActionPerformed
-        new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
-                RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
-                dialog.setLocationRelativeTo(null);
-                if (dialog.alterarDados()) {
-                    adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
-                    adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-                    atualizarValorEmCaixa();
-                    //Atualizando a tabela de produtos para que os dados fiquem consistentes
-                    adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
-                }
-                dialog.dispose();
-                return null;
-            }
-        }.execute();
+        RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
+        dialog.setLocationRelativeTo(null);
+        if (dialog.alterarDados()) {
+            adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
+            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+            atualizarValorEmCaixa();
+            //Atualizando a tabela de produtos para que os dados fiquem consistentes
+            adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
+        }
+        dialog.dispose();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
 
     private void campoPesquisarLocacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarLocacoesMouseClicked
@@ -2064,20 +2058,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelLocacoesMouseClicked
 
     private void botaoNovaVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovaVendaActionPerformed
-        /*new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {*/
-                RealizarVendaDialog dialog = new RealizarVendaDialog(null);
-                dialog.setLocationRelativeTo(null);
-                if (dialog.alterarDados()) {
-                    adicionarNovaVendaNaTabela(dialog.getNovaVenda());
-                    adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-                    atualizarValorEmCaixa();
-                }
-                dialog.dispose();
-               /* return null;
-            }
-        }.execute();*/
+        RealizarVendaDialog dialog = new RealizarVendaDialog(null);
+        dialog.setLocationRelativeTo(null);
+        if (dialog.alterarDados()) {
+            adicionarNovaVendaNaTabela(dialog.getNovaVenda());
+            adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+            atualizarValorEmCaixa();
+        }
+        dialog.dispose();
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
 
     private void campoPesquisarVendasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarVendasMouseClicked
@@ -2205,13 +2193,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelAdministradorMouseClicked
 
     private void botaoPesquisarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarClienteActionPerformed
-        AguardeDialog aguarde = new AguardeDialog(null, "Realizando a pesquisa de clientes.");
-        aguarde.executarProgresso();
-        aguarde.setLocationRelativeTo(null);
-        aguarde.setVisible(true);
-        
-        
-        
         if (campoPesquisarClientes.getText().equals("Pesquisar Cliente") || campoPesquisarClientes.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de cliente", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -2232,11 +2213,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 } else {
                     pesquisarClientesPorNomeEFiltro(textoPesquisado);
                 }
-                while (true) {
-                }
-                //aguarde.interromperProgresso();
-                //aguarde.setVisible(false);
-                //aguarde.dispose();
             } catch (ClienteInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -2275,6 +2251,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         //Limpa a tabela de clientes
         modeloTabelaClientes.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -2303,6 +2284,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 return null;
             }
 
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
+            }
         }.execute();
 
     }
@@ -2310,6 +2296,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void pesquisarClientesPorFiltro() {
 
         modeloTabelaClientes.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -2333,6 +2324,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 return null;
             }
 
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
+            }
         }.execute();
     }
 
@@ -2737,35 +2733,35 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoVerLocacoesClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerLocacoesClienteActionPerformed
         if (tabelaClientes.getSelectedRow() >= 0) {
-            final ProgressoBar aguarde;
-            aguarde = new ProgressoBar("Pesquisando as locações do cliente. Por favor, Aguarde...");
+
+            aguarde.setUndecorated(true);
+            aguarde.setResizable(false);
             aguarde.setLocationRelativeTo(null);
+            aguarde.iniciar();
             aguarde.setVisible(true);
 
-                new SwingWorker() {
-                    @Override
-                    protected Object doInBackground() throws Exception {
-                        aguarde.setIndeterminate(true);
-                        //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
-                        try {
-                            VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
-                                    (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
-                            dialog.setLocationRelativeTo(null);
-                            dialog.setVisible(true);
-                        } catch (ClienteInexistenteException e) {
-                            aguarde.setIndeterminate(false);
-                            aguarde.dispose();
-                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
-                        return null;
-                    }
-                    @Override
-                    protected void done() {
-                        aguarde.setIndeterminate(false);
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
+                    try {
+                        VerLocacoesDeClienteDialog dialog = new VerLocacoesDeClienteDialog(null, GerenciadorDePessoas.getInstance().pesquisarCliente(
+                                (String) tabelaClientes.getValueAt(tabelaClientes.getSelectedRow(), 0)));
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+                    } catch (ClienteInexistenteException e) {
                         aguarde.dispose();
-
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                }.execute();
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+
+                }
+            }.execute();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um cliente na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2855,21 +2851,39 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
         if (tabelaLocacoes.getSelectedRow() >= 0) {
-            try {
-                long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
-                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
+            aguarde.setUndecorated(true);
+            aguarde.setResizable(false);
+            aguarde.setLocationRelativeTo(null);
+            aguarde.iniciar();
+            aguarde.setVisible(true);
 
-                if (!GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
-                    Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
-                    GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
-                    dialog.setLocationRelativeTo(null);
-                    dialog.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    try {
+                        long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
+                                tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
+
+                        if (!GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
+                            Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
+                            GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
+                            dialog.setLocationRelativeTo(null);
+                            dialog.setVisible(true);
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                    return null;
                 }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+
+                }
+            }.execute();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2891,35 +2905,53 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
         if (tabelaLocacoes.getSelectedRow() >= 0) {
-            try {
-                Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
-                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
+            aguarde.setUndecorated(true);
+            aguarde.setResizable(false);
+            aguarde.setLocationRelativeTo(null);
+            aguarde.iniciar();
+            aguarde.setVisible(true);
 
-                if (locacao.isLocacaoPaga()) {
-                    if (!locacao.isFinalizada()) {
-                        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
-                        //Sim = 0
-                        if (escolha == 0) {
-                            try {
-                                //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                                GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId());
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    try {
+                        Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
+                                (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
 
-                                JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+                        if (locacao.isLocacaoPaga()) {
+                            if (!locacao.isFinalizada()) {
+                                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                                //Sim = 0
+                                if (escolha == 0) {
+                                    try {
+                                        //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
+                                        GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId());
 
-                                atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                                        JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+
+                                        atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
+                                    } catch (Exception e) {
+                                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                                    }
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                         }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } catch (LocacaoInexistenteException ex) {
+                        JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    return null;
                 }
-            } catch (LocacaoInexistenteException ex) {
-                JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+
+                }
+            }.execute();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2950,7 +2982,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarProdutoActionPerformed
 
     private void comboFiltrarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarProdutosActionPerformed
-        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
+
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
         if (campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
             pesquisarProdutosPorFiltro();
@@ -2978,48 +3010,65 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         //Limpa a tabela de produtos
         modeloTabelaProdutos.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
 
-        List<Produto> produtos = null;
-        switch (comboFiltrarProdutos.getSelectedItem().toString()) {
-            case "Todos":
-                produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(nome);
-                break;
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                List<Produto> produtos = null;
+                switch (comboFiltrarProdutos.getSelectedItem().toString()) {
+                    case "Todos":
+                        produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosPeloNome(nome);
+                        break;
 
-            case "Produtos de locação":
-                produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(nome);
-                break;
+                    case "Produtos de locação":
+                        produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(nome);
+                        break;
 
-            case "Produtos de venda":
-                produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(nome);
-                break;
+                    case "Produtos de venda":
+                        produtos = GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(nome);
+                        break;
 
-            case "Últimos locados":
+                    case "Últimos locados":
 
-                try {
-                    produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocadosPorNome(nome);
-                } catch (ProdutoInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        try {
+                            produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocadosPorNome(nome);
+                        } catch (ProdutoInexistenteException e) {
+                            JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                        break;
+
+                    case "Últimos vendidos":
+
+                        try {
+                            produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidosPorNome(nome);
+                        } catch (ProdutoInexistenteException e) {
+                            JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                        break;
+
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        break;
                 }
-
-                break;
-
-            case "Últimos vendidos":
-
-                try {
-                    produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidosPorNome(nome);
-                } catch (ProdutoInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                if (produtos != null) {
+                    adicionarProdutosNaTabela(produtos);
                 }
+                return null;
+            }
 
-                break;
+            @Override
+            protected void done() {
+                aguarde.dispose();
 
-            default:
-                JOptionPane.showMessageDialog(null, "Opção Inválida\n\n Tente novamente", "Aviso", JOptionPane.WARNING_MESSAGE);
-                break;
-        }
-        if (produtos != null) {
-            adicionarProdutosNaTabela(produtos);
-        }
+            }
+        }.execute();
 
     }
 
@@ -3027,6 +3076,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         //Limpa a tabela de produtos
         modeloTabelaProdutos.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
+
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -3071,6 +3126,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 }
                 return null;
             }
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
+            }
         }.execute();
     }
 
@@ -3078,27 +3139,45 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (campoPesquisarFornecedores.getText().equals("Pesquisar Fornecedor") || campoPesquisarFornecedores.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de fornecedor", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            try {
-                String textoPesquisado = campoPesquisarFornecedores.getText();
+            aguarde.setUndecorated(true);
+            aguarde.setResizable(false);
+            aguarde.setLocationRelativeTo(null);
+            aguarde.iniciar();
+            aguarde.setVisible(true);
 
-                //Verifica se o que foi digitado para a pesquisa é um CPF
-                if (textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.')
-                        && textoPesquisado.charAt(11) == '-') {
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    try {
+                        String textoPesquisado = campoPesquisarFornecedores.getText();
 
-                    Fornecedor fornecedor = GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(textoPesquisado);
-                    // Atualiza o model da lista de fornecedores
-                    modeloTabelaFornecedores.setRowCount(0);
-                    modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
-                } else {
-                    // Atualiza o model da lista de fornecedores
-                    modeloTabelaFornecedores.setRowCount(0);
-                    adicionarFornecedoresNaTabela(GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloNome(textoPesquisado));
+                        //Verifica se o que foi digitado para a pesquisa é um CPF
+                        if (textoPesquisado.length() == 14 && (textoPesquisado.charAt(3) == '.' && textoPesquisado.charAt(7) == '.')
+                                && textoPesquisado.charAt(11) == '-') {
 
+                            Fornecedor fornecedor = GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloCnpj(textoPesquisado);
+                            // Atualiza o model da lista de fornecedores
+                            modeloTabelaFornecedores.setRowCount(0);
+                            modeloTabelaFornecedores.addRow(new Object[]{fornecedor.getCnpj(), fornecedor.getNome(), fornecedor.getEndereco(), fornecedor.getTelefone()});
+                        } else {
+                            // Atualiza o model da lista de fornecedores
+                            modeloTabelaFornecedores.setRowCount(0);
+                            adicionarFornecedoresNaTabela(GerenciadorDePessoas.getInstance().pesquisarFornecedorPeloNome(textoPesquisado));
+
+                        }
+
+                    } catch (FornecedorInexistenteException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                    return null;
                 }
 
-            } catch (FornecedorInexistenteException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+
+                }
+            }.execute();
         }
     }//GEN-LAST:event_botaoPesquisarFornecedorActionPerformed
 
@@ -3106,47 +3185,70 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (campoPesquisarLocacoes.getText().equals("Pesquisar Locação") || campoPesquisarLocacoes.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o nome do cliente ou uma data para a pesquisa de locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            try {
-                // Limpa o model da lista de locações
-                modeloTabelaLocacoes.setRowCount(0);
+            aguarde.setUndecorated(true);
+            aguarde.setResizable(false);
+            aguarde.setLocationRelativeTo(null);
+            aguarde.iniciar();
+            aguarde.setVisible(true);
 
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                df.setLenient(false); // O date format não vai aceitar datas inválidas
-                Calendar dataPesquisada = Calendar.getInstance();
-                // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
-                dataPesquisada.setTime(df.parse(campoPesquisarLocacoes.getText()));
-
-                for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
                     try {
-                        //Adiciona os dados da nova locação na tabela
-                        modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                            GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                            "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        // Limpa o model da lista de locações
+                        modeloTabelaLocacoes.setRowCount(0);
+
+                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        df.setLenient(false); // O date format não vai aceitar datas inválidas
+                        Calendar dataPesquisada = Calendar.getInstance();
+                        // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
+                        dataPesquisada.setTime(df.parse(campoPesquisarLocacoes.getText()));
+
+                        for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
+                            try {
+                                //Adiciona os dados da nova locação na tabela
+                                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                    GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                            } catch (Exception e) {
+                                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+                        }
+
+                    } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
+                        for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(campoPesquisarLocacoes.getText())) {
+                            try {
+                                //Adiciona os dados da locação na tabela
+                                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                    GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+                        }
                     }
+                    return null;
                 }
 
-            } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
-                for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(campoPesquisarLocacoes.getText())) {
-                    try {
-                        //Adiciona os dados da locação na tabela
-                        modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                            GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                            "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
-                    } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+
                 }
-            }
+            }.execute();
 
         }
     }//GEN-LAST:event_botaoPesquisarLocacaoActionPerformed
 
     private void comboFiltrarLocacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarLocacoesActionPerformed
-        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         // Atualiza o model da lista de locações
         modeloTabelaLocacoes.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
+
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -3187,6 +3289,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 }
                 return null;
             }
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
+            }
         }.execute();
     }//GEN-LAST:event_comboFiltrarLocacoesActionPerformed
 
@@ -3194,30 +3302,53 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (campoPesquisarVendas.getText().equals("Pesquisar Venda") || campoPesquisarVendas.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe uma data para a pesquisa de venda", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            try {
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                df.setLenient(false); // O date format não vai aceitar datas inválidas
-                Calendar dataPesquisada = Calendar.getInstance();
-                // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
-                dataPesquisada.setTime(df.parse(campoPesquisarVendas.getText()));
-                // Limpa o model da lista de movimentacoes
-                modeloTabelaVendas.setRowCount(0);
+            aguarde.setUndecorated(true);
+            aguarde.setResizable(false);
+            aguarde.setLocationRelativeTo(null);
+            aguarde.iniciar();
+            aguarde.setVisible(true);
 
-                for (Venda venda : GerenciadorDeVenda.getInstance().pesquisarVendasPorData(dataPesquisada)) {
-                    modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    try {
+                        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                        df.setLenient(false); // O date format não vai aceitar datas inválidas
+                        Calendar dataPesquisada = Calendar.getInstance();
+                        // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
+                        dataPesquisada.setTime(df.parse(campoPesquisarVendas.getText()));
+                        // Limpa o model da lista de movimentacoes
+                        modeloTabelaVendas.setRowCount(0);
+
+                        for (Venda venda : GerenciadorDeVenda.getInstance().pesquisarVendasPorData(dataPesquisada)) {
+                            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+                        }
+
+                    } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
+                        JOptionPane.showMessageDialog(null, "Informe uma data válida para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
+                    return null;
                 }
 
-            } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
-                JOptionPane.showMessageDialog(null, "Informe uma data válida para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+
+                }
+            }.execute();
 
         }
     }//GEN-LAST:event_botaoPesquisarVendasActionPerformed
 
     private void comboFiltrarMovimentacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarMovimentacoesActionPerformed
-        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         // Atualiza o model da lista de movimentações
         modeloTabelaMovimentacoes.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
+
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -3258,6 +3389,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 }
                 return null;
             }
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
+            }
         }.execute();
     }//GEN-LAST:event_comboFiltrarMovimentacoesActionPerformed
 
@@ -3280,9 +3417,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_radioPesquisarProdutoNomeActionPerformed
 
     private void comboFiltrarVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarVendasActionPerformed
-        JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
         // Atualiza o model da lista de locações
         modeloTabelaVendas.setRowCount(0);
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setVisible(true);
+
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -3307,6 +3449,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     adicionarVendasNaTabela(GerenciadorDeVenda.getInstance().getVendas());
                 }
                 return null;
+            }
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+
             }
         }.execute();
     }//GEN-LAST:event_comboFiltrarVendasActionPerformed
@@ -3744,6 +3892,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         });
     }
 
+    private final ProgressoBar aguarde = new ProgressoBar();
     private String loginUsuario;
     private DefaultTableModel modeloTabelaClientes;
     private DefaultTableModel modeloTabelaProdutos;

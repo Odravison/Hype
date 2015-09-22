@@ -26,6 +26,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -33,7 +34,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Luender Lima
  */
 public class RealizarVendaDialog extends java.awt.Dialog {
-    
+
     public RealizarVendaDialog(Frame owner) {
         super(owner);
         initComponents();
@@ -566,37 +567,39 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoSelecionarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSelecionarProdutosActionPerformed
-        if(tabelaProdutos.getSelectedRow() < 0) {
+        if (tabelaProdutos.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um produto na lista para poder adicioná-lo aos produtos vendidos", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             try {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
-                
-                calcularValorTotal(); 
+
+                calcularValorTotal();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
                 campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            } 
+            }
         }
     }//GEN-LAST:event_botaoSelecionarProdutosActionPerformed
 
     private void campoPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarMouseClicked
-        if(campoPesquisar.getText().equals("Pesquisar Produto"))
-        eliminarTextoDeCampo(campoPesquisar);
+        if (campoPesquisar.getText().equals("Pesquisar Produto")) {
+            eliminarTextoDeCampo(campoPesquisar);
+        }
 
     }//GEN-LAST:event_campoPesquisarMouseClicked
 
     private void campoPesquisarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarKeyTyped
-        if(campoPesquisar.getText().equals("Pesquisar Produto"))
-        eliminarTextoDeCampo(campoPesquisar);
+        if (campoPesquisar.getText().equals("Pesquisar Produto")) {
+            eliminarTextoDeCampo(campoPesquisar);
+        }
 
     }//GEN-LAST:event_campoPesquisarKeyTyped
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        if(campoPesquisar.getText().length() <= 0) {
+        if (campoPesquisar.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             //Limpar o model dos produtos antes de acrescentar os objetos da pesquisa
@@ -608,21 +611,21 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void painelSelecionarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelSelecionarMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if (campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaProdutos.getSelectedRow() >= 0) {
+        if (tabelaProdutos.getSelectedRow() >= 0) {
             tabelaProdutos.clearSelection();
         }
     }//GEN-LAST:event_painelSelecionarMouseClicked
 
     private void botaoRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoRemoverActionPerformed
-        if(tabelaProdutosVendidos.getSelectedRow() < 0) {
+        if (tabelaProdutosVendidos.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(null, "Selecione um produto para remoção", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
             removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) tabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
-            calcularValorTotal(); 
+            calcularValorTotal();
             //calcularValorTotalVenda();
             campoPercentualDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
@@ -631,11 +634,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoRemoverActionPerformed
 
     private void painelProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelProdutosMouseClicked
-        if(campoPesquisar.getText().length() <= 0) {
+        if (campoPesquisar.getText().length() <= 0) {
             criarTextoEmCampo(campoPesquisar, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if(tabelaProdutosVendidos.getSelectedRow() >= 0) {
+        if (tabelaProdutosVendidos.getSelectedRow() >= 0) {
             tabelaProdutosVendidos.clearSelection();
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
@@ -646,86 +649,104 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-        try{
-            String formaPagamento = "";
-            if(produtosVendidos.size() <= 0) {
-                JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if(campoPercentualDesconto.getText().length() > 0) { 
+        aguarde.setUndecorated(true);
+        aguarde.setResizable(false);
+        aguarde.setLocationRelativeTo(null);
+        aguarde.iniciar();
+        aguarde.setAlwaysOnTop(true);
+        aguarde.setVisible(true);
+        aguarde.toFront();
+
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
                 try {
-                    if(Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
-                        JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                } catch(Exception e) {
-                    JOptionPane.showMessageDialog(null, "Não foi possível verificar o percentual de desconto. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-                
-            } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
-                JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (campoEntrada.getText().length() > 0) {
-                if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
-                    JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
-            } else {
-                
-                //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                if (campoPercentualDesconto.getText().length() <= 0) {
-                    campoPercentualDesconto.setText("0");
-                } else {
-                    valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-                                campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                }
-                //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
-                if (campoEntrada.getText().length() <= 0) {
-                    campoEntrada.setText("0");
-                }
-                //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
-                if (campoParcelas.getText().length() <= 0) {
-                    campoParcelas.setText("0");
-                }
-                
-                if (radioCartao.isSelected()) {
-                    if(radioCartao.isSelected()) {
-                        formaPagamento = "Cartão - Crédito";
+                    String formaPagamento = "";
+                    if (produtosVendidos.size() <= 0) {
+                        JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else if (campoPercentualDesconto.getText().length() > 0) {
+                        try {
+                            if (Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+                                JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, "Não foi possível verificar o percentual de desconto. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
+                        JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else if (campoEntrada.getText().length() > 0) {
+                        if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
+                            JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
                     } else {
-                        formaPagamento = "Cartão - Débito";
+
+                        //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
+                        if (campoPercentualDesconto.getText().length() <= 0) {
+                            campoPercentualDesconto.setText("0");
+                        } else {
+                            valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+                                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                        }
+                        //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
+                        if (campoEntrada.getText().length() <= 0) {
+                            campoEntrada.setText("0");
+                        }
+                        //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
+                        if (campoParcelas.getText().length() <= 0) {
+                            campoParcelas.setText("0");
+                        }
+
+                        if (radioCartao.isSelected()) {
+                            if (radioCartao.isSelected()) {
+                                formaPagamento = "Cartão - Crédito";
+                            } else {
+                                formaPagamento = "Cartão - Débito";
+                            }
+                        } else {
+                            formaPagamento = "À Vista";
+                            campoEntrada.setText("0");
+                            campoParcelas.setText("0");
+                        }
+
+                        try {
+
+                            novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalComDescontos, formaPagamento,
+                                    Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
+                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
+
+                            novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
+
+                            //O botão concluir foi selecionado
+                            concluirSelecionado = true;
+                            //Fecha janela
+                            setVisible(false);
+
+                        } catch (Exception e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
                     }
-                } else {
-                    formaPagamento = "À Vista";
-                    campoEntrada.setText("0");
-                    campoParcelas.setText("0");
-                }
-
-                try {
-                    JOptionPane.showMessageDialog(null, "A venda será efetuada no sistema. Por favor, aguarde...");
-                    
-                    novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalComDescontos, formaPagamento,
-                            Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
-                            Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText())));
-
-                    novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
-                    
-                    JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
-
-                    //O botão concluir foi selecionado
-                    concluirSelecionado = true;
-                    //Fecha janela
-                    setVisible(false);
-
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
+                return null;
             }
-        } catch(Exception e) {
-            JOptionPane.showMessageDialog(null, "Informe corretamente todos os dados necessários", "Aviso", JOptionPane.WARNING_MESSAGE);
-        }
+
+            @Override
+            protected void done() {
+                aguarde.dispose();
+                JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
+
+            }
+        }.execute();
     }//GEN-LAST:event_botaoConcluirActionPerformed
 
     private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
-        if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto 
-                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) > 100
-                || Integer.parseInt(campoPercentualDesconto.getText()+evt.getKeyChar()) == 0) {
+        if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto
+                || Integer.parseInt(campoPercentualDesconto.getText() + evt.getKeyChar()) > 100
+                || Integer.parseInt(campoPercentualDesconto.getText() + evt.getKeyChar()) == 0) {
             evt.consume();
-        } 
+        }
     }//GEN-LAST:event_campoPercentualDescontoKeyTyped
 
     private void radioAVistaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioAVistaActionPerformed
@@ -751,15 +772,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_radioDebitoActionPerformed
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
-        if(evt.getClickCount() == 2){            
+        if (evt.getClickCount() == 2) {
             try {
                 adicionarProdutoAVenda(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
-                
-                calcularValorTotal(); 
+
+                calcularValorTotal();
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
-            campoEntrada.setEnabled(true);
+                campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
@@ -767,11 +788,11 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_tabelaProdutosMouseClicked
 
     private void tabelaProdutosVendidosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosVendidosMouseClicked
-        if(evt.getClickCount() == 2){            
+        if (evt.getClickCount() == 2) {
             removerProdutoDaVenda(tabelaProdutosVendidos.getSelectedRow(), (String) tabelaProdutosVendidos.getValueAt(tabelaProdutosVendidos.getSelectedRow(), 0));
-            calcularValorTotal(); 
+            calcularValorTotal();
         }
-        if(produtosVendidos.size() <= 0) {
+        if (produtosVendidos.size() <= 0) {
             campoPercentualDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
             campoEntrada.setEnabled(false);
@@ -782,98 +803,98 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     private void campoParcelasKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyTyped
         if (!numeros.contains(evt.getKeyChar() + "") || campoParcelas.getText().length() >= maxCaracteresParcelas
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) > maxParcelas 
-                || Integer.parseInt(campoParcelas.getText()+evt.getKeyChar()) == 0) {
+                || Integer.parseInt(campoParcelas.getText() + evt.getKeyChar()) > maxParcelas
+                || Integer.parseInt(campoParcelas.getText() + evt.getKeyChar()) == 0) {
             evt.consume();
-        }   
+        }
     }//GEN-LAST:event_campoParcelasKeyTyped
 
     private void campoParcelasKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoParcelasKeyReleased
-        if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
+        if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas
                 && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || Integer.parseInt(campoParcelas.getText()) > 0
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            
+
             calcularValorTotal();
         }
         /*if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
-                && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || Integer.parseInt(campoParcelas.getText()) > 0) {
-            try {
-                //Se o usuário estiver apagando o conteúdo do campo
-                if (campoParcelas.getText().length() <= 0) { 
-                    labelValorParcelas.setText("");
+         && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+         || Integer.parseInt(campoParcelas.getText()) > 0) {
+         try {
+         //Se o usuário estiver apagando o conteúdo do campo
+         if (campoParcelas.getText().length() <= 0) { 
+         labelValorParcelas.setText("");
 
-                } else {
-                    labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+         } else {
+         labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
+         ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
                             
-                }
-            } catch(Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }  
-        }*/
+         }
+         } catch(Exception e) {
+         JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+         }  
+         }*/
     }//GEN-LAST:event_campoParcelasKeyReleased
 
     private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-                && (Integer.parseInt(campoPercentualDesconto.getText()) <= 100 &&  Integer.parseInt(campoPercentualDesconto.getText()) > 0))
-                || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE 
-                || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
-                
+                && (Integer.parseInt(campoPercentualDesconto.getText()) <= 100 && Integer.parseInt(campoPercentualDesconto.getText()) > 0))
+                || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) {
+
             calcularValorTotalComDesconto();
         }
         /*
-        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-                && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || Integer.parseInt(campoParcelas.getText()) > 0) {
-            try {
-                //Se o usuário estiver apagando o conteúdo do campo
-                if (campoPercentualDesconto.getText().length() > 0) {
-                    labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
+         && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
+         || Integer.parseInt(campoParcelas.getText()) > 0) {
+         try {
+         //Se o usuário estiver apagando o conteúdo do campo
+         if (campoPercentualDesconto.getText().length() > 0) {
+         labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
+         campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
    
-                } else {
-                    labelValorVenda.setText("R$ " + valorTotalVenda);
-                }
-            } catch(Exception e) {
-                JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-            }  
-        } */
+         } else {
+         labelValorVenda.setText("R$ " + valorTotalVenda);
+         }
+         } catch(Exception e) {
+         JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+         }  
+         } */
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
         //double metadeValor = valorTotal;
         if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoEntrada.getText().length() >= maxCaracteresEntrada
-                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) >= valorTotalComDescontos
-                || Double.parseDouble(campoEntrada.getText()+evt.getKeyChar()) == 0) { 
+                || Double.parseDouble(campoEntrada.getText() + evt.getKeyChar()) >= valorTotalComDescontos
+                || Double.parseDouble(campoEntrada.getText() + evt.getKeyChar()) == 0) {
 
             evt.consume();
-        } 
+        }
     }//GEN-LAST:event_campoEntradaKeyTyped
 
     private void campoEntradaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyReleased
-        if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.') 
-                && campoEntrada.getText().length() <= maxCaracteresEntrada && (Double.parseDouble(campoEntrada.getText()) > 0 && 
-                Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
+        if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.')
+                && campoEntrada.getText().length() <= maxCaracteresEntrada && (Double.parseDouble(campoEntrada.getText()) > 0
+                && Double.parseDouble(campoEntrada.getText()) < valorTotalComDescontos))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-                || evt.getKeyCode() == KeyEvent.VK_DELETE) { 
-            
+                || evt.getKeyCode() == KeyEvent.VK_DELETE) {
+
             calcularValorTotal();
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
-    
+
     public void calcularValorTotal() {
         try {
             valorTotalVenda = valorGeral;
             if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
                 valorTotalVenda = valorTotalVenda
                         - ((valorTotalVenda * percentualDescontoTemporada) / 100);
-            } 
-          
+            }
+
         } catch (Exception e) {
-        } 
-        
+        }
+
         if (campoPercentualDesconto.getText().length() > 0) {
             valorTotalVenda = valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
                     campoPercentualDesconto.getText())) / 100);
@@ -882,89 +903,89 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if (campoEntrada.getText().length() > 0) {
             valorTotalVenda -= Double.parseDouble(campoEntrada.getText());
         }
-        
+
         labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda
-                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-        
+        ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
 
         } else {
             labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
-                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         }
     }
-    
-    public void calcularValorTotalComDesconto() { 
-        if (campoPercentualDesconto.getText().length() > 0) {            
+
+    public void calcularValorTotalComDesconto() {
+        if (campoPercentualDesconto.getText().length() > 0) {
             labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
                     campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } else {
             labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda).doubleValue());
         }
     }
-    
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
-        campo.setFont(new java.awt.Font("Tahoma", 0, 14)); 
+        campo.setFont(new java.awt.Font("Tahoma", 0, 14));
         campo.setForeground(new java.awt.Color(0, 0, 0));
     }
-    
+
     public void criarTextoEmCampo(javax.swing.JTextField campo, String mensagem) {
         campo.setText(mensagem);
         campo.setForeground(new java.awt.Color(153, 153, 153));
         campo.setFont(new java.awt.Font("Tahoma", 2, 14));
     }
-    
+
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o carácter que gerou o evento não estiver na lista 
+        if (!numeros.contains(evt.getKeyChar() + "")) {// se o carácter que gerou o evento não estiver na lista 
             evt.consume();
         }
-        if(campo.getText().length()>= maxCaracteres){
+        if (campo.getText().length() >= maxCaracteres) {
             evt.consume();
         }
     }
-    
+
     public void habilitarCampos() {
         labelEntrada.setVisible(true);
         labelParcelas.setVisible(true);
         campoEntrada.setVisible(true);
         campoParcelas.setVisible(true);
-        if(produtosVendidos.isEmpty()) {
+        if (produtosVendidos.isEmpty()) {
             campoEntrada.setEnabled(false);
             campoParcelas.setEnabled(false);
         }
     }
-    
+
     public void desabilitarCampos() {
         labelEntrada.setVisible(false);
         labelParcelas.setVisible(false);
         campoEntrada.setVisible(false);
         campoParcelas.setVisible(false);
     }
-    
+
     public void habilitarRadios() {
         radioCredito.setSelected(false);
         radioDebito.setSelected(true);
         radioCredito.setVisible(true);
         radioDebito.setVisible(true);
     }
-    
+
     public void desabilitarRadios() {
         radioCredito.setVisible(false);
         radioDebito.setVisible(false);
     }
-    
+
     public void adicionarProdutoAVenda(Produto produto) {
         ProdutoVendido produtoVendido = getProdutoVendido(produto.getCodigo());
-        if(produtoVendido != null) {
-            if(getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
+        if (produtoVendido != null) {
+            if (getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
                 //Atualiza a quantidade do produto na locação
-                produtoVendido.setQuantidade(produtoVendido.getQuantidade()+1);
+                produtoVendido.setQuantidade(produtoVendido.getQuantidade() + 1);
                 //Atualiza a linha da tabela (2 = terceira coluna da tabela)
-                for(int i=0; i < modeloTabelaProdutosVendidos.getRowCount(); i++) {
-                    if(modeloTabelaProdutosVendidos.getValueAt(i, 0).equals(produto.getCodigo())) {
+                for (int i = 0; i < modeloTabelaProdutosVendidos.getRowCount(); i++) {
+                    if (modeloTabelaProdutosVendidos.getValueAt(i, 0).equals(produto.getCodigo())) {
                         modeloTabelaProdutosVendidos.setValueAt(produtoVendido.getQuantidade(), i, 2);
                         //Atualiza a quantidade de produtos em estoque
                         removerProdutoDoEstoque(tabelaProdutos.getSelectedRow(), produto.getCodigo());
@@ -978,7 +999,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Este produto não pode ser vendido! \n\nQuantidade de produtos insuficiente no estoque", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            if(getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
+            if (getProdutoEmEstoque(produto.getCodigo()).getQuantidade() > 0) {
                 ProdutoVendido novoProdutoVendido = new ProdutoVendido(produto.getCodigo(), 1);
                 produtosVendidos.add(novoProdutoVendido);
                 //Adiciona os dados do novo produto na tabela
@@ -992,28 +1013,28 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "Este produto não pode ser vendido! \n\nQuantidade de produtos insuficiente no estoque", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
-        
+
     }
-    
+
     public void removerProdutoDaVenda(int linhaSelecionada, String codigo) {
         ProdutoVendido produtoVendido = getProdutoVendido(codigo);
-        if(produtoVendido != null) {
+        if (produtoVendido != null) {
             //Decrementa o valor da quantidade de produtos que está no map, caso a chave já exista
-            int quantidade = produtoVendido.getQuantidade()-1;  
+            int quantidade = produtoVendido.getQuantidade() - 1;
             //Remove o produto selecionada da lista de locação
-            if(quantidade <= 0) {
+            if (quantidade <= 0) {
                 modeloTabelaProdutosVendidos.removeRow(linhaSelecionada);
                 //Remove o produto da lista de produtos vendidos
                 produtosVendidos.remove(produtoVendido);
             } else {
                 //Atualiza o valor da coluna de quantidade (segunda coluna) da tabela de produtos locados
-                modeloTabelaProdutosVendidos.setValueAt(quantidade+"", linhaSelecionada, 2);
+                modeloTabelaProdutosVendidos.setValueAt(quantidade + "", linhaSelecionada, 2);
             }
             //Atualiza a quantidade do produto no estoque
             adicionarProdutoAoEstoque(codigo);
             //Atualiza a quantidade no produto referente
             produtoVendido.setQuantidade(quantidade);
-            
+
             try {
                 //Atualiza o valor total da venda
                 valorGeral -= GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(codigo).getValor();
@@ -1023,24 +1044,24 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         } else {
             JOptionPane.showMessageDialog(null, "O produto não foi encontrado", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-        
+
     }
-    
+
     public void removerProdutoDoEstoque(int linhaSelecionada, String codigo) {
-        int quantProdutoEmEstoque = ((Integer) modeloTabelaProdutos.getValueAt(linhaSelecionada, 2))-1;
+        int quantProdutoEmEstoque = ((Integer) modeloTabelaProdutos.getValueAt(linhaSelecionada, 2)) - 1;
         modeloTabelaProdutos.setValueAt(quantProdutoEmEstoque, linhaSelecionada, 2);
         //Atualiza a quantidade do produto na lista de produtos em estoque
         getProdutoEmEstoque(codigo).setQuantidade(quantProdutoEmEstoque);
     }
-    
+
     public void adicionarProdutoAoEstoque(String codigo) {
         boolean atualizou = false;
-        
+
         Produto produtoEmEstoque = getProdutoEmEstoque(codigo);
-        
+
         //Atualiza a quantidade em estoque do produto
-        produtoEmEstoque.setQuantidade(produtoEmEstoque.getQuantidade()+1);
-        
+        produtoEmEstoque.setQuantidade(produtoEmEstoque.getQuantidade() + 1);
+
         for (int i = 0; i < modeloTabelaProdutos.getRowCount(); i++) {
             if (modeloTabelaProdutos.getValueAt(i, 0).equals(codigo)) {
                 //Atualiza a linha da tabela (2 = coluna de quantidade da tabela)
@@ -1049,82 +1070,82 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 break;
             }
         }
-        
-        if(!atualizou) {
+
+        if (!atualizou) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar a quantidade em estoque do produto", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
+
     public Produto getProdutoEmEstoque(String codigo) {
-        for(Produto produto: this.produtosEmEstoque) {
-            if(produto.getCodigo().equals(codigo)) {
+        for (Produto produto : this.produtosEmEstoque) {
+            if (produto.getCodigo().equals(codigo)) {
                 return produto;
             }
         }
         return null;
     }
-    
+
     public ProdutoVendido getProdutoVendido(String codigo) {
-        for(ProdutoVendido produto: this.produtosVendidos) {
-            if(produto.getCodigoProduto().equals(codigo)) {
+        for (ProdutoVendido produto : this.produtosVendidos) {
+            if (produto.getCodigoProduto().equals(codigo)) {
                 return produto;
             }
         }
         return null;
     }
-    
+
     public void calcularValorTotalVenda() {
         /*try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
-                valorTotalVenda = new BigDecimal(valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
+         valorTotalVenda = new BigDecimal(valorTotalVenda
+         - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)
+         ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 
-                labelValorVenda.setText("R$ " + valorTotalVenda);
+         labelValorVenda.setText("R$ " + valorTotalVenda);
                 
-            } else {
-                valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                labelValorVenda.setText("R$ " + valorTotalVenda);
-            }
-        } catch (TemporadaInexistenteException e) {
-            valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-            labelValorVenda.setText("R$ " + valorTotalVenda);
-        } catch (Exception e) {
-            valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-            labelValorVenda.setText("R$ " + valorTotalVenda);
-        }*/
+         } else {
+         valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         labelValorVenda.setText("R$ " + valorTotalVenda);
+         }
+         } catch (TemporadaInexistenteException e) {
+         valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         labelValorVenda.setText("R$ " + valorTotalVenda);
+         } catch (Exception e) {
+         valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+         labelValorVenda.setText("R$ " + valorTotalVenda);
+         }*/
     }
     /*
-    public void calcularValorTotalVendaComDesconto(int valorDesconto) {
-        try {
-            if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
-                double valorTotalComDescontoTemporada = valorTotalVenda
-                        - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100);
+     public void calcularValorTotalVendaComDesconto(int valorDesconto) {
+     try {
+     if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
+     double valorTotalComDescontoTemporada = valorTotalVenda
+     - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100);
                 
-                valorTotalVenda = new BigDecimal(valorTotalComDescontoTemporada 
-                        - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+     valorTotalVenda = new BigDecimal(valorTotalComDescontoTemporada 
+     - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
                 
-                labelValorVenda.setText("R$ " + valorTotalVenda);
-            } 
-        } catch (TemporadaInexistenteException e) {
-            //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
-            valorTotalVenda = new BigDecimal(valorTotalVenda
-                - ((valorTotalVenda * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-            labelValorVenda.setText("R$ " + valorTotalVenda);
-        }
-    }*/
-    
-    public boolean alterarDados() {        
+     labelValorVenda.setText("R$ " + valorTotalVenda);
+     } 
+     } catch (TemporadaInexistenteException e) {
+     //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
+     valorTotalVenda = new BigDecimal(valorTotalVenda
+     - ((valorTotalVenda * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+     labelValorVenda.setText("R$ " + valorTotalVenda);
+     }
+     }*/
+
+    public boolean alterarDados() {
         concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
         return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
     }
-    
+
     public Venda getNovaVenda() {
         return novaVenda;
     }
-    
+
     public Movimentacao getNovaMovimentacao() {
         return novaMovimentacao;
     }
@@ -1147,6 +1168,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private int percentualDescontoTemporada;
     private int maxCaracteresEntrada = 7;
     private double valorTotalComDescontos;
+    private final ProgressoBar aguarde = new ProgressoBar();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;
