@@ -293,7 +293,8 @@ public class GeradorDeRecibo {
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
             Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ " + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + " reais) "
+            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ " 
+                    + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + ") "
                     + "na forma de pagamento: " + loc.getFormaDePagamento()
                     + " Referente à locação de " + descCurtaProd.toString() + ".\n "
                     + "Valor Total: " + loc.getValorLocacao() + " "
@@ -432,7 +433,7 @@ public class GeradorDeRecibo {
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
             Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + valorPorExtenso(valorDessePagamento) + " na "
+            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de (" + valorPorExtenso(valorDessePagamento) + ") na "
                     + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
                     + "Referente à locação de " + descCurtaProd.toString() + "\n "
                     + "Valor Total: " + loc.getValorLocacao() + "  -  "

@@ -55,19 +55,16 @@ public class GerenciadorDeLocacao {
             locacao = new Locacao(cliente, produtosLocados, valor, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
             locacao.setAtiva(true);
-
+            
+            //Persistindo a locação, ela modificará o objeto colocando seu ID;
             ljp.create(locacao);
-
+            
+            //Adicionando a locação AO cliente, e depois editando o cliente, para que sua referência fique atualizada;
             cliente.adicionarLocacao(locacao);
             GerenciadorDePessoas.getInstance().editarCliente(cliente);
 
-            for (ProdutoLocado p : produtosLocados) {
-                GerenciadorDeProduto.getInstance().removerQuantidade(p.getCodigoProduto(), p.getQuantidade());
-            }
-
             locacao.imprimirContrato();
             locacao.gerarRecibo();
-            
 
             return locacao;
 
@@ -109,15 +106,12 @@ public class GerenciadorDeLocacao {
         }
     }
 
-    public void finalizarLocacao(long idLoc) throws LocacaoInexistenteException, ProdutoInexistenteException{
-        
-            Locacao locacao = this.pesquisarLocacaoPorId(idLoc);
-            for (ProdutoLocado pl: locacao.getProdutos()){
-                GerenciadorDeProduto.getInstance().adicionarQuantidade(pl.getCodigoProduto(), pl.getQuantidade());
-            }
-            locacao.setAtiva(false);
-            this.editarLocacao(locacao);
-            
+    public void finalizarLocacao(long idLoc) throws LocacaoInexistenteException, ProdutoInexistenteException {
+
+        Locacao locacao = this.pesquisarLocacaoPorId(idLoc);
+        locacao.setAtiva(false);
+        this.editarLocacao(locacao);
+
     }
 
     public List<Locacao> listarLocacoesPorDataDeLocacao(Calendar data) {
@@ -285,14 +279,13 @@ public class GerenciadorDeLocacao {
     public void verUltimoContratoGerado(long idLocacao) throws LocacaoInexistenteException, IOException, ContratoNaoGeradoException {
 
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
-        File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos() 
+        File diretorio = new File(GerenciadorDoSistema.getInstance().getConfiguracao().getDiretorioDeDocumentos()
                 + "\\" + locacao.getCliente().getNome() + "\\Contratos");
         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
         desktop.open(diretorio);
-        
+
 //            System.out.println("agora sai no throws: ====>>>>> " + locacao.getCaminhoUltimoContrato());
 //            throw new ContratoNaoGeradoException("O contrato para locação ainda não foi gerado");
-
     }
 
     public void gerarEImprimirPxReciboDeLocacao(long idLocacao, double valorDessePagamento) throws LocacaoInexistenteException, ProdutoInexistenteException, IOException, FileNotFoundException, PrinterException {
@@ -300,26 +293,61 @@ public class GerenciadorDeLocacao {
 
         locacao.gerarEImprimirPxRecibo(valorDessePagamento);
     }
-    
-    public boolean isLocacaoPaga(long idLocacao) throws LocacaoInexistenteException{
+
+    public boolean isLocacaoPaga(long idLocacao) throws LocacaoInexistenteException {
         Locacao locacao = this.pesquisarLocacaoPorId(idLocacao);
         return locacao.isLocacaoPaga();
     }
-    
-    public void editarLocacao(Locacao locacao) throws LocacaoInexistenteException{
+
+    public void editarLocacao(Locacao locacao) throws LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-        
-        try{
-            
+
+        try {
+
             ljp.editarLocacao(locacao);
-            
+
         } finally {
             emf.close();
         }
     }
-    
-    public boolean isFinalizada(long idLocacao) throws LocacaoInexistenteException{
+
+    public boolean isFinalizada(long idLocacao) throws LocacaoInexistenteException {
         return this.pesquisarLocacaoPorId(idLocacao).isFinalizada();
+    }
+
+    public List<Locacao> pesquisasrLocacoesEntreDatas(Calendar dataInicio, Calendar dataFinal) {
+        List<Locacao> locacoesEntreDatas = new ArrayList<Locacao>();
+        int manutencao = GerenciadorDoSistema.getInstance().getDiasDeManutencao();
+        int costureira = GerenciadorDoSistema.getInstance().getDiasDaCostureira();
+
+        for (Locacao l : this.getLocacoes()) {
+            if (l.isAtiva()) {
+                Calendar dataLocNoPeriodo = l.getDataLocacao();
+                dataLocNoPeriodo.add(Calendar.DATE, costureira);
+
+                Calendar dataDevNoPeriodo = l.getDataDevolucao();
+                dataDevNoPeriodo.add(Calendar.DATE, manutencao);
+
+                if (dataLocNoPeriodo.get(Calendar.YEAR) >= dataInicio.get(Calendar.YEAR)
+                        && dataDevNoPeriodo.get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR)) {
+
+                    if ((dataInicio.get(Calendar.DAY_OF_YEAR) >= dataInicio.get(Calendar.DAY_OF_YEAR)
+                            && dataFinal.get(Calendar.DAY_OF_YEAR) <= dataInicio.get(Calendar.DAY_OF_YEAR))
+
+                            || (dataInicio.get(Calendar.DAY_OF_YEAR) >= dataFinal.get(Calendar.DAY_OF_YEAR)
+                            && dataFinal.get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR))) {
+
+                        locacoesEntreDatas.add(l);
+
+                    }
+
+                }
+            }
+
+        }
+
+        return locacoesEntreDatas;
+
     }
 }

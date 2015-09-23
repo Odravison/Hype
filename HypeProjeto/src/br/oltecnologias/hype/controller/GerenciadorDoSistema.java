@@ -812,4 +812,12 @@ public class GerenciadorDoSistema {
             emf.close();
         }
     }
+
+    public int getDiasDaCostureira() {
+        return getConfiguracao().getDiasDaCostureira();
+    }
+
+    public int getDiasDeManutencao() {
+        return getConfiguracao().getDiasDeManutencao();
+    }
 }

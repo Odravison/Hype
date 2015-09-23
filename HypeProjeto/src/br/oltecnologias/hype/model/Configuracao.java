@@ -64,6 +64,8 @@ public class Configuracao implements Serializable {
     private int diasDeExtravio = 0;
     
     private String diretorioDeRelatorios = null;
+    private int diasDaCostureira = 0;
+    private int diasDeManutencao = 0;
     
     
 
@@ -83,7 +85,22 @@ public class Configuracao implements Serializable {
     public void setDiretorioDeRelatorios(String diretorioDeRelatorios) {
         this.diretorioDeRelatorios = diretorioDeRelatorios;
     }
-    
+
+    public int getDiasDaCostureira() {
+        return (diasDaCostureira*-1);
+    }
+
+    public int getDiasDeManutencao() {
+        return diasDeManutencao;
+    }
+
+    public void setDiasDaCostureira(int diasDaCostureira) {
+        this.diasDaCostureira = diasDaCostureira;
+    }
+
+    public void setDiasDeManutencao(int diasDeManutencao) {
+        this.diasDeManutencao = diasDeManutencao;
+    }    
 
     private static class ConfiguracaoHolder {
         private static final Configuracao INSTANCE = new Configuracao();

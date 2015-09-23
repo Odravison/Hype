@@ -222,7 +222,7 @@ public class Locacao implements Serializable {
     }
 
     public boolean isAtiva() {
-        return ativa;
+        return this.ativa;
     }
 
     public void setAtiva(boolean ativa) {

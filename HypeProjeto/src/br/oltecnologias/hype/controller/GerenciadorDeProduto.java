@@ -358,5 +358,28 @@ public class GerenciadorDeProduto {
             }
             return listaDeRetorno;
     }
+    
+    public List<Produto> getProdutosDisponiveisEntreDatas(Calendar dataInicio, Calendar dataFinal){
+        List<Produto> retorno = getProdutosDeLocacao();
+        List<Locacao> locacaoEntreDatas = GerenciadorDeLocacao.getInstance().pesquisasrLocacoesEntreDatas(dataInicio, dataFinal);
+        
+        if (GerenciadorDeLocacao.getInstance().getLocacoes().isEmpty()){
+            return retorno;
+        }
+        
+        for (Locacao l: locacaoEntreDatas){
+            for (ProdutoLocado pl: l.getProdutos()){
+                for (Produto p: retorno){
+                    if (p.getCodigo().equals(pl.getCodigoProduto())){
+                        if (p.getQuantidade() > 0){
+                            p.removerQuant(pl.getQuantidade());
+                        }
+                    }
+                }
+            }
+        }
+        
+        return retorno;
+    }
 
 }
