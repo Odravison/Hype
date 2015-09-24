@@ -816,6 +816,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     aguarde.setResizable(false);
                     aguarde.setLocationRelativeTo(null);
                     aguarde.iniciar();
+                    this.setAlwaysOnTop(false);
                     aguarde.setAlwaysOnTop(true);
                     aguarde.setVisible(true);
 
@@ -855,6 +856,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
+                    this.setAlwaysOnTop(true);
                 }
 
             }
@@ -865,6 +867,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
+            this.setAlwaysOnTop(true);
         }
 
 
