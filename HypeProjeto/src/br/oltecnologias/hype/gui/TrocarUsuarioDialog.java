@@ -10,6 +10,7 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.UsuarioInexistenteException;
 import br.oltecnologias.hype.model.Usuario;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author Luender Lima
@@ -147,64 +148,69 @@ public class TrocarUsuarioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void campoLoginKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoLoginKeyTyped
-        if(campoLogin.getText().length() >= maxCaracteresNickName) {
+        if (campoLogin.getText().length() >= maxCaracteresNickName) {
             evt.consume();
         }
     }//GEN-LAST:event_campoLoginKeyTyped
 
     private void campoSenhaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoSenhaKeyTyped
-        if(new String (campoSenha.getPassword()).length() >= maxCaracteresSenha) {
+        if (new String(campoSenha.getPassword()).length() >= maxCaracteresSenha) {
             evt.consume();
         }
     }//GEN-LAST:event_campoSenhaKeyTyped
 
     private void botaoEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEntrarActionPerformed
 
-        if(campoLogin.getText().length() <= 0) {
+        if (campoLogin.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "Informe o login", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else if(campoSenha.getPassword().length <= 0) {
+        } else if (campoSenha.getPassword().length <= 0) {
             JOptionPane.showMessageDialog(null, "Informe a senha", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            try {
-                // Validar usuário no sistema
-                if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
+            if (usuarioLogado.getNickName().toUpperCase().equals(campoLogin.getText().toUpperCase())) {
+                JOptionPane.showMessageDialog(null, "Você já está logado", "Aviso", JOptionPane.WARNING_MESSAGE);
+            } else {
+                try {
+                    // Validar usuário no sistema
+                    if (GerenciadorDePessoas.getInstance().validarUsuario(campoLogin.getText(), new String(campoSenha.getPassword()))) {
 
-                    try {
-                        usuarioLogado = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText());
-                        GerenciadorDoSistema.getInstance().setUsuarioLogado(usuarioLogado);
-                                                
-                        //O botão concluir foi selecionado
-                        concluirSelecionado = true;
-                        //Fecha janela
-                        setVisible(false);
-                    } catch (UsuarioInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        try {
+                            usuarioLogado = GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(campoLogin.getText());
+                            GerenciadorDoSistema.getInstance().setUsuarioLogado(usuarioLogado);
+
+                            //O botão concluir foi selecionado
+                            concluirSelecionado = true;
+                            //Fecha janela
+                            setVisible(false);
+                        } catch (UsuarioInexistenteException e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "Usuário não cadastrado no sistema. \n\nInforme os dados novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
+
         }
     }//GEN-LAST:event_botaoEntrarActionPerformed
 
-     public boolean alterarDados() {        
+    public boolean alterarDados() {
         concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
         setVisible(true);       //Mostramos a dialog e esperamos o usuário escolher alguma coisa.
         return concluirSelecionado;   //Retornamos true, se ele pressionou ok.
     }
-    
+
     public boolean isUsuarioAdministrador() {
         return usuarioLogado.isAdministrador();
     }
-    
+
     public Usuario getNovoUsuarioLogado() {
         return usuarioLogado;
     }
-    
+
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
     protected boolean concluirSelecionado;
