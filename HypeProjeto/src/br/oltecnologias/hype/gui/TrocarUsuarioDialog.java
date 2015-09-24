@@ -214,7 +214,7 @@ public class TrocarUsuarioDialog extends java.awt.Dialog {
     private int maxCaracteresNickName = 15;
     private int maxCaracteresSenha = 12;
     protected boolean concluirSelecionado;
-    private Usuario usuarioLogado;
+    private Usuario usuarioLogado = GerenciadorDoSistema.getInstance().getUsuarioLogado();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoEntrar;
     private javax.swing.JTextField campoLogin;
