@@ -130,7 +130,7 @@ public class Venda implements Serializable {
     }
     
     public String getEntradaInString() {
-        return new DecimalFormat("#.##").format(this.entrada);
+        return new DecimalFormat("0.00").format(this.entrada);
     }
 
     public String getDataVendaInString() {

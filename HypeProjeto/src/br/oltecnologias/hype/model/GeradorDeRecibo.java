@@ -27,6 +27,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -294,12 +295,12 @@ public class GeradorDeRecibo {
 
             Paragraph textoRecibo;
             textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ " 
-                    + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + ") "
+                    + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
                     + "na forma de pagamento: " + loc.getFormaDePagamento()
                     + " Referente à locação de " + descCurtaProd.toString() + ".\n "
-                    + "Valor Total: " + loc.getValorLocacao() + " "
-                    + "Entrada: " + loc.getValorDeEntrada() + ". \n"
-                    + "Resta: " + valorResta + " - "
+                    + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + " "
+                    + "Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ". \n"
+                    + "Resta: " + this.getValorInString(valorResta) + " - "
                     + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
@@ -433,12 +434,12 @@ public class GeradorDeRecibo {
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
             Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de (" + valorPorExtenso(valorDessePagamento) + ") na "
+            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + this.getValorInString(valorDessePagamento) + "(" + valorPorExtenso(valorDessePagamento) + ") na "
                     + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
                     + "Referente à locação de " + descCurtaProd.toString() + "\n "
-                    + "Valor Total: " + loc.getValorLocacao() + "  -  "
-                    + "Pago neste dia: " + valorDessePagamento + "\n"
-                    + "Resta: " + valorResta + " - "
+                    + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + "  -  "
+                    + "Pago neste dia: " + this.getValorInString(valorDessePagamento) + "\n"
+                    + "Resta: " + this.getValorInString(valorResta) + " - "
                     + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
@@ -580,11 +581,11 @@ public class GeradorDeRecibo {
 
             Paragraph textoRecibo;
             textoRecibo = new Paragraph("Recebi de ____________________________________________________________ a importância de R$ "
-                    + valorDaOperacao + " (" + valorPorExtenso(valorDaOperacao) + " reais) "
+                    + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
                     + "na forma de pagamento: " + venda.getFormaDePagamento()
                     + " Referente à compra de " + descCurtaProd.toString() + ".\n"
-                    + "Valor Total: " + venda.getValor() + " "
-                    + "Entrada: " + venda.getEntrada() + ". \n" , timesNewRoman12);
+                    + "Valor Total: " + this.getValorInString(venda.getValor()) + " "
+                    + "Entrada: " + this.getValorInString(venda.getEntrada()) + ". \n" , timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -642,5 +643,9 @@ public class GeradorDeRecibo {
 
         }
 
+    }
+    
+    private String getValorInString(Double valor) {
+        return new DecimalFormat("0.00").format(valor);
     }
 }

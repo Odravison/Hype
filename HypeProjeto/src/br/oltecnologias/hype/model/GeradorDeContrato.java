@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -50,7 +51,7 @@ public class GeradorDeContrato {
     public void gerarEImprimirContrato(Locacao locacao) throws IOException, Exception {
 
         gerarContrato(locacao);
-        
+
         String horaGeracao = new SimpleDateFormat("_HH-mm").format(Calendar.getInstance().getTime());
         String diaContrato = new SimpleDateFormat("dd.MM.yyyy").format(locacao.getDataLocacao().getTime());
 
@@ -58,7 +59,7 @@ public class GeradorDeContrato {
                 + "\\" + locacao.getCliente().getNome() + "\\Contratos\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf";
 
         FileInputStream fis = new FileInputStream(diretorio);
-        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf", 
+        PrintPdf printPDFFile = new PrintPdf(fis, "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf",
                 conf.getNomeDaImpressora());
 
         printPDFFile.print();
@@ -94,11 +95,11 @@ public class GeradorDeContrato {
             PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf"));
             pdf.open();
             pdf.setPageSize(PageSize.A4);
-            
+
             String diretorioFinal = diretorio.toString() + "\\" + "DL_" + diaContrato + "__H_" + horaGeracao + ".pdf";
             //Essa linha acima que deveria ser salva em UltimoCaminhoContrato
-            
-            GerenciadorDeLocacao.getInstance().setUltimoCaminhoContrato(locacao.getId(), diretorio.toString());            
+
+            GerenciadorDeLocacao.getInstance().setUltimoCaminhoContrato(locacao.getId(), diretorio.toString());
 
             Paragraph tituloContrato = new Paragraph("CONTRATO DE LOCAÇÃO DE ROUPAS E ACESSÓRIOS", timesNewRoman14);
             tituloContrato.setAlignment(Paragraph.ALIGN_CENTER);
@@ -143,7 +144,6 @@ public class GeradorDeContrato {
                     + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
             diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
 
-
             pdf.add(tituloContrato);
             pdf.add(textoContrato);
             pdf.add(periodo);
@@ -164,7 +164,7 @@ public class GeradorDeContrato {
             pdf.add(dadosCliente);
             pdf.add(linhaAssinatura);
             pdf.add(dadosEmpresa);
-            pdf.add(diaLocal);                    
+            pdf.add(diaLocal);
 
         } catch (DocumentException | IOException de) {
             System.err.println(de.getMessage());
@@ -179,12 +179,12 @@ public class GeradorDeContrato {
         List<ProdutoLocado> produtosLocados = new ArrayList<ProdutoLocado>();
         produtosLocados = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao).getProdutos();
         for (Produto p : this.produtos) {
-            for (ProdutoLocado pl: produtosLocados){
-                if (pl.getCodigoProduto().toUpperCase().equals(p.getCodigo().toUpperCase())){
-                    descCompleta += pl.getQuantidade() + " - " +p.getDescricao() + "\n";
+            for (ProdutoLocado pl : produtosLocados) {
+                if (pl.getCodigoProduto().toUpperCase().equals(p.getCodigo().toUpperCase())) {
+                    descCompleta += pl.getQuantidade() + " - " + p.getDescricao() + "\n";
                 }
             }
-            
+
         }
 
         return descCompleta;

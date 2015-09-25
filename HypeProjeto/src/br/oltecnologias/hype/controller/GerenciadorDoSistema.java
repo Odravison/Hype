@@ -34,6 +34,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -205,7 +206,7 @@ public class GerenciadorDoSistema {
         String diretorioFinal = null;
 
         double valorRecebido = 0.00;
-        
+
         double cartaoVenda = 0.00;
         double cartaoLocacao = 0.00;
 
@@ -241,7 +242,7 @@ public class GerenciadorDoSistema {
                     if (mov.getMovimento().toUpperCase().equals("VENDA")) {
                         Venda venda = GerenciadorDeVenda.getInstance().pesquisarVendaPorId(mov.getIdDaOperacao());
                         if (venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")
-                            || venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")){
+                                || venda.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")) {
                             cartaoVenda += venda.getJaPago();
                         }
                         quantVenda++;
@@ -251,7 +252,7 @@ public class GerenciadorDoSistema {
                     } else if (mov.getMovimento().toUpperCase().equals("LOCAÇÃO")) {
                         Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(mov.getIdDaOperacao());
                         if (locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
-                            || locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")){
+                                || locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")) {
                             cartaoLocacao += locacao.getJaPago();
                         }
                         quantLocacao++;
@@ -306,7 +307,7 @@ public class GerenciadorDoSistema {
                 table.setWidths(larguras);
 
                 for (String s : relatorio) {
-                    table.addCell(new Phrase (s, timesNewRoman12));
+                    table.addCell(new Phrase(s, timesNewRoman12));
                 }
                 Paragraph tituloRelatorio = new Paragraph("RELÁTÓRIO DE " + diaIni + "/" + mesIni + " a "
                         + diaFinal + "/" + mesFinal, timesNewRoman14);
@@ -317,9 +318,9 @@ public class GerenciadorDoSistema {
                         + "Quantidade de vendas: " + quantVenda + " - Total de venda: R$ " + totalVenda + "\n"
                         + "Quantidade de Locações: " + quantLocacao + " - Total de locações: R$ " + totalLocacao + "\n"
                         + "Quantidade de Despesas: " + quantDespesa + " - Total de despesas: R$ " + totalDespesa + "\n"
-                        + "Valor em caixa neste período: " + ((totalVenda + totalLocacao - totalDespesa)-(cartaoLocacao + cartaoVenda)) + "\n"
-                        + "Valor pago em Cartão para vendas: " + cartaoVenda + "\n"
-                        + "Valor pago em Cartão para locações: " + cartaoLocacao, timesNewRoman12);
+                        + "Valor em caixa neste período: " + this.getValorInString((totalVenda + totalLocacao - totalDespesa) - (cartaoLocacao + cartaoVenda)) + "\n"
+                        + "Valor pago em Cartão para vendas: " + this.getValorInString(cartaoVenda) + "\n"
+                        + "Valor pago em Cartão para locações: " + this.getValorInString(cartaoLocacao), timesNewRoman12);
                 resumoRelatorio.setAlignment(Paragraph.ALIGN_LEFT);
 
                 pdf.add(tituloRelatorio);
@@ -563,26 +564,16 @@ public class GerenciadorDoSistema {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         Movimentacao mov;
-        System.out.println("CHEGOU NO ADICIONARMOVIMENTACAO");
         if (tipo.toUpperCase().equals("VENDA")) {
-            System.out.println("VAI TRANSFORMAR O OBJECT EM VENDA");
             Venda venda = (Venda) obj;
-            System.out.println("VENDA\nVALOR: " + venda.getValor() + ", DATA: " + venda.getDataVenda() + ", EMPRESA: "
-                    + conf.getEmpresa().getNome() + " ID: " + venda.getId() + ", FORMAPAG: " + venda.getFormaDePagamento());
             mov = new Movimentacao("Venda", venda.getValor(), venda.getDataVenda(), usuarioLogado.getNickName(),
                     conf.getEmpresa().getNome(), venda.getId(), venda.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("DESPESA")) {
-            System.out.println("VAI TRANSFORMAR O OBJECT EM DESPESA");
             Despesa despesa = (Despesa) obj;
             mov = new Movimentacao("Despesa", despesa.getValor(), despesa.getData(), despesa.getEmissor(), despesa.getFavorecido(), despesa.getId(),
                     despesa.getFormaDePagamento());
         } else if (tipo.toUpperCase().equals("LOCAÇÃO")) {
-            System.out.println("VAI TRANSFORMAR O OBJECT EM LOCAÇÃO");
             Locacao locacao = (Locacao) obj;
-            System.out.println("LOCAÇÃO\nVALOR: " + (locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago())
-                    + ", EMPRESA: " + conf.getEmpresa().getNome()
-                    + conf.getEmpresa().getNome() + " ID: " + locacao.getId() + ", FORMAPAG: " + locacao.getFormaDePagamento());
-
             mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
                     usuarioLogado.getNickName(), conf.getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
         } else {
@@ -679,15 +670,23 @@ public class GerenciadorDoSistema {
         }
     }
 
-    public List<Movimentacao> pesquisarMovimentacoesPendentes() {
+    public List<Movimentacao> pesquisarMovimentacoesPendentes() throws LocacaoInexistenteException {
         List<Movimentacao> listaDeRetorno = new ArrayList<Movimentacao>();
 
         for (Movimentacao m : this.getMovimentacoes()) {
-            if (m.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
-                    || m.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")
-                    || m.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
+            if (m.getMovimento().toUpperCase().equals("LOCAÇÃO")) {
+                if (!GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(m.getIdDaOperacao()).isLocacaoPaga()) {
+                    if (m.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
+                            || m.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")
+                            || m.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
+                        listaDeRetorno.add(m);
+                    }
+                }
+
+            } else if (m.getMovimento().toUpperCase().equals("DESPESA")){
                 listaDeRetorno.add(m);
             }
+
         }
         return listaDeRetorno;
     }
@@ -819,5 +818,9 @@ public class GerenciadorDoSistema {
 
     public int getDiasDeManutencao() {
         return getConfiguracao().getDiasDeManutencao();
+    }
+
+    private String getValorInString(Double valor) {
+        return new DecimalFormat("0.00").format(valor);
     }
 }
