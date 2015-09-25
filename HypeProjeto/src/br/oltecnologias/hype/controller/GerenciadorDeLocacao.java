@@ -42,7 +42,7 @@ public class GerenciadorDeLocacao {
 
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor,
             Calendar dataLocacao, Calendar dataDeDevolucao, String formaDePagamento, int parcelas,
-            double entrada, int percentualDesconto) throws ProdutoInexistenteException, LocacaoExistenteException,
+            double entrada, int percentualDesconto, String tipoDeEntradaPromissoria) throws ProdutoInexistenteException, LocacaoExistenteException,
             ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException,
             LocacaoInexistenteException, IOException, Exception {
 
@@ -53,7 +53,7 @@ public class GerenciadorDeLocacao {
 
         try {
             locacao = new Locacao(cliente, produtosLocados, valor, dataLocacao,
-                    dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
+                    dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto,tipoDeEntradaPromissoria);
             locacao.setAtiva(true);
 
             //Persistindo a locação, ela modificará o objeto colocando seu ID;
