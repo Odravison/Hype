@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -169,30 +170,30 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
-            GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
-            
-            JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
-            setVisible(false);
-            dispose();
+                    GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
+
+                    JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
+                    setVisible(false);
+                    dispose();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Não foi possível imprimir o recibo\n\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não foi possível imprimir o recibo\n\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoGerarActionPerformed
 
     private void comboQuantidadeParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboQuantidadeParcelasActionPerformed
-        valorRecibo = valorParcela * comboQuantidadeParcelas.getSelectedIndex()+1;
-        labelValorRecibo.setText("R$ "+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-        labelValorResta.setText("Resta a ser pago: R$ "+new BigDecimal(valorQueResta-valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        valorRecibo = valorParcela * comboQuantidadeParcelas.getSelectedIndex() + 1;
+        labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
     }//GEN-LAST:event_comboQuantidadeParcelasActionPerformed
 
     public void calcularQuantidadeParcelas() {
         int quantParcelas = 1;
-        while(valorQueResta/quantParcelas > valorRecibo) {
+        while (valorQueResta / quantParcelas > valorRecibo) {
             quantParcelas++;
         }
         String[] valores = new String[quantParcelas];
-        for(int i=0; i < quantParcelas; i++) {
-            valores[i] = i+1+"";
+        for (int i = 0; i < quantParcelas; i++) {
+            valores[i] = i + 1 + "";
         }
         comboQuantidadeParcelas.setMaximumRowCount(quantParcelas);
         comboQuantidadeParcelas.setModel(new javax.swing.DefaultComboBoxModel(valores));

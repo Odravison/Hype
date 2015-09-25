@@ -150,15 +150,6 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
     }//GEN-LAST:event_closeDialog
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
-        aguarde.setUndecorated(true);
-        aguarde.setResizable(false);
-        aguarde.setLocationRelativeTo(null);
-        aguarde.iniciar();
-        aguarde.setVisible(true);
-
-        new SwingWorker() {
-            @Override
-            protected Object doInBackground() throws Exception {
                 try {
                     if (dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
                         JOptionPane.showMessageDialog(null, "A data final do contrato não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -170,15 +161,6 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, "Ocorreu algum problema na geração do relatório", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-                return null;
-            }
-
-            @Override
-            protected void done() {
-                aguarde.dispose();
-
-            }
-        }.execute();
     }//GEN-LAST:event_botaoGerarActionPerformed
 
     private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed

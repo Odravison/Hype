@@ -319,18 +319,18 @@ public class GerenciadorDeLocacao {
         for (Locacao l : this.getLocacoes()) {
             if (l.isAtiva()) {
                 Calendar dataLocNoPeriodo = l.getDataLocacao();
-                dataLocNoPeriodo.add(Calendar.DATE, costureira);
+                dataLocNoPeriodo.add(Calendar.DAY_OF_MONTH, costureira);
 
                 Calendar dataDevNoPeriodo = l.getDataDevolucao();
-                dataDevNoPeriodo.add(Calendar.DATE, manutencao);
+                dataDevNoPeriodo.add(Calendar.DAY_OF_MONTH, manutencao);
 
                 if (dataLocNoPeriodo.get(Calendar.YEAR) >= dataInicio.get(Calendar.YEAR)
                         && dataDevNoPeriodo.get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR)) {
 
-                    if ((dataInicio.get(Calendar.DAY_OF_YEAR) >= dataInicio.get(Calendar.DAY_OF_YEAR)
-                            && dataFinal.get(Calendar.DAY_OF_YEAR) <= dataInicio.get(Calendar.DAY_OF_YEAR))
-                            || (dataInicio.get(Calendar.DAY_OF_YEAR) >= dataFinal.get(Calendar.DAY_OF_YEAR)
-                            && dataFinal.get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR))) {
+                    if ((dataLocNoPeriodo.get(Calendar.DAY_OF_YEAR) <= dataInicio.get(Calendar.DAY_OF_YEAR)
+                            && dataDevNoPeriodo.get(Calendar.DAY_OF_YEAR) >= dataInicio.get(Calendar.DAY_OF_YEAR))
+                            || (dataLocNoPeriodo.get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR)
+                            && dataDevNoPeriodo.get(Calendar.DAY_OF_YEAR) >= dataFinal.get(Calendar.DAY_OF_YEAR))) {
 
                         locacoesEntreDatas.add(l);
 
@@ -355,5 +355,25 @@ public class GerenciadorDeLocacao {
         }
 
         return locacoesAtivas;
+    }
+
+    public List<Locacao> getLocacaoASerPreparada() {
+        List<Locacao> locacaoASerPreparada = new ArrayList<Locacao>();
+        int costureira = GerenciadorDoSistema.getInstance().getDiasDaCostureira();
+
+        for (Locacao l : this.getLocacoes()) {
+            if (l.isAtiva()) {
+                Calendar dataLocNoPeriodo = l.getDataLocacao();
+                dataLocNoPeriodo.add(Calendar.DAY_OF_MONTH, costureira);
+                if (dataLocNoPeriodo.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
+                    if (dataLocNoPeriodo.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                        
+                        locacaoASerPreparada.add(l);
+
+                    }
+                }
+            }
+        }
+        return locacaoASerPreparada;
     }
 }

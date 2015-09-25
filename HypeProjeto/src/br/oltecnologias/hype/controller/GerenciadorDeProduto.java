@@ -394,5 +394,19 @@ public class GerenciadorDeProduto {
         
         return false;
     }
+    
+    public List<Produto> getProdutosParaCostureira() throws ProdutoInexistenteException{
+        List<Produto> produtosParaCostureira = new ArrayList<Produto>();
+        List<Locacao> locacoesASeremPreparada = GerenciadorDeLocacao.getInstance().getLocacaoASerPreparada();
+        
+        for (Locacao l: locacoesASeremPreparada){
+            for (ProdutoLocado pl: l.getProdutos()){
+                Produto p = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
+                p.setQuantidade(pl.getQuantidade());
+                produtosParaCostureira.add(p);
+            }
+        }
+        return produtosParaCostureira;
+    }
 
 }

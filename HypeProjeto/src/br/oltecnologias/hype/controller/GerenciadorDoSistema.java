@@ -255,6 +255,9 @@ public class GerenciadorDoSistema {
                                 || locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")) {
                             cartaoLocacao += locacao.getJaPago();
                         }
+                        else if (locacao.getTipoEntradaDePromissoria().toUpperCase().equals("CARTÃO")){
+                            cartaoLocacao += locacao.getJaPago();
+                        }
                         quantLocacao++;
                         valorRecebido = locacao.getJaPago();
                         totalLocacao += valorRecebido;
