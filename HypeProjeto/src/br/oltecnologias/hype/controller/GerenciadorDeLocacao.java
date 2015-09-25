@@ -55,10 +55,10 @@ public class GerenciadorDeLocacao {
             locacao = new Locacao(cliente, produtosLocados, valor, dataLocacao,
                     dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto);
             locacao.setAtiva(true);
-            
+
             //Persistindo a locação, ela modificará o objeto colocando seu ID;
             ljp.create(locacao);
-            
+
             //Adicionando a locação AO cliente, e depois editando o cliente, para que sua referência fique atualizada;
             cliente.adicionarLocacao(locacao);
             GerenciadorDePessoas.getInstance().editarCliente(cliente);
@@ -97,7 +97,6 @@ public class GerenciadorDeLocacao {
         try {
 
             Locacao loc = this.pesquisarLocacaoPorId(id);
-            System.out.println("========>>>>>>>>> o caminho é esse: " + caminho);
             loc.setCaminhoUltimoContrato(caminho);
             ljp.editarLocacao(loc);
 
@@ -175,22 +174,18 @@ public class GerenciadorDeLocacao {
     }
 
     public List<Locacao> listarLocacoesEmAtraso() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-
-        List<Locacao> atrasos = new ArrayList<Locacao>();
-
-        try {
-            for (Locacao l : ljp.getAllLocacao()) {
-                if (l.getDataDevolucao().before(Calendar.getInstance())) {
-                    atrasos.add(l);
+        List<Locacao> locacoesEmAtraso = new ArrayList<Locacao>();
+        for (Locacao l : this.getLocacoesAtivas()) {
+            if (!l.isFinalizada()) {
+                if (!l.isLocacaoPaga()) {
+                    if (l.getDataLocacao().get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                        locacoesEmAtraso.add(l);
+                    }
                 }
             }
-        } finally {
-            emf.close();
         }
 
-        return atrasos;
+        return locacoesEmAtraso;
 
     }
 
@@ -316,7 +311,7 @@ public class GerenciadorDeLocacao {
         return this.pesquisarLocacaoPorId(idLocacao).isFinalizada();
     }
 
-    public List<Locacao> pesquisasrLocacoesEntreDatas(Calendar dataInicio, Calendar dataFinal) {
+    public List<Locacao> pesquisarLocacoesEntreDatas(Calendar dataInicio, Calendar dataFinal) {
         List<Locacao> locacoesEntreDatas = new ArrayList<Locacao>();
         int manutencao = GerenciadorDoSistema.getInstance().getDiasDeManutencao();
         int costureira = GerenciadorDoSistema.getInstance().getDiasDaCostureira();
@@ -334,7 +329,6 @@ public class GerenciadorDeLocacao {
 
                     if ((dataInicio.get(Calendar.DAY_OF_YEAR) >= dataInicio.get(Calendar.DAY_OF_YEAR)
                             && dataFinal.get(Calendar.DAY_OF_YEAR) <= dataInicio.get(Calendar.DAY_OF_YEAR))
-
                             || (dataInicio.get(Calendar.DAY_OF_YEAR) >= dataFinal.get(Calendar.DAY_OF_YEAR)
                             && dataFinal.get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR))) {
 
@@ -349,5 +343,17 @@ public class GerenciadorDeLocacao {
 
         return locacoesEntreDatas;
 
+    }
+
+    public List<Locacao> getLocacoesAtivas() {
+        List<Locacao> locacoesAtivas = new ArrayList<Locacao>();
+        for (Locacao l : this.getLocacoes()) {
+            if (l.isAtiva()) {
+                locacoesAtivas.add(l);
+            }
+
+        }
+
+        return locacoesAtivas;
     }
 }
