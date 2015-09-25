@@ -269,7 +269,7 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="botaoBuscar" min="-2" max="-2" attributes="0"/>
+                          <Component id="botaoPesquisar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -282,7 +282,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="campoPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="botaoBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="botaoPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -328,7 +328,7 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoPesquisarKeyTyped"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="botaoBuscar">
+        <Component class="javax.swing.JButton" name="botaoPesquisar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
@@ -339,7 +339,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoBuscarActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoPesquisarActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="scPnProdutos">
@@ -363,9 +363,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="0" rowCount="0"/>
-                </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0"/>
                 </Property>
@@ -380,7 +377,7 @@
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaProdutosMouseClicked"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); &#xa;// Altura das linhas&#xa;tabelaProdutos.setRowHeight(20); &#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o&quot;, &quot;Qtd&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa;&#xa;//Adicionando valores nas linhas&#xa;for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeLocacao()) {&#xa;    listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});&#xa;}&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(387);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(40);"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tabelaProdutos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);&#xa;&#xa;//Define a fonte do cabe&#xe7;alho da tabela de produtos&#xa;tabelaProdutos.getTableHeader().setFont(new java.awt.Font(&quot;Tahoma&quot;, 0, 14)); &#xa;// Altura das linhas&#xa;tabelaProdutos.setRowHeight(20); &#xa;&#xa;String[] nomesColunasTabelaProdutos = {&quot;C&#xf3;digo&quot;, &quot;Descri&#xe7;&#xe3;o&quot;, &quot;Qtd&quot;};&#xa;//Essa lista ter&#xe1; as linhas da tabela&#xa;List&lt;Object[]&gt; listaLinhasProdutos = new ArrayList&lt;&gt;();&#xa;&#xa;&#xa;//cria um defaultablemodel com as informa&#xe7;&#xf5;es acima&#xa;modeloTabelaProdutos = new DefaultTableModel(&#xa;                    listaLinhasProdutos.toArray(new Object[listaLinhasProdutos.size()][]), nomesColunasTabelaProdutos){&#xa;&#xa;                        boolean[] canEdit = new boolean [] {false, false, false};&#xa;                        &#xa;                        @Override  &#xa;                        public boolean isCellEditable(int rowIndex, int columnIndex){  &#xa;                            return canEdit [columnIndex];  &#xa;                        } &#xa;&#xa;                    };&#xa;&#xa;//define o model da tabela&#xa;tabelaProdutos.setModel(modeloTabelaProdutos);&#xa;// Redimensionando a largura da coluna de c&#xf3;digo&#xa;tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);&#xa;// Redimensionando a largura da coluna de descri&#xe7;&#xe3;o&#xa;tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(387);&#xa;// Redimensionando a largura da coluna de finalidade&#xa;tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(40);"/>
               </AuxValues>
             </Component>
           </SubComponents>
@@ -490,35 +487,45 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="87" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="labelMensagemContrato" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="labelDataInicial" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="dateDataInicialContrato" min="-2" pref="120" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
-                          <Component id="labelDataFinal" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="labelDataInicial" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="dateDataInicialContrato" min="-2" pref="120" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                  <Component id="labelDataFinal" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="dateDataFinalContrato" min="-2" pref="120" max="-2" attributes="0"/>
-                  <EmptySpace pref="87" max="32767" attributes="0"/>
+                  <EmptySpace pref="63" max="32767" attributes="0"/>
+                  <Component id="botaoBuscar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="labelMensagemContrato" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="217" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="labelMensagemContrato" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="28" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dateDataFinalContrato" min="-2" max="-2" attributes="0"/>
-                      <Component id="dateDataInicialContrato" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelDataInicial" min="-2" max="-2" attributes="0"/>
-                      <Component id="labelDataFinal" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="botaoBuscar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="labelMensagemContrato" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="28" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="dateDataFinalContrato" min="-2" max="-2" attributes="0"/>
+                              <Component id="dateDataInicialContrato" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelDataInicial" min="-2" max="-2" attributes="0"/>
+                              <Component id="labelDataFinal" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace pref="31" max="32767" attributes="0"/>
               </Group>
@@ -553,6 +560,20 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Informe a dura&#xe7;&#xe3;o do contrato:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="botaoBuscar">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="13" style="0"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Buscar"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor em Forma de M&#xe3;o"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoBuscarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -616,34 +637,39 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="20" pref="202" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
+                                  <Component id="radioCredito" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                                  <Component id="radioDebito" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="radioAVista" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="radioCartao" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="radioPromissoria" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                          <Component id="comboFormaPagamentoEntrada" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="labelEntrada" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="campoEntrada" min="-2" pref="69" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                           <Component id="labelParcelas" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
-                              <Component id="radioCredito" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
-                              <Component id="radioDebito" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="radioAVista" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="radioCartao" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="radioPromissoria" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="campoParcelas" min="-2" pref="33" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -666,6 +692,7 @@
                       <Component id="campoEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="labelParcelas" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="campoParcelas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="comboFormaPagamentoEntrada" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -805,6 +832,23 @@
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="radioDebito.setVisible(false);"/>
+          </AuxValues>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="comboFormaPagamentoEntrada">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="13" style="0"/>
+            </Property>
+            <Property name="maximumRowCount" type="int" value="3"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="2">
+                <StringItem index="0" value="Dinheiro"/>
+                <StringItem index="1" value="Cart&#xe3;o"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="comboFormaPagamentoEntrada.setVisible(false);"/>
           </AuxValues>
         </Component>
       </SubComponents>

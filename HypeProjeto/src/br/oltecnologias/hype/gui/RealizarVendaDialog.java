@@ -759,12 +759,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         radioCartao.setSelected(false);
         desabilitarCampos();
         desabilitarRadios();
+        limparValores();
     }//GEN-LAST:event_radioAVistaActionPerformed
 
     private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
         radioAVista.setSelected(false);
         habilitarRadios();
         desabilitarCampos();
+        limparValores();
     }//GEN-LAST:event_radioCartaoActionPerformed
 
     private void radioCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreditoActionPerformed
@@ -911,7 +913,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         }
 
         labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda
-        ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
@@ -981,6 +983,14 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     public void desabilitarRadios() {
         radioCredito.setVisible(false);
         radioDebito.setVisible(false);
+    }
+    
+    public void limparValores() {
+        campoParcelas.setText("");
+        campoEntrada.setText("");
+        calcularValorTotal();
+        valorTotalVenda = valorGeral;
+        calcularValorTotalComDesconto();
     }
 
     public void adicionarProdutoAVenda(Produto produto) {

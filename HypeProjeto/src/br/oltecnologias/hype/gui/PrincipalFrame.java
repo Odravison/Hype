@@ -218,7 +218,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(labelLogoEmpresa)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 947, Short.MAX_VALUE)
                 .addGroup(painelTopoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelTopoLayout.createSequentialGroup()
                         .addComponent(labelLoginUsuario)
@@ -547,8 +547,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelFiltrarProdutos.setText("Filtrar por:");
 
     comboFiltrarProdutos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    comboFiltrarProdutos.setMaximumRowCount(5);
-    comboFiltrarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Produtos de locação", "Produtos de venda", "Últimos locados", "Últimos vendidos" }));
+    comboFiltrarProdutos.setMaximumRowCount(6);
+    comboFiltrarProdutos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todos", "Produtos de locação", "Produtos de venda", "Para Ajuste", "Últimos locados", "Últimos vendidos" }));
     comboFiltrarProdutos.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarProdutos.addActionListener(new java.awt.event.ActionListener() {
@@ -1899,19 +1899,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelGeralLayout.createSequentialGroup()
                             .addContainerGap()
-                            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(painelTopo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addContainerGap())
+                            .addGroup(painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     );
                     painelGeralLayout.setVerticalGroup(
                         painelGeralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(painelGeralLayout.createSequentialGroup()
                             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(painelTopo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(abas, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, 0))
+                            .addContainerGap())
                     );
 
                     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -2041,6 +2041,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
             atualizarValorEmCaixa();
             //Atualizando a tabela de produtos para que os dados fiquem consistentes
+            modeloTabelaProdutos.setRowCount(0);
             adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
         }
         dialog.dispose();
@@ -3005,7 +3006,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoPesquisarProdutoActionPerformed
 
     private void comboFiltrarProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboFiltrarProdutosActionPerformed
-
         //Fazer a pesquisa sem levar o campo de pesquisa em consideração
         if (campoPesquisarProdutos.getText().equals("Pesquisar Produto") || campoPesquisarProdutos.getText().length() <= 0) {
             pesquisarProdutosPorFiltro();
@@ -3030,9 +3030,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiltrarProdutosActionPerformed
 
     public void pesquisarProdutosPorNomeEFiltro(String nome) {
-
-        //Limpa a tabela de produtos
-        modeloTabelaProdutos.setRowCount(0);
         aguarde.setUndecorated(true);
         aguarde.setResizable(false);
         aguarde.setLocationRelativeTo(null);
@@ -3096,9 +3093,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
 
     public void pesquisarProdutosPorFiltro() {
-
-        //Limpa a tabela de produtos
-        modeloTabelaProdutos.setRowCount(0);
         aguarde.setUndecorated(true);
         aguarde.setResizable(false);
         aguarde.setLocationRelativeTo(null);
@@ -3122,6 +3116,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         produtos = GerenciadorDeProduto.getInstance().getProdutosDeVenda();
                         break;
 
+                    case "Para Ajuste":
+                        //produtos = GerenciadorDeProduto.getInstance().getProdutosParaAjuste();
+                        break;   
+                        
                     case "Últimos locados":
                         try {
                             produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocados();
@@ -3290,6 +3288,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                     case "EXTRAVIADAS":
                         locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesExtraviadas();
+
+                        break;
+                        
+                    case "PARA AJUSTE":
+                        //locacoes = GerenciadorDeLocacao.getInstance().getProdutosParaAjuste();
 
                         break;
 
@@ -3842,6 +3845,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
 
     public void adicionarProdutosNaTabela(List<Produto> produtos) {
+        //Limpa a tabela de produtos
+        modeloTabelaProdutos.setRowCount(0);
         for (Produto produto : produtos) {
             modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
                 produto.getQuantidade(), produto.getFinalidade()});

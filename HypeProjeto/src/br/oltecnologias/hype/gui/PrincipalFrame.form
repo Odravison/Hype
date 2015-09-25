@@ -53,11 +53,11 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="abas" max="32767" attributes="0"/>
-                      <Component id="painelTopo" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="painelTopo" min="-2" max="-2" attributes="0"/>
+                      <Component id="abas" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -66,9 +66,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
                   <Component id="painelTopo" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="abas" min="-2" pref="604" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -87,7 +87,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="labelLogoEmpresa" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="947" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="labelLoginUsuario" min="-2" max="-2" attributes="0"/>
@@ -653,14 +653,15 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="5"/>
+                    <Property name="maximumRowCount" type="int" value="6"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="5">
+                      <StringArray count="6">
                         <StringItem index="0" value="Todos"/>
                         <StringItem index="1" value="Produtos de loca&#xe7;&#xe3;o"/>
                         <StringItem index="2" value="Produtos de venda"/>
-                        <StringItem index="3" value="&#xda;ltimos locados"/>
-                        <StringItem index="4" value="&#xda;ltimos vendidos"/>
+                        <StringItem index="3" value="Para Ajuste"/>
+                        <StringItem index="4" value="&#xda;ltimos locados"/>
+                        <StringItem index="5" value="&#xda;ltimos vendidos"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>
