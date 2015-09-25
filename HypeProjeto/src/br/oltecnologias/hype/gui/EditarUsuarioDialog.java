@@ -6,6 +6,7 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
+import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Usuario;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -108,10 +109,6 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
             }
         });
         campoSenha.setText(usuario.getSenha());
-        if(!usuario.isAdministrador()) {
-            labelSenha.setVisible(false);
-            campoSenha.setVisible(false);
-        }
 
         javax.swing.GroupLayout painelDadosGeraisLayout = new javax.swing.GroupLayout(painelDadosGerais);
         painelDadosGerais.setLayout(painelDadosGeraisLayout);
@@ -260,18 +257,24 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
 
                 try {
                     boolean editar = true;
-                    usuario.setNome(campoNome.getText());
-                    usuario.setIsAdministrador(radioAdm.isSelected());
                     if(!(new String(campoSenha.getPassword()).equals(usuario.getSenha()))) {
-                        String senhaConfirmada = JOptionPane.showInputDialog(null, "Informe a sua senha antiga para confirmação");
-                        if(usuario.getSenha().equals(senhaConfirmada)) {
-                            usuario.setSenha(new String(campoSenha.getPassword()));
-                        } else {
-                            editar = false;
-                            JOptionPane.showMessageDialog(null, "Não foi possível realizar a edição de usuário\n\nSenhas incompatíveis.");
+                        ConfirmacaoDialog dialog = new ConfirmacaoDialog(null);
+                        dialog.setLocationRelativeTo(null);
+                        if (dialog.alterarDados()) {
+                            if(GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {
+                                usuario.setSenha(new String(campoSenha.getPassword()));
+                            } else {
+                                editar = false;
+                                JOptionPane.showMessageDialog(null, "Não foi possível realizar a edição de usuário\n\nSenhas incompatíveis.");
+                            }
                         }
+                        dialog.dispose();
+                        
                     }
                     if(editar) {
+                        usuario.setNome(campoNome.getText());
+                        usuario.setIsAdministrador(radioAdm.isSelected());
+                    
                         GerenciadorDePessoas.getInstance().editarUsuario(usuario);
 
                         JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
@@ -280,9 +283,8 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                         setVisible(false);
                     } else {
                         setVisible(false);
-                        dispose();
                     }
-                    
+                    dispose();
                 } catch(Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
