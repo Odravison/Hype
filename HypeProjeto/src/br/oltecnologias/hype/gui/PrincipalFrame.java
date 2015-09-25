@@ -1991,8 +1991,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarProdutos, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible()) 
-                    || botaoConsultarDisponibilidade.isVisible()) {
+        if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())
+                || botaoConsultarDisponibilidade.isVisible()) {
             botaoEditarProduto.setVisible(false);
             botaoExcluirProduto.setVisible(false);
             botaoConsultarDisponibilidade.setVisible(false);
@@ -2264,8 +2264,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_comboFiltrarClientesActionPerformed
 
     public void pesquisarClientesPorNomeEFiltro(String nome) {
-        //JOptionPane.showMessageDialog(null, "O sistema irá realizar o filtro. Por favor, aguarde...");
-        //Limpa a tabela de clientes
         modeloTabelaClientes.setRowCount(0);
         aguarde.setUndecorated(true);
         aguarde.setResizable(false);
@@ -2525,8 +2523,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 ConfirmacaoDialog dialog = new ConfirmacaoDialog(null);
                 dialog.setLocationRelativeTo(null);
                 dialog.setVisible(true);
-                if(dialog.alterarDados()) {
-                    if(GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {
+                if (dialog.alterarDados()) {
+                    if (GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {
                         int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta despesa?", "Atenção!", JOptionPane.YES_NO_OPTION);
                         //Sim = 0
                         if (escolha == 0) {
@@ -2875,39 +2873,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoGerarReciboLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarReciboLocacaoActionPerformed
         if (tabelaLocacoes.getSelectedRow() >= 0) {
-            aguarde.setUndecorated(true);
-            aguarde.setResizable(false);
-            aguarde.setLocationRelativeTo(null);
-            aguarde.iniciar();
-            aguarde.setVisible(true);
+            try {
+                long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
+                        tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
+                System.out.println("==========>>>>>>>>>>> Tentando pegar a locação de id: " + idLocacao);
+                Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
+                System.out.println("==========>>>>>>>>>>> Pegou a locação, de id: " + locacao.getId());
+                if (!locacao.isLocacaoPaga()) {
+                    System.out.println("==========>>>>>>>>>>> ENTROU AQUI 1");
+                    GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
+                    System.out.println("==========>>>>>>>>>>> Abriu a tela");
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
+                    System.out.println("==========>>>>>>>>>>> Deixou visível");
 
-            new SwingWorker() {
-                @Override
-                protected Object doInBackground() throws Exception {
-                    try {
-                        long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
-                                tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
-                        Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
-                        if (locacao.isLocacaoPaga()) {
-                            
-                            GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
-                            dialog.setLocationRelativeTo(null);
-                            dialog.setVisible(true);
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
-                        }
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-                    }
-                    return null;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
+            } catch (Exception e) {
+                System.out.println(" ==========>>>>>>>>>>.... Exceção: " + e.getStackTrace() + "=======>>>>>> causa: " + e.getCause());
+                JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
 
-                @Override
-                protected void done() {
-                    aguarde.dispose();
-
-                }
-            }.execute();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2929,24 +2916,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoFinalizarLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoFinalizarLocacaoActionPerformed
         if (tabelaLocacoes.getSelectedRow() >= 0) {
-            aguarde.setUndecorated(true);
-            aguarde.setResizable(false);
-            aguarde.setLocationRelativeTo(null);
-            aguarde.iniciar();
-            aguarde.setVisible(true);
+            try {
+                Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
+                        (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
 
-            new SwingWorker() {
-                @Override
-                protected Object doInBackground() throws Exception {
-                    try {
-                        Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(Long.parseLong(
-                                (String) tabelaLocacoes.getValueAt(tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1)));
+                if (locacao.isLocacaoPaga()) {
+                    if (!locacao.isFinalizada()) {
+                        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                        //Sim = 0
+                        if (escolha == 0) {
+                            aguarde.setUndecorated(true);
+                            aguarde.setResizable(false);
+                            aguarde.setLocationRelativeTo(null);
+                            aguarde.iniciar();
+                            aguarde.setVisible(true);
 
-                        if (locacao.isLocacaoPaga()) {
-                            if (!locacao.isFinalizada()) {
-                                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja finalizar esta locação?", "Atenção!", JOptionPane.YES_NO_OPTION);
-                                //Sim = 0
-                                if (escolha == 0) {
+                            new SwingWorker() {
+                                @Override
+                                protected Object doInBackground() throws Exception {
+
                                     try {
                                         //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
                                         GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId());
@@ -2957,25 +2945,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                     } catch (Exception e) {
                                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                                     }
+                                    return null;
                                 }
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
-                            }
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Esta locação ainda não foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
+
+                                @Override
+                                protected void done() {
+                                    aguarde.dispose();
+
+                                }
+                            }.execute();
                         }
-                    } catch (LocacaoInexistenteException ex) {
-                        JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
-                    return null;
+                } else {
+                    JOptionPane.showMessageDialog(null, "Esta locação ainda não foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
-
-                @Override
-                protected void done() {
-                    aguarde.dispose();
-
-                }
-            }.execute();
+            } catch (LocacaoInexistenteException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar uma locação na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -3118,8 +3106,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                     case "Para Ajuste":
                         //produtos = GerenciadorDeProduto.getInstance().getProdutosParaAjuste();
-                        break;   
-                        
+                        break;
+
                     case "Últimos locados":
                         try {
                             produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosLocados();
@@ -3290,7 +3278,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesExtraviadas();
 
                         break;
-                        
+
                     case "PARA AJUSTE":
                         //locacoes = GerenciadorDeLocacao.getInstance().getProdutosParaAjuste();
 
