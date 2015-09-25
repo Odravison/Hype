@@ -234,7 +234,7 @@ public class Locacao implements Serializable {
     }
 
     public String getEntradaInString() {
-        return new DecimalFormat("#.##").format(this.valorDeEntrada);
+        return new DecimalFormat("0.00").format(this.valorDeEntrada);
     }
 
     public int getPercentualDesconto() {

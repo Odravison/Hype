@@ -361,16 +361,16 @@ public class GerenciadorDeProduto {
     
     public List<Produto> getProdutosDisponiveisEntreDatas(Calendar dataInicio, Calendar dataFinal){
         List<Produto> retorno = getProdutosDeLocacao();
-        List<Locacao> locacaoEntreDatas = GerenciadorDeLocacao.getInstance().pesquisasrLocacoesEntreDatas(dataInicio, dataFinal);
+        List<Locacao> locacoesEntreDatas = GerenciadorDeLocacao.getInstance().pesquisarLocacoesEntreDatas(dataInicio, dataFinal);
         
         if (GerenciadorDeLocacao.getInstance().getLocacoes().isEmpty()){
             return retorno;
         }
         
-        for (Locacao l: locacaoEntreDatas){
+        for (Locacao l: locacoesEntreDatas){
             for (ProdutoLocado pl: l.getProdutos()){
                 for (Produto p: retorno){
-                    if (p.getCodigo().equals(pl.getCodigoProduto())){
+                    if (p.getCodigo().toUpperCase().equals(pl.getCodigoProduto().toUpperCase())){
                         if (p.getQuantidade() > 0){
                             p.removerQuant(pl.getQuantidade());
                         }
