@@ -22,12 +22,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
-import javax.persistence.Transient;
 
 @Entity
 public class Locacao implements Serializable {
@@ -89,6 +86,8 @@ public class Locacao implements Serializable {
     private int percentualDesconto;
 
     private String caminhoUltimoContrato = "";
+    
+    private String tipoEntradaDePromissoria;
 
     public Locacao() {
     }
@@ -104,6 +103,20 @@ public class Locacao implements Serializable {
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
         this.ativa = true;
+    }
+    
+    public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int percentualDesconto, String tipoEntradaDePromissoria) {
+        this.cliente = cliente;
+        this.produtosLocados = produtosLocados;
+        this.valorDeEntrada = valorDeEntrada;
+        this.valorLocacao = valorLocacao;
+        this.dataLocacao = dataLocacao;
+        this.dataDevolucao = dataDeDevolucao;
+        this.formaDePagamento = formaDePagamento;
+        this.parcelas = parcelas;
+        this.ativa = true;
+        this.tipoEntradaDePromissoria = tipoEntradaDePromissoria;
     }
 
     public void gerarContrato() throws DocumentException, IOException, Exception {
@@ -256,9 +269,9 @@ public class Locacao implements Serializable {
     public void setCaminhoUltimoContrato(String caminhoUltimoContrato) {
         this.caminhoUltimoContrato = caminhoUltimoContrato;
     }
-    
+
     public String getStatus() {
-        if(isFinalizada()) {
+        if (isFinalizada()) {
             return "Fechada";
         }
         return "Aberta";
@@ -267,8 +280,8 @@ public class Locacao implements Serializable {
     public boolean isLocacaoPaga() {
         return (this.jaPago >= this.valorLocacao);
     }
-    
-    public boolean isFinalizada(){
+
+    public boolean isFinalizada() {
         return !this.ativa;
     }
 
@@ -276,4 +289,11 @@ public class Locacao implements Serializable {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataDevolucao.getTime());
     }
 
+    public String getTipoEntradaDePromissoria() {
+        return tipoEntradaDePromissoria;
+    }
+
+    public void setTipoEntradaDePromissoria(String tipoEntradaDePromissoria) {
+        this.tipoEntradaDePromissoria = tipoEntradaDePromissoria;
+    }
 }
