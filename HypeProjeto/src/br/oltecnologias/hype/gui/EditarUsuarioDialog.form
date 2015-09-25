@@ -238,7 +238,7 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoSenhaKeyTyped"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="campoSenha.setText(usuario.getSenha());&#xa;if(!usuario.isAdministrador()) {&#xa;    labelSenha.setVisible(false);&#xa;    campoSenha.setVisible(false);&#xa;}"/>
+            <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="campoSenha.setText(usuario.getSenha());"/>
           </AuxValues>
         </Component>
       </SubComponents>

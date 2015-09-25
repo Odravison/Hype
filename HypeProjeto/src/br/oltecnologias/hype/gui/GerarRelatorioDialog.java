@@ -33,6 +33,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         dateDataFinal = new com.toedter.calendar.JDateChooser();
         botaoCancelar = new javax.swing.JButton();
         botaoGerar = new javax.swing.JButton();
+        labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -50,10 +51,10 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         labelGerarRelatorio.setText("Gerar relatório entre as datas:");
 
         labelDataInicial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDataInicial.setText("Data Inicial:");
+        labelDataInicial.setText("Data Inicial:*");
 
         labelDataFinal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDataFinal.setText("Data Final:");
+        labelDataFinal.setText("Data Final:*");
 
         javax.swing.GroupLayout painelPeriodoLayout = new javax.swing.GroupLayout(painelPeriodo);
         painelPeriodo.setLayout(painelPeriodoLayout);
@@ -107,19 +108,24 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
             }
         });
 
+        labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        labelObrigatorio.setText("Obrigatorio *");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(botaoGerar)
+                        .addComponent(labelObrigatorio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoCancelar))
+                        .addComponent(botaoGerar))
                     .addComponent(painelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,9 +133,11 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                 .addGap(23, 23, 23)
                 .addComponent(painelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoCancelar)
-                    .addComponent(botaoGerar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoCancelar)
+                        .addComponent(botaoGerar))
+                    .addComponent(labelObrigatorio))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -188,6 +196,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
     private javax.swing.JLabel labelGerarRelatorio;
+    private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JPanel painelPeriodo;
     // End of variables declaration//GEN-END:variables
 }

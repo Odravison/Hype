@@ -103,6 +103,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoExcluirProduto = new javax.swing.JButton();
         radioPesquisarProdutoCodigo = new javax.swing.JRadioButton();
         radioPesquisarProdutoNome = new javax.swing.JRadioButton();
+        botaoConsultarDisponibilidade = new javax.swing.JButton();
         painelFornecedores = new javax.swing.JPanel();
         botaoNovoFornecedor = new javax.swing.JButton();
         botaoPesquisarFornecedor = new javax.swing.JButton();
@@ -596,6 +597,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    botaoConsultarDisponibilidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoConsultarDisponibilidade.setText("Consultar Disponibilidade");
+    botaoConsultarDisponibilidade.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoConsultarDisponibilidade.setVisible(false);
+    botaoConsultarDisponibilidade.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoConsultarDisponibilidadeActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout painelProdutosLayout = new javax.swing.GroupLayout(painelProdutos);
     painelProdutos.setLayout(painelProdutosLayout);
     painelProdutosLayout.setHorizontalGroup(
@@ -610,6 +621,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboFiltrarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(botaoConsultarDisponibilidade)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoEditarProduto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoExcluirProduto))
@@ -643,7 +656,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 .addComponent(labelFiltrarProdutos)
                 .addComponent(comboFiltrarProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoEditarProduto)
-                .addComponent(botaoExcluirProduto))
+                .addComponent(botaoExcluirProduto)
+                .addComponent(botaoConsultarDisponibilidade))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addComponent(pnRlProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1977,9 +1991,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarProdutos, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())) {
+        if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible()) 
+                    || botaoConsultarDisponibilidade.isVisible()) {
             botaoEditarProduto.setVisible(false);
             botaoExcluirProduto.setVisible(false);
+            botaoConsultarDisponibilidade.setVisible(false);
             tabelaProdutos.clearSelection();
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
@@ -2341,6 +2357,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             botaoEditarProduto.setVisible(true);
             botaoExcluirProduto.setVisible(true);
+            botaoConsultarDisponibilidade.setVisible(true);
         }
         if (evt.getClickCount() == 2) {
             new SwingWorker() {
@@ -2504,18 +2521,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoExcluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirDespesaActionPerformed
         if (tabelaMovimentacoes.getSelectedRow() >= 0) {
             if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta despesa?", "Atenção!", JOptionPane.YES_NO_OPTION);
-                //Sim = 0
-                if (escolha == 0) {
-                    try {
-                        //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
-                        GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
-                                tabelaLocacoes.getColumnCount() - 1)));
+                ConfirmacaoDialog dialog = new ConfirmacaoDialog(null);
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+                if(dialog.alterarDados()) {
+                    if(GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {
+                        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esta despesa?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                        //Sim = 0
+                        if (escolha == 0) {
+                            try {
+                                //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
+                                GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
+                                        tabelaLocacoes.getColumnCount() - 1)));
 
-                        removerMovimentacaoDaTabela(tabelaMovimentacoes.getSelectedRow());
-                        JOptionPane.showMessageDialog(null, "Despesa removida com sucesso!");
-                    } catch (DespesaInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                                removerMovimentacaoDaTabela(tabelaMovimentacoes.getSelectedRow());
+                                JOptionPane.showMessageDialog(null, "Despesa removida com sucesso!");
+                            } catch (DespesaInexistenteException e) {
+                                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+                        }
                     }
                 }
             } else {
@@ -2653,7 +2677,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "É preciso selecionar produto na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "É preciso selecionar um produto na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoEditarProdutoActionPerformed
 
@@ -2862,9 +2886,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     try {
                         long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
                                 tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
-
-                        if (!GerenciadorDeLocacao.getInstance().isLocacaoPaga(idLocacao)) {
-                            Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
+                        Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
+                        if (locacao.isLocacaoPaga()) {
+                            
                             GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
                             dialog.setLocationRelativeTo(null);
                             dialog.setVisible(true);
@@ -2937,7 +2961,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                            JOptionPane.showMessageDialog(null, "Esta locação ainda não foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                         }
                     } catch (LocacaoInexistenteException ex) {
                         JOptionPane.showMessageDialog(null, "Não foi possível continuar. Tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3538,6 +3562,24 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.dispose();
     }//GEN-LAST:event_labelLogoClosetMouseClicked
 
+    private void botaoConsultarDisponibilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarDisponibilidadeActionPerformed
+        if (tabelaProdutos.getSelectedRow() >= 0) {
+            try {
+                //Pesquisa o produto selecionado através do seu código
+                VerificarDisponibilidadeDialog dialog = new VerificarDisponibilidadeDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
+            } catch (ProdutoInexistenteException e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "É preciso selecionar um produto na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_botaoConsultarDisponibilidadeActionPerformed
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -3907,6 +3949,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoAlterarDiretorioRelatorios;
     private javax.swing.JButton botaoAlterarNomeImpressora;
     private javax.swing.JButton botaoAtivarTemporada;
+    private javax.swing.JButton botaoConsultarDisponibilidade;
     private javax.swing.JButton botaoEditarCliente;
     private javax.swing.JButton botaoEditarDespesa;
     private javax.swing.JButton botaoEditarEmpresa;

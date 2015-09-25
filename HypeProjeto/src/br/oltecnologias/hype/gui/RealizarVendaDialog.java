@@ -734,7 +734,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 @Override
                     protected void done() {
                         aguarde.dispose();
-                        JOptionPane.showMessageDialog(null, "Venda realizada com sucesso!");
+                        JOptionPane.showMessageDialog(null, "Venda efetuada com sucesso!");
                         //Fecha janela
                         setVisible(false);
 
