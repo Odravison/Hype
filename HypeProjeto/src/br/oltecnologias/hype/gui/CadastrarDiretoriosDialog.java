@@ -8,6 +8,7 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 
 import br.oltecnologias.hype.model.Configuracao;
+import java.awt.Image;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,8 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     public CadastrarDiretoriosDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        icone = new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage();
+        this.setIconImage(icone);
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -248,7 +250,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de backup");
             messageDialog = pane.createDialog("Aviso");
-            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            messageDialog.setIconImage(icone);
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
@@ -256,7 +258,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de documentos");
             messageDialog = pane.createDialog("Aviso");
-            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            messageDialog.setIconImage(icone);
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
@@ -264,7 +266,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage("Informe o diretório de relatórios");
             messageDialog = pane.createDialog("Aviso");
-            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            messageDialog.setIconImage(icone);
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
             
@@ -282,7 +284,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                 pane.setMessage("Diretórios cadastrados com sucesso!");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
 
@@ -292,7 +294,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage(e.getMessage());
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
             }
@@ -325,6 +327,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     }
 
     protected boolean salvarSelecionado;
+    private Image icone;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoDiretorioBackup;

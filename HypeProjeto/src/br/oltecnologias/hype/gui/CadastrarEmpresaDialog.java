@@ -9,6 +9,7 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -22,7 +23,8 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     public CadastrarEmpresaDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+        icone = new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage();
+        this.setIconImage(icone);
         botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
     }
 
@@ -321,7 +323,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o nome do estabelecimento comercial");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -329,7 +331,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o CNPJ da empresa");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -337,7 +339,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe a rua do estabelecimento comercial");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -345,7 +347,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe a cidade do estabelecimento comercial");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -353,7 +355,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o bairro do estabelecimento comercial");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -361,7 +363,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o número do estabelecimento comercial");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -369,7 +371,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 pane.setMessage("Informe o número de telefone do estabelecimento comercial");
                 messageDialog = pane.createDialog("Aviso");
-                messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                messageDialog.setIconImage(icone);
                 messageDialog.setAlwaysOnTop(true);
                 messageDialog.setVisible(true);
                 
@@ -390,7 +392,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                     pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                     pane.setMessage("Empresa cadastrada com sucesso!");
                     messageDialog = pane.createDialog("Aviso");
-                    messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                    messageDialog.setIconImage(icone);
                     messageDialog.setAlwaysOnTop(true);
                     messageDialog.setVisible(true);
                     
@@ -401,7 +403,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
                     pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                     pane.setMessage(e.getMessage());
                     messageDialog = pane.createDialog("Erro");
-                    messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+                    messageDialog.setIconImage(icone);
                     messageDialog.setAlwaysOnTop(true);
                     messageDialog.setVisible(true);
                 }
@@ -410,7 +412,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             pane.setMessage(e.getMessage());
             messageDialog = pane.createDialog("Erro");
-            messageDialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
+            messageDialog.setIconImage(icone);
             messageDialog.setAlwaysOnTop(true);
             messageDialog.setVisible(true);
         }
@@ -438,6 +440,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     private int maxCaracteresBairro = 30;
     private int maxCaracteresNumero = 4;
     protected boolean salvarSelecionado;
+    private Image icone;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoBairro;

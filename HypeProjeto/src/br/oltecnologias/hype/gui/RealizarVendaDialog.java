@@ -430,7 +430,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         botaoCancelar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoCancelar.setText("Cancelar");
         botaoCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoCancelar.setIcon(new ImageIcon("Imagens\\Cancelar.png"));
         botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoCancelarActionPerformed(evt);
@@ -440,7 +439,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         botaoConcluir.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoConcluir.setText("Concluir");
         botaoConcluir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoConcluir.setIcon(new ImageIcon("Imagens\\Salvar.png"));
         botaoConcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoConcluirActionPerformed(evt);
