@@ -42,13 +42,13 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelDataFinal = new javax.swing.JLabel();
         painelPagamento = new javax.swing.JPanel();
         labelFormaPagamento = new javax.swing.JLabel();
-        labelEntrada = new javax.swing.JLabel();
         labelParcelas = new javax.swing.JLabel();
         labelDesconto = new javax.swing.JLabel();
         labelValorTotal = new javax.swing.JLabel();
         labelStatus = new javax.swing.JLabel();
         labelValorResta = new javax.swing.JLabel();
         labelFormaPagamentoEntrada = new javax.swing.JLabel();
+        labelEntrada = new javax.swing.JLabel();
         labelValorPago = new javax.swing.JLabel();
         botaoOk = new javax.swing.JButton();
         botaoGerarContrato = new javax.swing.JButton();
@@ -124,9 +124,6 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelFormaPagamento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelFormaPagamento.setText("Forma de Pagamento: "+locacao.getFormaDePagamento());
 
-        labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelEntrada.setText("Entrada: "+locacao.getEntradaInString());
-
         labelParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelParcelas.setText("Parcelas: "+locacao.getParcelas());
 
@@ -143,7 +140,12 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelValorResta.setText("Resta a ser pago: R$ "+new BigDecimal(locacao.getValorLocacao()-locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelFormaPagamentoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelFormaPagamentoEntrada.setText("Forma pagamento entrada:");
+        if(locacao.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
+            labelFormaPagamentoEntrada.setText("Entrada Paga em: "+locacao.getTipoEntradaDePromissoria());
+        }
+
+        labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelEntrada.setText("Entrada: "+locacao.getEntradaInString());
 
         javax.swing.GroupLayout painelPagamentoLayout = new javax.swing.GroupLayout(painelPagamento);
         painelPagamento.setLayout(painelPagamentoLayout);
@@ -154,20 +156,26 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelPagamentoLayout.createSequentialGroup()
                         .addComponent(labelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29))
                     .addGroup(painelPagamentoLayout.createSequentialGroup()
-                        .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(labelParcelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelFormaPagamentoEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(labelValorResta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                                .addComponent(labelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelValorResta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                                .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(labelFormaPagamentoEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelStatus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelDesconto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(labelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(painelPagamentoLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(labelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         painelPagamentoLayout.setVerticalGroup(
@@ -176,13 +184,12 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(labelFormaPagamentoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelFormaPagamentoEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -252,13 +259,15 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(23, Short.MAX_VALUE)
+                        .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(botaoGerarContrato)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoOk))
-                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(botaoOk)))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(

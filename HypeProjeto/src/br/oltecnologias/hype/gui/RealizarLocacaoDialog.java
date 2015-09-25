@@ -814,7 +814,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 if (campoParcelas.getText().length() <= 0) {
                     campoParcelas.setText("0");
                 }
-
+                
                 if (radioCartao.isSelected()) {
                     if (radioCartao.isSelected()) {
                         formaPagamento = "Cartão - Crédito";
@@ -823,6 +823,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     }
                 } else if (radioPromissoria.isSelected()) {
                     formaPagamento = "Promissória";
+                    formaPagamentoEntrada = (String) comboFormaPagamentoEntrada.getSelectedItem();
+                  
                 } else {
                     formaPagamento = "À Vista";
                     campoEntrada.setText("0");
@@ -843,7 +845,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         protected Object doInBackground() throws Exception {
                             novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                                     dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()));
+                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()), formaPagamentoEntrada);
 
                             novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
 
@@ -1537,6 +1539,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private double valorTotalComDescontos;
     private final ProgressoBar aguarde = new ProgressoBar();
     private String formaPagamento = "";
+    String formaPagamentoEntrada = "";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

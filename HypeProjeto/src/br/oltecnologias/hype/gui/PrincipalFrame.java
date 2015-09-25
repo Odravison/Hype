@@ -127,6 +127,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoFinalizarLocacao = new javax.swing.JButton();
         botaoGerarReciboLocacao = new javax.swing.JButton();
         botaoVerRecibosLocacao = new javax.swing.JButton();
+        botaoPersonalizar = new javax.swing.JButton();
         painelVendas = new javax.swing.JPanel();
         botaoNovaVenda = new javax.swing.JButton();
         botaoPesquisarVendas = new javax.swing.JButton();
@@ -508,9 +509,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         List<Object[]> listaLinhasProdutos = new ArrayList<>();
 
         //Adicionando valores nas linhas
-        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutos()) {
+        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
             listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
                 produto.getQuantidade(), produto.getFinalidade()});
+    }
+    for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+        listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
+            produto.getQuantidade(), produto.getFinalidade()});
     }
     //cria um defaultablemodel com as informações acima
     modeloTabelaProdutos = new DefaultTableModel(
@@ -1014,6 +1019,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    botaoPersonalizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+    botaoPersonalizar.setText("Personalizar");
+    botaoPersonalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    botaoPersonalizar.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            botaoPersonalizarActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout painelLocacoesLayout = new javax.swing.GroupLayout(painelLocacoes);
     painelLocacoes.setLayout(painelLocacoesLayout);
     painelLocacoesLayout.setHorizontalGroup(
@@ -1021,7 +1035,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelLocacoesLayout.createSequentialGroup()
             .addGap(32, 32, 32)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(botaoNovaLocacao)
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addComponent(botaoNovaLocacao)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(botaoPersonalizar))
                 .addGroup(painelLocacoesLayout.createSequentialGroup()
                     .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -1046,8 +1063,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesLayout.createSequentialGroup()
             .addGap(23, 23, 23)
-            .addComponent(botaoNovaLocacao)
-            .addGap(50, 50, 50)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(botaoNovaLocacao)
+                .addComponent(botaoPersonalizar))
+            .addGap(49, 49, 49)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarLocacao))
@@ -3118,11 +3137,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 List<Produto> produtos = null;
                 switch (comboFiltrarProdutos.getSelectedItem().toString()) {
                     case "Todos":
-                        produtos = GerenciadorDeProduto.getInstance().getProdutos();
+                        produtos = GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance());
+                        for(Produto produto: GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+                            produtos.add(produto);
+                        }
                         break;
 
                     case "Produtos de locação":
-                        produtos = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
+                        produtos = GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance());
                         break;
 
                     case "Produtos de venda":
@@ -3130,7 +3152,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         break;
 
                     case "Para Ajuste":
-                        //produtos = GerenciadorDeProduto.getInstance().getProdutosParaAjuste();
+                        produtos = GerenciadorDeProduto.getInstance().getProdutosParaCostureira();
                         break;
 
                     case "Últimos locados":
@@ -3596,6 +3618,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoConsultarDisponibilidadeActionPerformed
 
+    private void botaoPersonalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPersonalizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botaoPersonalizarActionPerformed
+
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
         campo.setFont(new java.awt.Font("Tahoma", 0, 14));
@@ -3988,6 +4014,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoNovoFornecedor;
     private javax.swing.JButton botaoNovoProduto;
     private javax.swing.JButton botaoNovoUsuario;
+    private javax.swing.JButton botaoPersonalizar;
     private javax.swing.JButton botaoPesquisarCliente;
     private javax.swing.JButton botaoPesquisarFornecedor;
     private javax.swing.JButton botaoPesquisarLocacao;
