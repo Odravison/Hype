@@ -382,7 +382,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void validarLetrasETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) { 
-        if(numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento estiver na lista 
+        if(numeros.contains(evt.getKeyChar()+"")){
             evt.consume();
         } 
         if(campo.getText().length()>= maxCaracteres) {
@@ -391,7 +391,7 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
     }
     
     public void validarNumerosETamanho(java.awt.event.KeyEvent evt, javax.swing.JTextField campo, int maxCaracteres) {
-        if(!numeros.contains(evt.getKeyChar()+"")){// se o caracter que gerou o evento não estiver na lista 
+        if(!numeros.contains(evt.getKeyChar()+"")){ 
             evt.consume();
         } if(campo.getText().length()>= maxCaracteres){ 
             evt.consume(); 
