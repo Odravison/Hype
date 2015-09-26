@@ -258,7 +258,7 @@ public class EditarUsuarioDialog extends java.awt.Dialog {
                 try {
                     boolean editar = true;
                     if(!(new String(campoSenha.getPassword()).equals(usuario.getSenha()))) {
-                        ConfirmacaoDialog dialog = new ConfirmacaoDialog(null);
+                        ConfirmarSenhaDialog dialog = new ConfirmarSenhaDialog(null);
                         dialog.setLocationRelativeTo(null);
                         if (dialog.alterarDados()) {
                             if(GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {

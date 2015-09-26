@@ -105,7 +105,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         radioVenda.setBackground(new java.awt.Color(255, 255, 255));
         radioVenda.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioVenda.setText("Venda");
-        radioVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         radioVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioVendaActionPerformed(evt);
@@ -116,7 +116,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         radioAluguel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         radioAluguel.setSelected(true);
         radioAluguel.setText("Aluguel");
-        radioAluguel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        radioAluguel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         radioAluguel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 radioAluguelActionPerformed(evt);

@@ -31,13 +31,10 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="painelDados" alignment="1" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
-                      <Component id="painelDados" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="botaoGerarContrato" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="botaoOk" min="-2" max="-2" attributes="0"/>
@@ -346,7 +343,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorResta.setText(&quot;Resta a ser pago: R$ &quot;+new BigDecimal(locacao.getValorLocacao()-locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="double valorResta = new BigDecimal(locacao.getValorLocacao()-locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();&#xa;labelValorResta.setText(&quot;Resta a ser pago: R$ &quot;+new DecimalFormat(&quot;0.00&quot;).format(valorResta));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelFormaPagamentoEntrada">

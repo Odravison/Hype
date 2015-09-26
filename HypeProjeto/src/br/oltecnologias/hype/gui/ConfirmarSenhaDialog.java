@@ -9,9 +9,9 @@ package br.oltecnologias.hype.gui;
  *
  * @author Luender Lima
  */
-public class ConfirmacaoDialog extends java.awt.Dialog {
+public class ConfirmarSenhaDialog extends java.awt.Dialog {
 
-    public ConfirmacaoDialog(java.awt.Frame parent) {
+    public ConfirmarSenhaDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());

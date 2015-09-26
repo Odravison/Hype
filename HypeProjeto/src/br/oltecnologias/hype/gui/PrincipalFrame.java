@@ -2533,7 +2533,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoExcluirDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirDespesaActionPerformed
         if (tabelaMovimentacoes.getSelectedRow() >= 0) {
             if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-                ConfirmacaoDialog dialog = new ConfirmacaoDialog(null);
+                ConfirmarSenhaDialog dialog = new ConfirmarSenhaDialog(null);
                 dialog.setLocationRelativeTo(null);
                 if (dialog.alterarDados()) {
                     if (GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {
