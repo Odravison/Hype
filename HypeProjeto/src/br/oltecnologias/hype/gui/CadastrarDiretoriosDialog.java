@@ -86,6 +86,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             }
         });
 
+        campoDiretorioRelatorios.setEditable(false);
         campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoDiretorioRelatorios.setToolTipText("Informe o caminho do diretório");
         campoDiretorioRelatorios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
@@ -355,41 +356,32 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNomeImpressoraKeyTyped
 
     private void botaoAlterarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioBackupActionPerformed
-        if (campoDiretorioBackup.getText().length() > 0){
-            campoDiretorioBackup.setEditable(true);
-            JFileChooser fc = new JFileChooser(campoDiretorioBackup.getText());
-            fc.setDialogTitle("Selecionar pasta");
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int res = fc.showSaveDialog(this);
-            if (res == JFileChooser.APPROVE_OPTION){
-                campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath());
-            }
+        JFileChooser fc = new JFileChooser(campoDiretorioBackup.getText());
+        fc.setDialogTitle("Selecionar pasta");
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int res = fc.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_botaoAlterarDiretorioBackupActionPerformed
 
     private void botaoAlterarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioDocumentosActionPerformed
-        if (campoDiretorioDocumentos.getText().length() > 0){
-            campoDiretorioDocumentos.setEditable(true);
-            JFileChooser fc = new JFileChooser(campoDiretorioDocumentos.getText());
-            fc.setDialogTitle("Selecionar pasta");
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int res = fc.showSaveDialog(this);
-            if (res == JFileChooser.APPROVE_OPTION){
-                campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath());
-            }
+        JFileChooser fc = new JFileChooser(campoDiretorioDocumentos.getText());
+        fc.setDialogTitle("Selecionar pasta");
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int res = fc.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_botaoAlterarDiretorioDocumentosActionPerformed
 
     private void botaoAlterarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioRelatoriosActionPerformed
-        if (campoDiretorioRelatorios.getText().length() > 0){
-            campoDiretorioRelatorios.setEditable(true);
-            JFileChooser fc = new JFileChooser(campoDiretorioRelatorios.getText());
-            fc.setDialogTitle("Selecionar pasta");
-            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int res = fc.showSaveDialog(this);
-            if (res == JFileChooser.APPROVE_OPTION){
-                campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath());
-            }
+        JFileChooser fc = new JFileChooser(campoDiretorioRelatorios.getText());
+        fc.setDialogTitle("Selecionar pasta");
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        int res = fc.showSaveDialog(this);
+        if (res == JFileChooser.APPROVE_OPTION) {
+            campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath());
         }
     }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
     
