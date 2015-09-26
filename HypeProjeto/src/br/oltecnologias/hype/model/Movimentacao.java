@@ -113,7 +113,7 @@ public class Movimentacao implements Serializable {
     }
     
     public String getValorInString() {
-        return new DecimalFormat("#.##").format(this.valor);
+        return new DecimalFormat("0.00").format(this.valor);
     }
 
     public long getIdDaOperacao() {

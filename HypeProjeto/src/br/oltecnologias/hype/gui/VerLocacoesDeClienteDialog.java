@@ -63,7 +63,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         tabelaLocacoes.getTableHeader().setFont(new java.awt.Font("Tahoma", 0, 15));
         // Altura das linhas
         tabelaLocacoes.setRowHeight(25);
-        String[] nomesColunasTabelaLocacoes = {"Data da Locação", "Produtos Locados", "Valor Total", ""};
+        String[] nomesColunasTabelaLocacoes = {"Data", "Produtos Locados", "Valor Total", ""};
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
         //Adicionando valores nas linhas
@@ -91,11 +91,11 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
     // Redimensionando a largura da coluna de data
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(140);
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(100);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(997);
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(1027);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(130);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(140);
     // Redimensionando a largura da coluna id da locação
     tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(0);
     pnRlCliente.setViewportView(tabelaLocacoes);

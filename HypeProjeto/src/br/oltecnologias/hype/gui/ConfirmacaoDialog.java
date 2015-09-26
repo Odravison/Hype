@@ -108,7 +108,7 @@ public class ConfirmacaoDialog extends java.awt.Dialog {
         if(new String(campoSenha.getPassword()).length() > 0) {
             confirmarSelecionado = true; 
             setVisible(false);
-        }
+        } 
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     public boolean alterarDados() {        

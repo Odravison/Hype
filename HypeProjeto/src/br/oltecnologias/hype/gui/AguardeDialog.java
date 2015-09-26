@@ -13,9 +13,8 @@ import javax.swing.SwingWorker;
  */
 public class AguardeDialog extends java.awt.Dialog {
 
-    public AguardeDialog(java.awt.Frame parent, String mensagem) {
+    public AguardeDialog(java.awt.Frame parent) {
         super(parent);
-        this.mensagem = mensagem;
         initComponents();
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
@@ -24,10 +23,12 @@ public class AguardeDialog extends java.awt.Dialog {
     private void initComponents() {
 
         painelAguarde = new javax.swing.JPanel();
-        labelMensagem = new javax.swing.JLabel();
-        barCarregando = new javax.swing.JProgressBar();
+        labelAguarde = new javax.swing.JLabel();
 
+        setAlwaysOnTop(true);
         setBackground(java.awt.Color.white);
+        setLocationRelativeTo(null);
+        setUndecorated(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -36,31 +37,24 @@ public class AguardeDialog extends java.awt.Dialog {
         });
 
         painelAguarde.setBackground(new java.awt.Color(255, 255, 255));
+        painelAguarde.setBorder(javax.swing.BorderFactory.createEtchedBorder(new java.awt.Color(153, 153, 153), null));
 
-        labelMensagem.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelAguarde.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Aguarde.gif"))); // NOI18N
 
         javax.swing.GroupLayout painelAguardeLayout = new javax.swing.GroupLayout(painelAguarde);
         painelAguarde.setLayout(painelAguardeLayout);
         painelAguardeLayout.setHorizontalGroup(
             painelAguardeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelAguardeLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(painelAguardeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAguardeLayout.createSequentialGroup()
-                        .addComponent(labelMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(95, 95, 95))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAguardeLayout.createSequentialGroup()
-                        .addComponent(barCarregando, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(82, 82, 82))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelAguardeLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(labelAguarde, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
         );
         painelAguardeLayout.setVerticalGroup(
             painelAguardeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelAguardeLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(labelMensagem, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(barCarregando, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addComponent(labelAguarde, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -68,97 +62,26 @@ public class AguardeDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(painelAguarde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(painelAguarde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(painelAguarde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(painelAguarde, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    class ProgressoAguarde extends SwingWorker<Void, Void> {
-
-        @Override
-        protected Void doInBackground() throws Exception {
-            System.out.println("EXECUTOU O PROGRESSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-            String pontosTxt = "";
-            int cont = 0;
-            while (cont <= 900) {
-                System.out.println("EXECUTOU O WHILE DO DO INBACKGROUNDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-                for (int i = 0; i < 100; i++) {
-                    System.out.println("VALOR DE I NO DOINBACKGROUNDddddddddddddddddddddddddddddddddddddddddddddddddddd:  "+i);
-                    try {
-                        Thread.sleep(40);
-                        barCarregando.setValue(i);
-                    } catch (InterruptedException e) {
-                    }
-                    if (i == 99) {
-                        pontosTxt = "";
-                    } else if (i % 25 == 0 && i > 0) {
-                        pontosTxt += ".";
-                    }
-                    labelMensagem.setText(mensagem + ". Aguarde" + pontosTxt);
-                }
-                cont++;
-            }
-            return null;
-        }
-    }
-    
-    public void executarProgresso() {
-        /*barCarregando.setVisible(true);
-        labelMensagem.setVisible(true);
-        progresso = new ProgressoAguarde();
-        progresso.execute();*/
-        new Thread() {
-                        public void run() {
-                            System.out.println("EXECUTOU O PROGRESSOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-            String pontosTxt = "";
-            int cont = 0;
-            while (cont <= 900) {
-                System.out.println("EXECUTOU O WHILE DO DO INBACKGROUNDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD");
-                for (int i = 0; i < 100; i++) {
-                    System.out.println("VALOR DE I NO DOINBACKGROUNDddddddddddddddddddddddddddddddddddddddddddddddddddd:  "+i);
-                    try {
-                        Thread.sleep(40);
-                        barCarregando.setValue(i);
-                    } catch (InterruptedException e) {
-                    }
-                    if (i == 99) {
-                        pontosTxt = "";
-                    } else if (i % 25 == 0 && i > 0) {
-                        pontosTxt += ".";
-                    }
-                    labelMensagem.setText(mensagem + ". Aguarde" + pontosTxt);
-                }
-                cont++;
-            }
-
-                        }
-                    }.start();
-        
-    }
-    
-    public void interromperProgresso() {
-        progresso.cancel(true);
-        
-    }
     
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         setVisible(false);
         dispose();
     }//GEN-LAST:event_closeDialog
     
-    private String mensagem;
-    private ProgressoAguarde progresso;
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar barCarregando;
-    private javax.swing.JLabel labelMensagem;
+    private javax.swing.JLabel labelAguarde;
     private javax.swing.JPanel painelAguarde;
     // End of variables declaration//GEN-END:variables
 }

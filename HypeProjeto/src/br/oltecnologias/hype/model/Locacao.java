@@ -231,7 +231,7 @@ public class Locacao implements Serializable {
     }
 
     public String getValorLocacaoInString() {
-        return new DecimalFormat("#.##").format(this.valorLocacao);
+        return new DecimalFormat("0.00").format(this.valorLocacao);
     }
 
     public boolean isAtiva() {

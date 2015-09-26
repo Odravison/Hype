@@ -661,14 +661,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             } else {
-                
-                aguarde.setUndecorated(true);
-                aguarde.setResizable(false);
                 aguarde.setLocationRelativeTo(null);
-                aguarde.iniciar();
-                aguarde.setAlwaysOnTop(true);
                 aguarde.setVisible(true);
-                aguarde.toFront();
 
                 new SwingWorker() {
                     @Override
@@ -1175,7 +1169,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private int percentualDescontoTemporada;
     private int maxCaracteresEntrada = 7;
     private double valorTotalComDescontos;
-    private final ProgressoBar aguarde = new ProgressoBar();
+    private final AguardeDialog aguarde = new AguardeDialog(null);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

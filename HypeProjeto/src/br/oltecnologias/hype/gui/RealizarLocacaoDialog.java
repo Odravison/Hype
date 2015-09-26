@@ -832,10 +832,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 }
 
                 try {
-                    aguarde.setUndecorated(true);
-                    aguarde.setResizable(false);
                     aguarde.setLocationRelativeTo(null);
-                    aguarde.iniciar();
                     this.setAlwaysOnTop(false);
                     aguarde.setAlwaysOnTop(true);
                     aguarde.setVisible(true);
@@ -1086,6 +1083,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
         radioCartao.setSelected(false);
         radioAVista.setSelected(false);
+        comboFormaPagamentoEntrada.setVisible(true);
         habilitarCampos();
         desabilitarRadios();
         limparValores();
@@ -1300,7 +1298,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setVisible(true);
         campoEntrada.setVisible(true);
         campoParcelas.setVisible(true);
-        comboFormaPagamentoEntrada.setVisible(true);
         if (produtosLocados.isEmpty()) {
             campoEntrada.setEnabled(false);
             campoParcelas.setEnabled(false);
@@ -1537,7 +1534,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private int maxCaracteresEntrada = 7;
     private int percentualDescontoTemporada;
     private double valorTotalComDescontos;
-    private final ProgressoBar aguarde = new ProgressoBar();
+    private final AguardeDialog aguarde = new AguardeDialog(null);
     private String formaPagamento = "";
     String formaPagamentoEntrada = "";
     // Variables declaration - do not modify//GEN-BEGIN:variables
