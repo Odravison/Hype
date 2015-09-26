@@ -433,7 +433,15 @@ public class GerenciadorDeProduto {
             for (ProdutoLocado pl : l.getProdutos()) {
                 Produto p = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
                 p.setQuantidade(pl.getQuantidade());
-                produtosParaCostureira.add(p);
+                if (produtosParaCostureira.isEmpty()){
+                    produtosParaCostureira.add(p);
+                }else{
+                    for (Produto ppc: produtosParaCostureira){
+                        if (ppc.getCodigo().toUpperCase().equals(p.getCodigo().toUpperCase())){
+                            ppc.addQuant(p.getQuantidade());
+                        }
+                    }
+                }
             }
         }
         return produtosParaCostureira;
