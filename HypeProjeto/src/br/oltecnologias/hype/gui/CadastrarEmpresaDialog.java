@@ -23,7 +23,7 @@ public class CadastrarEmpresaDialog extends java.awt.Dialog {
     public CadastrarEmpresaDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        icone = new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage();
+        icone = new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage();
         this.setIconImage(icone);
         botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
     }

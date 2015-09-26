@@ -10,6 +10,7 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Configuracao;
 import java.awt.Image;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,8 +22,9 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     public CadastrarDiretoriosDialog(java.awt.Frame parent) {
         super(parent);
         initComponents();
-        icone = new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage();
+        icone = new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage();
         this.setIconImage(icone);
+        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -37,6 +39,9 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelDiretorioBackups = new javax.swing.JLabel();
         campoNomeImpressora = new javax.swing.JTextField();
         labelNomeImpressora = new javax.swing.JLabel();
+        botaoAlterarDiretorioBackup = new javax.swing.JButton();
+        botaoAlterarDiretorioDocumentos = new javax.swing.JButton();
+        botaoAlterarDiretorioRelatorios = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
@@ -51,10 +56,9 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         painelDiretorios.setBackground(new java.awt.Color(255, 255, 255));
         painelDiretorios.setBorder(javax.swing.BorderFactory.createTitledBorder("Diretórios"));
 
-        campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoDiretorioBackup.setForeground(new java.awt.Color(153, 153, 153));
-        campoDiretorioBackup.setText("Caminho do diretório");
-        campoDiretorioBackup.setToolTipText("Informe o caminho do diretório");
+        campoDiretorioBackup.setEditable(false);
+        campoDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoDiretorioBackup.setToolTipText("");
         campoDiretorioBackup.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoDiretorioBackup.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -67,10 +71,9 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             }
         });
 
-        campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoDiretorioDocumentos.setForeground(new java.awt.Color(153, 153, 153));
-        campoDiretorioDocumentos.setText("Caminho do diretório");
-        campoDiretorioDocumentos.setToolTipText("Informe o caminho do diretório");
+        campoDiretorioDocumentos.setEditable(false);
+        campoDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoDiretorioDocumentos.setToolTipText("");
         campoDiretorioDocumentos.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoDiretorioDocumentos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -83,9 +86,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             }
         });
 
-        campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoDiretorioRelatorios.setForeground(new java.awt.Color(153, 153, 153));
-        campoDiretorioRelatorios.setText("Caminho do diretório");
+        campoDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoDiretorioRelatorios.setToolTipText("Informe o caminho do diretório");
         campoDiretorioRelatorios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoDiretorioRelatorios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -108,9 +109,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelDiretorioBackups.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelDiretorioBackups.setText("Diretório de backups");
 
-        campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        campoNomeImpressora.setForeground(new java.awt.Color(153, 153, 153));
-        campoNomeImpressora.setText("Informe o nome da impressora");
+        campoNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoNomeImpressora.setDisabledTextColor(new java.awt.Color(204, 204, 204));
         campoNomeImpressora.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -126,6 +125,33 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         labelNomeImpressora.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelNomeImpressora.setText("Nome da impressora");
 
+        botaoAlterarDiretorioBackup.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoAlterarDiretorioBackup.setText("Alterar");
+        botaoAlterarDiretorioBackup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAlterarDiretorioBackup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlterarDiretorioBackupActionPerformed(evt);
+            }
+        });
+
+        botaoAlterarDiretorioDocumentos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoAlterarDiretorioDocumentos.setText("Alterar");
+        botaoAlterarDiretorioDocumentos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAlterarDiretorioDocumentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlterarDiretorioDocumentosActionPerformed(evt);
+            }
+        });
+
+        botaoAlterarDiretorioRelatorios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        botaoAlterarDiretorioRelatorios.setText("Alterar");
+        botaoAlterarDiretorioRelatorios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAlterarDiretorioRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAlterarDiretorioRelatoriosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout painelDiretoriosLayout = new javax.swing.GroupLayout(painelDiretorios);
         painelDiretorios.setLayout(painelDiretoriosLayout);
         painelDiretoriosLayout.setHorizontalGroup(
@@ -136,12 +162,21 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                     .addComponent(labelDiretorioRelatorios)
                     .addComponent(labelDiretorioDocumentos)
                     .addComponent(labelDiretorioBackups)
-                    .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(painelDiretoriosLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoAlterarDiretorioDocumentos))
+                    .addGroup(painelDiretoriosLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoAlterarDiretorioBackup))
+                    .addGroup(painelDiretoriosLayout.createSequentialGroup()
+                        .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botaoAlterarDiretorioRelatorios))
                     .addComponent(labelNomeImpressora)
                     .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelDiretoriosLayout.setVerticalGroup(
             painelDiretoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -149,16 +184,22 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addComponent(labelDiretorioBackups)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGroup(painelDiretoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(campoDiretorioBackup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAlterarDiretorioBackup))
+                .addGap(28, 28, 28)
                 .addComponent(labelDiretorioDocumentos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGroup(painelDiretoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoDiretorioDocumentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAlterarDiretorioDocumentos))
+                .addGap(29, 29, 29)
                 .addComponent(labelDiretorioRelatorios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGroup(painelDiretoriosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(campoDiretorioRelatorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAlterarDiretorioRelatorios))
+                .addGap(29, 29, 29)
                 .addComponent(labelNomeImpressora)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(campoNomeImpressora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +209,6 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
         botaoSalvar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         botaoSalvar.setText(" Salvar ");
         botaoSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
         botaoSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoSalvarActionPerformed(evt);
@@ -193,7 +233,7 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
                 .addComponent(painelDiretorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(botaoSalvar)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -313,6 +353,45 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
             eliminarTextoDeCampo(campoNomeImpressora);
         }
     }//GEN-LAST:event_campoNomeImpressoraKeyTyped
+
+    private void botaoAlterarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioBackupActionPerformed
+        if (campoDiretorioBackup.getText().length() > 0){
+            campoDiretorioBackup.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioBackup.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){
+                campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath());
+            }
+        }
+    }//GEN-LAST:event_botaoAlterarDiretorioBackupActionPerformed
+
+    private void botaoAlterarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioDocumentosActionPerformed
+        if (campoDiretorioDocumentos.getText().length() > 0){
+            campoDiretorioDocumentos.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioDocumentos.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){
+                campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath());
+            }
+        }
+    }//GEN-LAST:event_botaoAlterarDiretorioDocumentosActionPerformed
+
+    private void botaoAlterarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioRelatoriosActionPerformed
+        if (campoDiretorioRelatorios.getText().length() > 0){
+            campoDiretorioRelatorios.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioRelatorios.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){
+                campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath());
+            }
+        }
+    }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
     
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -329,6 +408,9 @@ public class CadastrarDiretoriosDialog extends java.awt.Dialog {
     protected boolean salvarSelecionado;
     private Image icone;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAlterarDiretorioBackup;
+    private javax.swing.JButton botaoAlterarDiretorioDocumentos;
+    private javax.swing.JButton botaoAlterarDiretorioRelatorios;
     private javax.swing.JButton botaoSalvar;
     private javax.swing.JTextField campoDiretorioBackup;
     private javax.swing.JTextField campoDiretorioDocumentos;

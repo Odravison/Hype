@@ -2815,42 +2815,45 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarEmpresaActionPerformed
 
     private void botaoAlterarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioBackupActionPerformed
-        campoDiretorioBackup.setEditable(true);
-        JFileChooser fc = new JFileChooser();
         if (campoDiretorioBackup.getText().length() > 0){
-            fc.setCurrentDirectory(new File(campoDiretorioBackup.getText()));
+            campoDiretorioBackup.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioBackup.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){ 
+                campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath()); 
+            }
+            botaoSalvarDiretorioBackup.setEnabled(true);
         }
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath());
-        }
-        botaoSalvarDiretorioBackup.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioBackupActionPerformed
 
     private void botaoAlterarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioDocumentosActionPerformed
-        campoDiretorioDocumentos.setEditable(true);
-        JFileChooser fc = new JFileChooser();
         if (campoDiretorioDocumentos.getText().length() > 0){
-            fc.setCurrentDirectory(new File(campoDiretorioDocumentos.getText()));
+            campoDiretorioDocumentos.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioDocumentos.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){ 
+                campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath()); 
+            }
+            campoDiretorioDocumentos.setEnabled(true);
         }
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath());
-        }
-        botaoSalvarDiretorioDocumentos.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioDocumentosActionPerformed
 
     private void botaoAlterarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioRelatoriosActionPerformed
-        campoDiretorioRelatorios.setEditable(true);
-        JFileChooser fc = new JFileChooser();
         if (campoDiretorioRelatorios.getText().length() > 0){
-            fc.setCurrentDirectory(new File(campoDiretorioRelatorios.getText()));
+            campoDiretorioRelatorios.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioRelatorios.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){ 
+                campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath()); 
+            }
+            campoDiretorioRelatorios.setEnabled(true);
         }
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath());
-        }
-        botaoSalvarDiretorioRelatorios.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
 
     private void botaoSalvarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioRelatoriosActionPerformed
