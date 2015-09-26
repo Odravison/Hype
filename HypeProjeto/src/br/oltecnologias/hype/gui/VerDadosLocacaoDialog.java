@@ -202,7 +202,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         );
 
         labelValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorPago.setText("Valor já pago: R$ "+locacao.getJaPago());
+        labelValorPago.setText("Valor já pago: R$ "+new BigDecimal(locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);

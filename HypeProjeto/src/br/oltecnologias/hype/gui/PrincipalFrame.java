@@ -2920,7 +2920,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
                 Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
                 if (!locacao.isLocacaoPaga()) {
-                    GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
+                    /*GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);*/
+                    GerarReciboDialog dialog = new GerarReciboDialog(null, locacao);
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
                 } else {

@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -278,7 +280,7 @@ public class Locacao implements Serializable {
     }
 
     public boolean isLocacaoPaga() {
-        return (this.jaPago >= this.valorLocacao);
+        return (new BigDecimal(this.jaPago).setScale(2, RoundingMode.HALF_EVEN).doubleValue() >= this.valorLocacao);
     }
 
     public boolean isFinalizada() {

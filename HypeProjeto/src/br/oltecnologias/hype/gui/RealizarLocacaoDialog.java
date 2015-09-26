@@ -197,7 +197,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelValorTotal.setText("Valor Final: ");
 
         painelSelecionar.setBackground(new java.awt.Color(255, 255, 255));
-        painelSelecionar.setBorder(javax.swing.BorderFactory.createTitledBorder("Selecionar Produtos"));
+        painelSelecionar.setBorder(javax.swing.BorderFactory.createTitledBorder("Produtos Disponíveis"));
         painelSelecionar.setPreferredSize(new java.awt.Dimension(564, 238));
         painelSelecionar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -271,11 +271,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         //define o model da tabela
         tabelaProdutos.setModel(modeloTabelaProdutos);
         // Redimensionando a largura da coluna de código
-        tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(75);
         // Redimensionando a largura da coluna de descrição
         tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(392);
         // Redimensionando a largura da coluna de finalidade
-        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(35);
+        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(40);
         tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaProdutosMouseClicked(evt);
@@ -364,11 +364,11 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         //define o model da tabela
         tabelaProdutosLocados.setModel(modeloTabelaProdutosLocados);
         // Redimensionando a largura da coluna de código
-        tabelaProdutosLocados.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tabelaProdutosLocados.getColumnModel().getColumn(0).setPreferredWidth(75);
         // Redimensionando a largura da coluna de descrição
         tabelaProdutosLocados.getColumnModel().getColumn(1).setPreferredWidth(392);
         // Redimensionando a largura da coluna de finalidade
-        tabelaProdutosLocados.getColumnModel().getColumn(2).setPreferredWidth(35);
+        tabelaProdutosLocados.getColumnModel().getColumn(2).setPreferredWidth(40);
         tabelaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaProdutosLocados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1221,16 +1221,35 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             Calendar dataInicial = dateDataInicialContrato.getCalendar();
             Calendar dataFinal = dateDataFinalContrato.getCalendar();
             modeloTabelaProdutos.setRowCount(0);
-            for(Produto produto: GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(dataInicial, dataFinal)) {
-                modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
-            }
+            
+            aguarde.setLocationRelativeTo(null);
+            this.setAlwaysOnTop(false);
+            aguarde.setAlwaysOnTop(true);
+            aguarde.setVisible(true);
+            
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    for(Produto produto: GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(dataInicial, dataFinal)) {
+                        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+                    setAlwaysOnTop(true);
+                }
+            }.execute();
+                
         } catch(Exception e) {
             pane.setMessage("Informe as datas para a pesquisa dos produtos corretamente");
-             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-             dialog = pane.createDialog("Aviso");
-             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
-             dialog.setAlwaysOnTop(true);
-             dialog.setVisible(true);
+            pane.setMessageType(JOptionPane.WARNING_MESSAGE);
+            dialog = pane.createDialog("Aviso");
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
