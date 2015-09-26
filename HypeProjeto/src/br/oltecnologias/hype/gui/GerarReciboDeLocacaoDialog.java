@@ -170,25 +170,25 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
-                    GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
+            GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
 
-                    JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
-                    setVisible(false);
-                    dispose();
+            JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
+            setVisible(false);
+            dispose();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível imprimir o recibo\n\n" + e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_botaoGerarActionPerformed
 
     private void comboQuantidadeParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboQuantidadeParcelasActionPerformed
-        valorRecibo = valorParcela * comboQuantidadeParcelas.getSelectedIndex() + 1;
+        valorRecibo = valorParcela * (comboQuantidadeParcelas.getSelectedIndex() + 1);
         labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
     }//GEN-LAST:event_comboQuantidadeParcelasActionPerformed
 
     public void calcularQuantidadeParcelas() {
         int quantParcelas = 1;
-        while (valorQueResta / quantParcelas > valorRecibo) {
+        while(valorQueResta > (valorParcela*quantParcelas)) {
             quantParcelas++;
         }
         String[] valores = new String[quantParcelas];

@@ -3415,7 +3415,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             @Override
             protected Object doInBackground() throws Exception {
                 List<Movimentacao> movimentacoes = null;
-                switch (comboFiltrarVendas.getSelectedItem().toString().toUpperCase()) {
+                switch (comboFiltrarMovimentacoes.getSelectedItem().toString().toUpperCase()) {
 
                     case "TODAS":
                         movimentacoes = GerenciadorDoSistema.getInstance().getMovimentacoes();
