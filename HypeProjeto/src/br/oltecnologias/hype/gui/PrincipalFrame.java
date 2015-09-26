@@ -3327,10 +3327,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                         break;
 
-                    case "PARA AJUSTE":
-                        //locacoes = GerenciadorDeLocacao.getInstance().getProdutosParaAjuste();
-
-                        break;
 
                     case "MAIS RECENTES":
                         locacoes = GerenciadorDeLocacao.getInstance().getMostRecentLocation();

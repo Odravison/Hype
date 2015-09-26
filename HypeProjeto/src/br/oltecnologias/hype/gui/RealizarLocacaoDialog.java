@@ -1312,7 +1312,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setVisible(false);
         campoEntrada.setVisible(false);
         campoParcelas.setVisible(false);
-        comboFormaPagamentoEntrada.setVisible(true);
+        comboFormaPagamentoEntrada.setVisible(false);
     }
 
     public void habilitarRadios() {
