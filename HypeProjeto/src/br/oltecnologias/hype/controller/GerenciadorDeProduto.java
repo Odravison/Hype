@@ -136,7 +136,7 @@ public class GerenciadorDeProduto {
             emf.close();
         }
     }
-    
+
     public void adicionarQuantidade(String codigoDoProduto, int quantidade) throws ProdutoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
@@ -259,17 +259,17 @@ public class GerenciadorDeProduto {
 
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
 
-            for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
-                for (ProdutoVendido pv : v.getProdutosVendidos()) {
-                    Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
-                    if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
-                        if (!listaDeRetorno.contains(produto)) {
-                            listaDeRetorno.add(produto);
-                        }
+        for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
+            for (ProdutoVendido pv : v.getProdutosVendidos()) {
+                Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
+                if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                    if (!listaDeRetorno.contains(produto)) {
+                        listaDeRetorno.add(produto);
                     }
                 }
             }
-            return listaDeRetorno;
+        }
+        return listaDeRetorno;
     }
 
     public List<Produto> pesquisarUltimosProdutosLocadosPorData(Calendar data)
@@ -277,19 +277,19 @@ public class GerenciadorDeProduto {
 
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
 
-            for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
-                if ((l.getDataLocacao().get(Calendar.DAY_OF_YEAR) == data.get(Calendar.DAY_OF_YEAR))
-                        && (l.getDataLocacao().get(Calendar.YEAR) == data.get(Calendar.YEAR))) {
-                    for (ProdutoLocado pl : l.getProdutos()) {
-                        Produto produto = GerenciadorDeProduto.getInstance()
-                                .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
-                        if (!listaDeRetorno.contains(produto)) {
-                            listaDeRetorno.add(produto);
-                        }
+        for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+            if ((l.getDataLocacao().get(Calendar.DAY_OF_YEAR) == data.get(Calendar.DAY_OF_YEAR))
+                    && (l.getDataLocacao().get(Calendar.YEAR) == data.get(Calendar.YEAR))) {
+                for (ProdutoLocado pl : l.getProdutos()) {
+                    Produto produto = GerenciadorDeProduto.getInstance()
+                            .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
+                    if (!listaDeRetorno.contains(produto)) {
+                        listaDeRetorno.add(produto);
                     }
                 }
             }
-            return listaDeRetorno;
+        }
+        return listaDeRetorno;
     }
 
     public List<Produto> pesquisarUltimosProdutosVendidosPorData(Calendar data)
@@ -318,89 +318,117 @@ public class GerenciadorDeProduto {
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
 
         for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
-                for (ProdutoLocado pl : l.getProdutos()) {
-                    Produto produto = GerenciadorDeProduto.getInstance()
-                            .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
-                        listaDeRetorno.add(produto);
+            for (ProdutoLocado pl : l.getProdutos()) {
+                Produto produto = GerenciadorDeProduto.getInstance()
+                        .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
+                produto.setQuantidade(pl.getQuantidade());
+                if (listaDeRetorno.isEmpty()) {
+                    listaDeRetorno.add(produto);
+                } else {
+                    for (Produto p : listaDeRetorno) {
+                        if (p.getCodigo().toUpperCase().equals(produto.getCodigo().toUpperCase())) {
+                            p.addQuant(produto.getQuantidade());
+
+                        } else {
+                            listaDeRetorno.add(produto);
+                        }
+
+                    }
                 }
+
+            }
         }
         return listaDeRetorno;
 
     }
-    
+
     public List<Produto> pesquisarUltimosProdutosVendidos()
             throws ProdutoInexistenteException {
 
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
 
         for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
-                for (ProdutoVendido pl : v.getProdutosVendidos()) {
-                    Produto produto = GerenciadorDeProduto.getInstance()
-                            .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
-                        listaDeRetorno.add(produto);
+            for (ProdutoVendido pv : v.getProdutosVendidos()) {
+                Produto produto = GerenciadorDeProduto.getInstance()
+                        .pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
+                produto.setQuantidade(pv.getQuantidade());
+                if (listaDeRetorno.isEmpty()) {
+                    listaDeRetorno.add(produto);
+                } else {
+                    for (Produto p : listaDeRetorno) {
+                        if (p.getCodigo().toUpperCase().equals(produto.getCodigo().toUpperCase())) {
+                            p.addQuant(produto.getQuantidade());
+
+                        } else {
+                            listaDeRetorno.add(produto);
+                        }
+
+                    }
                 }
+
+            }
         }
         return listaDeRetorno;
 
     }
-    
-    public List<Produto> pesquisarUltimosProdutosLocadosPorNome(String nome) throws ProdutoInexistenteException{
+
+    public List<Produto> pesquisarUltimosProdutosLocadosPorNome(String nome) throws ProdutoInexistenteException {
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
 
-            for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
-                    for (ProdutoLocado pl : l.getProdutos()) {
-                        Produto produto = GerenciadorDeProduto.getInstance()
-                                .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
-                        if (!listaDeRetorno.contains(produto) && produto.getNome().toUpperCase().equals(nome.toUpperCase())) {
-                            listaDeRetorno.add(produto);
-                        }
-                    }
+        for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+            for (ProdutoLocado pl : l.getProdutos()) {
+                Produto produto = GerenciadorDeProduto.getInstance()
+                        .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
+                if (!listaDeRetorno.contains(produto) && produto.getNome().toUpperCase().equals(nome.toUpperCase())) {
+                    listaDeRetorno.add(produto);
+                }
             }
-            return listaDeRetorno;
+        }
+        return listaDeRetorno;
     }
-    
-    public List<Produto> getProdutosDisponiveisEntreDatas(Calendar dataInicio, Calendar dataFinal){
+
+    public List<Produto> getProdutosDisponiveisEntreDatas(Calendar dataInicio, Calendar dataFinal) {
         List<Produto> retorno = getProdutosDeLocacao();
         List<Locacao> locacoesEntreDatas = GerenciadorDeLocacao.getInstance().pesquisarLocacoesEntreDatas(dataInicio, dataFinal);
-        
-        if (GerenciadorDeLocacao.getInstance().getLocacoes().isEmpty()){
+
+        if (GerenciadorDeLocacao.getInstance().getLocacoes().isEmpty()) {
             return retorno;
         }
-        
-        for (Locacao l: locacoesEntreDatas){
-            for (ProdutoLocado pl: l.getProdutos()){
-                for (Produto p: retorno){
-                    if (p.getCodigo().toUpperCase().equals(pl.getCodigoProduto().toUpperCase())){
-                        if (p.getQuantidade() > 0){
+
+        for (Locacao l : locacoesEntreDatas) {
+            for (ProdutoLocado pl : l.getProdutos()) {
+                for (Produto p : retorno) {
+                    if (p.getCodigo().toUpperCase().equals(pl.getCodigoProduto().toUpperCase())) {
+                        if (p.getQuantidade() > 0) {
                             p.removerQuant(pl.getQuantidade());
                         }
                     }
                 }
             }
         }
-        
+
         return retorno;
     }
-    
-    public boolean consultarDisponibilidadeDeProdutoEntreDatas (Calendar dataInicio, Calendar dataFiinal, String codigoProduto){
+
+    public boolean consultarDisponibilidadeDeProdutoEntreDatas(Calendar dataInicio, Calendar dataFiinal, String codigoProduto) {
         List<Produto> produtos = this.getProdutosDisponiveisEntreDatas(dataInicio, dataFiinal);
-        for (Produto pe: produtos){
-            if (pe.getCodigo().toUpperCase().equals(codigoProduto.toUpperCase())){
-                if (pe.getQuantidade() >= 1){
+        for (Produto pe : produtos) {
+            if (pe.getCodigo().toUpperCase().equals(codigoProduto.toUpperCase())) {
+                if (pe.getQuantidade() >= 1) {
                     return true;
                 }
             }
         }
-        
+
         return false;
     }
-    
-    public List<Produto> getProdutosParaCostureira() throws ProdutoInexistenteException{
+
+    public List<Produto> getProdutosParaCostureira() throws ProdutoInexistenteException {
         List<Produto> produtosParaCostureira = new ArrayList<Produto>();
         List<Locacao> locacoesASeremPreparada = GerenciadorDeLocacao.getInstance().getLocacaoASerPreparada();
-        
-        for (Locacao l: locacoesASeremPreparada){
-            for (ProdutoLocado pl: l.getProdutos()){
+
+        for (Locacao l : locacoesASeremPreparada) {
+            for (ProdutoLocado pl : l.getProdutos()) {
                 Produto p = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
                 p.setQuantidade(pl.getQuantidade());
                 produtosParaCostureira.add(p);
