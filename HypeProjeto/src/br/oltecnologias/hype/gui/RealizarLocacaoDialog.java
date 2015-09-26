@@ -273,9 +273,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         // Redimensionando a largura da coluna de código
         tabelaProdutos.getColumnModel().getColumn(0).setPreferredWidth(80);
         // Redimensionando a largura da coluna de descrição
-        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(387);
+        tabelaProdutos.getColumnModel().getColumn(1).setPreferredWidth(392);
         // Redimensionando a largura da coluna de finalidade
-        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tabelaProdutos.getColumnModel().getColumn(2).setPreferredWidth(35);
         tabelaProdutos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaProdutosMouseClicked(evt);
@@ -366,9 +366,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         // Redimensionando a largura da coluna de código
         tabelaProdutosLocados.getColumnModel().getColumn(0).setPreferredWidth(80);
         // Redimensionando a largura da coluna de descrição
-        tabelaProdutosLocados.getColumnModel().getColumn(1).setPreferredWidth(387);
+        tabelaProdutosLocados.getColumnModel().getColumn(1).setPreferredWidth(392);
         // Redimensionando a largura da coluna de finalidade
-        tabelaProdutosLocados.getColumnModel().getColumn(2).setPreferredWidth(40);
+        tabelaProdutosLocados.getColumnModel().getColumn(2).setPreferredWidth(35);
         tabelaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         tabelaProdutosLocados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
