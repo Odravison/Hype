@@ -67,19 +67,12 @@ public class GerenciadorDeProduto {
     }
 
     public List<Produto> pesquisarProdutosPeloNome(String nome) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
-
         List<Produto> aux = new ArrayList<Produto>();
 
-        try {
-            for (Produto p : pjp.getAllProdutos()) {
-                if (p.getNome().toUpperCase().contains(nome.toUpperCase())) {
-                    aux.add(p);
-                }
+        for (Produto p : this.getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
+            if (p.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                aux.add(p);
             }
-        } finally {
-            emf.close();
         }
 
         return aux;
@@ -187,47 +180,32 @@ public class GerenciadorDeProduto {
     }
 
     public List<Produto> pesquisarProdutosDeLocacaoPeloNome(String nome) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
         List<Produto> retorno = new ArrayList<Produto>();
 
-        try {
-
-            for (Produto p : pjp.getAllProdutos()) {
-                if (p.isLocation()) {
-                    if (p.getNome().contains(nome)) {
-                        retorno.add(p);
-                    }
+        for (Produto p : this.getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
+            if (p.isLocation()) {
+                if (p.getNome().contains(nome)) {
+                    retorno.add(p);
                 }
             }
-
-            return retorno;
-
-        } finally {
-            if (emf != null) {
-                emf.close();
-            }
         }
+
+        return retorno;
+
     }
 
     public List<Produto> pesquisarProdutosDeVendaPeloNome(String nome) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        ProdutoJpaRepository pjp = new ProdutoJpaRepository(emf);
         List<Produto> produtosDeVenda = new ArrayList<Produto>();
-        try {
 
-            for (Produto p : pjp.getAllProdutos()) {
-                if (!p.isLocation()) {
-                    if (p.getNome().contains(nome)) {
-                        produtosDeVenda.add(p);
-                    }
-
+        for (Produto p : this.getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
+            if (!p.isLocation()) {
+                if (p.getNome().contains(nome)) {
+                    produtosDeVenda.add(p);
                 }
+
             }
-            return produtosDeVenda;
-        } finally {
-            emf.close();
         }
+        return produtosDeVenda;
     }
 
     public List<Produto> LocadosPorNome(String nome) throws ProdutoInexistenteException {
@@ -262,9 +240,18 @@ public class GerenciadorDeProduto {
         for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
             for (ProdutoVendido pv : v.getProdutosVendidos()) {
                 Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
-                if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
-                    if (!listaDeRetorno.contains(produto)) {
-                        listaDeRetorno.add(produto);
+                produto.setQuantidade(pv.getQuantidade());
+                if (listaDeRetorno.isEmpty()) {
+                    listaDeRetorno.add(produto);
+                } else {
+                    for (Produto p : listaDeRetorno) {
+                        if (produto.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                            p.addQuant(produto.getQuantidade());
+
+                        } else {
+                            listaDeRetorno.add(produto);
+                        }
+
                     }
                 }
             }
@@ -346,8 +333,10 @@ public class GerenciadorDeProduto {
             throws ProdutoInexistenteException {
 
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
+        Calendar data = Calendar.getInstance();
+        data.add(Calendar.DAY_OF_YEAR, -7);
 
-        for (Venda v : GerenciadorDeVenda.getInstance().getMostRecentsSales()) {
+        for (Venda v : GerenciadorDeVenda.getInstance().pesquisarVendasEntreDatas(null, Calendar.getInstance())) {
             for (ProdutoVendido pv : v.getProdutosVendidos()) {
                 Produto produto = GerenciadorDeProduto.getInstance()
                         .pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
@@ -374,13 +363,26 @@ public class GerenciadorDeProduto {
 
     public List<Produto> pesquisarUltimosProdutosLocadosPorNome(String nome) throws ProdutoInexistenteException {
         List<Produto> listaDeRetorno = new ArrayList<Produto>();
+        Calendar data = Calendar.getInstance();
+        data.add(Calendar.DAY_OF_YEAR, -7);
 
-        for (Locacao l : GerenciadorDeLocacao.getInstance().getMostRecentLocation()) {
+        for (Locacao l : GerenciadorDeLocacao.getInstance().pesquisarLocacoesEntreDatas(data, Calendar.getInstance())) {
             for (ProdutoLocado pl : l.getProdutos()) {
                 Produto produto = GerenciadorDeProduto.getInstance()
                         .pesquisarProdutoPeloCodigo(pl.getCodigoProduto());
-                if (!listaDeRetorno.contains(produto) && produto.getNome().toUpperCase().equals(nome.toUpperCase())) {
+                produto.setQuantidade(pl.getQuantidade());
+                if (listaDeRetorno.isEmpty()) {
                     listaDeRetorno.add(produto);
+                } else {
+                    for (Produto p : listaDeRetorno) {
+                        if (produto.getNome().toUpperCase().equals(nome.toUpperCase())) {
+                            p.addQuant(produto.getQuantidade());
+
+                        } else {
+                            listaDeRetorno.add(produto);
+                        }
+
+                    }
                 }
             }
         }
