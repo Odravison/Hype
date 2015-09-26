@@ -127,7 +127,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoFinalizarLocacao = new javax.swing.JButton();
         botaoGerarReciboLocacao = new javax.swing.JButton();
         botaoVerRecibosLocacao = new javax.swing.JButton();
-        botaoPersonalizar = new javax.swing.JButton();
         painelVendas = new javax.swing.JPanel();
         botaoNovaVenda = new javax.swing.JButton();
         botaoPesquisarVendas = new javax.swing.JButton();
@@ -177,6 +176,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoEditarEmpresa = new javax.swing.JButton();
         comboFiltrarUsuarios = new javax.swing.JComboBox();
         labelFiltrarUsuarios = new javax.swing.JLabel();
+        botaoGerirValores = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Closet");
@@ -1019,15 +1019,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
-    botaoPersonalizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    botaoPersonalizar.setText("Personalizar");
-    botaoPersonalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-    botaoPersonalizar.addActionListener(new java.awt.event.ActionListener() {
-        public void actionPerformed(java.awt.event.ActionEvent evt) {
-            botaoPersonalizarActionPerformed(evt);
-        }
-    });
-
     javax.swing.GroupLayout painelLocacoesLayout = new javax.swing.GroupLayout(painelLocacoes);
     painelLocacoes.setLayout(painelLocacoesLayout);
     painelLocacoesLayout.setHorizontalGroup(
@@ -1035,10 +1026,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         .addGroup(painelLocacoesLayout.createSequentialGroup()
             .addGap(32, 32, 32)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(painelLocacoesLayout.createSequentialGroup()
-                    .addComponent(botaoNovaLocacao)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(botaoPersonalizar))
+                .addComponent(botaoNovaLocacao)
                 .addGroup(painelLocacoesLayout.createSequentialGroup()
                     .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(18, 18, 18)
@@ -1063,9 +1051,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(painelLocacoesLayout.createSequentialGroup()
             .addGap(23, 23, 23)
-            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(botaoNovaLocacao)
-                .addComponent(botaoPersonalizar))
+            .addComponent(botaoNovaLocacao)
             .addGap(49, 49, 49)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1849,6 +1835,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     labelFiltrarUsuarios.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                     labelFiltrarUsuarios.setText("Filtrar por:");
 
+                    botaoGerirValores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+                    botaoGerirValores.setText("Gerir Dias");
+                    botaoGerirValores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                    botaoGerirValores.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                            botaoGerirValoresActionPerformed(evt);
+                        }
+                    });
+
                     javax.swing.GroupLayout painelAdministradorLayout = new javax.swing.GroupLayout(painelAdministrador);
                     painelAdministrador.setLayout(painelAdministradorLayout);
                     painelAdministradorLayout.setHorizontalGroup(
@@ -1861,7 +1856,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(botaoEditarEmpresa)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(botaoAtivarTemporada))
+                                    .addComponent(botaoAtivarTemporada)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botaoGerirValores))
                                 .addGroup(painelAdministradorLayout.createSequentialGroup()
                                     .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(18, 18, 18)
@@ -1885,7 +1882,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(botaoNovoUsuario)
                                 .addComponent(botaoAtivarTemporada)
-                                .addComponent(botaoEditarEmpresa))
+                                .addComponent(botaoEditarEmpresa)
+                                .addComponent(botaoGerirValores))
                             .addGap(50, 50, 50)
                             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2817,42 +2815,45 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoEditarEmpresaActionPerformed
 
     private void botaoAlterarDiretorioBackupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioBackupActionPerformed
-        campoDiretorioBackup.setEditable(true);
-        JFileChooser fc = new JFileChooser();
         if (campoDiretorioBackup.getText().length() > 0){
-            fc.setCurrentDirectory(new File(campoDiretorioBackup.getText()));
+            campoDiretorioBackup.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioBackup.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){ 
+                campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath()); 
+            }
+            botaoSalvarDiretorioBackup.setEnabled(true);
         }
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            campoDiretorioBackup.setText(fc.getSelectedFile().getAbsolutePath());
-        }
-        botaoSalvarDiretorioBackup.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioBackupActionPerformed
 
     private void botaoAlterarDiretorioDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioDocumentosActionPerformed
-        campoDiretorioDocumentos.setEditable(true);
-        JFileChooser fc = new JFileChooser();
         if (campoDiretorioDocumentos.getText().length() > 0){
-            fc.setCurrentDirectory(new File(campoDiretorioDocumentos.getText()));
+            campoDiretorioDocumentos.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioDocumentos.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){ 
+                campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath()); 
+            }
+            campoDiretorioDocumentos.setEnabled(true);
         }
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            campoDiretorioDocumentos.setText(fc.getSelectedFile().getAbsolutePath());
-        }
-        botaoSalvarDiretorioDocumentos.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioDocumentosActionPerformed
 
     private void botaoAlterarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAlterarDiretorioRelatoriosActionPerformed
-        campoDiretorioRelatorios.setEditable(true);
-        JFileChooser fc = new JFileChooser();
         if (campoDiretorioRelatorios.getText().length() > 0){
-            fc.setCurrentDirectory(new File(campoDiretorioRelatorios.getText()));
+            campoDiretorioRelatorios.setEditable(true);
+            JFileChooser fc = new JFileChooser(campoDiretorioRelatorios.getText());
+            fc.setDialogTitle("Selecionar pasta");
+            fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            int res = fc.showSaveDialog(this);
+            if (res == JFileChooser.APPROVE_OPTION){ 
+                campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath()); 
+            }
+            campoDiretorioRelatorios.setEnabled(true);
         }
-        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            campoDiretorioRelatorios.setText(fc.getSelectedFile().getAbsolutePath());
-        }
-        botaoSalvarDiretorioRelatorios.setEnabled(true);
     }//GEN-LAST:event_botaoAlterarDiretorioRelatoriosActionPerformed
 
     private void botaoSalvarDiretorioRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarDiretorioRelatoriosActionPerformed
@@ -3618,9 +3619,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoConsultarDisponibilidadeActionPerformed
 
-    private void botaoPersonalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPersonalizarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_botaoPersonalizarActionPerformed
+    private void botaoGerirValoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerirValoresActionPerformed
+        GerirDiasDialog dialog = new GerirDiasDialog(null);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_botaoGerirValoresActionPerformed
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -4008,13 +4011,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoFinalizarLocacao;
     private javax.swing.JButton botaoGerarReciboLocacao;
     private javax.swing.JButton botaoGerarRelatorio;
+    private javax.swing.JButton botaoGerirValores;
     private javax.swing.JButton botaoNovaLocacao;
     private javax.swing.JButton botaoNovaVenda;
     private javax.swing.JButton botaoNovoCliente;
     private javax.swing.JButton botaoNovoFornecedor;
     private javax.swing.JButton botaoNovoProduto;
     private javax.swing.JButton botaoNovoUsuario;
-    private javax.swing.JButton botaoPersonalizar;
     private javax.swing.JButton botaoPesquisarCliente;
     private javax.swing.JButton botaoPesquisarFornecedor;
     private javax.swing.JButton botaoPesquisarLocacao;

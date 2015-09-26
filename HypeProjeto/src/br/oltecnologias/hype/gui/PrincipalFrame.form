@@ -1011,11 +1011,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="32" pref="32" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="botaoNovaLocacao" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="botaoPersonalizar" min="-2" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="botaoNovaLocacao" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarLocacoes" min="-2" pref="454" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1046,10 +1042,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="botaoNovaLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="botaoPersonalizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="botaoNovaLocacao" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="campoPesquisarLocacoes" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1266,20 +1259,6 @@
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="botaoVerRecibosLocacao.setVisible(false);"/>
                   </AuxValues>
-                </Component>
-                <Component class="javax.swing.JButton" name="botaoPersonalizar">
-                  <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="14" style="0"/>
-                    </Property>
-                    <Property name="text" type="java.lang.String" value="Personalizar"/>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Cursor em Forma de M&#xe3;o"/>
-                    </Property>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoPersonalizarActionPerformed"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -2098,6 +2077,8 @@
                                   <Component id="botaoEditarEmpresa" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="botaoAtivarTemporada" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="botaoGerirValores" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="campoPesquisarUsuarios" min="-2" pref="454" max="-2" attributes="0"/>
@@ -2129,6 +2110,7 @@
                               <Component id="botaoNovoUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoAtivarTemporada" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="botaoEditarEmpresa" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="botaoGerirValores" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -2330,6 +2312,20 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Filtrar por:"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="botaoGerirValores">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Tahoma" size="14" style="0"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Gerir Dias"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Cursor em Forma de M&#xe3;o"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoGerirValoresActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
