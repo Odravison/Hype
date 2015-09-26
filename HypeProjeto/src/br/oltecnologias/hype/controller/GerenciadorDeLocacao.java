@@ -236,6 +236,29 @@ public class GerenciadorDeLocacao {
 
         return listaOrdenada;
     }
+    
+    public List<Locacao> getLocacoesMaisAntigas() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
+        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
+
+        List<Locacao> listaOrdenada = new ArrayList<Locacao>();
+
+        try {
+            listaOrdenada = ljp.getAllLocacao();
+
+            Collections.sort(listaOrdenada, (Object o1, Object o2) -> {
+                Locacao l1 = (Locacao) o1;
+                Locacao l2 = (Locacao) o2;
+                return l1.getDataLocacao().getTimeInMillis() >= l2.getDataLocacao().getTimeInMillis() ? +1
+                        : (l1.getDataLocacao().getTimeInMillis() <= l2.getDataLocacao().getTimeInMillis() ? -1 : 0);
+            });
+
+        } finally {
+            emf.close();
+        }
+
+        return listaOrdenada;
+    }
 
     public Locacao pesquisarLocacaoPorId(long id) throws LocacaoInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
