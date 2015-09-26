@@ -169,6 +169,30 @@ public class GerenciadorDeVenda {
         }
     }
     
+    public List<Venda> pesquisarVendasEntreDatas(Calendar dataInicio, Calendar dataFinal) {
+        List<Venda> vendasEntreDatas = new ArrayList<Venda>();
+
+        for (Venda v : this.getVendas()) {
+                if (v.getDataVenda().get(Calendar.YEAR) >= dataInicio.get(Calendar.YEAR)
+                        && v.getDataVenda().get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR)) {
+
+                    if ((v.getDataVenda().get(Calendar.DAY_OF_YEAR) <= dataInicio.get(Calendar.DAY_OF_YEAR)
+                            && v.getDataVenda().get(Calendar.DAY_OF_YEAR) >= dataInicio.get(Calendar.DAY_OF_YEAR))
+                            || (v.getDataVenda().get(Calendar.DAY_OF_YEAR) <= dataFinal.get(Calendar.DAY_OF_YEAR)
+                            && v.getDataVenda().get(Calendar.DAY_OF_YEAR) >= dataFinal.get(Calendar.DAY_OF_YEAR))) {
+
+                        vendasEntreDatas.add(v);
+
+                    }
+
+                }
+
+        }
+
+        return vendasEntreDatas;
+
+    }
+    
     
 
 }
