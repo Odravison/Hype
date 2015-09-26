@@ -1173,14 +1173,15 @@
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="14" style="0"/>
                     </Property>
-                    <Property name="maximumRowCount" type="int" value="5"/>
+                    <Property name="maximumRowCount" type="int" value="6"/>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="5">
+                      <StringArray count="6">
                         <StringItem index="0" value="Todas"/>
-                        <StringItem index="1" value="Atrasadas"/>
-                        <StringItem index="2" value="Extraviadas"/>
-                        <StringItem index="3" value="Mais Recentes"/>
-                        <StringItem index="4" value="Mais Antigas"/>
+                        <StringItem index="1" value="Ativas"/>
+                        <StringItem index="2" value="Atrasadas"/>
+                        <StringItem index="3" value="Extraviadas"/>
+                        <StringItem index="4" value="Mais Recentes"/>
+                        <StringItem index="5" value="Mais Antigas"/>
                       </StringArray>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value="Selecionar tipo de filtro"/>

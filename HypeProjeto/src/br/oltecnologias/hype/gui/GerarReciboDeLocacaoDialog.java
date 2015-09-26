@@ -182,8 +182,14 @@ public class GerarReciboDeLocacaoDialog extends java.awt.Dialog {
 
     private void comboQuantidadeParcelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboQuantidadeParcelasActionPerformed
         valorRecibo = valorParcela * (comboQuantidadeParcelas.getSelectedIndex() + 1);
-        labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-        labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        if(valorRecibo > 0) {
+            labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        } else {
+            valorRecibo = valorParcela;
+            labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        }
     }//GEN-LAST:event_comboQuantidadeParcelasActionPerformed
 
     public void calcularQuantidadeParcelas() {

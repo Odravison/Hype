@@ -102,7 +102,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         labelValorPago.setText("Valor já pago: R$ "+venda.getJaPago());
 
         labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorResta.setText("R$ "+new BigDecimal(venda.getValor()-venda.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        labelValorResta.setText("Resta ser pago: R$ "+new BigDecimal(venda.getValor()-venda.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
@@ -118,7 +118,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
                         .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 68, Short.MAX_VALUE))
+                        .addGap(0, 92, Short.MAX_VALUE))
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelProdutosVendidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -172,13 +172,10 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(758, 758, 758)
-                        .addComponent(botaoOk))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(botaoOk)
+                    .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(

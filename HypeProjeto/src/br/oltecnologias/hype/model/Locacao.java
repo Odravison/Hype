@@ -274,7 +274,7 @@ public class Locacao implements Serializable {
         if (isFinalizada()) {
             return "Fechada";
         }
-        return "Aberta";
+        return "Ativa";
     }
 
     public boolean isLocacaoPaga() {

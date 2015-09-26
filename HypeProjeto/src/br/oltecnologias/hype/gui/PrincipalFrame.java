@@ -969,8 +969,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelFiltrarLocacoes.setText("Filtrar por:");
 
     comboFiltrarLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    comboFiltrarLocacoes.setMaximumRowCount(5);
-    comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
+    comboFiltrarLocacoes.setMaximumRowCount(6);
+    comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Ativas", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
     comboFiltrarLocacoes.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarLocacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -2557,6 +2557,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Senhas incompatíveis", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 }
             } else {
@@ -2921,22 +2923,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
             try {
                 long idLocacao = Long.parseLong((String) tabelaLocacoes.getValueAt(
                         tabelaLocacoes.getSelectedRow(), tabelaLocacoes.getColumnCount() - 1));
-                System.out.println("==========>>>>>>>>>>> Tentando pegar a locação de id: " + idLocacao);
                 Locacao locacao = GerenciadorDeLocacao.getInstance().pesquisarLocacaoPorId(idLocacao);
-                System.out.println("==========>>>>>>>>>>> Pegou a locação, de id: " + locacao.getId());
                 if (!locacao.isLocacaoPaga()) {
-                    System.out.println("==========>>>>>>>>>>> ENTROU AQUI 1");
                     GerarReciboDeLocacaoDialog dialog = new GerarReciboDeLocacaoDialog(null, locacao);
-                    System.out.println("==========>>>>>>>>>>> Abriu a tela");
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
-                    System.out.println("==========>>>>>>>>>>> Deixou visível");
-
                 } else {
                     JOptionPane.showMessageDialog(null, "Esta locação já foi quitada", "Aviso", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (Exception e) {
-                System.out.println(" ==========>>>>>>>>>>.... Exceção: " + e.getStackTrace() + "=======>>>>>> causa: " + e.getCause());
                 JOptionPane.showMessageDialog(null, "Não foi possível gerar o recibo da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
 
@@ -3266,7 +3261,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 //Adiciona os dados da nova locação na tabela
                                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
@@ -3317,6 +3312,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                         break;
 
+                        
+                    case "ATIVAS":
+                        locacoes = GerenciadorDeLocacao.getInstance().getLocacoesAtivas();
+
+                        break;
+                        
                     case "ATRASADAS":
                         locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesEmAtraso();
 
@@ -3379,7 +3380,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         modeloTabelaVendas.setRowCount(0);
 
                         for (Venda venda : GerenciadorDeVenda.getInstance().pesquisarVendasPorData(dataPesquisada)) {
-                            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), venda.getProdutosVendidos(), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+                            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
                         }
 
                     } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
@@ -3675,7 +3676,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
         modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ " + movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), movimentacao.getIdDaOperacao()});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
     }
 
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
