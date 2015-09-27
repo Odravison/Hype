@@ -127,7 +127,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValor.setText(&quot;Valor: R$ &quot;+despesa.getValorInString());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValor.setText(&quot;Valor: &quot;+despesa.getValorInString());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelFavorecido">

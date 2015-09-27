@@ -3,6 +3,7 @@ package br.oltecnologias.hype.model;
 import java.io.Serializable;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -97,7 +98,7 @@ public class Despesa implements Serializable {
     }
     
     public String getValorInString(){
-        return new DecimalFormat("0.00").format(this.valor);
+        return NumberFormat.getCurrencyInstance().format(this.valor);
     }
     
     public String getFavorecido() {

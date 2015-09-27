@@ -203,7 +203,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorTotal.setText(&quot;Valor Total: R$ &quot;+venda.getValorInString());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorTotal.setText(&quot;Valor Total: &quot;+venda.getValorInString());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelData">

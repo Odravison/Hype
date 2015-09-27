@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -98,7 +99,7 @@ public class Venda implements Serializable {
     }
     
     public String getValorInString() {
-        return new DecimalFormat("0.00").format(this.valor);
+        return NumberFormat.getCurrencyInstance().format(this.valor);
     }
 
     public String getFormaDePagamento() {
@@ -130,7 +131,7 @@ public class Venda implements Serializable {
     }
     
     public String getEntradaInString() {
-        return new DecimalFormat("0.00").format(this.entrada);
+        return NumberFormat.getCurrencyInstance().format(this.entrada);
     }
 
     public String getDataVendaInString() {

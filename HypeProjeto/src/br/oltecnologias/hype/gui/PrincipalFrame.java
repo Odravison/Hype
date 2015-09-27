@@ -33,6 +33,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -3833,12 +3834,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     public void atualizarValorEmCaixa() {
         double valorEmCaixa = GerenciadorDoSistema.getInstance().getValorCaixaDiario();
-        if (valorEmCaixa > 0) {
+        if (valorEmCaixa >= 0) {
             labelValorEmCaixa.setForeground(new Color(0, 153, 0));
         } else {
             labelValorEmCaixa.setForeground(new Color(255, 0, 0));
         }
-        labelValorEmCaixa.setText("R$ " + new DecimalFormat("0.00").format(valorEmCaixa));
+        labelValorEmCaixa.setText(NumberFormat.getCurrencyInstance().format(valorEmCaixa));
     }
 
     public void desabilitarCamposDeDiretorios() {

@@ -19,6 +19,9 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -506,9 +509,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelValorTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValorVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -668,8 +671,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         if (campoPercentualDesconto.getText().length() <= 0) {
                             campoPercentualDesconto.setText("0");
                         } else {
-                            valorTotalVenda = new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-                                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                            calcularValorTotal();
                         }
                         //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                         if (campoEntrada.getText().length() <= 0) {
@@ -892,16 +894,17 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if (campoEntrada.getText().length() > 0) {
             valorTotalVenda -= Double.parseDouble(campoEntrada.getText());
         }
-
-        labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda
-                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        
+        valorTotalArredondado = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        labelValorVenda.setText(NumberFormat.getCurrencyInstance().format(valorTotalArredondado));
 
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
 
         } else {
-            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
-            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            valorParcelasArredondado = new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
+                                                                            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X " + NumberFormat.getCurrencyInstance().format(valorParcelasArredondado));
 
         }
     }
@@ -909,7 +912,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     public void calcularValorTotalComDesconto() {
         if (campoPercentualDesconto.getText().length() > 0) {
             labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+                                        campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } else {
             labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda).doubleValue());
         }
@@ -1165,7 +1168,10 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private int percentualDescontoTemporada;
     private int maxCaracteresEntrada = 7;
     private double valorTotalComDescontos;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("0.00");
     private final AguardeDialog aguarde = new AguardeDialog(null);
+    private double valorTotalArredondado;
+    private double valorParcelasArredondado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

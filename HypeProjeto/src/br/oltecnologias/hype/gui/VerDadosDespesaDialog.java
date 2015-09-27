@@ -46,7 +46,7 @@ public class VerDadosDespesaDialog extends java.awt.Dialog {
         labelNome.setText("Nome: "+despesa.getNome());
 
         labelValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValor.setText("Valor: R$ "+despesa.getValorInString());
+        labelValor.setText("Valor: "+despesa.getValorInString());
 
         labelFavorecido.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelFavorecido.setText("Favorecido: "+despesa.getFavorecido());

@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -233,7 +234,7 @@ public class Locacao implements Serializable {
     }
 
     public String getValorLocacaoInString() {
-        return new DecimalFormat("0.00").format(this.valorLocacao);
+        return NumberFormat.getCurrencyInstance().format(this.valorLocacao);
     }
 
     public boolean isAtiva() {
@@ -249,7 +250,7 @@ public class Locacao implements Serializable {
     }
 
     public String getEntradaInString() {
-        return new DecimalFormat("0.00").format(this.valorDeEntrada);
+        return NumberFormat.getCurrencyInstance().format(this.valorDeEntrada);
     }
 
     public int getPercentualDesconto() {

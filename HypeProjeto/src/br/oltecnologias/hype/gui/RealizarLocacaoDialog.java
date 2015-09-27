@@ -21,6 +21,9 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -800,8 +803,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 if (campoPercentualDesconto.getText().length() <= 0) {
                     campoPercentualDesconto.setText("0");
                 } else {
-                    valorTotalLocacao = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                            campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    calcularValorTotal();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
@@ -1276,15 +1278,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         if (campoEntrada.getText().length() > 0) {
             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
         }
-
-        labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        valorTotalArredondado = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        labelValorLocacao.setText(NumberFormat.getCurrencyInstance().format(valorTotalArredondado));
 
         if (campoParcelas.getText().length() <= 0) {
             labelValorParcelas.setText("");
 
         } else {
-            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X R$ " + new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
-            ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            valorParcelasArredondado = new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
+                    ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorParcelas.setText(" = " + campoParcelas.getText() + " X " + NumberFormat.getCurrencyInstance().format(valorParcelasArredondado));
 
         }
     }
@@ -1559,7 +1562,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private double valorTotalComDescontos;
     private final AguardeDialog aguarde = new AguardeDialog(null);
     private String formaPagamento = "";
-    String formaPagamentoEntrada = "";
+    private String formaPagamentoEntrada = "";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("0.00");
+    private double valorTotalArredondado;
+    private double valorParcelasArredondado;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

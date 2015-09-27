@@ -16,6 +16,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
@@ -135,14 +136,14 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setText("Desconto: "+locacao.getPercentualDesconto());
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorTotal.setText("Valor Total: R$ "+locacao.getValorLocacaoInString());
+        labelValorTotal.setText("Valor Total: "+locacao.getValorLocacaoInString());
 
         labelStatus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelStatus.setText("Status: "+locacao.getStatus());
 
         labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         double valorResta = new BigDecimal(locacao.getValorLocacao()-locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-        labelValorResta.setText("Resta a ser pago: R$ "+new DecimalFormat("0.00").format(valorResta));
+        labelValorResta.setText("Resta a ser pago: "+NumberFormat.getCurrencyInstance().format(valorResta));
 
         labelFormaPagamentoEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         if(locacao.getFormaDePagamento().toUpperCase().equals("PROMISSÓRIA")) {
@@ -205,8 +206,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         );
 
         labelValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        double valorJaPago = new BigDecimal(locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-        labelValorPago.setText("Valor já pago: R$ "+new SimpleDateFormat("0.00").format(valorJaPago));
+        labelValorPago.setText("Valor já pago: R$ "+new BigDecimal(locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);

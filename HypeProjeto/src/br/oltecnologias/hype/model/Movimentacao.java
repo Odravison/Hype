@@ -8,6 +8,7 @@ package br.oltecnologias.hype.model;
 import java.io.Serializable;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
@@ -113,7 +114,7 @@ public class Movimentacao implements Serializable {
     }
     
     public String getValorInString() {
-        return new DecimalFormat("0.00").format(this.valor);
+        return NumberFormat.getCurrencyInstance().format(this.valor);
     }
 
     public long getIdDaOperacao() {
