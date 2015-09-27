@@ -21,6 +21,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
         super(parent);
         this.locacao = locacao;
         valorQueResta = locacao.getValorLocacao() - locacao.getJaPago();
+        this.valorParcela = (locacao.getValorLocacao()-locacao.getValorDeEntrada())/locacao.getParcelas();
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
@@ -69,8 +70,6 @@ public class GerarReciboDialog extends java.awt.Dialog {
 
         labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
-        this.valorParcela = (locacao.getValorLocacao()-locacao.getValorDeEntrada())/locacao.getParcelas();
-
         labelValorRecibo.setText("R$ "+new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -80,7 +79,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
         labelValorTotal.setText("Valor total desta locação: R$ "+new BigDecimal(locacao.getValorLocacao()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorResta.setText("Resta a ser pago: R$ "+new BigDecimal(valorQueResta).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        labelValorResta.setText("Restará a ser pago: R$ "+new BigDecimal(valorQueResta-valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         campoQuantParcelas.setEditable(false);
         campoQuantParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -191,7 +190,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
 
     private void botaoGerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoGerarActionPerformed
         try {
-            GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, valorRecibo);
+            GeradorDeRecibo.getInstance().gerarEImprimirPxReciboDeLocacao(locacao, new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
             JOptionPane.showMessageDialog(null, "O recibo foi gerado com sucesso!");
             setVisible(false);
@@ -205,14 +204,14 @@ public class GerarReciboDialog extends java.awt.Dialog {
         if(Integer.parseInt(campoQuantParcelas.getText()) > 1){
             valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())-1);
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())-1)+"");
-            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            labelValorResta.setText("Restará a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
             labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } 
     }//GEN-LAST:event_botaoDiminuirParcelaActionPerformed
 
     private void botaoAumentarParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAumentarParcelaActionPerformed
         valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())+1);
-        if((valorQueResta - valorRecibo) >= 0) {
+        if((new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue()) >= 0) {
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())+1)+"");
             labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } else {
