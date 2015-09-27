@@ -129,6 +129,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoFinalizarLocacao = new javax.swing.JButton();
         botaoGerarReciboLocacao = new javax.swing.JButton();
         botaoVerRecibosLocacao = new javax.swing.JButton();
+        radioDataInicio = new javax.swing.JRadioButton();
+        radioDataDevolucao = new javax.swing.JRadioButton();
         painelVendas = new javax.swing.JPanel();
         botaoNovaVenda = new javax.swing.JButton();
         botaoPesquisarVendas = new javax.swing.JButton();
@@ -888,7 +890,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarLocacoes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarLocacoes.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarLocacoes.setText("Pesquisar Locação");
-    campoPesquisarLocacoes.setToolTipText("Pesquise locações pela data de início do contrato no formato: dd/mm/aaa");
+    campoPesquisarLocacoes.setToolTipText("Pesquise locações pelo nome do lacador ou pela data de início ou de fim no formato: dd/mm/aaa");
     campoPesquisarLocacoes.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -920,7 +922,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Essa lista terá as linhas da tabela
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
     //Adicionando valores nas linhas
-    for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoes()) {
+    for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoesAtivas()) {
         try {
             listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
@@ -973,6 +975,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboFiltrarLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     comboFiltrarLocacoes.setMaximumRowCount(6);
     comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Ativas", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
+    comboFiltrarLocacoes.setSelectedIndex(1);
     comboFiltrarLocacoes.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarLocacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -1021,6 +1024,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }
     });
 
+    radioDataInicio.setBackground(new java.awt.Color(255, 255, 255));
+    radioDataInicio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    radioDataInicio.setSelected(true);
+    radioDataInicio.setText("Data de início");
+    radioDataInicio.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            radioDataInicioActionPerformed(evt);
+        }
+    });
+
+    radioDataDevolucao.setBackground(new java.awt.Color(255, 255, 255));
+    radioDataDevolucao.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+    radioDataDevolucao.setText("Data de devolução");
+    radioDataDevolucao.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            radioDataDevolucaoActionPerformed(evt);
+        }
+    });
+
     javax.swing.GroupLayout painelLocacoesLayout = new javax.swing.GroupLayout(painelLocacoes);
     painelLocacoes.setLayout(painelLocacoesLayout);
     painelLocacoesLayout.setHorizontalGroup(
@@ -1029,10 +1051,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGap(32, 32, 32)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(botaoNovaLocacao)
-                .addGroup(painelLocacoesLayout.createSequentialGroup()
-                    .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(18, 18, 18)
-                    .addComponent(botaoPesquisarLocacao))
                 .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, painelLocacoesLayout.createSequentialGroup()
                         .addComponent(labelFiltrarLocacoes)
@@ -1046,7 +1064,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         .addComponent(botaoVerRecibosLocacao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoVerContrato))
-                    .addComponent(pnRlLocacoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(pnRlLocacoes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelLocacoesLayout.createSequentialGroup()
+                    .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(painelLocacoesLayout.createSequentialGroup()
+                            .addComponent(radioDataInicio)
+                            .addGap(10, 10, 10)
+                            .addComponent(radioDataDevolucao))
+                        .addComponent(botaoPesquisarLocacao))))
             .addContainerGap(19, Short.MAX_VALUE))
     );
     painelLocacoesLayout.setVerticalGroup(
@@ -1058,7 +1085,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(campoPesquisarLocacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(botaoPesquisarLocacao))
-            .addGap(36, 36, 36)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+            .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(radioDataInicio)
+                .addComponent(radioDataDevolucao))
+            .addGap(6, 6, 6)
             .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(painelLocacoesLayout.createSequentialGroup()
                     .addGroup(painelLocacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -2989,13 +3020,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                             protected void done() {
                                                 aguarde.dispose();
                                                 JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+                                                atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
 
                                             }
                                         }.execute();
                                         
                                         
 
-                                        atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
+                                        //atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
                                     } catch (Exception e) {
                                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                                     }
@@ -3251,17 +3283,32 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         Calendar dataPesquisada = Calendar.getInstance();
                         // Se o que foi digitado para a pesquisa não for uma data válida, será lançada uma exceção ao fazer o parse
                         dataPesquisada.setTime(df.parse(campoPesquisarLocacoes.getText()));
-
-                        for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
-                            try {
-                                //Adiciona os dados da nova locação na tabela
-                                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
-                                    GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                                    locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
-                            } catch (Exception e) {
-                                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                        
+                        if(radioDataInicio.isSelected()) {
+                            for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
+                                try {
+                                    //Adiciona os dados da nova locação na tabela
+                                    modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                        GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                                        locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                                }
                             }
-                        }
+                        } else if(radioDataDevolucao.isSelected()) {
+                            for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeDevolucao(dataPesquisada)) {
+                                try {
+                                    //Adiciona os dados da nova locação na tabela
+                                    modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                        GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
+                                        locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                                } catch (Exception e) {
+                                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                                }
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Selecione a data inicial ou a data de devoluçao para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }   
 
                     } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
                         for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(campoPesquisarLocacoes.getText())) {
@@ -3605,6 +3652,16 @@ public class PrincipalFrame extends javax.swing.JFrame {
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }//GEN-LAST:event_botaoGerirValoresActionPerformed
+
+    private void radioDataInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDataInicioActionPerformed
+        radioDataInicio.setSelected(true);
+        radioDataDevolucao.setSelected(false);
+    }//GEN-LAST:event_radioDataInicioActionPerformed
+
+    private void radioDataDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDataDevolucaoActionPerformed
+        radioDataDevolucao.setSelected(true);
+        radioDataInicio.setSelected(false);
+    }//GEN-LAST:event_radioDataDevolucaoActionPerformed
 
     public void eliminarTextoDeCampo(javax.swing.JTextField campo) {
         campo.setText("");
@@ -4065,6 +4122,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane pnRlProduto;
     private javax.swing.JScrollPane pnRlUsuario;
     private javax.swing.JScrollPane pnRlVendas;
+    private javax.swing.JRadioButton radioDataDevolucao;
+    private javax.swing.JRadioButton radioDataInicio;
     private javax.swing.JRadioButton radioPesquisarProdutoCodigo;
     private javax.swing.JRadioButton radioPesquisarProdutoNome;
     private javax.swing.JTable tabelaClientes;
