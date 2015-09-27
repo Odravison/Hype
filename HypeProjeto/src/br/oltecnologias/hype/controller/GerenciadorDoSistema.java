@@ -254,8 +254,7 @@ public class GerenciadorDoSistema {
                         if (locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
                                 || locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")) {
                             cartaoLocacao += locacao.getJaPago();
-                        }
-                        else if (locacao.getTipoEntradaDePromissoria().toUpperCase().equals("CARTÃO")){
+                        } else if (locacao.getTipoEntradaDePromissoria().toUpperCase().equals("CARTÃO")) {
                             cartaoLocacao += locacao.getJaPago();
                         }
                         quantLocacao++;
@@ -365,12 +364,15 @@ public class GerenciadorDoSistema {
         return movimentacao;
     }
 
-    public void removerMovimentacao(long id) throws MovimentacaoInexistenteException {
+    public void removerMovimentacao(long id) throws MovimentacaoInexistenteException, DespesaInexistenteException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
 
         try {
-
+            Movimentacao movimentacao = this.pesquisarMovimentacaoPorId(id);
+            if (movimentacao.getMovimento().equalsIgnoreCase("DESPESA")) {
+                this.removerDespesas(movimentacao.getIdDaOperacao());
+            }
             mjp.removerMovimentacao(id);
 
         } finally {
@@ -598,18 +600,15 @@ public class GerenciadorDoSistema {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         MovimentacaoJpaRepository mjp = new MovimentacaoJpaRepository(emf);
         double valorTotalEmCaixa = 0.00;
-        Calendar c = Calendar.getInstance();
-        int diaDeHoje = c.get(Calendar.DAY_OF_MONTH);
-        int mesDeHoje = c.get(Calendar.MONTH);
-        int anoDeHoje = c.get(Calendar.YEAR);
 
         try {
             for (Movimentacao mov : mjp.getAllMovimentacoes()) {
-                if (mov.getData().get(Calendar.DAY_OF_MONTH) == diaDeHoje
-                        && mov.getData().get(Calendar.MONTH) == mesDeHoje
-                        && mov.getData().get(Calendar.YEAR) == anoDeHoje) {
-                    if (mov.getMovimento().toUpperCase().equals("DESPESA")) {
+                if (mov.getData().get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
+                        && mov.getData().get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
+
+                    if (mov.getMovimento().equalsIgnoreCase("DESPESA")) {
                         valorTotalEmCaixa -= mov.getValor();
+
                     } else {
                         valorTotalEmCaixa += mov.getValor();
                     }
@@ -686,7 +685,7 @@ public class GerenciadorDoSistema {
                     }
                 }
 
-            } else if (m.getMovimento().toUpperCase().equals("DESPESA")){
+            } else if (m.getMovimento().toUpperCase().equals("DESPESA")) {
                 listaDeRetorno.add(m);
             }
 
@@ -700,7 +699,7 @@ public class GerenciadorDoSistema {
         Movimentacao mov;
 
         try {
-            mov = new Movimentacao("Locação", locacao.getValorLocacao() - locacao.getValorDeEntrada() + locacao.getJaPago(), Calendar.getInstance(),
+            mov = new Movimentacao("Locação", locacao.getValorLocacao(), Calendar.getInstance(),
                     usuarioLogado.getNome(), conf.getEmpresa().getNome(), locacao.getId(), locacao.getFormaDePagamento());
             mjp.create(mov);
             return mov;

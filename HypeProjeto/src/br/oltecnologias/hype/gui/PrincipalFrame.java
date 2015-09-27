@@ -2553,6 +2553,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Despesa removida com sucesso!");
                             } catch (MovimentacaoInexistenteException e) {
                                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            } catch (DespesaInexistenteException ex) {
+                                Logger.getLogger(PrincipalFrame.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
                     } else {
@@ -2986,11 +2988,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                             @Override
                                             protected void done() {
                                                 aguarde.dispose();
+                                                JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
 
                                             }
                                         }.execute();
                                         
-                                        JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
+                                        
 
                                         atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
                                     } catch (Exception e) {

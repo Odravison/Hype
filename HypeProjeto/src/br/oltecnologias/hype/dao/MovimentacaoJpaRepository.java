@@ -57,7 +57,7 @@ public class MovimentacaoJpaRepository implements MovimentacaoRepository {
             em = getEntityManager();
 
             if (!existsMovimentacao(id)) {
-                throw new MovimentacaoInexistenteException("Produto com código: " + id + " não foi cadastrado!");
+                throw new MovimentacaoInexistenteException("Despesa não encontrada");
             }
 
             return em.find(Movimentacao.class, id);
