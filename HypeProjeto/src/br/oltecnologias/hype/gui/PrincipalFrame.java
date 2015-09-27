@@ -924,7 +924,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         try {
             listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "Ocorreu um erro na hora de buscar os dados da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
     }
@@ -1178,9 +1178,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna data da venda
     tabelaVendas.getColumnModel().getColumn(0).setPreferredWidth(120);
     // Redimensionando a largura da coluna de produtos vendidos
-    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(900);
+    tabelaVendas.getColumnModel().getColumn(1).setPreferredWidth(885);
     // Redimensionando a largura da coluna de valor total
-    tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(95);
+    tabelaVendas.getColumnModel().getColumn(2).setPreferredWidth(110);
     // Redimensionando a largura da coluna de forma de pagamento
     tabelaVendas.getColumnModel().getColumn(3).setPreferredWidth(165);
     // Redimensionando a largura da coluna id da venda
@@ -1287,7 +1287,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
         listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});
     }
 
     //cria um defaultablemodel com as informações acima
@@ -2542,7 +2542,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         //Sim = 0
                         if (escolha == 0) {
                             try {
-                                //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
                                 //GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
                                   //      tabelaMovimentacoes.getColumnCount() - 1)));
                                 
@@ -2618,13 +2617,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         }
         if (evt.getClickCount() == 2) {
-
-            //Passa, como parâmetro, a movimentacao pesquisada pelo id
             try {
                 if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
 
-                    VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                            Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))));
+                    VerDadosDespesaDialog dialog = new VerDadosDespesaDialog(
+                        null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                            GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(
+                                Long.parseLong((String) tabelaMovimentacoes.getValueAt(
+                                    tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))).getIdDaOperacao())
+                        );
 
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
@@ -2726,9 +2727,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
             if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
 
                 try {
-                    //Pesquisa a despesa selecionado através do seu id (0 = primeira coluna da tabela)
-                    EditarDespesaDialog dialog = new EditarDespesaDialog(null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                            Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))));
+                    EditarDespesaDialog dialog = new EditarDespesaDialog(
+                            null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                            GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(Long.parseLong(
+                                (String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))).getIdDaOperacao())
+                            );
 
                     dialog.setLocationRelativeTo(null);
                     if (dialog.alterarDados()) {
@@ -2738,7 +2741,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                 } catch (DespesaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
+                } catch (MovimentacaoInexistenteException e) {
+                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                } 
 
             } else {
                 JOptionPane.showMessageDialog(null, "Não é possível editar este tipo de movimentação", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3617,7 +3622,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     public void adicionarNovoProdutoNaTabela(Produto produto) {
         //Adiciona os dados do novo produto na tabela
-        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
+        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
             produto.getQuantidade(), produto.getFinalidade()});
     }
 
@@ -3631,7 +3636,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Adiciona os dados da nova locação na tabela
             modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da locação na tabela:\n" + e.getMessage(),
                     "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3642,7 +3647,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         try {
             //Adiciona os dadosa nova venda na tabela
             modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()),
-                "R$ " + venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
+                venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Não foi possível atualizar os dados da venda na tabela:\n" + e.getMessage(),
                     "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3651,8 +3656,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     public void adicionarNovaMovimentacaoNaTabela(Movimentacao movimentacao) {
         //Adiciona os dados da nova movimentação na tabela
-        modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ " + movimentacao.getValorInString(),
-            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
+        modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), movimentacao.getValorInString(),
+            movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});
     }
 
     public void adicionarNovoUsuarioNaTabela(Usuario usuario) {
@@ -3715,7 +3720,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             //Coluna de descrição
             modeloTabelaProdutos.setValueAt(produto.getDescricao(), linha, 1);
             //Coluna de descrição
-            modeloTabelaProdutos.setValueAt("R$ " + produto.getValorInString(), linha, 2);
+            modeloTabelaProdutos.setValueAt(produto.getValorInString(), linha, 2);
             //Coluna de descrição
             modeloTabelaProdutos.setValueAt(produto.getQuantidade(), linha, 3);
             //Coluna de descrição
@@ -3726,7 +3731,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     //Coluna de descrição
                     modeloTabelaProdutos.setValueAt(produto.getDescricao(), i, 1);
                     //Coluna de descrição
-                    modeloTabelaProdutos.setValueAt("R$ " + produto.getValorInString(), i, 2);
+                    modeloTabelaProdutos.setValueAt(produto.getValorInString(), i, 2);
                     //Coluna de descrição
                     modeloTabelaProdutos.setValueAt(produto.getQuantidade(), i, 3);
                     //Coluna de descrição
@@ -3766,8 +3771,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }
 
     public void atualizarDadosDespesaNaTabela(Movimentacao movimentacao, int linha) {
-        String idSelecionado = Long.toString(movimentacao.getIdDaOperacao());
-        if (idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(linha, 0))) {
+        String idSelecionado = Long.toString(movimentacao.getId());
+        if (idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(linha, tabelaMovimentacoes.getColumnCount()-1))) {
             //Coluna de valor
             modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), linha, 1);
             //Coluna de responsável
@@ -3776,7 +3781,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             modeloTabelaMovimentacoes.setValueAt(movimentacao.getBeneficiario(), linha, 4);
         } else {
             for (int i = 0; i < modeloTabelaMovimentacoes.getRowCount(); i++) {
-                if (idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(i, 0))) {
+                if (idSelecionado.equals((String) modeloTabelaMovimentacoes.getValueAt(i, tabelaMovimentacoes.getColumnCount()-1))) {
                     //Coluna de valor
                     modeloTabelaMovimentacoes.setValueAt(movimentacao.getValorInString(), i, 1);
                     //Coluna de responsável
@@ -3793,7 +3798,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     public void atualizarDadosUsuarioNaTabela(Usuario usuario, int linha) {
         String loginSelecionado = usuario.getNickName();
-        if (loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(linha, 0))) {
+        if (loginSelecionado.equals((String) modeloTabelaUsuarios.getValueAt(linha, 1))) {
             //Coluna de nome
             modeloTabelaUsuarios.setValueAt(usuario.getNome(), linha, 0);
             //Coluna de nome
@@ -3863,7 +3868,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         //Limpa a tabela de produtos
         modeloTabelaProdutos.setRowCount(0);
         for (Produto produto : produtos) {
-            modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
+            modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
                 produto.getQuantidade(), produto.getFinalidade()});
         }
     }
@@ -3880,7 +3885,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             for (Locacao locacao : locacoes) {
                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                   locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3901,8 +3906,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     public void adicionarMovimentacoesNaTabela(List<Movimentacao> movimentacoes) {
         for (Movimentacao movimentacao : movimentacoes) {
-            modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), "R$ " + movimentacao.getValorInString(),
-                movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getIdDaOperacao())});
+            modeloTabelaMovimentacoes.addRow(new Object[]{movimentacao.getMovimento(), movimentacao.getValorInString(),
+                movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});
         }
     }
 
