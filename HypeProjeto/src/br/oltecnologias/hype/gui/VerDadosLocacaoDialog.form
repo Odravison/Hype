@@ -377,7 +377,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorPago.setText(&quot;Valor j&#xe1; pago: R$ &quot;+new BigDecimal(locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorPago.setText(&quot;Valor j&#xe1; pago: &quot;+NumberFormat.getCurrencyInstance().format(locacao.getJaPago()));"/>
           </AuxValues>
         </Component>
       </SubComponents>

@@ -70,7 +70,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(cliente.getCpf())) {
             try {
                 listaLinhasLocacoes.add(new Object[]{locacao.getDataLocacaoInString(),
-                    GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), "R$ "+locacao.getValorLocacaoInString(), Long.toString(locacao.getId())});
+                    GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), locacao.getValorLocacaoInString(), Long.toString(locacao.getId())});
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocorreu um erro na hora de buscar os dados da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
         }

@@ -512,11 +512,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         //Adicionando valores nas linhas
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
-            listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
+            listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
                 produto.getQuantidade(), produto.getFinalidade()});
     }
     for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
-        listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ "+produto.getValorInString(),
+        listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
             produto.getQuantidade(), produto.getFinalidade()});
     }
     //cria um defaultablemodel com as informações acima
@@ -1154,7 +1154,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     try {
         //Adicionando valores nas linhas
         for (Venda venda : GerenciadorDeVenda.getInstance().getVendas()) {
-            listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), "R$ "+venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
+            listaLinhasVendas.add(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), venda.getValorInString(), venda.getFormaDePagamento(), Long.toString(venda.getId())});
         }
     } catch(Exception e) {
         e.getMessage();
@@ -1286,7 +1286,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //Adicionando valores nas linhas
     for (Movimentacao movimentacao : GerenciadorDoSistema.getInstance().getMovimentacoes()) {
-        listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), "R$ "+movimentacao.getValorInString(),
+        listaLinhasMovimentacoes.add(new Object[]{movimentacao.getMovimento(), movimentacao.getValorInString(),
             movimentacao.getDataInString(), movimentacao.getResponsavel(), movimentacao.getBeneficiario(), Long.toString(movimentacao.getId())});
     }
 
@@ -3021,7 +3021,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(campoPesquisarProdutos.getText());
                     //Limpa a tabela para adicionar o dado da pesquisa
                     modeloTabelaProdutos.setRowCount(0);
-                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
+                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
                         produto.getQuantidade(), produto.getFinalidade()});
                 } else if (radioPesquisarProdutoNome.isSelected()) {
                     pesquisarProdutosPorNomeEFiltro(campoPesquisarProdutos.getText());
@@ -3046,7 +3046,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     Produto produto = GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(campoPesquisarProdutos.getText());
                     //Limpa a tabela para adicionar o dado da pesquisa
                     modeloTabelaProdutos.setRowCount(0);
-                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), "R$ " + produto.getValorInString(),
+                    modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
                         produto.getQuantidade(), produto.getFinalidade()});
                 } else if (radioPesquisarProdutoNome.isSelected()) {
                     pesquisarProdutosPorNomeEFiltro(campoPesquisarProdutos.getText());
@@ -3254,7 +3254,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 //Adiciona os dados da nova locação na tabela
                                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                                    locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                             } catch (Exception e) {
                                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
@@ -3266,7 +3266,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 //Adiciona os dados da locação na tabela
                                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                                    "R$ " + locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                                    locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
@@ -3367,7 +3367,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         modeloTabelaVendas.setRowCount(0);
 
                         for (Venda venda : GerenciadorDeVenda.getInstance().pesquisarVendasPorData(dataPesquisada)) {
-                            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+                            modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), venda.getValorInString(), venda.getFormaDePagamento()});
                         }
 
                     } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
@@ -3895,7 +3895,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarVendasNaTabela(List<Venda> vendas) {
         for (Venda venda : vendas) {
             try {
-                modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), "R$ " + venda.getValorInString(), venda.getFormaDePagamento()});
+                modeloTabelaVendas.addRow(new Object[]{venda.getDataVendaInString(), GerenciadorDeVenda.getInstance().getProdutosDeVendaInString(venda.getId()), venda.getValorInString(), venda.getFormaDePagamento()});
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             } catch (VendaInexistenteException e) {

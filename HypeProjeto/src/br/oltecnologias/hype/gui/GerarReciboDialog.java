@@ -5,16 +5,11 @@
  */
 package br.oltecnologias.hype.gui;
 
-import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
 import br.oltecnologias.hype.model.GeradorDeRecibo;
 import br.oltecnologias.hype.model.Locacao;
-import br.oltecnologias.hype.model.Venda;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.SimpleDateFormat;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
 
 /**
  *
@@ -76,16 +71,16 @@ public class GerarReciboDialog extends java.awt.Dialog {
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
         this.valorParcela = (locacao.getValorLocacao()-locacao.getValorDeEntrada())/locacao.getParcelas();
 
-        labelValorRecibo.setText("R$ "+new SimpleDateFormat("0.00").format(new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
+        labelValorRecibo.setText("R$ "+new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQtdParcelas.setText("Quantas parcelas serão pagas?");
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorTotal.setText("Valor total desta locação: R$ "+new SimpleDateFormat("0.00").format(new BigDecimal(locacao.getValorLocacao()).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
+        labelValorTotal.setText("Valor total desta locação: R$ "+new BigDecimal(locacao.getValorLocacao()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorResta.setText("Resta a ser pago: R$ "+new SimpleDateFormat("0.00").format(new BigDecimal(valorQueResta).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
+        labelValorResta.setText("Resta a ser pago: R$ "+new BigDecimal(valorQueResta).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         campoQuantParcelas.setEditable(false);
         campoQuantParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -130,15 +125,15 @@ public class GerarReciboDialog extends java.awt.Dialog {
                     .addComponent(labelValorRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(72, 72, 72))
                 .addGroup(painelDadosLayout.createSequentialGroup()
-                    .addGap(109, 109, 109)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(labelQtdParcelas)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(campoQuantParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(30, 30, 30)
+                    .addGap(45, 45, 45)
                     .addComponent(botaoDiminuirParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
                     .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGap(55, 55, 55)))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,7 +206,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
             valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())-1);
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())-1)+"");
             labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-            labelValorRecibo.setText("R$ " + new SimpleDateFormat("0.00").format(new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
+            labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } 
     }//GEN-LAST:event_botaoDiminuirParcelaActionPerformed
 
@@ -219,7 +214,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
         valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())+1);
         if((valorQueResta - valorRecibo) >= 0) {
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())+1)+"");
-            labelValorResta.setText("Resta a ser pago: R$ " + new SimpleDateFormat("0.00").format(new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
+            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         } else {
             valorRecibo = valorParcela * Integer.parseInt(campoQuantParcelas.getText());
         }
