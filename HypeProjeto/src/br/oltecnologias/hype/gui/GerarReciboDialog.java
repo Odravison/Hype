@@ -20,8 +20,9 @@ public class GerarReciboDialog extends java.awt.Dialog {
     public GerarReciboDialog(java.awt.Frame parent, Locacao locacao) {
         super(parent);
         this.locacao = locacao;
-        valorQueResta = locacao.getValorLocacao() - locacao.getJaPago();
+        this.valorQueResta = locacao.getValorLocacao() - locacao.getJaPago();
         this.valorParcela = (locacao.getValorLocacao()-locacao.getValorDeEntrada())/locacao.getParcelas();
+        this.valorRecibo = this.valorParcela;
         initComponents();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
     }
@@ -70,7 +71,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
 
         labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
-        labelValorRecibo.setText("R$ "+new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        labelValorRecibo.setText("R$ "+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQtdParcelas.setText("Quantas parcelas serão pagas?");

@@ -170,7 +170,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorRecibo.setText(&quot;R$ &quot;+new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorRecibo.setText(&quot;R$ &quot;+new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelQtdParcelas">
