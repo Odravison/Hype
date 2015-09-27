@@ -132,25 +132,6 @@ public class GerenciadorDeLocacao {
         return aux;
     }
 
-    public List<Locacao> listarLocacoesPorDataDeDevolucao(Calendar data) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-
-        List<Locacao> aux = new ArrayList<Locacao>();
-
-        try {
-            for (Locacao l : ljp.getAllLocacao()) {
-                if (l.getDataDevolucao().equals(data)) {
-                    aux.add(l);
-                }
-            }
-        } finally {
-            emf.close();
-        }
-
-        return aux;
-    }
-
     public List<Locacao> listarLocacoesExtraviadas() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -398,5 +379,15 @@ public class GerenciadorDeLocacao {
             }
         }
         return locacaoASerPreparada;
+    }
+    
+    public List<Locacao> listarLocacoesPorDataDeDevolucao(Calendar dataPesquisada){
+        List<Locacao> locacoesDeHoje = new ArrayList<Locacao>();
+        for (Locacao l: getLocacoesAtivas()){
+            if (l.getDataDevolucao().get(Calendar.DAY_OF_YEAR) == dataPesquisada.get(Calendar.DAY_OF_YEAR)){
+                locacoesDeHoje.add(l);
+            }
+        }
+        return locacoesDeHoje;
     }
 }
