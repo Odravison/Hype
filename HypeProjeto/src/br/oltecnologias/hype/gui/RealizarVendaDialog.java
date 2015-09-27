@@ -647,19 +647,15 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
     private void botaoConcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConcluirActionPerformed
-
         try {
-            
             if (produtosVendidos.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if (campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
                 JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (campoEntrada.getText().length() > 0) {
-                if (Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
-                    JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
-                }
+            } else if (campoEntrada.getText().length() > 0 && Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
+                JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 aguarde.setLocationRelativeTo(null);
                 aguarde.setVisible(true);

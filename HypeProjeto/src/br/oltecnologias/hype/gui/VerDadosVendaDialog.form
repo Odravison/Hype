@@ -72,27 +72,27 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="scPnProdutosVendidos" max="32767" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Component id="labelFormaPagamento" min="-2" pref="297" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="labelEntrada" min="-2" pref="183" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="labelParcelas" min="-2" pref="200" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="labelProdutosVendidos" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="labelValorPago" min="-2" pref="182" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="labelDesconto" min="-2" pref="192" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="labelValorTotal" min="-2" pref="178" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="labelDesconto" min="-2" pref="218" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="labelValorResta" min="-2" pref="211" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="labelData" min="-2" pref="193" max="-2" attributes="0"/>
+                          <Component id="labelValorTotal" min="-2" pref="214" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
+                          <Component id="labelData" min="-2" pref="241" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="labelFormaPagamento" min="-2" pref="297" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="labelEntrada" min="-2" pref="183" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="labelParcelas" min="-2" pref="200" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="labelProdutosVendidos" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -103,28 +103,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="labelValorResta" min="-2" pref="17" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelProdutosVendidos" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelValorPago" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="scPnProdutosVendidos" min="-2" pref="212" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="labelFormaPagamento" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                              <Component id="labelEntrada" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                              <Component id="labelParcelas" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelValorTotal" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
-                              <Component id="labelData" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
-                              <Component id="labelDesconto" min="-2" pref="17" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Component id="labelProdutosVendidos" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="scPnProdutosVendidos" min="-2" pref="212" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="labelFormaPagamento" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="labelEntrada" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="labelParcelas" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="labelValorTotal" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="labelData" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                      <Component id="labelDesconto" min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -154,7 +146,9 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
                 </Property>
+                <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="wrapStyleWord" type="boolean" value="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="String descricaoProdutosVendidos = &quot;&quot;;&#xa;try {&#xa;    for(Produto produto: GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId())) {&#xa;        for (ProdutoVendido pv: venda.getProdutosVendidos()){&#xa;            if (pv.getCodigoProduto().toUpperCase().equals(produto.getCodigo().toUpperCase())){&#xa;                descricaoProdutosVendidos += pv.getQuantidade() + &quot; - &quot; + produto.getDescricao()+&quot;\n&quot;;&#xa;            }&#xa;            &#xa;        }&#xa;        &#xa;    }&#xa;} catch(Exception e) {&#xa;    JOptionPane.showMessageDialog(null, &quot;N&#xe3;o foi poss&#xed;vel exibir os produtos vendidos:\n&quot;+e.getMessage(), &#xa;                    &quot;Aviso&quot;, JOptionPane.WARNING_MESSAGE);&#xa;}&#xa;areaProdutosVendidos.setText(descricaoProdutosVendidos);"/>
@@ -220,26 +214,6 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelData.setText(&quot;Data: &quot;+venda.getDataVendaInString());"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelValorPago">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorPago.setText(&quot;Valor j&#xe1; pago: R$ &quot;+venda.getJaPago());"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JLabel" name="labelValorResta">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorResta.setText(&quot;Resta ser pago: R$ &quot;+new BigDecimal(venda.getValor()-venda.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
           </AuxValues>
         </Component>
       </SubComponents>

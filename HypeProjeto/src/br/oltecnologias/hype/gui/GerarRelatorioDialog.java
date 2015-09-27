@@ -125,7 +125,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoCancelar))
                     .addComponent(painelPeriodo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,7 +138,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
                         .addComponent(botaoCancelar)
                         .addComponent(botaoGerar))
                     .addComponent(labelObrigatorio))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
 
         pack();

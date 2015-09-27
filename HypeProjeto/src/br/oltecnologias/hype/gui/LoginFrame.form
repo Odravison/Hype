@@ -62,7 +62,7 @@
                           <Component id="painelDeLogin" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="505" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="509" max="-2" attributes="0"/>
                           <Component id="labelLogo" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>

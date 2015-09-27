@@ -1114,7 +1114,7 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Pesquisar Loca&#xe7;&#xe3;o"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Pesquise loca&#xe7;&#xf5;es pela data no formato: dd/mm/aaa"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Pesquise loca&#xe7;&#xf5;es pela data de in&#xed;cio do contrato no formato: dd/mm/aaa"/>
                     <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="cc" green="cc" red="cc" type="rgb"/>
                     </Property>

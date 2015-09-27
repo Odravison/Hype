@@ -11,6 +11,7 @@ import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Venda;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
@@ -41,8 +42,8 @@ public class GerarReciboDialog extends java.awt.Dialog {
         labelValorTotal = new javax.swing.JLabel();
         labelValorResta = new javax.swing.JLabel();
         campoQuantParcelas = new javax.swing.JTextField();
-        botaoAumentarParcela = new javax.swing.JButton();
         botaoDiminuirParcela = new javax.swing.JButton();
+        botaoAumentarParcela = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
         setResizable(false);
@@ -74,39 +75,40 @@ public class GerarReciboDialog extends java.awt.Dialog {
         labelValorRecibo.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         labelValorRecibo.setForeground(new java.awt.Color(0, 153, 51));
         this.valorParcela = (locacao.getValorLocacao()-locacao.getValorDeEntrada())/locacao.getParcelas();
-        labelValorRecibo.setText("R$ "+new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+
+        labelValorRecibo.setText("R$ "+new SimpleDateFormat("0.00").format(new BigDecimal(valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
 
         labelQtdParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelQtdParcelas.setText("Quantas parcelas serão pagas?");
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorTotal.setText("Valor total desta locação: R$ "+locacao.getValorLocacao());
+        labelValorTotal.setText("Valor total desta locação: R$ "+new SimpleDateFormat("0.00").format(new BigDecimal(locacao.getValorLocacao()).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
 
         labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorResta.setText("Resta a ser pago: R$"+new BigDecimal(valorQueResta).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        labelValorResta.setText("Resta a ser pago: R$ "+new SimpleDateFormat("0.00").format(new BigDecimal(valorQueResta).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
 
         campoQuantParcelas.setEditable(false);
         campoQuantParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoQuantParcelas.setText("1");
 
-        botaoAumentarParcela.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        botaoAumentarParcela.setText("+");
-        botaoAumentarParcela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoAumentarParcela.setPreferredSize(new java.awt.Dimension(45, 25));
-        botaoAumentarParcela.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoAumentarParcelaActionPerformed(evt);
-            }
-        });
-
         botaoDiminuirParcela.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         botaoDiminuirParcela.setText("-");
         botaoDiminuirParcela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        botaoDiminuirParcela.setMinimumSize(new java.awt.Dimension(45, 25));
         botaoDiminuirParcela.setPreferredSize(new java.awt.Dimension(45, 25));
         botaoDiminuirParcela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botaoDiminuirParcelaActionPerformed(evt);
+            }
+        });
+
+        botaoAumentarParcela.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        botaoAumentarParcela.setText("+");
+        botaoAumentarParcela.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        botaoAumentarParcela.setMinimumSize(new java.awt.Dimension(45, 25));
+        botaoAumentarParcela.setPreferredSize(new java.awt.Dimension(45, 25));
+        botaoAumentarParcela.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAumentarParcelaActionPerformed(evt);
             }
         });
 
@@ -133,15 +135,15 @@ public class GerarReciboDialog extends java.awt.Dialog {
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(campoQuantParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(30, 30, 30)
-                    .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
                     .addComponent(botaoDiminuirParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, 0)
+                    .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(20, 20, 20)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(labelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -149,8 +151,8 @@ public class GerarReciboDialog extends java.awt.Dialog {
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelQtdParcelas)
                     .addComponent(campoQuantParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(botaoDiminuirParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botaoDiminuirParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelValor)
@@ -204,30 +206,26 @@ public class GerarReciboDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_botaoGerarActionPerformed
 
+    private void botaoDiminuirParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDiminuirParcelaActionPerformed
+        if(Integer.parseInt(campoQuantParcelas.getText()) > 1){
+            valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())-1);
+            campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())-1)+"");
+            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            labelValorRecibo.setText("R$ " + new SimpleDateFormat("0.00").format(new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
+        } 
+    }//GEN-LAST:event_botaoDiminuirParcelaActionPerformed
+
     private void botaoAumentarParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAumentarParcelaActionPerformed
         valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())+1);
-        if((valorQueResta - valorRecibo) > 0) {
+        if((valorQueResta - valorRecibo) >= 0) {
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())+1)+"");
-            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            labelValorResta.setText("Resta a ser pago: R$ " + new SimpleDateFormat("0.00").format(new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue()));
         } else {
             valorRecibo = valorParcela * Integer.parseInt(campoQuantParcelas.getText());
         }
         labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
     }//GEN-LAST:event_botaoAumentarParcelaActionPerformed
 
-    private void botaoDiminuirParcelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoDiminuirParcelaActionPerformed
-        if(Integer.parseInt(campoQuantParcelas.getText()) > 1){
-            valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText())-1);
-            campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText())-1)+"");
-            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-            labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-        } 
-        
-    }//GEN-LAST:event_botaoDiminuirParcelaActionPerformed
-
-    private String numeros = "0987654321"; // Alguns campos não devem aceitar números
-    private int maxCaracteresPreco = 10;
-    //protected boolean gerarSelecionado;
     private Locacao locacao;
     private double valorRecibo;
     private double valorParcela;

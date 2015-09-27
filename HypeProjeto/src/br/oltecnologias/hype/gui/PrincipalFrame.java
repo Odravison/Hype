@@ -887,7 +887,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     campoPesquisarLocacoes.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
     campoPesquisarLocacoes.setForeground(new java.awt.Color(153, 153, 153));
     campoPesquisarLocacoes.setText("Pesquisar Locação");
-    campoPesquisarLocacoes.setToolTipText("Pesquise locações pela data no formato: dd/mm/aaa");
+    campoPesquisarLocacoes.setToolTipText("Pesquise locações pela data de início do contrato no formato: dd/mm/aaa");
     campoPesquisarLocacoes.setDisabledTextColor(new java.awt.Color(204, 204, 204));
     campoPesquisarLocacoes.addMouseListener(new java.awt.event.MouseAdapter() {
         public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -2966,29 +2966,31 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             aguarde.setLocationRelativeTo(null);
                             aguarde.setVisible(true);
 
-                            new SwingWorker() {
-                                @Override
-                                protected Object doInBackground() throws Exception {
-
+                            
                                     try {
-                                        //Pesquisa a locação através do seu id (tamanho da tabela - 1 = o id está na última coluna da tabela)
-                                        GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId());
+                                        new SwingWorker() {
+                                            @Override
+                                            protected Object doInBackground() throws Exception {
+                                                
+                                                GerenciadorDeLocacao.getInstance().finalizarLocacao(locacao.getId());
+                                                
+                                                return null;
+                                            }
 
+                                            @Override
+                                            protected void done() {
+                                                aguarde.dispose();
+
+                                            }
+                                        }.execute();
+                                        
                                         JOptionPane.showMessageDialog(null, "Locação finalizada com sucesso!");
 
                                         atualizarStatusDeLocacao(Long.toString(locacao.getId()), tabelaLocacoes.getSelectedRow());
                                     } catch (Exception e) {
                                         JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                                     }
-                                    return null;
-                                }
-
-                                @Override
-                                protected void done() {
-                                    aguarde.dispose();
-
-                                }
-                            }.execute();
+                                    
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Esta locação já está finalizada", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -3317,7 +3319,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         break;
 
                     case "MAIS ANTIGAS":
-                        //locacoes = GerenciadorDeLocacao.getInstance().getLocacoesMaisAntigas();
+                        locacoes = GerenciadorDeLocacao.getInstance().getLocacoesMaisAntigas();
 
                         break;
 

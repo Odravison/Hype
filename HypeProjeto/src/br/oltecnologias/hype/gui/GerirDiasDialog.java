@@ -150,7 +150,7 @@ public class GerirDiasDialog extends java.awt.Dialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoSalvar)
                     .addComponent(botaoCancelar))
-                .addGap(33, 33, 33))
+                .addGap(36, 36, 36))
         );
 
         pack();

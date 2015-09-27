@@ -158,7 +158,7 @@ public class LoginFrame extends javax.swing.JFrame {
                         .addGap(473, 473, 473)
                         .addComponent(painelDeLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelGeralLayout.createSequentialGroup()
-                        .addGap(505, 505, 505)
+                        .addGap(509, 509, 509)
                         .addComponent(labelLogo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 399, Short.MAX_VALUE)
                 .addComponent(labelIconeBotaoBranco)

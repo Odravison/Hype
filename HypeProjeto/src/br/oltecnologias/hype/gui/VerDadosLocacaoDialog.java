@@ -16,6 +16,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 /**
@@ -72,7 +73,9 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         areaProdutosLocados.setEditable(false);
         areaProdutosLocados.setColumns(20);
         areaProdutosLocados.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        areaProdutosLocados.setLineWrap(true);
         areaProdutosLocados.setRows(5);
+        areaProdutosLocados.setWrapStyleWord(true);
         String descricaoProdutosLocados = "";
         try {
             for(Produto produto: GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId())) {
@@ -202,7 +205,8 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         );
 
         labelValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorPago.setText("Valor já pago: R$ "+new BigDecimal(locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        double valorJaPago = new BigDecimal(locacao.getJaPago()).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+        labelValorPago.setText("Valor já pago: R$ "+new SimpleDateFormat("0.00").format(valorJaPago));
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
@@ -261,7 +265,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -273,7 +277,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addComponent(painelDados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

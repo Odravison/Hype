@@ -1222,6 +1222,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             Calendar dataFinal = dateDataFinalContrato.getCalendar();
             modeloTabelaProdutos.setRowCount(0);
             
+            //Limpa a lista e a tabela dos produtos locados
+            modeloTabelaProdutosLocados.setRowCount(0);
+            produtosLocados.clear();
+            
             aguarde.setLocationRelativeTo(null);
             this.setAlwaysOnTop(false);
             aguarde.setAlwaysOnTop(true);
