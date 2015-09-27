@@ -254,8 +254,7 @@ public class GerenciadorDoSistema {
                         if (locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - CRÉDITO")
                                 || locacao.getFormaDePagamento().toUpperCase().equals("CARTÃO - DÉBITO")) {
                             cartaoLocacao += locacao.getJaPago();
-                        }
-                        else if (locacao.getTipoEntradaDePromissoria().toUpperCase().equals("CARTÃO")){
+                        } else if (locacao.getTipoEntradaDePromissoria().toUpperCase().equals("CARTÃO")) {
                             cartaoLocacao += locacao.getJaPago();
                         }
                         quantLocacao++;
@@ -371,18 +370,10 @@ public class GerenciadorDoSistema {
 
         try {
             Movimentacao movimentacao = this.pesquisarMovimentacaoPorId(id);
-            System.out.println("movimentacao tem o movimento do tipo: " + movimentacao.getMovimento());
-            if (movimentacao.getMovimento().equalsIgnoreCase("DESPESA")){
-                System.out.println("======>>>>>>>>>>> entrou aqui e vai alterar a movimentacao de id: " + movimentacao.getId());
-                movimentacao.setMovimento("CREDITADO");
-                mjp.editarMovimentacao(movimentacao);
-                System.out.println("=========>>>>>>>> Agora a movimentacao tem movimento do tipo: " + movimentacao.getMovimento());
+            if (movimentacao.getMovimento().equalsIgnoreCase("DESPESA")) {
                 this.removerDespesas(movimentacao.getIdDaOperacao());
-            } else{
-                mjp.removerMovimentacao(id);
             }
-
-            
+            mjp.removerMovimentacao(id);
 
         } finally {
             if (emf != null) {
@@ -614,10 +605,10 @@ public class GerenciadorDoSistema {
             for (Movimentacao mov : mjp.getAllMovimentacoes()) {
                 if (mov.getData().get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)
                         && mov.getData().get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
+
                     if (mov.getMovimento().equalsIgnoreCase("DESPESA")) {
                         valorTotalEmCaixa -= mov.getValor();
-                    } else if (mov.getMovimento().equalsIgnoreCase("CREDITADO")){
-                        valorTotalEmCaixa += mov.getValor();
+
                     } else {
                         valorTotalEmCaixa += mov.getValor();
                     }
@@ -694,7 +685,7 @@ public class GerenciadorDoSistema {
                     }
                 }
 
-            } else if (m.getMovimento().toUpperCase().equals("DESPESA")){
+            } else if (m.getMovimento().toUpperCase().equals("DESPESA")) {
                 listaDeRetorno.add(m);
             }
 

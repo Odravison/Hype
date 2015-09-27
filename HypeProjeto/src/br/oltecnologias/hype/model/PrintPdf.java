@@ -60,7 +60,7 @@ public class PrintPdf {
                 System.out.println("Impressora Encontrada: " + ps.getName());
 
 
-                if (ps.getName().toUpperCase().equals(imp.toUpperCase())) {
+                if (ps.getName().toUpperCase().contains(imp.toUpperCase())) {
                     System.out.println("Impressora Selecionada: " + ps.getName());
                     impressora = ps;
                     System.out.println("Entrou dentro do if com impressora certa.");
