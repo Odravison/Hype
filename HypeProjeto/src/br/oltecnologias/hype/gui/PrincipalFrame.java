@@ -2115,6 +2115,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     }
 
                 }.execute();
+                comboFiltrarProdutos.setSelectedIndex(0);
             }
         }
         dialog.dispose();
@@ -2153,8 +2154,28 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (dialog.alterarDados()) {
             adicionarNovaVendaNaTabela(dialog.getNovaVenda());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
-            //Atualizar tabela de produtos
             atualizarValorEmCaixa();
+            
+            //Atualizando a tabela de produtos para que os dados fiquem consistentes
+            modeloTabelaProdutos.setRowCount(0);
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+
+                    for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
+                        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
+                            produto.getQuantidade(), produto.getFinalidade()});
+                    }
+                    for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+                        modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
+                            produto.getQuantidade(), produto.getFinalidade()});
+                    }
+
+                    return null;
+                }
+
+            }.execute();
+            comboFiltrarProdutos.setSelectedIndex(0);
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaVendaActionPerformed
