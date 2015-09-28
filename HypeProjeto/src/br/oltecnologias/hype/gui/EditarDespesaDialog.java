@@ -8,6 +8,8 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Movimentacao;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
@@ -70,7 +72,7 @@ public class EditarDespesaDialog extends java.awt.Dialog {
         labelValor.setText("Valor:* R$ ");
 
         campoValor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoValor.setText(despesa.getValorInString());
+        campoValor.setText(new BigDecimal(despesa.getValor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue()+"");
         campoValor.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 campoValorKeyTyped(evt);

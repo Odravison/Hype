@@ -176,7 +176,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();&#xa;campoQuatDiasAjuste.setText(configuracao.getDiasDaCostureira()+&quot;&quot;);&#xa;campoQuatDiasManuntencao.setText(configuracao.getDiasDeManutencao()+&quot;&quot;);&#xa;campoQuatDiasExtravio.setText(configuracao.getDiasDeExtravio()+&quot;&quot;);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();&#xa;campoQuatDiasAjuste.setText((configuracao.getDiasDaCostureira()*(-1))+&quot;&quot;);&#xa;campoQuatDiasManuntencao.setText(configuracao.getDiasDeManutencao()+&quot;&quot;);&#xa;campoQuatDiasExtravio.setText(configuracao.getDiasDeExtravio()+&quot;&quot;);"/>
           </AuxValues>
         </Component>
       </SubComponents>
