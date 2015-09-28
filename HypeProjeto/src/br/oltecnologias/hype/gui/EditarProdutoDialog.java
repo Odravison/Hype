@@ -10,6 +10,8 @@ import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.exception.FornecedorInexistenteException;
 import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -308,7 +310,7 @@ public class EditarProdutoDialog extends java.awt.Dialog {
         campoCor.setText(produto.getCor());
         campoTamanho.setText(produto.getTam()+"");
         campoQuantidade.setText(produto.getQuantidade()+"");
-        campoPreco.setText(produto.getValorInString());
+        campoPreco.setText(new BigDecimal(produto.getValor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue()+"");
         campoPreco.setText(campoPreco.getText().replaceAll(",", "."));
         if(produto.isLocation()) {
             radioAluguel.setSelected(true);

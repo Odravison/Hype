@@ -461,7 +461,7 @@ public class GerenciadorDeProduto {
                 }
             }
         }
-        return false;
+        return true;
     }
 
 }

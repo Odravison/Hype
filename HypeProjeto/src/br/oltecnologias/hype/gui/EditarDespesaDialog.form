@@ -173,7 +173,7 @@
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="campoValorKeyTyped"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="campoValor.setText(despesa.getValorInString());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="campoValor.setText(new BigDecimal(despesa.getValor()).setScale(2, RoundingMode.HALF_EVEN).doubleValue()+&quot;&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="labelFavorecido">

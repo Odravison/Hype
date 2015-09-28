@@ -2042,13 +2042,14 @@ public class PrincipalFrame extends javax.swing.JFrame {
             criarTextoEmCampo(campoPesquisarProdutos, "Pesquisar Produto");
         }
         //Se alguma linha da tabela estiver selecionada
-        if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())
+        /*if (tabelaProdutos.getSelectedRow() >= 0 || (botaoEditarProduto.isVisible() || botaoExcluirProduto.isVisible())
                 || botaoConsultarDisponibilidade.isVisible()) {
-            botaoEditarProduto.setVisible(false);
-            botaoExcluirProduto.setVisible(false);
-            botaoConsultarDisponibilidade.setVisible(false);
-            tabelaProdutos.clearSelection();
-        }
+            
+        }*/
+        botaoEditarProduto.setVisible(false);
+        botaoExcluirProduto.setVisible(false);
+        botaoConsultarDisponibilidade.setVisible(false);
+        tabelaProdutos.clearSelection();
     }//GEN-LAST:event_painelProdutosMouseClicked
 
     private void botaoNovoFornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoFornecedorActionPerformed
@@ -2088,12 +2089,33 @@ public class PrincipalFrame extends javax.swing.JFrame {
         RealizarLocacaoDialog dialog = new RealizarLocacaoDialog(null);
         dialog.setLocationRelativeTo(null);
         if (dialog.alterarDados()) {
-            adicionarNovaLocacaoNaTabela(dialog.getNovaLocacao());
+            Locacao locacao = dialog.getNovaLocacao();
+            adicionarNovaLocacaoNaTabela(locacao);
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
             atualizarValorEmCaixa();
-            //Atualizando a tabela de produtos para que os dados fiquem consistentes
-            modeloTabelaProdutos.setRowCount(0);
-            adicionarProdutosNaTabela(GerenciadorDeProduto.getInstance().getProdutos());
+
+            if(locacao.getDataLocacao().get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                //Atualizando a tabela de produtos para que os dados fiquem consistentes
+                modeloTabelaProdutos.setRowCount(0);
+
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+
+                        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(Calendar.getInstance(), Calendar.getInstance())) {
+                            modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
+                                produto.getQuantidade(), produto.getFinalidade()});
+                        }
+                        for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
+                            modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getValorInString(),
+                                produto.getQuantidade(), produto.getFinalidade()});
+                        }
+
+                        return null;
+                    }
+
+                }.execute();
+            }
         }
         dialog.dispose();
     }//GEN-LAST:event_botaoNovaLocacaoActionPerformed
@@ -2228,12 +2250,19 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_painelConfiguracoesMouseClicked
 
     private void botaoNovoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoNovoUsuarioActionPerformed
-        CadastrarUsuarioDialog dialog = new CadastrarUsuarioDialog(null);
-        dialog.setLocationRelativeTo(null);
-        if (dialog.alterarDados()) {
-            adicionarNovoUsuarioNaTabela(dialog.getNovoUsuario());
+        ConfirmarSenhaDialog confirmar = new ConfirmarSenhaDialog(null);
+        confirmar.setLocationRelativeTo(null);
+        if (confirmar.alterarDados()) {
+            if (GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(confirmar.getSenhaInformada())) {
+                CadastrarUsuarioDialog dialog = new CadastrarUsuarioDialog(null);
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    adicionarNovoUsuarioNaTabela(dialog.getNovoUsuario());
+                }
+                dialog.dispose();
+            }
         }
-        dialog.dispose();
+        confirmar.dispose();
     }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
 
     private void campoPesquisarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarUsuariosMouseClicked
@@ -2401,7 +2430,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (evt.getClickCount() == 1) {
             botaoEditarProduto.setVisible(true);
             botaoExcluirProduto.setVisible(true);
-            botaoConsultarDisponibilidade.setVisible(true);
+            if(((String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), tabelaProdutos.getColumnCount()-1))
+                        .toUpperCase().equals("LOCAÇÃO")) {
+                botaoConsultarDisponibilidade.setVisible(true);
+            }
         }
         if (evt.getClickCount() == 2) {
             new SwingWorker() {
@@ -2500,17 +2532,22 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoExcluirProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirProdutoActionPerformed
         if (tabelaProdutos.getSelectedRow() >= 0) {
-            int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este produto?", "Atenção!", JOptionPane.YES_NO_OPTION);
-            //Sim = 0
-            if (escolha == 0) {
-                try {
-                    //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
-                    GerenciadorDeProduto.getInstance().removerProduto((String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0));
-                    removerProdutoDaTabela(tabelaProdutos.getSelectedRow());
-                    JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
-                } catch (ProdutoInexistenteException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+            String idProduto = (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0);
+            if(GerenciadorDeProduto.getInstance().isExcluivel(idProduto)) {
+                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este produto?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                //Sim = 0
+                if (escolha == 0) {
+                    try {
+                        //Pesquisa o produto selecionado através do seu código (0 = primeira coluna da tabela)
+                        GerenciadorDeProduto.getInstance().removerProduto(idProduto);
+                        removerProdutoDaTabela(tabelaProdutos.getSelectedRow());
+                        JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
+                    } catch (ProdutoInexistenteException e) {
+                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                    }
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Não é possível excluir este produto", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um produto na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -2538,25 +2575,35 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     private void botaoExcluirUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirUsuarioActionPerformed
         if (tabelaUsuarios.getSelectedRow() >= 0) {
+            ConfirmarSenhaDialog dialog = new ConfirmarSenhaDialog(null);
+            
             if (!((String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)).equals(
                     GerenciadorDoSistema.getInstance().getUsuarioLogado().getNickName())) {
-
-                String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
-                int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
-                //Sim = 0
-                if (escolha == 0) {
-                    try {
-                        //Remove o usuário selecionado através do seu login
-                        GerenciadorDePessoas.getInstance().removerUsuario(login);
-                        removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
-                        JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
-                    } catch (UsuarioInexistenteException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                
+                dialog.setLocationRelativeTo(null);
+                if (dialog.alterarDados()) {
+                    if (GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(dialog.getSenhaInformada())) {
+                
+                        String login = (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1);
+                        int escolha = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir este usuário?", "Atenção!", JOptionPane.YES_NO_OPTION);
+                        //Sim = 0
+                        if (escolha == 0) {
+                            try {
+                                //Remove o usuário selecionado através do seu login
+                                GerenciadorDePessoas.getInstance().removerUsuario(login);
+                                removerUsuarioDaTabela(tabelaUsuarios.getSelectedRow());
+                                JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                            } catch (UsuarioInexistenteException e) {
+                                JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+                            }
+                        }
                     }
                 }
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Você não pode se excluir do sistema", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
+            dialog.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -2790,22 +2837,29 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarUsuarioActionPerformed
         if (tabelaUsuarios.getSelectedRow() >= 0) {
 
+            ConfirmarSenhaDialog confirmar= new ConfirmarSenhaDialog(null);
             try {
-                //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
-                EditarUsuarioDialog dialog = new EditarUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
-                        (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
+                confirmar.setLocationRelativeTo(null);
+                if (confirmar.alterarDados()) {
+                    if (GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(confirmar.getSenhaInformada())) {
+                
+                        //Pesquisa o usuário selecionado através do seu login (segunda coluna da tabela)
+                        EditarUsuarioDialog dialog = new EditarUsuarioDialog(null, GerenciadorDePessoas.getInstance().pesquisarUsuarioPeloLogin(
+                                (String) tabelaUsuarios.getValueAt(tabelaUsuarios.getSelectedRow(), 1)));
 
-                dialog.setLocationRelativeTo(null);
+                        dialog.setLocationRelativeTo(null);
 
-                if (dialog.alterarDados()) {
-                    atualizarDadosUsuarioNaTabela(dialog.getUsuario(), tabelaUsuarios.getSelectedRow());
+                        if (dialog.alterarDados()) {
+                            atualizarDadosUsuarioNaTabela(dialog.getUsuario(), tabelaUsuarios.getSelectedRow());
+                        }
+                        dialog.dispose();
+                    }
                 }
-                dialog.dispose();
-
+                
             } catch (UsuarioInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-
+            confirmar.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -3633,12 +3687,17 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoConsultarDisponibilidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConsultarDisponibilidadeActionPerformed
         if (tabelaProdutos.getSelectedRow() >= 0) {
             try {
-                //Pesquisa o produto selecionado através do seu código
-                VerificarDisponibilidadeDialog dialog = new VerificarDisponibilidadeDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
-                        (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
+                if(((String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), tabelaProdutos.getColumnCount()-1))
+                        .toUpperCase().equals("LOCAÇÃO")) {
+                    //Pesquisa o produto selecionado através do seu código
+                    VerificarDisponibilidadeDialog dialog = new VerificarDisponibilidadeDialog(null, GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
+                            (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
 
-                dialog.setLocationRelativeTo(null);
-                dialog.setVisible(true);
+                    dialog.setLocationRelativeTo(null);
+                    dialog.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Só é possível consultar a disponibilidade dos produtos de locação", "Aviso", JOptionPane.WARNING_MESSAGE);
+                }
             } catch (ProdutoInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }

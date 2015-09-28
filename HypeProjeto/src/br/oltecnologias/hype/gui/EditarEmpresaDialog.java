@@ -366,6 +366,9 @@ public class EditarEmpresaDialog extends java.awt.Dialog {
                     GerenciadorDoSistema.getInstance().editarEmpresa(empresa);
 
                     JOptionPane.showMessageDialog(null, "Empresa editada com sucesso!");
+                    
+                    setVisible(false);
+                    dispose();
 
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
