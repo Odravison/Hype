@@ -154,7 +154,22 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
             if (dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
                 JOptionPane.showMessageDialog(null, "A data final do contrato não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dateDataInicial.getCalendar(), dateDataFinal.getCalendar());
+                aguarde.setLocationRelativeTo(null);
+                aguarde.setVisible(true);
+
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
+                        GerenciadorDoSistema.getInstance().gerarRelatorioDeCaixa(dateDataInicial.getCalendar(), dateDataFinal.getCalendar());
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        aguarde.dispose();
+
+                    }
+                }.execute();
             }
             setVisible(false);
             dispose();
@@ -168,7 +183,7 @@ public class GerarRelatorioDialog extends java.awt.Dialog {
         dispose();
     }//GEN-LAST:event_botaoCancelarActionPerformed
 
-    
+    private final AguardeDialog aguarde = new AguardeDialog(null);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoCancelar;
     private javax.swing.JButton botaoGerar;

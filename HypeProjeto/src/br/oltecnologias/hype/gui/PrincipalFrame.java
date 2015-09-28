@@ -3421,6 +3421,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         }
 
                     } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
+                        aguarde.dispose();
                         JOptionPane.showMessageDialog(null, "Informe uma data válida para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                     return null;
