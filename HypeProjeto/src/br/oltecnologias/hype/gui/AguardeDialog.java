@@ -5,8 +5,6 @@
  */
 package br.oltecnologias.hype.gui;
 
-import javax.swing.SwingWorker;
-
 /**
  *
  * @author Luender Lima

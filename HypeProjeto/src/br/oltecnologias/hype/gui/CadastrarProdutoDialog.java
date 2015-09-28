@@ -357,10 +357,7 @@ public class CadastrarProdutoDialog extends java.awt.Dialog {
             
             evt.consume(); 
         }
-        /*
-        if(campoPreco.getText().length() >= 3 && campoPreco.getText().length() % 3 == 0){
-            campoPreco.setText(campoPreco.getText()+".");
-        } */
+
     }//GEN-LAST:event_campoPrecoKeyTyped
 
     private void campoNomeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoNomeKeyTyped
