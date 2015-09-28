@@ -38,7 +38,7 @@ public class VerDadosProdutoDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
-        setTitle("Ver Produto");
+        setTitle("Dados do produto");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

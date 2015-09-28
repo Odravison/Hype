@@ -31,7 +31,7 @@ public class VerDadosUsuarioDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
-        setTitle("Ver Usuário");
+        setTitle("Dados do usuário");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

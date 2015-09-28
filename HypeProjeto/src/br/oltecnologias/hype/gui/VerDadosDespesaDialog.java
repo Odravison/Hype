@@ -33,6 +33,7 @@ public class VerDadosDespesaDialog extends java.awt.Dialog {
         botaoOk = new javax.swing.JButton();
 
         setBackground(java.awt.Color.white);
+        setTitle("Dados da despesa");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

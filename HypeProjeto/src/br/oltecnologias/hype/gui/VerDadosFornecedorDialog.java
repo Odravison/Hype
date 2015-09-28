@@ -37,7 +37,7 @@ public class VerDadosFornecedorDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
-        setTitle("Ver Fornecedor");
+        setTitle("Dados do fornecedor");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

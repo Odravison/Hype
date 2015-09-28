@@ -45,7 +45,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         });
 
         painelLocacoesFeitas.setBackground(new java.awt.Color(255, 255, 255));
-        painelLocacoesFeitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações Feitas"));
+        painelLocacoesFeitas.setBorder(javax.swing.BorderFactory.createTitledBorder("Locações"));
 
         pnRlCliente.setBackground(new java.awt.Color(255, 255, 255));
         pnRlCliente.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);

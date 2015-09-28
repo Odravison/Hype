@@ -49,7 +49,7 @@ public class VerDadosClienteDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
-        setTitle("Ver Cliente");
+        setTitle("Dados do cliente");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

@@ -58,7 +58,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
 
         setBackground(java.awt.Color.white);
         setResizable(false);
-        setTitle("Ver Locação");
+        setTitle("Dados da locação");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 closeDialog(evt);

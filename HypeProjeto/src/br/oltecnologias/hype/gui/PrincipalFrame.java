@@ -2153,6 +2153,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         if (dialog.alterarDados()) {
             adicionarNovaVendaNaTabela(dialog.getNovaVenda());
             adicionarNovaMovimentacaoNaTabela(dialog.getNovaMovimentacao());
+            //Atualizar tabela de produtos
             atualizarValorEmCaixa();
         }
         dialog.dispose();
@@ -3250,7 +3251,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         try {
                             System.out.println(">>>>>>>>>>>>>>>>>>>>>>FEZ A PESQUISA DOS ÚLTIMOS PRODUTOS VENDIDOS");
                             produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidos();
-                            System.out.println("QAUNTIDADE DE PRODUTOS VENDIDOS: "+produtos.size());
+                            System.out.println("QUANTIDADE DE PRODUTOS VENDIDOS: "+produtos.size());
                         } catch (ProdutoInexistenteException e) {
                             JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                         }
@@ -3370,7 +3371,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 //Adiciona os dados da locação na tabela
                                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
                                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
-                                    locacao.getValorLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
+                                    locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                             } catch (Exception ex) {
                                 JOptionPane.showMessageDialog(null, ex.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
