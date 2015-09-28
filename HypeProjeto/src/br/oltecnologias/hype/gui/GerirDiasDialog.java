@@ -66,7 +66,7 @@ public class GerirDiasDialog extends java.awt.Dialog {
         campoQuatDiasExtravio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         campoQuatDiasExtravio.setPreferredSize(new java.awt.Dimension(40, 23));
         Configuracao configuracao = GerenciadorDoSistema.getInstance().getConfiguracao();
-        campoQuatDiasAjuste.setText(configuracao.getDiasDaCostureira()+"");
+        campoQuatDiasAjuste.setText((configuracao.getDiasDaCostureira()*(-1))+"");
         campoQuatDiasManuntencao.setText(configuracao.getDiasDeManutencao()+"");
         campoQuatDiasExtravio.setText(configuracao.getDiasDeExtravio()+"");
 
