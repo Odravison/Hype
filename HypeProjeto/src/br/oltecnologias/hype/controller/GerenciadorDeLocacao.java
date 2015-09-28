@@ -64,9 +64,7 @@ public class GerenciadorDeLocacao {
             GerenciadorDePessoas.getInstance().editarCliente(cliente);
 
             locacao.imprimirContrato();
-            if (locacao.getValorDeEntrada() > 0){
-                locacao.gerarRecibo();
-            }            
+            locacao.gerarRecibo();
 
             return locacao;
 
@@ -152,11 +150,10 @@ public class GerenciadorDeLocacao {
     public List<Locacao> listarLocacoesEmAtraso() {
         List<Locacao> locacoesEmAtraso = new ArrayList<Locacao>();
         for (Locacao l : this.getLocacoesAtivas()) {
-            if (!l.isFinalizada()) {
-                if (!l.isLocacaoPaga()) {
-                    if (l.getDataLocacao().get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
-                        locacoesEmAtraso.add(l);
-                    }
+            if (!l.isLocacaoPaga()) {
+                if (l.getDataLocacao().get(Calendar.DAY_OF_YEAR)
+                        == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
+                    locacoesEmAtraso.add(l);
                 }
             }
         }
@@ -367,13 +364,23 @@ public class GerenciadorDeLocacao {
         return locacoesDeHoje;
     }
 
-    public List<Locacao> pesquisarLocacoesDeCliente(String nome) {
-        List<Locacao> locacoesDeHoje = new ArrayList<Locacao>();
+    public List<Locacao> pesquisarLocacoesDeClientePeloNome(String nome) {
+        List<Locacao> locacoes = new ArrayList<Locacao>();
         for (Locacao l : getLocacoes()) {
-            if (l.getCliente().getNome().toUpperCase().contains(nome.toUpperCase())) {
-                locacoesDeHoje.add(l);
+            if (l.getCliente().getCpf().toUpperCase().contains(nome.toUpperCase())) {
+                locacoes.add(l);
             }
         }
-        return locacoesDeHoje;
+        return locacoes;
+    }
+
+    public List<Locacao> pesquisarLocacoesDeClientePeloCpf(String cpf) {
+        List<Locacao> locacoes = new ArrayList<Locacao>();
+        for (Locacao l : getLocacoes()) {
+            if (l.getCliente().getCpf().equals(cpf)) {
+                locacoes.add(l);
+            }
+        }
+        return locacoes;
     }
 }
