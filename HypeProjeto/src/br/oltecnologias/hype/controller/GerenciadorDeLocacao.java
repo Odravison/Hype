@@ -53,7 +53,7 @@ public class GerenciadorDeLocacao {
 
         try {
             locacao = new Locacao(cliente, produtosLocados, valor, dataLocacao,
-                    dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto,tipoDeEntradaPromissoria);
+                    dataDeDevolucao, formaDePagamento, parcelas, entrada, percentualDesconto, tipoDeEntradaPromissoria);
             locacao.setAtiva(true);
 
             //Persistindo a locação, ela modificará o objeto colocando seu ID;
@@ -122,25 +122,6 @@ public class GerenciadorDeLocacao {
         try {
             for (Locacao l : ljp.getAllLocacao()) {
                 if (l.getDataLocacao().equals(data)) {
-                    aux.add(l);
-                }
-            }
-        } finally {
-            emf.close();
-        }
-
-        return aux;
-    }
-
-    public List<Locacao> listarLocacoesPorDataDeDevolucao(Calendar data) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-
-        List<Locacao> aux = new ArrayList<Locacao>();
-
-        try {
-            for (Locacao l : ljp.getAllLocacao()) {
-                if (l.getDataDevolucao().equals(data)) {
                     aux.add(l);
                 }
             }
@@ -236,7 +217,7 @@ public class GerenciadorDeLocacao {
 
         return listaOrdenada;
     }
-    
+
     public List<Locacao> getLocacoesMaisAntigas() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
         LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
@@ -273,25 +254,6 @@ public class GerenciadorDeLocacao {
         }
 
         return loc;
-    }
-
-    public List<Locacao> pesquisarLocacoesDeCliente(String cpfCliente) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-        List<Locacao> locacoesDoCliente = new ArrayList<Locacao>();
-
-        try {
-            for (Locacao l : ljp.getAllLocacao()) {
-                if (l.getCliente().getCpf().equals(cpfCliente)) {
-                    locacoesDoCliente.add(l);
-                }
-            }
-            return locacoesDoCliente;
-
-        } finally {
-            emf.close();
-        }
-
     }
 
     public void verUltimoContratoGerado(long idLocacao) throws LocacaoInexistenteException, IOException, ContratoNaoGeradoException {
@@ -390,7 +352,7 @@ public class GerenciadorDeLocacao {
                 dataLocNoPeriodo.add(Calendar.DAY_OF_MONTH, costureira);
                 if (dataLocNoPeriodo.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
                     if (dataLocNoPeriodo.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
-                        
+
                         locacaoASerPreparada.add(l);
 
                     }
@@ -398,5 +360,25 @@ public class GerenciadorDeLocacao {
             }
         }
         return locacaoASerPreparada;
+    }
+
+    public List<Locacao> listarLocacoesPorDataDeDevolucao(Calendar dataPesquisada) {
+        List<Locacao> locacoesDeHoje = new ArrayList<Locacao>();
+        for (Locacao l : getLocacoes()) {
+            if (l.getDataDevolucao().get(Calendar.DAY_OF_YEAR) == dataPesquisada.get(Calendar.DAY_OF_YEAR)) {
+                locacoesDeHoje.add(l);
+            }
+        }
+        return locacoesDeHoje;
+    }
+
+    public List<Locacao> pesquisarLocacoesDeCliente(String nome) {
+        List<Locacao> locacoesDeHoje = new ArrayList<Locacao>();
+        for (Locacao l : getLocacoes()) {
+            if (l.getCliente().getNome().toUpperCase().contains(nome.toUpperCase())) {
+                locacoesDeHoje.add(l);
+            }
+        }
+        return locacoesDeHoje;
     }
 }

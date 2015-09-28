@@ -74,6 +74,12 @@ public class GerenciadorDeProduto {
                 aux.add(p);
             }
         }
+        
+        for (Produto p : this.getProdutosDeVenda()) {
+            if (p.getNome().toUpperCase().contains(nome.toUpperCase())) {
+                aux.add(p);
+            }
+        }
 
         return aux;
     }
@@ -445,6 +451,17 @@ public class GerenciadorDeProduto {
             }
         }
         return produtosParaCostureira;
+    }
+    
+    public boolean isExcluivel(String idDoProduto){
+        for (Locacao l: GerenciadorDeLocacao.getInstance().getLocacoes()){
+            for (ProdutoLocado pl: l.getProdutos()){
+                if (pl.getCodigoProduto().equalsIgnoreCase(idDoProduto)){
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 
 }
