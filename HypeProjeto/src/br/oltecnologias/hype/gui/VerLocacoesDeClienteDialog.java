@@ -67,7 +67,7 @@ public class VerLocacoesDeClienteDialog extends java.awt.Dialog {
         //Essa lista terá as linhas da tabela
         List<Object[]> listaLinhasLocacoes = new ArrayList<>();
         //Adicionando valores nas linhas
-        for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(cliente.getCpf())) {
+        for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeClientePeloCpf(cliente.getCpf())) {
             try {
                 listaLinhasLocacoes.add(new Object[]{locacao.getDataLocacaoInString(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()), locacao.getValorLocacaoInString(), Long.toString(locacao.getId())});

@@ -3387,7 +3387,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         }   
 
                     } catch (ParseException e) { //Se o que está sendo pesquisado não for uma data
-                        for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeCliente(campoPesquisarLocacoes.getText())) {
+                        for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeClientePeloNome(campoPesquisarLocacoes.getText())) {
                             try {
                                 //Adiciona os dados da locação na tabela
                                 modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),

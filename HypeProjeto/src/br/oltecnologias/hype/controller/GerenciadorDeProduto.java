@@ -342,7 +342,7 @@ public class GerenciadorDeProduto {
         Calendar data = Calendar.getInstance();
         data.add(Calendar.DAY_OF_YEAR, -7);
 
-        for (Venda v : GerenciadorDeVenda.getInstance().pesquisarVendasEntreDatas(null, Calendar.getInstance())) {
+        for (Venda v : GerenciadorDeVenda.getInstance().pesquisarVendasEntreDatas(data, Calendar.getInstance())) {
             for (ProdutoVendido pv : v.getProdutosVendidos()) {
                 Produto produto = GerenciadorDeProduto.getInstance()
                         .pesquisarProdutoPeloCodigo(pv.getCodigoProduto());
