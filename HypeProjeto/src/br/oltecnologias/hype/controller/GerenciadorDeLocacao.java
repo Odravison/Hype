@@ -64,7 +64,9 @@ public class GerenciadorDeLocacao {
             GerenciadorDePessoas.getInstance().editarCliente(cliente);
 
             locacao.imprimirContrato();
-            locacao.gerarRecibo();
+            if (locacao.getValorDeEntrada() > 0){
+                locacao.gerarRecibo();
+            }            
 
             return locacao;
 
@@ -133,22 +135,15 @@ public class GerenciadorDeLocacao {
     }
 
     public List<Locacao> listarLocacoesExtraviadas() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("closetpu");
-        LocacaoJpaRepository ljp = new LocacaoJpaRepository(emf);
-
         List<Locacao> extraviadas = new ArrayList<Locacao>();
 
-        try {
-            Calendar dataExtravio = Calendar.getInstance();
-            dataExtravio.add(Calendar.DAY_OF_MONTH, Configuracao.getInstance().getDiasDeExtravio());
+        Calendar dataExtravio = Calendar.getInstance();
+        dataExtravio.add(Calendar.DAY_OF_MONTH, Configuracao.getInstance().getDiasDeExtravio());
 
-            for (Locacao l : ljp.getAllLocacao()) {
-                if (l.getDataDevolucao().before(dataExtravio)) {
-                    extraviadas.add(l);
-                }
+        for (Locacao l : this.getLocacoesAtivas()) {
+            if (l.getDataDevolucao().before(dataExtravio)) {
+                extraviadas.add(l);
             }
-        } finally {
-            emf.close();
         }
 
         return extraviadas;
@@ -202,7 +197,7 @@ public class GerenciadorDeLocacao {
         List<Locacao> listaOrdenada = new ArrayList<Locacao>();
 
         try {
-            listaOrdenada = ljp.getAllLocacao();
+            listaOrdenada = this.getLocacoesAtivas();
 
             Collections.sort(listaOrdenada, (Object o1, Object o2) -> {
                 Locacao l1 = (Locacao) o1;
