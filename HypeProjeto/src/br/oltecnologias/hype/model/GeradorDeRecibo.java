@@ -40,13 +40,13 @@ import java.util.logging.Logger;
  *
  * @author Odravison
  */
-
 public class GeradorDeRecibo {
 
     private static GeradorDeRecibo singleton;
     private List<Produto> produtos;
     private Configuracao conf = GerenciadorDoSistema.getInstance().getConfiguracao();
     Image logo = null;
+    Paragraph textoRecibo;
 
     public static GeradorDeRecibo getInstance() {
         if (singleton == null) {
@@ -57,16 +57,16 @@ public class GeradorDeRecibo {
 
     private GeradorDeRecibo() {
         this.produtos = new ArrayList<Produto>();
-        
+
         try {
-            
+
             logo = Image.getInstance(getClass().getResource("/br/oltecnologias/hype/imagens/logoRecibo.png"));
             logo.scaleToFit(270, 54);
-            
+
         } catch (BadElementException | IOException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     public static String valorPorExtenso(double vlr) {
@@ -207,7 +207,7 @@ public class GeradorDeRecibo {
         return (s);
     }
 
-    public void gerarEImprimirReciboDeLocacao(Locacao loc) 
+    public void gerarEImprimirReciboDeLocacao(Locacao loc)
             throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
@@ -294,7 +294,7 @@ public class GeradorDeRecibo {
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
             Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ " 
+            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
                     + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
                     + "na forma de pagamento: " + loc.getFormaDePagamento()
                     + " Referente à locação de " + descCurtaProd.toString() + ".\n "
@@ -344,16 +344,20 @@ public class GeradorDeRecibo {
 
         } finally {
             pdf.close();
+            if (loc.getValorDeEntrada() > 0
+                    || (loc.getFormaDePagamento().equalsIgnoreCase("À VISTA")
+                    || loc.getFormaDePagamento().equalsIgnoreCase("CARTÃO - CRÉDITO")
+                    || loc.getFormaDePagamento().equalsIgnoreCase("CARTÃO - DÉBITO"))) {
+                String diretorioImpressao = diretorio.toString() + "\\" + "Rec_"
+                        + diaRecibo + "__H_" + horaGeracao + ".pdf";
 
-            String diretorioImpressao = diretorio.toString() + "\\" + "Rec_"
-                    + diaRecibo + "__H_" + horaGeracao + ".pdf";
+                fis = new FileInputStream(diretorioImpressao);
 
-            fis = new FileInputStream(diretorioImpressao);
+                printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf",
+                        conf.getNomeDaImpressora());
 
-            printPDFFile = new PrintPdf(fis, "Rec_" + diaRecibo + "__H_" + horaGeracao + ".pdf",
-                    conf.getNomeDaImpressora());
-
-            printPDFFile.print();
+                printPDFFile.print();
+            }
 
         }
 
@@ -368,7 +372,7 @@ public class GeradorDeRecibo {
         return descricaoCurta;
     }
 
-    public void gerarEImprimirPxReciboDeLocacao(Locacao loc, double valorDessePagamento) 
+    public void gerarEImprimirPxReciboDeLocacao(Locacao loc, double valorDessePagamento)
             throws LocacaoInexistenteException, ProdutoInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(loc.getId());
 
@@ -433,15 +437,23 @@ public class GeradorDeRecibo {
             Paragraph descCurtaProd;
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
-            Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + this.getValorInString(valorDessePagamento) + "(" + valorPorExtenso(valorDessePagamento) + ") na "
-                    + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
-                    + "Referente à locação de " + descCurtaProd.toString() + "\n "
-                    + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + "  -  "
-                    + "Pago neste dia: " + this.getValorInString(valorDessePagamento) + "\n"
-                    + "Resta: " + this.getValorInString(valorResta) + " - "
-                    + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
-            textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            if (valorResta > 0) {
+                textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + this.getValorInString(valorDessePagamento) + "(" + valorPorExtenso(valorDessePagamento) + ") na "
+                        + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
+                        + "Referente à locação de " + descCurtaProd.toString() + "\n "
+                        + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + "  -  "
+                        + "Pago neste dia: " + this.getValorInString(valorDessePagamento) + "\n"
+                        + "Resta: " + this.getValorInString(valorResta) + " - "
+                        + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
+                textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            } else {
+                textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + this.getValorInString(valorDessePagamento) + "(" + valorPorExtenso(valorDessePagamento) + ") na "
+                        + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
+                        + "Referente à locação de " + descCurtaProd.toString() + "\n "
+                        + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + "  -  "
+                        + "Pago neste dia: " + this.getValorInString(valorDessePagamento), timesNewRoman12);
+                textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            }
 
             Paragraph linhaAssinatura;
             linhaAssinatura = new Paragraph("\n"
@@ -495,7 +507,7 @@ public class GeradorDeRecibo {
         }
     }
 
-    public void gerarEImprimirReciboDeVenda(Venda venda) 
+    public void gerarEImprimirReciboDeVenda(Venda venda)
             throws ProdutoInexistenteException, VendaInexistenteException, FileNotFoundException, IOException, PrinterException {
         this.produtos = GerenciadorDeVenda.getInstance().getProdutosDeVenda(venda.getId());
 
@@ -585,7 +597,7 @@ public class GeradorDeRecibo {
                     + "na forma de pagamento: " + venda.getFormaDePagamento()
                     + " Referente à compra de " + descCurtaProd.toString() + ".\n"
                     + "Valor Total: " + this.getValorInString(venda.getValor()) + " "
-                    + "Entrada: " + this.getValorInString(venda.getEntrada()) + ". \n" , timesNewRoman12);
+                    + "Entrada: " + this.getValorInString(venda.getEntrada()) + ". \n", timesNewRoman12);
             textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
 
             Paragraph linhaAssinatura;
@@ -630,7 +642,7 @@ public class GeradorDeRecibo {
 
         } finally {
             pdf.close();
-            
+
             String diretorioImpressao = diretorio.toString() + "\\" + venda.getId() + ".pdf";
 
             FileInputStream fis = new FileInputStream(diretorioImpressao);
@@ -644,7 +656,7 @@ public class GeradorDeRecibo {
         }
 
     }
-    
+
     private String getValorInString(Double valor) {
         return new DecimalFormat("0.00").format(valor);
     }
