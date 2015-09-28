@@ -293,16 +293,25 @@ public class GeradorDeRecibo {
             Paragraph descCurtaProd;
             descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
-            Paragraph textoRecibo;
-            textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
-                    + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
-                    + "na forma de pagamento: " + loc.getFormaDePagamento()
-                    + " Referente à locação de " + descCurtaProd.toString() + ".\n "
-                    + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + " "
-                    + "Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ". \n"
-                    + "Resta: " + this.getValorInString(valorResta) + " - "
-                    + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
-            textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            if (valorResta > 0) {
+                textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
+                        + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
+                        + "na forma de pagamento: " + loc.getFormaDePagamento()
+                        + " referente à locação de " + descCurtaProd.toString() + ".\n "
+                        + "Valor Total: " + this.getValorInString(loc.getValorLocacao())
+                        + " Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ". \n"
+                        + "Resta: " + this.getValorInString(valorResta) + " - "
+                        + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
+                textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            } else {
+                textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
+                        + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
+                        + "na forma de pagamento: " + loc.getFormaDePagamento()
+                        + " referente à locação de " + descCurtaProd.toString() + ".\n "
+                        + "Valor Total: " + this.getValorInString(loc.getValorLocacao())
+                        + " Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ".", timesNewRoman12);
+                textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+            }
 
             Paragraph linhaAssinatura;
             linhaAssinatura = new Paragraph("\n"
@@ -439,8 +448,8 @@ public class GeradorDeRecibo {
 
             if (valorResta > 0) {
                 textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + this.getValorInString(valorDessePagamento) + "(" + valorPorExtenso(valorDessePagamento) + ") na "
-                        + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
-                        + "Referente à locação de " + descCurtaProd.toString() + "\n "
+                        + "forma de pagamento: " + loc.getFormaDePagamento() + "."
+                        + " Referente à locação de " + descCurtaProd.toString() + "\n"
                         + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + "  -  "
                         + "Pago neste dia: " + this.getValorInString(valorDessePagamento) + "\n"
                         + "Resta: " + this.getValorInString(valorResta) + " - "
@@ -449,7 +458,7 @@ public class GeradorDeRecibo {
             } else {
                 textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de " + this.getValorInString(valorDessePagamento) + "(" + valorPorExtenso(valorDessePagamento) + ") na "
                         + "forma de pagamento: " + loc.getFormaDePagamento() + ". "
-                        + "Referente à locação de " + descCurtaProd.toString() + "\n "
+                        + "Referente à locação de " + descCurtaProd.toString() + "\n"
                         + "Valor Total: " + this.getValorInString(loc.getValorLocacao()) + "  -  "
                         + "Pago neste dia: " + this.getValorInString(valorDessePagamento), timesNewRoman12);
                 textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
