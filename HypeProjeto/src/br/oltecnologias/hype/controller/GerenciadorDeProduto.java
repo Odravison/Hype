@@ -423,10 +423,11 @@ public class GerenciadorDeProduto {
         Produto peFail = null;
         for (Produto pe : produtos) {
             if (pe.getCodigo().toUpperCase().equals(codigoProduto.toUpperCase())) {
-                return pe;
+                if (pe.getQuantidade() > 0){
+                    return pe;
+                }
             }
         }
-
         return peFail;
     }
 
