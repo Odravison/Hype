@@ -74,7 +74,6 @@ public class CadastrarClienteDialog extends java.awt.Dialog {
         labelObrigatório = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(240, 240, 240));
-        setPreferredSize(new java.awt.Dimension(720, 625));
         setResizable(false);
         setSize(new java.awt.Dimension(700, 694));
         setTitle("Cadastro de Cliente");

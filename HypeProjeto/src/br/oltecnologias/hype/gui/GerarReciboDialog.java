@@ -81,7 +81,12 @@ public class GerarReciboDialog extends java.awt.Dialog {
         labelValorTotal.setText("Valor total desta locação: R$ "+new BigDecimal(locacao.getValorLocacao()).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
 
         labelValorResta.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorResta.setText("Restará a ser pago: R$ "+new BigDecimal(valorQueResta-valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        valorRestaTemporario = valorQueResta-valorParcela;
+        if(valorRestaTemporario < 1) {
+            labelValorResta.setText("Restará a ser pago: R$ 0,00");
+        } else {
+            labelValorResta.setText("Restará a ser pago: R$ "+new BigDecimal(valorRestaTemporario).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+        }
 
         campoQuantParcelas.setEditable(false);
         campoQuantParcelas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -114,27 +119,27 @@ public class GerarReciboDialog extends java.awt.Dialog {
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(labelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
-                    .addGap(180, 180, 180)
-                    .addComponent(labelValor)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(labelValorRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(72, 72, 72))
-                .addGroup(painelDadosLayout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(labelQtdParcelas)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(campoQuantParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(45, 45, 45)
-                    .addComponent(botaoDiminuirParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, 0)
-                    .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(55, 55, 55)))
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
+                            .addComponent(labelValor)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(labelValorRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(72, 72, 72))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosLayout.createSequentialGroup()
+                            .addComponent(labelQtdParcelas)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(campoQuantParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(45, 45, 45)
+                            .addComponent(botaoDiminuirParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, 0)
+                            .addComponent(botaoAumentarParcela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(55, 55, 55)))))
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,7 +225,12 @@ public class GerarReciboDialog extends java.awt.Dialog {
         if (Integer.parseInt(campoQuantParcelas.getText()) > 1) {
             valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText()) - 1);
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText()) - 1) + "");
-            labelValorResta.setText("Restará a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            valorRestaTemporario = valorQueResta - valorRecibo;
+            if (valorRestaTemporario < 1) {
+                labelValorResta.setText("Restará a ser pago: R$ 0,00");
+            } else {
+                labelValorResta.setText("Restará a ser pago: R$ " + new BigDecimal(valorRestaTemporario).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            }
             labelValorRecibo.setText("R$ " + new BigDecimal(valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
         }
     }//GEN-LAST:event_botaoDiminuirParcelaActionPerformed
@@ -229,7 +239,12 @@ public class GerarReciboDialog extends java.awt.Dialog {
         valorRecibo = valorParcela * (Integer.parseInt(campoQuantParcelas.getText()) + 1);
         if ((new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue()) >= 0) {
             campoQuantParcelas.setText((Integer.parseInt(campoQuantParcelas.getText()) + 1) + "");
-            labelValorResta.setText("Resta a ser pago: R$ " + new BigDecimal(valorQueResta - valorRecibo).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            valorRestaTemporario = valorQueResta - valorRecibo;
+            if (valorRestaTemporario < 1) {
+                labelValorResta.setText("Restará a ser pago: R$ 0,00");
+            } else {
+                labelValorResta.setText("Restará a ser pago: R$ " + new BigDecimal(valorRestaTemporario).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            }
         } else {
             valorRecibo = valorParcela * Integer.parseInt(campoQuantParcelas.getText());
         }
@@ -240,6 +255,7 @@ public class GerarReciboDialog extends java.awt.Dialog {
     private double valorRecibo;
     private double valorParcela;
     private double valorQueResta;
+    private double valorRestaTemporario;
     private final AguardeDialog aguarde = new AguardeDialog(null);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAumentarParcela;

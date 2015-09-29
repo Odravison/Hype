@@ -3270,9 +3270,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                     case "Últimos vendidos":
                         try {
-                            System.out.println(">>>>>>>>>>>>>>>>>>>>>>FEZ A PESQUISA DOS ÚLTIMOS PRODUTOS VENDIDOS");
                             produtos = GerenciadorDeProduto.getInstance().pesquisarUltimosProdutosVendidos();
-                            System.out.println("QUANTIDADE DE PRODUTOS VENDIDOS: "+produtos.size());
                         } catch (ProdutoInexistenteException e) {
                             JOptionPane.showMessageDialog(null, "Ocorreu um erro na pesquisa de produtos. \nPor favor, tente novamente.", "Aviso", JOptionPane.WARNING_MESSAGE);
                         }

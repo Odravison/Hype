@@ -8,6 +8,7 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.model.Produto;
 import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 /**
  *
@@ -196,16 +197,35 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
             } else {
                 labelDescricaoProduto.setText("O produto " + produto.getNome() + " estará");
                 
-                if (GerenciadorDeProduto.getInstance().consultarDisponibilidadeDeProdutoEntreDatas(
-                        dateDataInicial.getCalendar(), dateDataFinal.getCalendar(), produto.getCodigo())) {
+                AguardeDialog aguarde = new AguardeDialog(null);
+                aguarde.setLocationRelativeTo(null);
+                aguarde.setVisible(true);
+    
+                new SwingWorker() {
+                    @Override
+                    protected Object doInBackground() throws Exception {
 
-                    labelDisponibilidade.setText("DISPONÍVEL");
-                    labelDisponibilidade.setForeground(new java.awt.Color(0, 153, 0));
-                } else {
-                    labelDisponibilidade.setText("INDISPONÍVEL");
-                    labelDisponibilidade.setForeground(new java.awt.Color(255, 0, 0));
-                }
-                labelTextoFinalResultado.setVisible(true);
+                        if (GerenciadorDeProduto.getInstance().consultarDisponibilidadeDeProdutoEntreDatas(
+                                dateDataInicial.getCalendar(), dateDataFinal.getCalendar(), produto.getCodigo())) {
+
+                            labelDisponibilidade.setText("DISPONÍVEL");
+                            labelDisponibilidade.setForeground(new java.awt.Color(0, 153, 0));
+                        } else {
+                            labelDisponibilidade.setText("INDISPONÍVEL");
+                            labelDisponibilidade.setForeground(new java.awt.Color(255, 0, 0));
+                        }
+                        labelTextoFinalResultado.setVisible(true);
+
+                        return null;
+                    }
+
+                    @Override
+                    protected void done() {
+                        aguarde.dispose();
+
+                    }
+                }.execute();
+                
             }
 
         } catch (Exception e) {

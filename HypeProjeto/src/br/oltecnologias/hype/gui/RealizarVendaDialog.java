@@ -742,14 +742,18 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         radioCartao.setSelected(false);
         desabilitarCampos();
         desabilitarRadios();
-        limparValores();
+        if(campoParcelas.getText().length() > 0 || campoEntrada.getText().length() > 0) {
+            limparValores();
+        } 
     }//GEN-LAST:event_radioAVistaActionPerformed
 
     private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
         radioAVista.setSelected(false);
         habilitarRadios();
         desabilitarCampos();
-        limparValores();
+        if(campoParcelas.getText().length() > 0 || campoEntrada.getText().length() > 0) {
+            limparValores();
+        }    
     }//GEN-LAST:event_radioCartaoActionPerformed
 
     private void radioCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreditoActionPerformed
@@ -833,7 +837,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
 
-            calcularValorTotalComDesconto();
+            calcularValorTotal();
         }
         /*
          if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
@@ -973,8 +977,8 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         campoParcelas.setText("");
         campoEntrada.setText("");
         calcularValorTotal();
-        valorTotalVenda = valorGeral;
-        calcularValorTotalComDesconto();
+        //valorTotalVenda = valorGeral;
+        //calcularValorTotalComDesconto();
     }
 
     public void adicionarProdutoAVenda(Produto produto) {

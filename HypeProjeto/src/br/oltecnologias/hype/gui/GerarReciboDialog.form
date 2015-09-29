@@ -200,7 +200,7 @@
             </Property>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelValorResta.setText(&quot;Restar&#xe1; a ser pago: R$ &quot;+new BigDecimal(valorQueResta-valorParcela).setScale(2, RoundingMode.HALF_EVEN).doubleValue());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="valorRestaTemporario = valorQueResta-valorParcela;&#xa;if(valorRestaTemporario &lt; 1) {&#xa;    labelValorResta.setText(&quot;Restar&#xe1; a ser pago: R$ 0,00&quot;);&#xa;} else {&#xa;    labelValorResta.setText(&quot;Restar&#xe1; a ser pago: R$ &quot;+new BigDecimal(valorRestaTemporario).setScale(2, RoundingMode.HALF_EVEN).doubleValue());&#xa;}"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JTextField" name="campoQuantParcelas">

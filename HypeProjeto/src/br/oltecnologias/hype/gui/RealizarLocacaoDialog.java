@@ -1036,7 +1036,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         (String) tabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
 
                 calcularValorTotal();
-                //calcularValorTotalLocacao();
+                
                 campoPercentualDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
                 campoEntrada.setEnabled(true);
@@ -1070,8 +1070,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioCartao.setSelected(false);
         radioPromissoria.setSelected(false);
         desabilitarCampos();
-        desabilitarRadios();   
-        limparValores();
+        desabilitarRadios();  
+        if(campoParcelas.getText().length() > 0 || campoEntrada.getText().length() > 0) {
+            limparValores();
+        }
     }//GEN-LAST:event_radioAVistaActionPerformed
 
     private void radioCartaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCartaoActionPerformed
@@ -1079,7 +1081,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         radioPromissoria.setSelected(false);
         habilitarRadios();
         desabilitarCampos();
-        limparValores();
+        if(campoParcelas.getText().length() > 0 || campoEntrada.getText().length() > 0) {
+            limparValores();
+        }
     }//GEN-LAST:event_radioCartaoActionPerformed
 
     private void radioPromissoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPromissoriaActionPerformed
@@ -1088,7 +1092,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         comboFormaPagamentoEntrada.setVisible(true);
         habilitarCampos();
         desabilitarRadios();
-        limparValores();
+        if(campoParcelas.getText().length() > 0 || campoEntrada.getText().length() > 0) {
+            limparValores();
+        }
     }//GEN-LAST:event_radioPromissoriaActionPerformed
 
     private void radioCreditoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioCreditoActionPerformed
@@ -1144,7 +1150,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
 
-            calcularValorTotalComDesconto();
+            calcularValorTotal();
+            //calcularValorTotalComDesconto();
             /*try {
              if (campoPercentualDesconto.getText().length() > 0) {
              labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
@@ -1288,16 +1295,18 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             valorParcelasArredondado = new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
                     ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorParcelas.setText(" = " + campoParcelas.getText() + " X " + NumberFormat.getCurrencyInstance().format(valorParcelasArredondado));
-
         }
     }
 
     public void calcularValorTotalComDesconto() {
+        double valor;
         if (campoPercentualDesconto.getText().length() > 0) {
-            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
+            valor = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
+                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+            labelValorLocacao.setText(NumberFormat.getCurrencyInstance().format(valor));
         } else {
-            labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao).doubleValue());
+            valor = new BigDecimal(valorTotalLocacao).doubleValue();
+            labelValorLocacao.setText(NumberFormat.getCurrencyInstance().format(valor));
         }
     }
 
@@ -1354,8 +1363,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campoParcelas.setText("");
         campoEntrada.setText("");
         calcularValorTotal();
-        valorTotalLocacao = valorGeral;
-        calcularValorTotalComDesconto();
+        //valorTotalLocacao = valorGeral;
+        //calcularValorTotalComDesconto();
     }
 
     public boolean alterarDados() {
