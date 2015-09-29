@@ -418,17 +418,16 @@ public class GerenciadorDeProduto {
         return retorno;
     }
 
-    public boolean consultarDisponibilidadeDeProdutoEntreDatas(Calendar dataInicio, Calendar dataFiinal, String codigoProduto) {
+    public Produto consultarDisponibilidadeDeProdutoEntreDatas(Calendar dataInicio, Calendar dataFiinal, String codigoProduto) {
         List<Produto> produtos = this.getProdutosDisponiveisEntreDatas(dataInicio, dataFiinal);
+        Produto peFail = null;
         for (Produto pe : produtos) {
             if (pe.getCodigo().toUpperCase().equals(codigoProduto.toUpperCase())) {
-                if (pe.getQuantidade() >= 1) {
-                    return true;
-                }
+                return pe;
             }
         }
 
-        return false;
+        return peFail;
     }
 
     public List<Produto> getProdutosParaCostureira() throws ProdutoInexistenteException {
