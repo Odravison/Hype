@@ -918,13 +918,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Altura das linhas
     tabelaLocacoes.setRowHeight(25);
 
-    String[] nomesColunasTabelaLocacoes = {"CPF Cliente", "Cliente", "Produtos Locados", "Valor Total", "Início","Devolução", "Status", ""};
+    String[] nomesColunasTabelaLocacoes = {"Locador", "Contato", "Produtos Locados", "Valor Total", "Início","Devolução", "Status", ""};
     //Essa lista terá as linhas da tabela
     List<Object[]> listaLinhasLocacoes = new ArrayList<>();
     //Adicionando valores nas linhas
     for (Locacao locacao : GerenciadorDeLocacao.getInstance().getLocacoesAtivas()) {
         try {
-            listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+            listaLinhasLocacoes.add(new Object[]{locacao.getCliente().getNome(), locacao.getCliente().getCelular(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                 locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
     } catch (Exception e) {
@@ -946,10 +946,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
     //define o model da tabela
     tabelaLocacoes.setModel(modeloTabelaLocacoes);
-    // Redimensionando a largura da coluna de CPF do cliente
-    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(115);
     // Redimensionando a largura da coluna de nome do cliente
-    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(250);
+    tabelaLocacoes.getColumnModel().getColumn(0).setPreferredWidth(240);
+    // Redimensionando a largura da coluna de contato do locador
+    tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(125);
     // Redimensionando a largura da coluna de produtos locados
     tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(585);
     // Redimensionando a largura da coluna de valor total
@@ -973,9 +973,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
     labelFiltrarLocacoes.setText("Filtrar por:");
 
     comboFiltrarLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-    comboFiltrarLocacoes.setMaximumRowCount(6);
-    comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Ativas", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
-    comboFiltrarLocacoes.setSelectedIndex(1);
+    comboFiltrarLocacoes.setMaximumRowCount(7);
+    comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Ativas", "Para Ajuste", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
     comboFiltrarLocacoes.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarLocacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -2282,6 +2281,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     adicionarNovoUsuarioNaTabela(dialog.getNovoUsuario());
                 }
                 dialog.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "A senha do usuário logado é incompatível com a senha informada", "Aviso", JOptionPane.WARNING_MESSAGE);
             }
         }
         confirmar.dispose();
@@ -2619,6 +2620,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                             }
                         }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "A senha do usuário logado é incompatível com a senha informada", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 
@@ -2642,9 +2645,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         //Sim = 0
                         if (escolha == 0) {
                             try {
-                                //GerenciadorDoSistema.getInstance().removerDespesas(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
-                                  //      tabelaMovimentacoes.getColumnCount() - 1)));
-                                
                                 GerenciadorDoSistema.getInstance().removerMovimentacao(Long.parseLong((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(),
                                         tabelaMovimentacoes.getColumnCount() - 1)));
                                 
@@ -2658,7 +2658,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             }
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Senhas incompatíveis", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "A senha do usuário logado é incompatível com a senha informada", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 }
                 dialog.dispose();
@@ -2827,20 +2827,30 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void botaoEditarDespesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarDespesaActionPerformed
         if (tabelaMovimentacoes.getSelectedRow() >= 0) {
             if (((String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), 0)).toUpperCase().equals("DESPESA")) {
-
                 try {
-                    EditarDespesaDialog dialog = new EditarDespesaDialog(
-                            null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
-                            GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(Long.parseLong(
-                                (String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))).getIdDaOperacao())
-                            );
+                    
+                    ConfirmarSenhaDialog confirmar= new ConfirmarSenhaDialog(null);
+                    confirmar.setLocationRelativeTo(null);
+                    if (confirmar.alterarDados()) {
+                        if (GerenciadorDoSistema.getInstance().getUsuarioLogado().getSenha().equals(confirmar.getSenhaInformada())) {
+                    
+                            EditarDespesaDialog dialog = new EditarDespesaDialog(
+                                    null, GerenciadorDoSistema.getInstance().pesquisarDespesaPorId(
+                                    GerenciadorDoSistema.getInstance().pesquisarMovimentacaoPorId(Long.parseLong(
+                                        (String) tabelaMovimentacoes.getValueAt(tabelaMovimentacoes.getSelectedRow(), tabelaMovimentacoes.getColumnCount() - 1))).getIdDaOperacao())
+                                    );
 
-                    dialog.setLocationRelativeTo(null);
-                    if (dialog.alterarDados()) {
-                        atualizarDadosDespesaNaTabela(dialog.getMovimentacao(), tabelaMovimentacoes.getSelectedRow());
+                            dialog.setLocationRelativeTo(null);
+                            if (dialog.alterarDados()) {
+                                atualizarDadosDespesaNaTabela(dialog.getMovimentacao(), tabelaMovimentacoes.getSelectedRow());
+                            }
+                            dialog.dispose();
+                            
+                        } else {
+                            JOptionPane.showMessageDialog(null, "A senha do usuário logado é incompatível com a senha informada", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        }
                     }
-                    dialog.dispose();
-
+                    confirmar.dispose();
                 } catch (DespesaInexistenteException e) {
                     JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
                 } catch (MovimentacaoInexistenteException e) {
@@ -2875,13 +2885,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             atualizarDadosUsuarioNaTabela(dialog.getUsuario(), tabelaUsuarios.getSelectedRow());
                         }
                         dialog.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "A senha do usuário logado é incompatível com a senha informada", "Aviso", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                
+                confirmar.dispose();
             } catch (UsuarioInexistenteException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
             }
-            confirmar.dispose();
+            
         } else {
             JOptionPane.showMessageDialog(null, "É preciso selecionar um usuário na tabela", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
@@ -3432,6 +3444,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
                         break;
                         
+                    case "PARA AJUSTE":
+                        //locacoes = GerenciadorDeLocacao.getInstance().getLocacoesParaAjuste();
+
+                        break;
+                        
                     case "ATRASADAS":
                         locacoes = GerenciadorDeLocacao.getInstance().listarLocacoesEmAtraso();
 
@@ -3774,7 +3791,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     public void adicionarNovaLocacaoNaTabela(Locacao locacao) {
         try {
             //Adiciona os dados da nova locação na tabela
-            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+            modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getCliente().getCelular(),
                 GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                 locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
         } catch (Exception e) {
@@ -3817,7 +3834,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         modeloTabelaFornecedores.removeRow(indice);
     }
 
-    public void removerLocaoDaTabela(int indice) {
+    public void removerLocacaoDaTabela(int indice) {
         modeloTabelaLocacoes.removeRow(indice);
     }
 
@@ -4023,7 +4040,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         try {
             //Adiciona os dados das locação na tabela
             for (Locacao locacao : locacoes) {
-                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getCliente().getCelular(),
                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                    locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
             }

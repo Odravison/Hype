@@ -53,6 +53,14 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelFormaPagamentoEntrada = new javax.swing.JLabel();
         labelEntrada = new javax.swing.JLabel();
         labelValorPago = new javax.swing.JLabel();
+        painelMedidasLocador = new javax.swing.JPanel();
+        labelBlazer = new javax.swing.JLabel();
+        labelCalca = new javax.swing.JLabel();
+        labelColete = new javax.swing.JLabel();
+        labelCamisa = new javax.swing.JLabel();
+        labelSapato = new javax.swing.JLabel();
+        labelComprimentoManga = new javax.swing.JLabel();
+        labelComprimentoCalca = new javax.swing.JLabel();
         botaoOk = new javax.swing.JButton();
         botaoGerarContrato = new javax.swing.JButton();
 
@@ -153,6 +161,9 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelEntrada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelEntrada.setText("Entrada: "+locacao.getEntradaInString());
 
+        labelValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelValorPago.setText("Valor já pago: "+NumberFormat.getCurrencyInstance().format(locacao.getJaPago()));
+
         javax.swing.GroupLayout painelPagamentoLayout = new javax.swing.GroupLayout(painelPagamento);
         painelPagamento.setLayout(painelPagamentoLayout);
         painelPagamentoLayout.setHorizontalGroup(
@@ -161,36 +172,36 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                 .addContainerGap()
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(painelPagamentoLayout.createSequentialGroup()
-                        .addComponent(labelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29))
+                        .addComponent(labelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(painelPagamentoLayout.createSequentialGroup()
                         .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(painelPagamentoLayout.createSequentialGroup()
-                                .addComponent(labelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(labelValorPago, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(labelValorResta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(painelPagamentoLayout.createSequentialGroup()
                                 .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(labelFormaPagamentoEntrada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelPagamentoLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(labelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelPagamentoLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(labelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(labelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         painelPagamentoLayout.setVerticalGroup(
             painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelPagamentoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(labelParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(labelFormaPagamento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(labelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,15 +209,72 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
                     .addComponent(labelEntrada, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelPagamentoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(labelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, 17, Short.MAX_VALUE)
-                        .addComponent(labelStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(labelStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelValorResta, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        labelValorPago.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelValorPago.setText("Valor já pago: "+NumberFormat.getCurrencyInstance().format(locacao.getJaPago()));
+        painelMedidasLocador.setBackground(new java.awt.Color(255, 255, 255));
+        painelMedidasLocador.setBorder(javax.swing.BorderFactory.createTitledBorder("Medidas do locador"));
+
+        labelBlazer.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelBlazer.setText("Blazer: "+locacao.getCliente().getMedidas().getBlazer());
+
+        labelCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCalca.setText("Calça: "+locacao.getCliente().getMedidas().getCalca());
+
+        labelColete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelColete.setText("Colete: "+locacao.getCliente().getMedidas().getColete());
+
+        labelCamisa.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelCamisa.setText("Camisa: "+locacao.getCliente().getMedidas().getCamisa());
+
+        labelSapato.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelSapato.setText("Sapato: "+locacao.getCliente().getMedidas().getSapato());
+
+        labelComprimentoManga.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelComprimentoManga.setText("Com. Manga: "+locacao.getCliente().getMedidas().getComprimentoManga());
+
+        labelComprimentoCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelComprimentoCalca.setText("Com. Calça: "+locacao.getCliente().getMedidas().getComprimentoCalca());
+
+        javax.swing.GroupLayout painelMedidasLocadorLayout = new javax.swing.GroupLayout(painelMedidasLocador);
+        painelMedidasLocador.setLayout(painelMedidasLocadorLayout);
+        painelMedidasLocadorLayout.setHorizontalGroup(
+            painelMedidasLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelMedidasLocadorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(painelMedidasLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(labelComprimentoCalca, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                    .addGroup(painelMedidasLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(labelComprimentoManga, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                        .addComponent(labelSapato, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelCamisa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelColete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelCalca, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(labelBlazer, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelMedidasLocadorLayout.setVerticalGroup(
+            painelMedidasLocadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelMedidasLocadorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelBlazer, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCalca, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelColete, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelCamisa, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSapato, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComprimentoManga, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelComprimentoCalca, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout painelDadosLayout = new javax.swing.GroupLayout(painelDados);
         painelDados.setLayout(painelDadosLayout);
@@ -215,27 +283,28 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scPnProdutosVendidos, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                    .addComponent(scPnProdutosVendidos)
+                    .addComponent(painelPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(painelDadosLayout.createSequentialGroup()
                         .addComponent(labelProdutosLocados)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(labelValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(painelDadosLayout.createSequentialGroup()
-                        .addComponent(painelPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(painelDadosContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(511, 511, 511)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(painelDadosContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(painelMedidasLocador, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         painelDadosLayout.setVerticalGroup(
             painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelProdutosLocados)
-                    .addComponent(labelValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scPnProdutosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(painelDadosLayout.createSequentialGroup()
+                        .addComponent(labelProdutosLocados)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scPnProdutosVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(painelMedidasLocador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(painelDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(painelDadosContrato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(painelPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -315,6 +384,12 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JTextArea areaProdutosLocados;
     private javax.swing.JButton botaoGerarContrato;
     private javax.swing.JButton botaoOk;
+    private javax.swing.JLabel labelBlazer;
+    private javax.swing.JLabel labelCalca;
+    private javax.swing.JLabel labelCamisa;
+    private javax.swing.JLabel labelColete;
+    private javax.swing.JLabel labelComprimentoCalca;
+    private javax.swing.JLabel labelComprimentoManga;
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
     private javax.swing.JLabel labelDesconto;
@@ -323,12 +398,14 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelFormaPagamentoEntrada;
     private javax.swing.JLabel labelParcelas;
     private javax.swing.JLabel labelProdutosLocados;
+    private javax.swing.JLabel labelSapato;
     private javax.swing.JLabel labelStatus;
     private javax.swing.JLabel labelValorPago;
     private javax.swing.JLabel labelValorResta;
     private javax.swing.JLabel labelValorTotal;
     private javax.swing.JPanel painelDados;
     private javax.swing.JPanel painelDadosContrato;
+    private javax.swing.JPanel painelMedidasLocador;
     private javax.swing.JPanel painelPagamento;
     private javax.swing.JScrollPane scPnProdutosVendidos;
     // End of variables declaration//GEN-END:variables
