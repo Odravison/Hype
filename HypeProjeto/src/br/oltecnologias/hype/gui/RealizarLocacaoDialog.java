@@ -21,14 +21,11 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -990,7 +987,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotal();
-            calcularValorTotalLocacao();
             campoPercentualDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
             campoEntrada.setEnabled(false);
@@ -1123,24 +1119,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
             calcularValorTotal();
 
-            /*try {
-             //Se o usuário estiver apagando o conteúdo do campo
-             if (campoParcelas.getText().length() <= 0) { 
-             labelValorParcelas.setText("");
-
-             } else {
-             labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
-             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                            
-             }
-             } catch(Exception e) {
-             pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-             dialog = pane.createDialog("Aviso");
-             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-             dialog.setAlwaysOnTop(true);
-             dialog.setVisible(true);
-             }  */
         }
     }//GEN-LAST:event_campoParcelasKeyReleased
 
@@ -1151,23 +1129,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
 
             calcularValorTotal();
-            //calcularValorTotalComDesconto();
-            /*try {
-             if (campoPercentualDesconto.getText().length() > 0) {
-             labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-   
-             } else {
-             labelValorLocacao.setText("R$ " + valorTotalLocacao);
-             }
-             } catch(Exception e) {
-             pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-             dialog = pane.createDialog("Aviso");
-             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-             dialog.setAlwaysOnTop(true);
-             dialog.setVisible(true);
-             }  */
         }
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
@@ -1187,41 +1148,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
             calcularValorTotal();
-            /*
-             try {
-             if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
-             if (campoEntrada.getText().length() > 0) {
-             valorTotalLocacao += Double.parseDouble(campoEntrada.getText());
-             } else {
-             valorTotalLocacao += Double.parseDouble(evt.getKeyChar()+"");
-             }
-             } else {
-             valorTotalLocacao -= Double.parseDouble(campoEntrada.getText());
-             }
-                
-             //Atualiza o valor total da locação exibido ao cliente
-             calcularValorTotalLocacao();
-                
-             if (campoPercentualDesconto.getText().length() > 0) {
-             labelValorLocacao.setText("R$ " + new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-             campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-   
-             }
-             //Atualiza o valor das parcelas, caso tenha algum valor no campo de parcelas
-             if (campoParcelas.getText().length() > 0) {
-             labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalLocacao / Integer.parseInt(campoParcelas.getText())
-             ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-             }
-                                
-             } catch(Exception e) {
-             pane.setMessage("Não foi possível realizar o cálculo do valor das parcelas da locação."+"\n"+e.getMessage());
-             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
-             dialog = pane.createDialog("Aviso");
-             dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
-             dialog.setAlwaysOnTop(true);
-             dialog.setVisible(true);
-             }  
-             */
+            
         }
     }//GEN-LAST:event_campoEntradaKeyReleased
 
@@ -1515,29 +1442,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             }
         }
         return null;
-    }
-
-    public void calcularValorTotalLocacao() {
-        /*try {
-         if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("LOCAÇÃO")) {
-         valorTotalLocacao = new BigDecimal(valorTotalLocacao
-         - ((valorTotalLocacao * percentualDescontoTemporada) / 100)
-         ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-
-         labelValorLocacao.setText("R$ " + valorTotalLocacao);
-
-         } else {
-         valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-         labelValorLocacao.setText("R$ " + valorTotalLocacao);
-         }
-          
-         } catch (TemporadaInexistenteException e) {
-         valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-         labelValorLocacao.setText("R$ " + valorTotalLocacao);
-         } catch (Exception e) {
-         valorTotalLocacao = new BigDecimal(valorTotalLocacao).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-         labelValorLocacao.setText("R$ " + valorTotalLocacao);
-         } */
     }
 
     public Locacao getNovaLocacao() {

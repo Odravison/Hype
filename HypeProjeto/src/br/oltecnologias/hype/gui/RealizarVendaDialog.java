@@ -10,7 +10,6 @@ import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
 import br.oltecnologias.hype.exception.TemporadaInexistenteException;
-import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoVendido;
@@ -19,14 +18,11 @@ import java.awt.Frame;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
@@ -812,23 +808,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
             calcularValorTotal();
         }
-        /*if ((numeros.contains(evt.getKeyChar() + "") && campoParcelas.getText().length() < maxCaracteresParcelas 
-         && Integer.parseInt(campoParcelas.getText()) <= maxParcelas) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-         || Integer.parseInt(campoParcelas.getText()) > 0) {
-         try {
-         //Se o usuário estiver apagando o conteúdo do campo
-         if (campoParcelas.getText().length() <= 0) { 
-         labelValorParcelas.setText("");
-
-         } else {
-         labelValorParcelas.setText(" = "+campoParcelas.getText()+" X R$ "+new BigDecimal(valorTotalVenda / Integer.parseInt(campoParcelas.getText())
-         ).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-                            
-         }
-         } catch(Exception e) {
-         JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-         }  
-         }*/
     }//GEN-LAST:event_campoParcelasKeyReleased
 
     private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
@@ -839,23 +818,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
             calcularValorTotal();
         }
-        /*
-         if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-         && Integer.parseInt(campoPercentualDesconto.getText()) <= 100) || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
-         || Integer.parseInt(campoParcelas.getText()) > 0) {
-         try {
-         //Se o usuário estiver apagando o conteúdo do campo
-         if (campoPercentualDesconto.getText().length() > 0) {
-         labelValorVenda.setText("R$ " + new BigDecimal(valorTotalVenda - ((valorTotalVenda * Integer.parseInt(
-         campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue());
-   
-         } else {
-         labelValorVenda.setText("R$ " + valorTotalVenda);
-         }
-         } catch(Exception e) {
-         JOptionPane.showMessageDialog(null, "Não foi possível realizar o cálculo do valor das parcelas da venda."+"\n"+e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
-         }  
-         } */
+
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
@@ -1096,47 +1059,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         return null;
     }
 
-    public void calcularValorTotalVenda() {
-        /*try {
-         if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
-         valorTotalVenda = new BigDecimal(valorTotalVenda
-         - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100)
-         ).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                
-         labelValorVenda.setText("R$ " + valorTotalVenda);
-                
-         } else {
-         valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-         labelValorVenda.setText("R$ " + valorTotalVenda);
-         }
-         } catch (TemporadaInexistenteException e) {
-         valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-         labelValorVenda.setText("R$ " + valorTotalVenda);
-         } catch (Exception e) {
-         valorTotalVenda = new BigDecimal(valorTotalVenda).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-         labelValorVenda.setText("R$ " + valorTotalVenda);
-         }*/
-    }
-    /*
-     public void calcularValorTotalVendaComDesconto(int valorDesconto) {
-     try {
-     if (GerenciadorDoSistema.getInstance().isTemporadaAtivada("VENDA")) {
-     double valorTotalComDescontoTemporada = valorTotalVenda
-     - ((valorTotalVenda * GerenciadorDoSistema.getInstance().getPercentualDescontoTemporada("VENDA")) / 100);
-                
-     valorTotalVenda = new BigDecimal(valorTotalComDescontoTemporada 
-     - ((valorTotalComDescontoTemporada * valorDesconto)/100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                
-     labelValorVenda.setText("R$ " + valorTotalVenda);
-     } 
-     } catch (TemporadaInexistenteException e) {
-     //Se a temporada não existir, o cálculo será feito apenas com o desconto dado
-     valorTotalVenda = new BigDecimal(valorTotalVenda
-     - ((valorTotalVenda * valorDesconto) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-     labelValorVenda.setText("R$ " + valorTotalVenda);
-     }
-     }*/
-
     public boolean alterarDados() {
         concluirSelecionado = false;  //Marcamos que o salavar não foi selecionado
         setModal(true);         //A dialog tem que ser modal. Só pode retornar do setVisible ap�s ficar invisível.
@@ -1170,7 +1092,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private int percentualDescontoTemporada;
     private int maxCaracteresEntrada = 7;
     private double valorTotalComDescontos;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("0.00");
     private final AguardeDialog aguarde = new AguardeDialog(null);
     private double valorTotalArredondado;
     private double valorParcelasArredondado;
