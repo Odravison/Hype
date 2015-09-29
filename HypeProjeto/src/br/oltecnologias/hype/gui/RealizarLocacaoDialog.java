@@ -1363,8 +1363,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         campoParcelas.setText("");
         campoEntrada.setText("");
         calcularValorTotal();
-        //valorTotalLocacao = valorGeral;
-        //calcularValorTotalComDesconto();
     }
 
     public boolean alterarDados() {

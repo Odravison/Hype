@@ -977,8 +977,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         campoParcelas.setText("");
         campoEntrada.setText("");
         calcularValorTotal();
-        //valorTotalVenda = valorGeral;
-        //calcularValorTotalComDesconto();
     }
 
     public void adicionarProdutoAVenda(Produto produto) {
