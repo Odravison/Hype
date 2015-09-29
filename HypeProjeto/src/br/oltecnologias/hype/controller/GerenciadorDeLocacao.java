@@ -293,13 +293,21 @@ public class GerenciadorDeLocacao {
         int manutencao = GerenciadorDoSistema.getInstance().getDiasDeManutencao();
         int costureira = GerenciadorDoSistema.getInstance().getDiasDaCostureira();
 
+        dataInicio.add(Calendar.DAY_OF_YEAR, costureira);
+        dataFinal.add(Calendar.DAY_OF_YEAR, manutencao);
+        System.out.println("DATA INICIAL =======>>>>>> " + dataInicio.get(Calendar.DAY_OF_YEAR));
+        System.out.println("DATA FINAL ===========>>>>>>>" + dataFinal.get(Calendar.DAY_OF_YEAR));
+
         for (Locacao l : this.getLocacoes()) {
             if (l.isAtiva()) {
                 Calendar dataLocNoPeriodo = l.getDataLocacao();
-                dataLocNoPeriodo.add(Calendar.DAY_OF_MONTH, costureira);
+                dataLocNoPeriodo.add(Calendar.DAY_OF_YEAR, costureira);
 
                 Calendar dataDevNoPeriodo = l.getDataDevolucao();
-                dataDevNoPeriodo.add(Calendar.DAY_OF_MONTH, manutencao);
+                dataDevNoPeriodo.add(Calendar.DAY_OF_YEAR, manutencao);
+
+                System.out.println("DATA INICIAL LOCAÇÃO =======>>>>>> " + dataLocNoPeriodo.get(Calendar.DAY_OF_YEAR));
+                System.out.println("DATA FINAL LOCAÇÃO ===========>>>>>>>" + dataDevNoPeriodo.get(Calendar.DAY_OF_YEAR));
 
                 if (dataLocNoPeriodo.get(Calendar.YEAR) >= dataInicio.get(Calendar.YEAR)
                         && dataDevNoPeriodo.get(Calendar.YEAR) <= dataFinal.get(Calendar.YEAR)) {
@@ -312,12 +320,9 @@ public class GerenciadorDeLocacao {
                         locacoesEntreDatas.add(l);
 
                     }
-
                 }
             }
-
         }
-
         return locacoesEntreDatas;
 
     }
