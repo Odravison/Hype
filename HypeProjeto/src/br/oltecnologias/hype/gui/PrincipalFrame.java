@@ -165,8 +165,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         botaoSalvarNomeImpressora = new javax.swing.JButton();
         painelAdministrador = new javax.swing.JPanel();
         botaoNovoUsuario = new javax.swing.JButton();
-        botaoPesquisarUsuario = new javax.swing.JButton();
-        campoPesquisarUsuarios = new javax.swing.JTextField();
         pnRlUsuario = new javax.swing.JScrollPane();
         tabelaUsuarios = new javax.swing.JTable();
         botaoAtivarTemporada = new javax.swing.JButton();
@@ -1733,31 +1731,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         }
                     });
 
-                    botaoPesquisarUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-                    botaoPesquisarUsuario.setText("Pesquisar");
-                    botaoPesquisarUsuario.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-                    botaoPesquisarUsuario.addActionListener(new java.awt.event.ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent evt) {
-                            botaoPesquisarUsuarioActionPerformed(evt);
-                        }
-                    });
-
-                    campoPesquisarUsuarios.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-                    campoPesquisarUsuarios.setForeground(new java.awt.Color(153, 153, 153));
-                    campoPesquisarUsuarios.setText("Pesquisar Usuário");
-                    campoPesquisarUsuarios.setToolTipText("Pesquise usuários pelo nome");
-                    campoPesquisarUsuarios.setDisabledTextColor(new java.awt.Color(204, 204, 204));
-                    campoPesquisarUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-                        public void mouseClicked(java.awt.event.MouseEvent evt) {
-                            campoPesquisarUsuariosMouseClicked(evt);
-                        }
-                    });
-                    campoPesquisarUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
-                        public void keyTyped(java.awt.event.KeyEvent evt) {
-                            campoPesquisarUsuariosKeyTyped(evt);
-                        }
-                    });
-
                     pnRlUsuario.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
                     pnRlUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
                     pnRlUsuario.setPreferredSize(new java.awt.Dimension(596, 340));
@@ -1887,10 +1860,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                     .addComponent(botaoAtivarTemporada)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(botaoGerirValores))
-                                .addGroup(painelAdministradorLayout.createSequentialGroup()
-                                    .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(botaoPesquisarUsuario))
                                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(painelAdministradorLayout.createSequentialGroup()
                                         .addComponent(labelFiltrarUsuarios)
@@ -1912,11 +1881,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                 .addComponent(botaoAtivarTemporada)
                                 .addComponent(botaoEditarEmpresa)
                                 .addComponent(botaoGerirValores))
-                            .addGap(50, 50, 50)
-                            .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(campoPesquisarUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(botaoPesquisarUsuario))
-                            .addGap(36, 36, 36)
+                            .addGap(111, 111, 111)
                             .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(painelAdministradorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(labelFiltrarUsuarios)
@@ -2284,22 +2249,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         confirmar.dispose();
     }//GEN-LAST:event_botaoNovoUsuarioActionPerformed
 
-    private void campoPesquisarUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_campoPesquisarUsuariosMouseClicked
-        if (campoPesquisarUsuarios.getText().equals("Pesquisar Usuário")) {
-            eliminarTextoDeCampo(campoPesquisarUsuarios);
-        }
-    }//GEN-LAST:event_campoPesquisarUsuariosMouseClicked
-
-    private void campoPesquisarUsuariosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPesquisarUsuariosKeyTyped
-        if (campoPesquisarUsuarios.getText().equals("Pesquisar Usuário")) {
-            eliminarTextoDeCampo(campoPesquisarUsuarios);
-        }
-    }//GEN-LAST:event_campoPesquisarUsuariosKeyTyped
-
     private void painelAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_painelAdministradorMouseClicked
-        if (campoPesquisarUsuarios.getText().length() <= 0) {
-            criarTextoEmCampo(campoPesquisarUsuarios, "Pesquisar Usuário");
-        }
         //Se alguma linha da tabela estiver selecionada
         if (tabelaUsuarios.getSelectedRow() >= 0 || (botaoEditarUsuario.isVisible() || botaoExcluirUsuario.isVisible())) {
             botaoEditarUsuario.setVisible(false);
@@ -3579,14 +3529,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         }.execute();
     }//GEN-LAST:event_comboFiltrarMovimentacoesActionPerformed
 
-    private void botaoPesquisarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarUsuarioActionPerformed
-        if (campoPesquisarUsuarios.getText().equals("Pesquisar Usuário") || campoPesquisarUsuarios.getText().length() <= 0) {
-            JOptionPane.showMessageDialog(null, "Informe um nome para a pesquisa de usuarios", "Aviso", JOptionPane.WARNING_MESSAGE);
-        } else {
-            adicionarUsuariosNaTabela(GerenciadorDePessoas.getInstance().pesquisarUsuarioPorNome(campoPesquisarUsuarios.getText()));
-        }
-    }//GEN-LAST:event_botaoPesquisarUsuarioActionPerformed
-
     private void radioPesquisarProdutoCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioPesquisarProdutoCodigoActionPerformed
         radioPesquisarProdutoCodigo.setSelected(true);
         radioPesquisarProdutoNome.setSelected(false);
@@ -4112,7 +4054,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JButton botaoPesquisarFornecedor;
     private javax.swing.JButton botaoPesquisarLocacao;
     private javax.swing.JButton botaoPesquisarProduto;
-    private javax.swing.JButton botaoPesquisarUsuario;
     private javax.swing.JButton botaoPesquisarVendas;
     private javax.swing.JButton botaoRegistrarDespesa;
     private javax.swing.JLabel botaoSair;
@@ -4132,7 +4073,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JTextField campoPesquisarFornecedores;
     private javax.swing.JTextField campoPesquisarLocacoes;
     private javax.swing.JTextField campoPesquisarProdutos;
-    private javax.swing.JTextField campoPesquisarUsuarios;
     private javax.swing.JTextField campoPesquisarVendas;
     private javax.swing.JComboBox comboFiltrarClientes;
     private javax.swing.JComboBox comboFiltrarFornecedores;

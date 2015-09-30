@@ -244,10 +244,8 @@ public class RegistrarDespesaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoNomeKeyTyped
 
     private void campoValorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoValorKeyTyped
-        if(
-                (!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.') || 
-                campoValor.getText().length() >= maxCaracteresValor ||
-                (campoValor.getText().length() == 3 && evt.getKeyChar() != '.')) { //(campoValor.getText().length() > 3 && !campoValor.getText().contains(".")) || 
+        if((!numeros.contains(evt.getKeyChar()+"") && evt.getKeyChar() != '.')
+                || campoValor.getText().length() >= maxCaracteresValor) {
             
             evt.consume(); 
         }

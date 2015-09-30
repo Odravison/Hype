@@ -204,7 +204,12 @@ public class GerenciadorDePessoas {
         FornecedorJpaRepository fjp = new FornecedorJpaRepository(emf);
 
         try {
-            aux = fjp.getAllFornecedores();
+            for(Fornecedor f: fjp.getAllFornecedores()){
+                if (f.getNome().toUpperCase().contains(nome.toUpperCase())){
+                    aux.add(f);
+                }
+            } 
+            
         } finally {
             emf.close();
         }
