@@ -36,8 +36,6 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
         labelFechar = new javax.swing.JButton();
         painelResultadoConsulta = new javax.swing.JPanel();
         labelDescricaoProduto = new javax.swing.JLabel();
-        labelDisponibilidade = new javax.swing.JLabel();
-        labelTextoFinalResultado = new javax.swing.JLabel();
         labelObrigatorio = new javax.swing.JLabel();
 
         setBackground(java.awt.Color.white);
@@ -64,12 +62,8 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
         painelDadosConsulta.setLayout(painelDadosConsultaLayout);
         painelDadosConsultaLayout.setHorizontalGroup(
             painelDadosConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosConsultaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(labelOrientacaoConsulta)
-                .addGap(75, 75, 75))
             .addGroup(painelDadosConsultaLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
+                .addGap(149, 149, 149)
                 .addComponent(labelDataInicial)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateDataInicial, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -77,14 +71,18 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
                 .addComponent(labelDataFinal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dateDataFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(150, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelDadosConsultaLayout.createSequentialGroup()
+                .addGap(169, 169, 169)
+                .addComponent(labelOrientacaoConsulta)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelDadosConsultaLayout.setVerticalGroup(
             painelDadosConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosConsultaLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(23, 23, 23)
                 .addComponent(labelOrientacaoConsulta)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(painelDadosConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelDataInicial)
                     .addComponent(labelDataFinal)
@@ -116,34 +114,21 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
 
         labelDescricaoProduto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        labelDisponibilidade.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
-
-        labelTextoFinalResultado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelTextoFinalResultado.setText("para o período pesquisado");
-        labelTextoFinalResultado.setVisible(false);
-
         javax.swing.GroupLayout painelResultadoConsultaLayout = new javax.swing.GroupLayout(painelResultadoConsulta);
         painelResultadoConsulta.setLayout(painelResultadoConsultaLayout);
         painelResultadoConsultaLayout.setHorizontalGroup(
             painelResultadoConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(painelResultadoConsultaLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(labelDescricaoProduto)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelDisponibilidade)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(labelTextoFinalResultado)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, painelResultadoConsultaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelDescricaoProduto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         painelResultadoConsultaLayout.setVerticalGroup(
             painelResultadoConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelResultadoConsultaLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(painelResultadoConsultaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelDisponibilidade, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelTextoFinalResultado))
-                .addGap(23, 23, 23))
+                .addComponent(labelDescricaoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         labelObrigatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -195,7 +180,6 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
             if (dateDataFinal.getCalendar().before(dateDataInicial.getCalendar())) {
                 JOptionPane.showMessageDialog(null, "A data final da consulta não pode ser anterior a data inicial", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
-                labelDescricaoProduto.setText("O produto " + produto.getNome() + " estará");
                 
                 AguardeDialog aguarde = new AguardeDialog(null);
                 aguarde.setLocationRelativeTo(null);
@@ -204,17 +188,27 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
                 new SwingWorker() {
                     @Override
                     protected Object doInBackground() throws Exception {
-
-                        if (GerenciadorDeProduto.getInstance().consultarDisponibilidadeDeProdutoEntreDatas(
-                                dateDataInicial.getCalendar(), dateDataFinal.getCalendar(), produto.getCodigo())) {
-
+                        
+                        Produto produtoConsultado = GerenciadorDeProduto.getInstance().consultarDisponibilidadeDeProdutoEntreDatas(
+                                dateDataInicial.getCalendar(), dateDataFinal.getCalendar(), produto.getCodigo());
+                        
+                        if (produtoConsultado != null) {
+                            labelDescricaoProduto.setText("Terá "+produtoConsultado.getQuantidade()+" unidades do produto " + produto.getNome() + 
+                                    " disponíveis no estoque para o período pesquisado");
+                        } else {
+                            labelDescricaoProduto.setText("Terá 0 unidades do produto " + produto.getNome() + 
+                                    " disponíveis no estoque para o período pesquisado");
+                        }
+                        /*if (produtoConsultado != null) {
+                            labelDescricaoProduto.setText("O produto " + produto.getNome() + " estará");
+                            
                             labelDisponibilidade.setText("DISPONÍVEL");
                             labelDisponibilidade.setForeground(new java.awt.Color(0, 153, 0));
                         } else {
                             labelDisponibilidade.setText("INDISPONÍVEL");
                             labelDisponibilidade.setForeground(new java.awt.Color(255, 0, 0));
                         }
-                        labelTextoFinalResultado.setVisible(true);
+                        labelTextoFinalResultado.setVisible(true);*/
 
                         return null;
                     }
@@ -246,11 +240,9 @@ public class VerificarDisponibilidadeDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
     private javax.swing.JLabel labelDescricaoProduto;
-    private javax.swing.JLabel labelDisponibilidade;
     private javax.swing.JButton labelFechar;
     private javax.swing.JLabel labelObrigatorio;
     private javax.swing.JLabel labelOrientacaoConsulta;
-    private javax.swing.JLabel labelTextoFinalResultado;
     private javax.swing.JPanel painelDadosConsulta;
     private javax.swing.JPanel painelResultadoConsulta;
     // End of variables declaration//GEN-END:variables

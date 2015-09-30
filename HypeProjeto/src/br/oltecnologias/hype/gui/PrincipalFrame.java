@@ -3445,7 +3445,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         break;
                         
                     case "PARA AJUSTE":
-                        //locacoes = GerenciadorDeLocacao.getInstance().getLocacoesParaAjuste();
+                        locacoes = GerenciadorDeLocacao.getInstance().getLocacaoASerPreparada();
 
                         break;
                         
