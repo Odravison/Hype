@@ -10,7 +10,6 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Medidas;
 import java.awt.Frame;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

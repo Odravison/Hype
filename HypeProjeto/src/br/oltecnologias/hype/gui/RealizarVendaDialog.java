@@ -36,6 +36,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
     public RealizarVendaDialog(Frame owner) {
         super(owner);
+        listaRowProdutos = new ArrayList<>();
         initComponents();
         valorGeral = 0;
         valorTotalComDescontos = 0;
@@ -129,7 +130,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         });
 
         botaoBuscar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        botaoBuscar.setText("   Buscar  ");
+        botaoBuscar.setText("Pesquisar");
         botaoBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         botaoBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,6 +155,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         //Adicionando valores nas linhas
         for (Produto produto : GerenciadorDeProduto.getInstance().getProdutosDeVenda()) {
             listaLinhasProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+            listaRowProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
         }
         //cria um defaultablemodel com as informações acima
         modeloTabelaProdutos = new DefaultTableModel(
@@ -483,11 +485,9 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
             }
         } catch(TemporadaInexistenteException e) {
-            System.out.println("LANÇOU A EXCEÇÃO "+e.getMessage());
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         } catch (Exception e) {
-            System.out.println("LANÇOU A EXCEÇÃO "+e.getMessage());
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
@@ -599,11 +599,28 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         if (campoPesquisar.getText().length() <= 0) {
             JOptionPane.showMessageDialog(null, "É preciso informar o nome ou o código do produto para a pesquisa", "Aviso", JOptionPane.WARNING_MESSAGE);
         } else {
-            //Limpar o model dos produtos antes de acrescentar os objetos da pesquisa
+            //Limpa a tabela de produtos
             modeloTabelaProdutos.setRowCount(0);
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeVendaPeloNome(campoPesquisar.getText())) {
-                modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
-            }
+            
+            aguarde.setLocationRelativeTo(null);
+            aguarde.setVisible(true);
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    for (Object[] row : listaRowProdutos) {
+                        if(((String)row[1]).toUpperCase().contains(campoPesquisar.getText().toUpperCase())) {
+                            modeloTabelaProdutos.addRow(row);
+                        }
+                    }
+                    
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+                }
+            }.execute();       
         }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
@@ -653,7 +670,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (campoEntrada.getText().length() > 0 && Double.parseDouble(campoEntrada.getText()) < (valorTotalVenda / 2)) {
+            } else if (campoEntrada.getText().length() > 0 && Double.parseDouble(campoEntrada.getText()) < (valorTotalComDescontos / 2)) {
                 JOptionPane.showMessageDialog(null, "O valor de entrada deve ser de, no mínimo, metade do valor total da compra", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else {
                 aguarde.setLocationRelativeTo(null);
@@ -667,7 +684,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         if (campoPercentualDesconto.getText().length() <= 0) {
                             campoPercentualDesconto.setText("0");
                         } else {
-                            calcularValorTotal();
+                            //calcularValorTotal();
                         }
                         //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                         if (campoEntrada.getText().length() <= 0) {
@@ -822,7 +839,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     }//GEN-LAST:event_campoPercentualDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
-        //double metadeValor = valorTotal;
         if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoEntrada.getText().length() >= maxCaracteresEntrada
                 || Double.parseDouble(campoEntrada.getText() + evt.getKeyChar()) >= valorTotalComDescontos
                 || Double.parseDouble(campoEntrada.getText() + evt.getKeyChar()) == 0) {
@@ -1095,6 +1111,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
     private final AguardeDialog aguarde = new AguardeDialog(null);
     private double valorTotalArredondado;
     private double valorParcelasArredondado;
+    private List<Object[]> listaRowProdutos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

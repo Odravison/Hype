@@ -6,7 +6,6 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.model.Movimentacao;
-import java.text.SimpleDateFormat;
 
 /**
  *

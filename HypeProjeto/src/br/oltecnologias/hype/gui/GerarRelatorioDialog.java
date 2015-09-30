@@ -6,7 +6,6 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
-import java.util.Calendar;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 

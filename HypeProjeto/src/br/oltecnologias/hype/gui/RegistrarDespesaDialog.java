@@ -9,7 +9,6 @@ import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.model.Despesa;
 import br.oltecnologias.hype.model.Movimentacao;
 import java.util.Calendar;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

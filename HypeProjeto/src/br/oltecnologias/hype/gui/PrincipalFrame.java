@@ -22,7 +22,6 @@ import br.oltecnologias.hype.model.Cliente;
 import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Fornecedor;
-import br.oltecnologias.hype.model.GeradorDeRecibo;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.Movimentacao;
 import br.oltecnologias.hype.model.Produto;
@@ -32,22 +31,18 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -951,9 +946,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // Redimensionando a largura da coluna de contato do locador
     tabelaLocacoes.getColumnModel().getColumn(1).setPreferredWidth(125);
     // Redimensionando a largura da coluna de produtos locados
-    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(585);
+    tabelaLocacoes.getColumnModel().getColumn(2).setPreferredWidth(580);
     // Redimensionando a largura da coluna de valor total
-    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(82);
+    tabelaLocacoes.getColumnModel().getColumn(3).setPreferredWidth(87);
     // Redimensionando a largura da coluna de data de início
     tabelaLocacoes.getColumnModel().getColumn(4).setPreferredWidth(85);
     // Redimensionando a largura da coluna de data de devolução
@@ -975,6 +970,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     comboFiltrarLocacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
     comboFiltrarLocacoes.setMaximumRowCount(7);
     comboFiltrarLocacoes.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Todas", "Ativas", "Para Ajuste", "Atrasadas", "Extraviadas", "Mais Recentes", "Mais Antigas" }));
+    comboFiltrarLocacoes.setSelectedIndex(1);
     comboFiltrarLocacoes.setToolTipText("Selecionar tipo de filtro");
     comboFiltrarLocacoes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     comboFiltrarLocacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -3374,7 +3370,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeLocacao(dataPesquisada)) {
                                 try {
                                     //Adiciona os dados da nova locação na tabela
-                                    modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                    modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getCliente().getCelular(),
                                         GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                                         locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                                 } catch (Exception e) {
@@ -3385,7 +3381,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                             for (Locacao locacao : GerenciadorDeLocacao.getInstance().listarLocacoesPorDataDeDevolucao(dataPesquisada)) {
                                 try {
                                     //Adiciona os dados da nova locação na tabela
-                                    modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                    modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getCliente().getCelular(),
                                         GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                                         locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                                 } catch (Exception e) {
@@ -3400,7 +3396,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
                         for (Locacao locacao : GerenciadorDeLocacao.getInstance().pesquisarLocacoesDeClientePeloNome(campoPesquisarLocacoes.getText())) {
                             try {
                                 //Adiciona os dados da locação na tabela
-                                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getCpf(), locacao.getCliente().getNome(),
+                                modeloTabelaLocacoes.addRow(new Object[]{locacao.getCliente().getNome(), locacao.getCliente().getCelular(),
                                     GerenciadorDeLocacao.getInstance().getProdutosDeLocacaoInString(locacao.getId()),
                                     locacao.getValorLocacaoInString(), locacao.getDataLocacaoInString(), locacao.getDataDevolucaoInString(), locacao.getStatus(), Long.toString(locacao.getId())});
                             } catch (Exception ex) {
@@ -4072,47 +4068,6 @@ public class PrincipalFrame extends javax.swing.JFrame {
         for (Usuario usuario : usuarios) {
             modeloTabelaUsuarios.addRow(new Object[]{usuario.getNome(), usuario.getNickName(), usuario.getCategoria()});
         }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalFrame.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PrincipalFrame(null).setVisible(true);
-            }
-        });
     }
 
     private final AguardeDialog aguarde = new AguardeDialog(null);

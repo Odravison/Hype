@@ -9,7 +9,6 @@ import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Fornecedor;
 import java.awt.Frame;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

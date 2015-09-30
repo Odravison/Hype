@@ -8,7 +8,6 @@ package br.oltecnologias.hype.gui;
 import br.oltecnologias.hype.controller.GerenciadorDePessoas;
 import br.oltecnologias.hype.model.Endereco;
 import br.oltecnologias.hype.model.Fornecedor;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

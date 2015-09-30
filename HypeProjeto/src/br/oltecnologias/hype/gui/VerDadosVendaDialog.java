@@ -9,8 +9,6 @@ import br.oltecnologias.hype.controller.GerenciadorDeVenda;
 import br.oltecnologias.hype.model.Produto;
 import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import javax.swing.JOptionPane;
 
 /**

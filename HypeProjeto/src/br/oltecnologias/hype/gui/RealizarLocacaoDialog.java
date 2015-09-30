@@ -48,6 +48,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         produtosLocados = new ArrayList<ProdutoLocado>();
         pane = new JOptionPane();
         dialog = null;
+        listaRowProdutos = new ArrayList<>();
         produtosEmEstoque = GerenciadorDeProduto.getInstance().getProdutosDeLocacao();
         this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
         botaoConcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Salvar.png")));
@@ -645,11 +646,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
             }
         } catch(TemporadaInexistenteException e) {
-            System.out.println("LANÇOU A EXCEÇÃO "+e.getMessage());
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         } catch (Exception e) {
-            System.out.println("LANÇOU A EXCEÇÃO "+e.getMessage());
             labelStatusTemporada.setText("OFF");
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
@@ -941,10 +940,27 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
+            //Limpa a tabela de produtos
             modeloTabelaProdutos.setRowCount(0);
-            for (Produto produto : GerenciadorDeProduto.getInstance().pesquisarProdutosDeLocacaoPeloNome(campoPesquisar.getText())) {
-                modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
-            }
+            aguarde.setLocationRelativeTo(null);
+            aguarde.setVisible(true);
+            new SwingWorker() {
+                @Override
+                protected Object doInBackground() throws Exception {
+                    for (Object[] row : listaRowProdutos) {
+                        if(((String)row[1]).toUpperCase().contains(campoPesquisar.getText().toUpperCase())) {
+                            modeloTabelaProdutos.addRow(row);
+                        }
+                    }
+
+                    return null;
+                }
+
+                @Override
+                protected void done() {
+                    aguarde.dispose();
+                }
+            }.execute();
         }
     }//GEN-LAST:event_botaoPesquisarActionPerformed
 
@@ -1158,9 +1174,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             Calendar dataFinal = dateDataFinalContrato.getCalendar();
             modeloTabelaProdutos.setRowCount(0);
             
-            //Limpa a lista e a tabela dos produtos locados
-            modeloTabelaProdutosLocados.setRowCount(0);
-            produtosLocados.clear();
+            zerarValores();
             
             aguarde.setLocationRelativeTo(null);
             this.setAlwaysOnTop(false);
@@ -1172,6 +1186,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 protected Object doInBackground() throws Exception {
                     for(Produto produto: GerenciadorDeProduto.getInstance().getProdutosDisponiveisEntreDatas(dataInicial, dataFinal)) {
                         modeloTabelaProdutos.addRow(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
+                        listaRowProdutos.add(new Object[]{produto.getCodigo(), produto.getDescricao(), produto.getQuantidade()});
                     }
                     return null;
                 }
@@ -1443,6 +1458,19 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
         return null;
     }
+    
+    public void zerarValores() {
+        //Limpa a lista e a tabela dos produtos locados
+        modeloTabelaProdutosLocados.setRowCount(0);
+        produtosLocados.clear();
+        valorGeral = 0;
+        
+        campoParcelas.setText("");
+        campoEntrada.setText("");
+        campoPercentualDesconto.setText("");
+        labelValorLocacao.setText("");
+        labelValorParcelas.setText("");
+    }
 
     public Locacao getNovaLocacao() {
         return novaLocacao;
@@ -1474,9 +1502,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private final AguardeDialog aguarde = new AguardeDialog(null);
     private String formaPagamento = "";
     private String formaPagamentoEntrada = "";
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("0.00");
     private double valorTotalArredondado;
     private double valorParcelasArredondado;
+    private List<Object[]> listaRowProdutos;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoCancelar;

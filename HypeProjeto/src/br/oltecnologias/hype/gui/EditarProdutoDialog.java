@@ -12,7 +12,6 @@ import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Produto;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**

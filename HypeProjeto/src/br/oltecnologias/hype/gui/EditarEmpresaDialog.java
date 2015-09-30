@@ -6,10 +6,8 @@
 package br.oltecnologias.hype.gui;
 
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
-import br.oltecnologias.hype.model.Configuracao;
 import br.oltecnologias.hype.model.Empresa;
 import br.oltecnologias.hype.model.Endereco;
-import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
