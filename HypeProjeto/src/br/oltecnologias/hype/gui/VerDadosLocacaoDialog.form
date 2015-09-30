@@ -491,7 +491,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelComprimentoManga.setText(&quot;Com. Manga: &quot;+locacao.getCliente().getMedidas().getComprimentoManga());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelComprimentoManga.setText(&quot;Comprimento Manga: &quot;+locacao.getCliente().getMedidas().getComprimentoManga());"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelComprimentoCalca">
@@ -501,7 +501,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelComprimentoCalca.setText(&quot;Com. Cal&#xe7;a: &quot;+locacao.getCliente().getMedidas().getComprimentoCalca());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelComprimentoCalca.setText(&quot;Comprimento Cal&#xe7;a: &quot;+locacao.getCliente().getMedidas().getComprimentoCalca());"/>
               </AuxValues>
             </Component>
           </SubComponents>

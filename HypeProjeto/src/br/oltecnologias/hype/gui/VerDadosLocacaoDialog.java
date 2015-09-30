@@ -234,10 +234,10 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelSapato.setText("Sapato: "+locacao.getCliente().getMedidas().getSapato());
 
         labelComprimentoManga.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelComprimentoManga.setText("Com. Manga: "+locacao.getCliente().getMedidas().getComprimentoManga());
+        labelComprimentoManga.setText("Comprimento Manga: "+locacao.getCliente().getMedidas().getComprimentoManga());
 
         labelComprimentoCalca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelComprimentoCalca.setText("Com. Calça: "+locacao.getCliente().getMedidas().getComprimentoCalca());
+        labelComprimentoCalca.setText("Comprimento Calça: "+locacao.getCliente().getMedidas().getComprimentoCalca());
 
         javax.swing.GroupLayout painelMedidasLocadorLayout = new javax.swing.GroupLayout(painelMedidasLocador);
         painelMedidasLocador.setLayout(painelMedidasLocadorLayout);
