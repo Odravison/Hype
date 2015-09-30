@@ -256,7 +256,8 @@ public class Locacao implements Serializable {
     }
 
     public boolean isLocacaoPaga() {
-        return (new BigDecimal(this.jaPago).setScale(2, RoundingMode.HALF_EVEN).doubleValue() >= this.valorLocacao);
+        return (new BigDecimal(this.jaPago).setScale(2, RoundingMode.HALF_EVEN).doubleValue() >= this.valorLocacao 
+                && (this.jaPago-this.valorLocacao < 1));
     }
 
     public boolean isFinalizada() {
