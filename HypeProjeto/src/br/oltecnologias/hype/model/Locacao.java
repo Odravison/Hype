@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
@@ -40,30 +39,6 @@ public class Locacao implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     private Cliente cliente;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name="fk_locacao")
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)  //o nome da propriedade de "value" que liga a esta classe  
-//    @JoinColumn(name = "fk_locacao")
-//    @ElementCollection
-//    @MapKeyColumn(name="CODIGO")
-//    @Column(name="QUANTIDADE")
-//    @CollectionTable(name="locacao_produtos", joinColumns=@JoinColumn(name="id_locacao"))
-//    @ElementCollection
-//
-//    @CollectionTable(
-//            name = "PRODUTOS_LOCACAO",
-//            joinColumns = @JoinColumn(name = "id_locacao"))
-//    @Column(name = "produtos")
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @CollectionTable(name = "PRODUTOS")
-//    @MapKeyColumn(name = "CODIGO")
-//    @Column(name = "QUANTIDADE")
-//    @ElementCollection
-//    @CollectionTable(name="produtos", joinColumns=@JoinColumn(name="id_locacao"))
-//    @Column(name="produtos")
-//    @MapKeyJoinColumn(name="codigo", referencedColumnName="quantidade")
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
-//    @MapKeyJoinColumn(name = "codigo")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "fk_locacao")
     private List<ProdutoLocado> produtosLocados;

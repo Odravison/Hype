@@ -6,13 +6,11 @@ import br.oltecnologias.hype.model.Produto;
 import java.util.ArrayList;
 import java.util.List;
 import br.oltecnologias.hype.exception.ProdutoInexistenteException;
-import br.oltecnologias.hype.model.Fornecedor;
 import br.oltecnologias.hype.model.Locacao;
 import br.oltecnologias.hype.model.ProdutoLocado;
 import br.oltecnologias.hype.model.ProdutoVendido;
 import br.oltecnologias.hype.model.Venda;
 import java.util.Calendar;
-import java.util.Collections;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 

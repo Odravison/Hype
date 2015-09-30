@@ -317,9 +317,9 @@ public class GerenciadorDoSistema {
                 tituloRelatorio.setSpacingAfter(10);
 
                 Paragraph resumoRelatorio = new Paragraph("Resumo do relatório: \n"
-                        + "Quantidade de vendas: " + quantVenda + " - Total de venda: R$ " + totalVenda + "\n"
-                        + "Quantidade de Locações: " + quantLocacao + " - Total de locações: R$ " + totalLocacao + "\n"
-                        + "Quantidade de Despesas: " + quantDespesa + " - Total de despesas: R$ " + totalDespesa + "\n"
+                        + "Quantidade de vendas: " + quantVenda + " - Total de venda: R$ " + this.getValorInString(totalVenda) + "\n"
+                        + "Quantidade de Locações: " + quantLocacao + " - Total de locações: R$ " + this.getValorInString(totalLocacao) + "\n"
+                        + "Quantidade de Despesas: " + quantDespesa + " - Total de despesas: R$ " + this.getValorInString(totalDespesa) + "\n"
                         + "Valor em caixa neste período: " + this.getValorInString((totalVenda + totalLocacao - totalDespesa) - (cartaoLocacao + cartaoVenda)) + "\n"
                         + "Valor pago em Cartão para vendas: " + this.getValorInString(cartaoVenda) + "\n"
                         + "Valor pago em Cartão para locações: " + this.getValorInString(cartaoLocacao), timesNewRoman12);

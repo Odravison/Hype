@@ -6,7 +6,6 @@
 package br.oltecnologias.hype.model;
 
 import br.oltecnologias.hype.controller.GerenciadorDeLocacao;
-import br.oltecnologias.hype.controller.GerenciadorDeProduto;
 import br.oltecnologias.hype.controller.GerenciadorDoSistema;
 import br.oltecnologias.hype.exception.LocacaoInexistenteException;
 import com.itextpdf.text.Document;
@@ -19,7 +18,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

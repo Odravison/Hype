@@ -7,7 +7,6 @@ package br.oltecnologias.hype.model;
 
 import java.io.Serializable;
 
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 
@@ -42,7 +41,7 @@ public class Movimentacao implements Serializable {
     
     
     @Temporal(TemporalType.DATE)
-    private Calendar data;
+    private Calendar dataMov;
     
     private String responsavel;
     
@@ -51,7 +50,7 @@ public class Movimentacao implements Serializable {
     public Movimentacao(String movimento, double valor, Calendar data, String responsavel, String beneficiario, long idDaOperacao, String formaDePagamento) {
         this.movimento = movimento;
         this.valor = valor;
-        this.data = data;
+        this.dataMov = data;
         this.responsavel = responsavel;
         this.beneficiario = beneficiario;
         this.idDaOperacao = idDaOperacao;
@@ -86,11 +85,11 @@ public class Movimentacao implements Serializable {
     }
 
     public Calendar getData() {
-        return data;
+        return dataMov;
     }
 
     public void setData(Calendar data) {
-        this.data = data;
+        this.dataMov = data;
     }
 
     public String getResponsavel() {
@@ -110,7 +109,7 @@ public class Movimentacao implements Serializable {
     }
     
     public String getDataInString() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(this.data.getTime());
+        return new SimpleDateFormat("dd/MM/yyyy").format(this.dataMov.getTime());
     }
     
     public String getValorInString() {
