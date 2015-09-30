@@ -345,11 +345,11 @@ public class GerenciadorDeLocacao {
 
         for (Locacao l : this.getLocacoes()) {
             if (l.isAtiva()) {
-                Calendar dataLocNoPeriodo = l.getDataLocacao();
-                dataLocNoPeriodo.add(Calendar.DAY_OF_MONTH, costureira);
+                Calendar dataLocNoPeriodo = Calendar.getInstance();
+                dataLocNoPeriodo.setTime(l.getDataLocacao().getTime());
+                dataLocNoPeriodo.add(Calendar.DAY_OF_YEAR, costureira);
                 if (dataLocNoPeriodo.get(Calendar.YEAR) == Calendar.getInstance().get(Calendar.YEAR)) {
                     if (dataLocNoPeriodo.get(Calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)) {
-
                         locacaoASerPreparada.add(l);
 
                     }
