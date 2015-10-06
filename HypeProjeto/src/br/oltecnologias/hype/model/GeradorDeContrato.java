@@ -68,6 +68,7 @@ public class GeradorDeContrato {
     public void gerarContrato(Locacao locacao) throws DocumentException, IOException, Exception {
 
         this.produtos = GerenciadorDeLocacao.getInstance().getProdutosDeLocacao(locacao.getId());
+        Empresa empresa = Configuracao.getInstance().getEmpresa();
 
         Document pdf = new Document();
         File diretorio;
@@ -104,7 +105,10 @@ public class GeradorDeContrato {
             tituloContrato.setSpacingAfter(10);
 
             Paragraph textoContrato;
-            textoContrato = new Paragraph(conf.getContratoPt1()
+            textoContrato = new Paragraph(empresa.getNome() + " , inscrita no CNPJ " + empresa.getCnpj() + ", "
+                    + empresa.getEndereco().getRua() + "," + empresa.getEndereco().getNumeroCasa() + " doravante denominada “"+ empresa.getNome() +"”, "
+                    + "neste ato representada na Forma de seu contrato social e de outro lado o contratante denominado de “LOCADOR”, "
+                    + "resolvem celebrar o presente contrato de locação, nas seguintes condições:\n"
                     .concat(conf.getContratoPt2()
                             .concat(conf.getContratoPt3()
                                     .concat(conf.getContratoPt4()

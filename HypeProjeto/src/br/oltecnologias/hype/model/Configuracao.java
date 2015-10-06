@@ -36,7 +36,7 @@ public class Configuracao implements Serializable {
     
     @Lob
     @Column(length = 1000)
-    private String contratoPt1 = "Terni Vellucci , inscrita no CNPJ/22.833.691/0001-47, Av.Presidente Epitácio Pessoa, Nº 2400 doravante denominada “Terni Vellucci”, neste ato representada na Forma de seu contrato social e de outro lado o contratante denominado de “LOCADOR”, resolvem celebrar o presente contrato de locação, nas seguintes condições:\n";
+    private String contratoPt1 = null;
     @Lob
     @Column(length = 1000)
     private String contratoPt2 = "Cláusula 1ª. O objeto do presente contrato é a locação de roupas, usadas ou não, e acessórios de uso pessoal, as quais são selecionados e indicados pelo LOCADOR, pessoalmente na loja física.\n";
