@@ -270,7 +270,7 @@ public class GerenciadorDoSistema {
                     relatorio.add(mov.getMovimento());
                     relatorio.add(mov.getResponsavel().substring(0, 11));
                     relatorio.add(mov.getValorInString());
-                    relatorio.add(Double.toString(valorRecebido));
+                    relatorio.add(this.getValorInString(valorRecebido));
                     relatorio.add(mov.getFormaDePagamento());
 
                 }
