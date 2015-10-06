@@ -61,7 +61,7 @@ public class Locacao implements Serializable {
 
     private boolean ativa;
 
-    private int percentualDesconto;
+    private int valorDeDesconto;
 
     private String caminhoUltimoContrato = "";
     
@@ -71,7 +71,7 @@ public class Locacao implements Serializable {
     }
 
     public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int percentualDesconto) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int valorDeDesconto) {
         this.cliente = cliente;
         this.produtosLocados = produtosLocados;
         this.valorDeEntrada = valorDeEntrada;
@@ -80,11 +80,12 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
+        this.valorDeDesconto = valorDeDesconto;
         this.ativa = true;
     }
     
     public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int percentualDesconto, String tipoEntradaDePromissoria) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int valorDeDesconto, String tipoEntradaDePromissoria) {
         this.cliente = cliente;
         this.produtosLocados = produtosLocados;
         this.valorDeEntrada = valorDeEntrada;
@@ -93,6 +94,7 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
+        this.valorDeDesconto = valorDeDesconto;
         this.ativa = true;
         this.tipoEntradaDePromissoria = tipoEntradaDePromissoria;
     }
@@ -228,12 +230,12 @@ public class Locacao implements Serializable {
         return NumberFormat.getCurrencyInstance().format(this.valorDeEntrada);
     }
 
-    public int getPercentualDesconto() {
-        return percentualDesconto;
+    public int getValorDeDesconto() {
+        return valorDeDesconto;
     }
 
-    public void setPercentualDesconto(int percentualDesconto) {
-        this.percentualDesconto = percentualDesconto;
+    public void setValorDeDesconto(int valorDeDesconto) {
+        this.valorDeDesconto = valorDeDesconto;
     }
 
     public void resetarId() {
