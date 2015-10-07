@@ -314,7 +314,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDesconto.setText(&quot;Desconto: &quot;+locacao.getPercentualDesconto());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDesconto.setText(&quot;Desconto: &quot;+locacao.getValorDeDesconto());"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelValorTotal">
@@ -398,14 +398,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="labelComprimentoCalca" pref="172" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="labelComprimentoManga" alignment="0" pref="172" max="32767" attributes="0"/>
-                              <Component id="labelSapato" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelCamisa" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelColete" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelCalca" alignment="0" max="32767" attributes="0"/>
-                              <Component id="labelBlazer" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="labelComprimentoManga" alignment="0" pref="172" max="32767" attributes="0"/>
+                          <Component id="labelSapato" alignment="0" max="32767" attributes="0"/>
+                          <Component id="labelCamisa" alignment="0" max="32767" attributes="0"/>
+                          <Component id="labelColete" alignment="0" max="32767" attributes="0"/>
+                          <Component id="labelCalca" alignment="0" max="32767" attributes="0"/>
+                          <Component id="labelBlazer" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>

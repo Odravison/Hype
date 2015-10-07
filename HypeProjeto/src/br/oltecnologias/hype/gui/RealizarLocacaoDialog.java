@@ -22,7 +22,6 @@ import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -59,7 +58,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("Não foi possível atualizar o valor da temporada de desconto\n" + e.getMessage());
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
@@ -94,8 +93,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelMensagemContrato = new javax.swing.JLabel();
         botaoBuscar = new javax.swing.JButton();
         labelDesconto = new javax.swing.JLabel();
-        campoPercentualDesconto = new javax.swing.JTextField();
-        labelSimboloPorcentagem = new javax.swing.JLabel();
+        campoValorDesconto = new javax.swing.JTextField();
         labelValorLocacao = new javax.swing.JLabel();
         painelFormaPagamento = new javax.swing.JPanel();
         radioAVista = new javax.swing.JRadioButton();
@@ -111,10 +109,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelValorParcelas = new javax.swing.JLabel();
         labelStatus = new javax.swing.JLabel();
         labelStatusTemporada = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1366, 620));
         setResizable(false);
         setTitle("Realizar Locação");
         addMouseListener(new java.awt.event.MouseAdapter() {
@@ -464,19 +462,16 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         labelDesconto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelDesconto.setText("Desconto:");
 
-        campoPercentualDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        campoPercentualDesconto.setEnabled(false);
-        campoPercentualDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
+        campoValorDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        campoValorDesconto.setEnabled(false);
+        campoValorDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                campoPercentualDescontoKeyReleased(evt);
+                campoValorDescontoKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                campoPercentualDescontoKeyTyped(evt);
+                campoValorDescontoKeyTyped(evt);
             }
         });
-
-        labelSimboloPorcentagem.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        labelSimboloPorcentagem.setText("%");
 
         labelValorLocacao.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelValorLocacao.setForeground(new java.awt.Color(0, 153, 0));
@@ -653,12 +648,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             labelStatusTemporada.setForeground(new java.awt.Color(255, 0, 0));
         }
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("R$");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(painelSelecionar, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
@@ -673,10 +671,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addGap(31, 31, 31)
                         .addComponent(labelDesconto)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(labelSimboloPorcentagem)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(campoValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
@@ -691,7 +689,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             .addComponent(painelContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(painelProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(painelLocador, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -714,13 +712,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         .addComponent(botaoConcluir)
                         .addComponent(labelValorTotal)
                         .addComponent(labelDesconto)
-                        .addComponent(campoPercentualDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(labelSimboloPorcentagem)
+                        .addComponent(campoValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelValorLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelValorParcelas, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(labelStatus)
-                        .addComponent(labelStatusTemporada)))
-                .addContainerGap(77, Short.MAX_VALUE))
+                        .addComponent(labelStatusTemporada)
+                        .addComponent(jLabel1)))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
@@ -742,7 +740,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Selecione o cliente que irá realizar a locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
@@ -750,15 +748,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Selecione os produtos para a locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
-            } else if (campoPercentualDesconto.getText().length() > 0 && Integer.parseInt(campoPercentualDesconto.getText()) > 100) {
+            } else if (campoValorDesconto.getText().length() > 0 && Integer.parseInt(campoValorDesconto.getText()) > 100) {
                 pane.setMessage("O percentual de desconto não pode estar acima de 100%");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
@@ -766,7 +764,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Informe a forma de pagamento da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
@@ -774,14 +772,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Informe a forma de pagamento da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             } else if ((radioCredito.isSelected() || radioPromissoria.isSelected()) && campoParcelas.getText().length() <= 0) {
                 pane.setMessage("Informe a quantidade de parcelas da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
@@ -789,25 +787,22 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("A data final do contrato não pode ser anterior a data inicial");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
             } else {
 
                 //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
-                if (campoPercentualDesconto.getText().length() <= 0) {
-                    campoPercentualDesconto.setText("0");
+                if (campoValorDesconto.getText().length() <= 0) {
+                    campoValorDesconto.setText("0");
                 } else {
                     calcularValorTotal();
                 }
                 //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                 if (campoEntrada.getText().length() <= 0) {
                     campoEntrada.setText("0");
-                } else {
-                    //Apenas se nao estiver alterando o valor da variável valor total
-                    //valorTotalLocacao = new BigDecimal(valorTotalLocacao - Double.parseDouble(campoEntrada.getText())).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
-                }
+                } 
                 //Se o campo de parcelas estiver em branco, a quantidade de parcelas será 0
                 if (campoParcelas.getText().length() <= 0) {
                     campoParcelas.setText("0");
@@ -840,7 +835,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         protected Object doInBackground() throws Exception {
                             novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                                     dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoPercentualDesconto.getText()), formaPagamentoEntrada);
+                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoValorDesconto.getText()), formaPagamentoEntrada);
 
                             novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
 
@@ -855,7 +850,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                             pane.setMessage("Locação efetuada com sucesso!");
                             pane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
                             dialog = pane.createDialog("Mensagem");
-                            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                             dialog.setAlwaysOnTop(true);
                             dialog.setVisible(true);
                             //Fecha janela
@@ -868,7 +863,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                     pane.setMessage(e.getMessage());
                     pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                     dialog = pane.createDialog("Erro");
-                    dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                    dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                     dialog.setAlwaysOnTop(true);
                     dialog.setVisible(true);
                     this.setAlwaysOnTop(true);
@@ -879,7 +874,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("Informe corretamente todos os dados necessários");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
             this.setAlwaysOnTop(true);
@@ -899,7 +894,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
@@ -936,7 +931,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("É preciso informar o nome ou o código do produto para a pesquisa");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
@@ -969,7 +964,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("Selecione um produto na lista para poder adicioná-lo aos produtos locados");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
 
@@ -978,14 +973,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 adicionarProdutoALocacao(GerenciadorDeProduto.getInstance().pesquisarProdutoPeloCodigo(
                         (String) modeloTabelaProdutos.getValueAt(tabelaProdutos.getSelectedRow(), 0)));
                 calcularValorTotal();
-                campoPercentualDesconto.setEnabled(true);
+                campoValorDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
                 campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
@@ -997,13 +992,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("Selecione um produto para remoção");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         } else {
             removerProdutoDaLocacao(tabelaProdutosLocados.getSelectedRow(), (String) modeloTabelaProdutosLocados.getValueAt(tabelaProdutosLocados.getSelectedRow(), 0));
             calcularValorTotal();
-            campoPercentualDesconto.setEnabled(false);
+            campoValorDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
             campoEntrada.setEnabled(false);
         }
@@ -1033,13 +1028,13 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_painelProdutosMouseClicked
 
-    private void campoPercentualDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyTyped
-        if (!numeros.contains(evt.getKeyChar() + "") || campoPercentualDesconto.getText().length() >= maxCaracteresDesconto
-                || Integer.parseInt(campoPercentualDesconto.getText() + evt.getKeyChar()) > 100
-                || Integer.parseInt(campoPercentualDesconto.getText() + evt.getKeyChar()) == 0) {
+    private void campoValorDescontoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoValorDescontoKeyTyped
+        if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoValorDesconto.getText().length() >= maxCaracteresDesconto
+                || Double.parseDouble(campoValorDesconto.getText() + evt.getKeyChar()) > valorTotalComDescontos
+                || Double.parseDouble(campoValorDesconto.getText() + evt.getKeyChar()) == 0) {
             evt.consume();
         }
-    }//GEN-LAST:event_campoPercentualDescontoKeyTyped
+    }//GEN-LAST:event_campoValorDescontoKeyTyped
 
     private void tabelaProdutosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaProdutosMouseClicked
         if (evt.getClickCount() == 2 && modeloTabelaProdutos.getRowCount() > 0) {
@@ -1049,14 +1044,14 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
                 calcularValorTotal();
                 
-                campoPercentualDesconto.setEnabled(true);
+                campoValorDesconto.setEnabled(true);
                 campoParcelas.setEnabled(true);
                 campoEntrada.setEnabled(true);
             } catch (ProdutoInexistenteException e) {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
@@ -1070,10 +1065,10 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             //calcularValorTotalLocacao();
         }
         if (produtosLocados.size() <= 0) {
-            campoPercentualDesconto.setEnabled(false);
+            campoValorDesconto.setEnabled(false);
             campoParcelas.setEnabled(false);
             campoEntrada.setEnabled(false);
-            campoPercentualDesconto.setText("");
+            campoValorDesconto.setText("");
             labelValorLocacao.setText("");
         }
     }//GEN-LAST:event_tabelaProdutosLocadosMouseClicked
@@ -1138,15 +1133,15 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         }
     }//GEN-LAST:event_campoParcelasKeyReleased
 
-    private void campoPercentualDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoPercentualDescontoKeyReleased
-        if ((numeros.contains(evt.getKeyChar() + "") && campoPercentualDesconto.getText().length() <= maxCaracteresDesconto
-                && (Integer.parseInt(campoPercentualDesconto.getText()) <= 100 && Integer.parseInt(campoPercentualDesconto.getText()) > 0))
+    private void campoValorDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoValorDescontoKeyReleased
+        if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.') && campoValorDesconto.getText().length() <= maxCaracteresDesconto
+                && (Double.parseDouble(campoValorDesconto.getText()) < valorTotalComDescontos && Double.parseDouble(campoValorDesconto.getText()) > 0))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
 
             calcularValorTotal();
         }
-    }//GEN-LAST:event_campoPercentualDescontoKeyReleased
+    }//GEN-LAST:event_campoValorDescontoKeyReleased
 
     private void campoEntradaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoEntradaKeyTyped
         if ((!numeros.contains(evt.getKeyChar() + "") && evt.getKeyChar() != '.') || campoEntrada.getText().length() >= maxCaracteresEntrada
@@ -1202,7 +1197,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("Informe as datas para a pesquisa dos produtos corretamente");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
@@ -1219,9 +1214,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         } catch (Exception e) {
         }
 
-        if (campoPercentualDesconto.getText().length() > 0) {
-            valorTotalLocacao = valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                    campoPercentualDesconto.getText())) / 100);
+        if (campoValorDesconto.getText().length() > 0) {
+            valorTotalLocacao = valorTotalLocacao - Double.parseDouble(campoValorDesconto.getText());
         }
         valorTotalComDescontos = valorTotalLocacao;
         if (campoEntrada.getText().length() > 0) {
@@ -1242,9 +1236,9 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     public void calcularValorTotalComDesconto() {
         double valor;
-        if (campoPercentualDesconto.getText().length() > 0) {
+        if (campoValorDesconto.getText().length() > 0) {
             valor = new BigDecimal(valorTotalLocacao - ((valorTotalLocacao * Integer.parseInt(
-                    campoPercentualDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
+                    campoValorDesconto.getText())) / 100)).setScale(2, RoundingMode.HALF_EVEN).doubleValue();
             labelValorLocacao.setText(NumberFormat.getCurrencyInstance().format(valor));
         } else {
             valor = new BigDecimal(valorTotalLocacao).doubleValue();
@@ -1336,7 +1330,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Este produto não pode ser locado! \n\nQuantidade de produtos insuficiente no estoque");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
@@ -1356,7 +1350,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage("Este produto não pode ser locado! \n\nQuantidade de produtos insuficiente no estoque");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
@@ -1392,7 +1386,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 pane.setMessage(e.getMessage());
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
-                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+                dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
@@ -1400,7 +1394,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("O produto não foi encontrado");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
@@ -1444,7 +1438,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
             pane.setMessage("Não foi possível atualizar a quantidade em estoque do produto");
             pane.setMessageType(JOptionPane.WARNING_MESSAGE);
             dialog = pane.createDialog("Aviso");
-            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Branco.png")).getImage());
+            dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
         }
@@ -1467,7 +1461,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
         
         campoParcelas.setText("");
         campoEntrada.setText("");
-        campoPercentualDesconto.setText("");
+        campoValorDesconto.setText("");
         labelValorLocacao.setText("");
         labelValorParcelas.setText("");
     }
@@ -1481,7 +1475,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     }
 
     private String numeros = "0987654321"; // Alguns campos não devem aceitar números
-    private int maxCaracteresDesconto = 3;
+    private int maxCaracteresDesconto = 7;
     private int maxCaracteresParcelas = 2;
     private Cliente locador;
     private ArrayList<ProdutoLocado> produtosLocados;
@@ -1515,11 +1509,12 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JButton botaoSelecionarProdutos;
     private javax.swing.JTextField campoEntrada;
     private javax.swing.JTextField campoParcelas;
-    private javax.swing.JTextField campoPercentualDesconto;
     private javax.swing.JTextField campoPesquisar;
+    private javax.swing.JTextField campoValorDesconto;
     private javax.swing.JComboBox comboFormaPagamentoEntrada;
     private com.toedter.calendar.JDateChooser dateDataFinalContrato;
     private com.toedter.calendar.JDateChooser dateDataInicialContrato;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelCliente;
     private javax.swing.JLabel labelDataFinal;
     private javax.swing.JLabel labelDataInicial;
@@ -1528,7 +1523,6 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
     private javax.swing.JLabel labelMensagemContrato;
     private javax.swing.JLabel labelNomeCliente;
     private javax.swing.JLabel labelParcelas;
-    private javax.swing.JLabel labelSimboloPorcentagem;
     private javax.swing.JLabel labelStatus;
     private javax.swing.JLabel labelStatusTemporada;
     private javax.swing.JLabel labelValorLocacao;
