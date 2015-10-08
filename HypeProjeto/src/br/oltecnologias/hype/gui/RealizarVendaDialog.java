@@ -538,12 +538,12 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(labelDesconto)
+                        .addComponent(campoValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(botaoConcluir)
-                        .addComponent(botaoCancelar)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(labelDesconto)
-                            .addComponent(campoValorDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
+                        .addComponent(botaoCancelar))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(labelValorParcelas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelValorVenda, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -666,7 +666,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
         try {
             if (produtosVendidos.size() <= 0) {
                 JOptionPane.showMessageDialog(null, "Selecione os produtos para a venda", "Aviso", JOptionPane.WARNING_MESSAGE);
-            } else if (campoValorDesconto.getText().length() > 0 && Integer.parseInt(campoValorDesconto.getText()) > 100) {
+            } else if (campoValorDesconto.getText().length() > 0 && Double.parseDouble(campoValorDesconto.getText()) > 100) {
                 JOptionPane.showMessageDialog(null, "O percentual de desconto não pode estar acima de 100%", "Aviso", JOptionPane.WARNING_MESSAGE);
             } else if ((radioCartao.isSelected() && radioCredito.isSelected()) && campoParcelas.getText().length() <= 0) {
                 JOptionPane.showMessageDialog(null, "Informe a quantidade de parcelas da locação", "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -683,9 +683,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         //Se o campo de desconto estiver em branco, a locação terá 0% de desconto
                         if (campoValorDesconto.getText().length() <= 0) {
                             campoValorDesconto.setText("0");
-                        } else {
-                            //calcularValorTotal();
-                        }
+                        } 
                         //Se o campo de entrada estiver em branco, a locação terá R$ 0 de entrada
                         if (campoEntrada.getText().length() <= 0) {
                             campoEntrada.setText("0");
@@ -711,7 +709,7 @@ public class RealizarVendaDialog extends java.awt.Dialog {
 
                             novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalComDescontos, formaPagamento,
                                     Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
-                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoValorDesconto.getText())));
+                                    Double.parseDouble(campoEntrada.getText()), Double.parseDouble(campoValorDesconto.getText())));
 
                             novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeVenda(novaVenda);
 
