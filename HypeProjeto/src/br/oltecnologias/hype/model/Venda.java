@@ -43,7 +43,7 @@ public class Venda implements Serializable {
 
     private double entrada = 0;
     
-    private int percentualDesconto = 0;
+    private double valorDoDesconto = 0;
     
     private double jaPago = 0;
     
@@ -62,14 +62,14 @@ public class Venda implements Serializable {
      */
     
     public Venda(List<ProdutoVendido> produtos, double valor, String formaDePagamento, 
-            Calendar dataVenda, int quantidadeParcelas, double valorDeEntrada, int percentualDesconto) {
+            Calendar dataVenda, int quantidadeParcelas, double valorDeEntrada, double valorDoDesconto) {
         this.produtosVendidos = produtos;
         this.valor = valor;
         this.formaDePagamento = formaDePagamento;
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
         this.entrada = valorDeEntrada;
-        this.percentualDesconto = percentualDesconto;
+        this.valorDoDesconto = valorDoDesconto;
     }
 
     public long getId() {
@@ -136,12 +136,12 @@ public class Venda implements Serializable {
         return new SimpleDateFormat("dd/MM/yyyy").format(this.dataVenda.getTime());
     }
     
-    public int getPercentualDesconto() {
-        return percentualDesconto;
+    public double getValorDoDesconto() {
+        return valorDoDesconto;
     }
 
-    public void setPercentualDesconto(int percentualDesconto) {
-        this.percentualDesconto = percentualDesconto;
+    public void setValorDoDesconto(double valorDoDesconto) {
+        this.valorDoDesconto = valorDoDesconto;
     }
 
     public double getJaPago() {
