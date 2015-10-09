@@ -88,7 +88,7 @@ public class VerDadosVendaDialog extends java.awt.Dialog {
         labelParcelas.setText("Parcelas: "+venda.getQuantidadeParcelas());
 
         labelDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDesconto.setText("Desconto: "+venda.getPercentualDesconto());
+        labelDesconto.setText("Desconto: "+venda.getValorDoDesconto());
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelValorTotal.setText("Valor Total: "+venda.getValorInString());
