@@ -706,7 +706,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         }
 
                         try {
-
                             novaVenda = GerenciadorDeVenda.getInstance().realizarVenda(new Venda(produtosVendidos, valorTotalComDescontos, formaPagamento,
                                     Calendar.getInstance(), Integer.parseInt(campoParcelas.getText()),
                                     Double.parseDouble(campoEntrada.getText()), Double.parseDouble(campoValorDesconto.getText())));
@@ -722,8 +721,6 @@ public class RealizarVendaDialog extends java.awt.Dialog {
                         
                         return null;
                     }
-
-                    
 
                 @Override
                     protected void done() {
