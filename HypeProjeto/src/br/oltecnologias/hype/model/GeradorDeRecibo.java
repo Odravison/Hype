@@ -252,101 +252,106 @@ public class GeradorDeRecibo {
 
         try {
 
-            diretorio = new File(conf.getDiretorioDeDocumentos()
-                    + "\\" + loc.getCliente().getNome() + "\\Recibos");
+            if (loc.getValorDeEntrada() > 0
+                    || (loc.getFormaDePagamento().equalsIgnoreCase("À VISTA")
+                    || loc.getFormaDePagamento().equalsIgnoreCase("CARTÃO - CRÉDITO")
+                    || loc.getFormaDePagamento().equalsIgnoreCase("CARTÃO - DÉBITO"))) {
+                diretorio = new File(conf.getDiretorioDeDocumentos()
+                        + "\\" + loc.getCliente().getNome() + "\\Recibos");
 
-            diretorio.mkdirs();
+                diretorio.mkdirs();
 
-            PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Rec_"
-                    + diaRecibo + "__H_" + horaGeracao + ".pdf"));
+                PdfWriter.getInstance(pdf, new FileOutputStream(diretorio.toString() + "\\" + "Rec_"
+                        + diaRecibo + "__H_" + horaGeracao + ".pdf"));
 
-            pdf.open();
-            pdf.setPageSize(PageSize.A4);
+                pdf.open();
+                pdf.setPageSize(PageSize.A4);
 
-            Paragraph cabecalhoDeRecibo;
-            cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
-                    + conf.getEmpresa().getCnpj() + "\n"
-                    + conf.getEmpresa().getEndereco().toString() + "\n"
-                    + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
-            cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
-            cabecalhoDeRecibo.setSpacingAfter(10);
+                Paragraph cabecalhoDeRecibo;
+                cabecalhoDeRecibo = new Paragraph(conf.getEmpresa().getNome() + "\n"
+                        + conf.getEmpresa().getCnpj() + "\n"
+                        + conf.getEmpresa().getEndereco().toString() + "\n"
+                        + "Fone: " + conf.getEmpresa().getTelefone(), timesNewRoman12);
+                cabecalhoDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+                cabecalhoDeRecibo.setSpacingAfter(10);
 
-            PdfPTable tabelaCabecalho = new PdfPTable(2);
-            PdfPCell celulaImagem = new PdfPCell(logo);
+                PdfPTable tabelaCabecalho = new PdfPTable(2);
+                PdfPCell celulaImagem = new PdfPCell(logo);
 
-            PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
+                PdfPCell celulaTCabecalho = new PdfPCell(cabecalhoDeRecibo);
 
-            celulaImagem.setBorder(-1);
-            celulaImagem.setPadding(10);
+                celulaImagem.setBorder(-1);
+                celulaImagem.setPadding(10);
 
-            celulaTCabecalho.setBorder(-1);
-            celulaTCabecalho.setPadding(10);
+                celulaTCabecalho.setBorder(-1);
+                celulaTCabecalho.setPadding(10);
 
-            tabelaCabecalho.addCell(celulaImagem);
-            tabelaCabecalho.addCell(celulaTCabecalho);
-            tabelaCabecalho.setSpacingAfter(10);
+                tabelaCabecalho.addCell(celulaImagem);
+                tabelaCabecalho.addCell(celulaTCabecalho);
+                tabelaCabecalho.setSpacingAfter(10);
 
-            Paragraph tituloDeRecibo;
-            tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
-            tituloDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
+                Paragraph tituloDeRecibo;
+                tituloDeRecibo = new Paragraph("RECIBO", timesNewRoman18);
+                tituloDeRecibo.setAlignment(Paragraph.ALIGN_CENTER);
 
-            Paragraph descCurtaProd;
-            descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
+                Paragraph descCurtaProd;
+                descCurtaProd = new Paragraph(getDescricaoCurta(produtos), courier12);
 
-            if (valorResta > 0) {
-                textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
-                        + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
-                        + "na forma de pagamento: " + loc.getFormaDePagamento()
-                        + " referente à locação de " + descCurtaProd.toString() + ".\n "
-                        + "Valor Total: " + this.getValorInString(loc.getValorLocacao())
-                        + " Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ". \n"
-                        + "Resta: " + this.getValorInString(valorResta) + " - "
-                        + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
-                textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
-            } else {
-                textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
-                        + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
-                        + "na forma de pagamento: " + loc.getFormaDePagamento()
-                        + " referente à locação de " + descCurtaProd.toString() + ".\n "
-                        + "Valor Total: " + this.getValorInString(loc.getValorLocacao())
-                        + " Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ".", timesNewRoman12);
-                textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+                if (valorResta > 0) {
+                    textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
+                            + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
+                            + "na forma de pagamento: " + loc.getFormaDePagamento()
+                            + " referente à locação de " + descCurtaProd.toString() + ".\n "
+                            + "Valor Total: " + this.getValorInString(loc.getValorLocacao())
+                            + " Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ". \n"
+                            + "Resta: " + this.getValorInString(valorResta) + " - "
+                            + "que será pago até o dia: " + loc.getDataLocacaoInString(), timesNewRoman12);
+                    textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+                } else {
+                    textoRecibo = new Paragraph("Recebi de " + loc.getCliente().getNome() + " a importância de R$ "
+                            + this.getValorInString(valorDaOperacao) + " (" + valorPorExtenso(valorDaOperacao) + ") "
+                            + "na forma de pagamento: " + loc.getFormaDePagamento()
+                            + " referente à locação de " + descCurtaProd.toString() + ".\n "
+                            + "Valor Total: " + this.getValorInString(loc.getValorLocacao())
+                            + " Entrada: " + this.getValorInString(loc.getValorDeEntrada()) + ".", timesNewRoman12);
+                    textoRecibo.setAlignment(Paragraph.ALIGN_JUSTIFIED);
+                }
+
+                Paragraph linhaAssinatura;
+                linhaAssinatura = new Paragraph("\n"
+                        + "\n"
+                        + "________________________________________________________________________ \n"
+                        + conf.getEmpresa().getNome() + "\n"
+                        + "\n",
+                        timesNewRoman12);
+                linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
+
+                Paragraph diaLocal;
+                diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
+                        + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
+                diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
+
+                Paragraph linhaDeCorte;
+                linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
+                        timesNewRoman12);
+                linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
+                linhaDeCorte.setSpacingAfter(10);
+                linhaDeCorte.setSpacingBefore(10);
+
+                pdf.add(tabelaCabecalho);
+                pdf.add(tituloDeRecibo);
+                pdf.add(textoRecibo);
+                pdf.add(linhaAssinatura);
+                pdf.add(diaLocal);
+
+                pdf.add(linhaDeCorte);
+
+                pdf.add(tabelaCabecalho);
+                pdf.add(tituloDeRecibo);
+                pdf.add(textoRecibo);
+                pdf.add(linhaAssinatura);
+                pdf.add(diaLocal);
             }
-
-            Paragraph linhaAssinatura;
-            linhaAssinatura = new Paragraph("\n"
-                    + "\n"
-                    + "________________________________________________________________________ \n"
-                    + conf.getEmpresa().getNome() + "\n"
-                    + "\n",
-                    timesNewRoman12);
-            linhaAssinatura.setAlignment(Paragraph.ALIGN_CENTER);
-
-            Paragraph diaLocal;
-            diaLocal = new Paragraph(conf.getEmpresa().getEndereco().getCidade()
-                    + ", " + dia + " de " + mes + " de" + ano, timesNewRoman12);
-            diaLocal.setAlignment(Paragraph.ALIGN_RIGHT);
-
-            Paragraph linhaDeCorte;
-            linhaDeCorte = new Paragraph("----------------------------------------------------------------------------------------",
-                    timesNewRoman12);
-            linhaDeCorte.setAlignment(Paragraph.ALIGN_CENTER);
-            linhaDeCorte.setSpacingAfter(10);
-            linhaDeCorte.setSpacingBefore(10);
-
-            pdf.add(tabelaCabecalho);
-            pdf.add(tituloDeRecibo);
-            pdf.add(textoRecibo);
-            pdf.add(linhaAssinatura);
-            pdf.add(diaLocal);
-
-            pdf.add(linhaDeCorte);
-
-            pdf.add(tabelaCabecalho);
-            pdf.add(tituloDeRecibo);
-            pdf.add(textoRecibo);
-            pdf.add(linhaAssinatura);
-            pdf.add(diaLocal);
 
         } catch (DocumentException | FileNotFoundException ex) {
             Logger.getLogger(GeradorDeRecibo.class.getName()).log(Level.SEVERE, null, ex);
