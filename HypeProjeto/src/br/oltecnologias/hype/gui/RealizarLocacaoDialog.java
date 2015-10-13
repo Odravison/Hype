@@ -752,8 +752,8 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
 
-            } else if (campoValorDesconto.getText().length() > 0 && Integer.parseInt(campoValorDesconto.getText()) > 100) {
-                pane.setMessage("O percentual de desconto não pode estar acima de 100%");
+            } else if (campoValorDesconto.getText().length() > valorTotalComDescontos) {
+                pane.setMessage("O valor de desconto não pode ser maior do que o valor total da locação");
                 pane.setMessageType(JOptionPane.WARNING_MESSAGE);
                 dialog = pane.createDialog("Aviso");
                 dialog.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/br/oltecnologias/hype/imagens/Icon borda branca.png")).getImage());
