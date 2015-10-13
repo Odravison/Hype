@@ -237,6 +237,10 @@ public class Locacao implements Serializable {
     public void setValorDeDesconto(int valorDeDesconto) {
         this.valorDeDesconto = valorDeDesconto;
     }
+    
+    public String getvalorDeDescontoInString() {
+        return NumberFormat.getCurrencyInstance().format(this.valorDeDesconto);
+    }    
 
     public void resetarId() {
         this.id = 0;

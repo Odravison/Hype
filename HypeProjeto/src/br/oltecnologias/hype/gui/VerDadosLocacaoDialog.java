@@ -139,7 +139,7 @@ public class VerDadosLocacaoDialog extends java.awt.Dialog {
         labelParcelas.setText("Parcelas: "+locacao.getParcelas());
 
         labelDesconto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        labelDesconto.setText("Desconto: "+locacao.getValorDeDesconto());
+        labelDesconto.setText("Desconto: "+locacao.getvalorDeDescontoInString());
 
         labelValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         labelValorTotal.setText("Valor Total: "+locacao.getValorLocacaoInString());
