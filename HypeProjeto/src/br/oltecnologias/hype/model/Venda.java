@@ -43,7 +43,7 @@ public class Venda implements Serializable {
 
     private double entrada = 0;
     
-    private double valorDoDesconto = 0;
+    private double percentualDesconto = 0;
     
     private double jaPago = 0;
     
@@ -69,7 +69,7 @@ public class Venda implements Serializable {
         this.dataVenda = dataVenda;
         this.quantidadeParcelas = quantidadeParcelas;
         this.entrada = valorDeEntrada;
-        this.valorDoDesconto = valorDoDesconto;
+        this.percentualDesconto = valorDoDesconto;
     }
 
     public long getId() {
@@ -137,11 +137,11 @@ public class Venda implements Serializable {
     }
     
     public double getValorDoDesconto() {
-        return valorDoDesconto;
+        return percentualDesconto;
     }
 
     public void setValorDoDesconto(double valorDoDesconto) {
-        this.valorDoDesconto = valorDoDesconto;
+        this.percentualDesconto = valorDoDesconto;
     }
 
     public double getJaPago() {

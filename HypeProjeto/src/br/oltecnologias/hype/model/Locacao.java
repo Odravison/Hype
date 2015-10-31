@@ -61,7 +61,7 @@ public class Locacao implements Serializable {
 
     private boolean ativa;
 
-    private int valorDeDesconto;
+    private double percentualDesconto;
 
     private String caminhoUltimoContrato = "";
     
@@ -71,7 +71,7 @@ public class Locacao implements Serializable {
     }
 
     public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int valorDeDesconto) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, double valorDeDesconto) {
         this.cliente = cliente;
         this.produtosLocados = produtosLocados;
         this.valorDeEntrada = valorDeEntrada;
@@ -80,12 +80,12 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
-        this.valorDeDesconto = valorDeDesconto;
+        this.percentualDesconto = valorDeDesconto;
         this.ativa = true;
     }
     
     public Locacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valorLocacao, Calendar dataLocacao,
-            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, int valorDeDesconto, String tipoEntradaDePromissoria) {
+            Calendar dataDeDevolucao, String formaDePagamento, int parcelas, double valorDeEntrada, double valorDeDesconto, String tipoEntradaDePromissoria) {
         this.cliente = cliente;
         this.produtosLocados = produtosLocados;
         this.valorDeEntrada = valorDeEntrada;
@@ -94,7 +94,7 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
-        this.valorDeDesconto = valorDeDesconto;
+        this.percentualDesconto = valorDeDesconto;
         this.ativa = true;
         this.tipoEntradaDePromissoria = tipoEntradaDePromissoria;
     }
@@ -230,12 +230,12 @@ public class Locacao implements Serializable {
         return NumberFormat.getCurrencyInstance().format(this.valorDeEntrada);
     }
 
-    public int getValorDeDesconto() {
-        return valorDeDesconto;
+    public double getValorDeDesconto() {
+        return percentualDesconto;
     }
 
-    public void setValorDeDesconto(int valorDeDesconto) {
-        this.valorDeDesconto = valorDeDesconto;
+    public void setValorDeDesconto(double valorDeDesconto) {
+        this.percentualDesconto = valorDeDesconto;
     }
 
     public void resetarId() {
