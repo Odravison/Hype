@@ -42,7 +42,7 @@ public class GerenciadorDeLocacao {
 
     public Locacao realizarLocacao(Cliente cliente, List<ProdutoLocado> produtosLocados, double valor,
             Calendar dataLocacao, Calendar dataDeDevolucao, String formaDePagamento, int parcelas,
-            double entrada, int valorDeDesconto, String tipoDeEntradaPromissoria) throws ProdutoInexistenteException, LocacaoExistenteException,
+            double entrada, double valorDeDesconto, String tipoDeEntradaPromissoria) throws ProdutoInexistenteException, LocacaoExistenteException,
             ClienteInexistenteException, TipoInexistenteDeMovimentacao, ClienteExistenteException,
             LocacaoInexistenteException, IOException, Exception {
 

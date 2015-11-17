@@ -827,7 +827,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
                         protected Object doInBackground() throws Exception {
                             novaLocacao = GerenciadorDeLocacao.getInstance().realizarLocacao(locador, produtosLocados, valorTotalComDescontos, dateDataInicialContrato.getCalendar(),
                                     dateDataFinalContrato.getCalendar(), formaPagamento, Integer.parseInt(campoParcelas.getText()),
-                                    Double.parseDouble(campoEntrada.getText()), Integer.parseInt(campoValorDesconto.getText()), formaPagamentoEntrada);
+                                    Double.parseDouble(campoEntrada.getText()), Double.parseDouble(campoValorDesconto.getText()), formaPagamentoEntrada);
 
                             novaMovimentacao = GerenciadorDoSistema.getInstance().adicionarMovimentacaoDeLocacao(novaLocacao);
 
@@ -1127,7 +1127,7 @@ public class RealizarLocacaoDialog extends java.awt.Dialog {
 
     private void campoValorDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_campoValorDescontoKeyReleased
         if (((numeros.contains(evt.getKeyChar() + "") || evt.getKeyChar() == '.') && campoValorDesconto.getText().length() <= maxCaracteresDesconto
-                && (Double.parseDouble(campoValorDesconto.getText()) < valorTotalComDescontos && Double.parseDouble(campoValorDesconto.getText()) > 0))
+                && (Double.parseDouble(campoValorDesconto.getText()) <= valorTotalComDescontos && Double.parseDouble(campoValorDesconto.getText()) > 0))
                 || evt.getKeyCode() == KeyEvent.VK_BACK_SPACE
                 || evt.getKeyCode() == KeyEvent.VK_DELETE) {
 
