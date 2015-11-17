@@ -61,7 +61,7 @@ public class Locacao implements Serializable {
 
     private boolean ativa;
 
-    private double valorDeDesconto;
+    private double percentualDesconto;
 
     private String caminhoUltimoContrato = "";
     
@@ -80,7 +80,7 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
-        this.valorDeDesconto = valorDeDesconto;
+        this.percentualDesconto = valorDeDesconto;
         this.ativa = true;
     }
     
@@ -94,7 +94,7 @@ public class Locacao implements Serializable {
         this.dataDevolucao = dataDeDevolucao;
         this.formaDePagamento = formaDePagamento;
         this.parcelas = parcelas;
-        this.valorDeDesconto = valorDeDesconto;
+        this.percentualDesconto = valorDeDesconto;
         this.ativa = true;
         this.tipoEntradaDePromissoria = tipoEntradaDePromissoria;
     }
@@ -231,11 +231,11 @@ public class Locacao implements Serializable {
     }
 
     public double getValorDeDesconto() {
-        return valorDeDesconto;
+        return percentualDesconto;
     }
 
     public void setValorDeDesconto(double valorDeDesconto) {
-        this.valorDeDesconto = valorDeDesconto;
+        this.percentualDesconto = valorDeDesconto;
     }
 
     public void resetarId() {
