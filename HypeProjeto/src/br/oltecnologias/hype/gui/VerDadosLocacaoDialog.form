@@ -314,7 +314,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDesconto.setText(&quot;Desconto: &quot;+locacao.getValorDeDesconto());"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="labelDesconto.setText(&quot;Desconto: &quot;+NumberFormat.getCurrencyInstance().format(locacao.getValorDeDesconto()));"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="labelValorTotal">
